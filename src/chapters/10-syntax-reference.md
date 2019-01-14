@@ -11,7 +11,7 @@
 - <code>(<em>pattern</em>)</code> グループ化
 - <code><em>pat<sub>1</sub></em> | <em>pat<sub>2</sub></em></code> 選択
 - <code>pat<sub>&lt;pat'&gt;</sub></code> 差(`pat`によって生成された要素で、`pat'`で生成されたものを除いたもの)
-- `fibonacci` タイプライターフォントで表記される終端文法
+- <tt>fibonacci</tt> タイプライターフォントで表記される終端文法
 
 BNFのような文法をレポートを通して用いる。文法の生成は次のような形をしている:
 
@@ -24,98 +24,98 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 ### 字句文法
 
 <pre>
-<em>program</em>	→	{ <em>lexeme</em> | <em>whitespace</em> }
-<em>lexeme</em>	→	<em>qvarid</em> | <em>qconid</em> | <em>qvarsym</em> | <em>qconsym</em>
-                | <em>literal</em> | <em>special</em> | <em>reservedop</em> | <em>reservedid</em>
-<em>literal</em>	→	<em>integer</em> | <em>float</em> | <em>char</em> | <em>string</em>
-<em>special</em>	→	( | ) | , | ; | [ | ] | ` | { | }
+<em>program</em>		→ { <em>lexeme</em> | <em>whitespace</em> }
+<em>lexeme</em>		→ <em>qvarid</em> | <em>qconid</em> | <em>qvarsym</em> | <em>qconsym</em>
+		| <em>literal</em> | <em>special</em> | <em>reservedop</em> | <em>reservedid</em>
+<em>literal</em>		→ <em>integer</em> | <em>float</em> | <em>char</em> | <em>string</em>
+<em>special</em>		→ ( | ) | , | ; | [ | ] | ` | { | }
  
-<em>whitespace</em>	→	<em>whitestuff</em> {<em>whitestuff</em>}
-<em>whitestuff</em>	→	<em>whitechar</em> | <em>comment</em> | <em>ncomment</em>
-<em>whitechar</em>	→	<em>newline</em> | <em>vertab</em> | <em>space</em> | <em>tab</em> | <em>uniWhite</em>
-<em>newline</em>	→	<em>return</em> <em>linefeed</em> | <em>return</em> | <em>linefeed</em> | <em>formfeed</em>
-<em>return</em>	→	a carriage return
-<em>linefeed</em>	→	a line feed
-<em>vertab</em>	→	a vertical tab
-<em>formfeed</em>	→	a form feed
-<em>space</em>	→	a space
-<em>tab</em>	→	a horizontal tab
-<em>uniWhite</em>	→	any Unicode character defined as whitespace
+<em>whitespace</em>	→ <em>whitestuff</em> {<em>whitestuff</em>}
+<em>whitestuff</em>	→ <em>whitechar</em> | <em>comment</em> | <em>ncomment</em>
+<em>whitechar</em>	→ <em>newline</em> | <em>vertab</em> | <em>space</em> | <em>tab</em> | <em>uniWhite</em>
+<em>newline</em>		→ <em>return</em> <em>linefeed</em> | <em>return</em> | <em>linefeed</em> | <em>formfeed</em>
+<em>return</em>		→ a carriage return
+<em>linefeed</em>	→ a line feed
+<em>vertab</em>		→ a vertical tab
+<em>formfeed</em>	→ a form feed
+<em>space</em>		→ a space
+<em>tab</em>		→ a horizontal tab
+<em>uniWhite</em>	→ any Unicode character defined as whitespace
  
-<em>comment</em>	→	dashes [ any⟨symbol⟩ {any} ] newline
-<em>dashes</em>	→	-- {-}
-<em>opencom</em>	→	{-
-<em>closecom</em>	→	-}
-<em>ncomment</em>	→	<em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em>
-<em>ANY seq</em>	→	{<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> | <em>closecom</em> ) {<em>ANY</em>}⟩</sub>
-<em>ANY</em>	→	<em>graphic</em> | <em>whitechar</em>
-<em>any</em>	→	<em>graphic</em> | <em>space</em> | <em>tab</em>
-<em>graphic</em>	→	<em>small</em> | <em>large</em> | <em>symbol</em> | <em>digit</em> | <em>special</em> | " | '
+<em>comment</em>		→ dashes [ any⟨symbol⟩ {any} ] newline
+<em>dashes</em>		→ -- {-}
+<em>opencom</em>		→ {-
+<em>closecom</em>	→ -}
+<em>ncomment</em>	→ <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em>
+<em>ANY seq</em>		→ {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> | <em>closecom</em> ) {<em>ANY</em>}⟩</sub>
+<em>ANY</em>		→ <em>graphic</em> | <em>whitechar</em>
+<em>any</em>		→ <em>graphic</em> | <em>space</em> | <em>tab</em>
+<em>graphic</em>		→ <em>small</em> | <em>large</em> | <em>symbol</em> | <em>digit</em> | <em>special</em> | " | '
  
-<em>small</em>	→	<em>ascSmall</em> | <em>uniSmall</em> | _
-<em>ascSmall</em>	→	<tt>a</tt> | <tt>b</tt> | … | <tt>z</tt>
-<em>uniSmall</em>	→	any Unicode lowercase letter
+<em>small</em>		→ <em>ascSmall</em> | <em>uniSmall</em> | _
+<em>ascSmall</em>	→ <tt>a</tt> | <tt>b</tt> | … | <tt>z</tt>
+<em>uniSmall</em>	→ any Unicode lowercase letter
  
-<em>large</em>	→	<em>ascLarge</em> | <em>uniLarge</em>
-<em>ascLarge</em>	→	<tt>A</tt> | <tt>B</tt> | … | <tt>Z</tt>
-<em>uniLarge</em>	→	any uppercase or titlecase Unicode letter
-<em>symbol</em>	→	<em>ascSymbol</em> | <em>uniSymbol</em><sub>⟨<em>special</em> | _ | " | '⟩</sub>
+<em>large</em>		→ <em>ascLarge</em> | <em>uniLarge</em>
+<em>ascLarge</em>	→ <tt>A</tt> | <tt>B</tt> | … | <tt>Z</tt>
+<em>uniLarge</em>	→ any uppercase or titlecase Unicode letter
+<em>symbol</em>		→ <em>ascSymbol</em> | <em>uniSymbol</em><sub>⟨<em>special</em> | _ | " | '⟩</sub>
  
-<em>ascSymbol</em>	→ <tt>!</tt> | <tt>#</tt> | <tt>$</tt> | <tt>%</tt> | <tt>&</tt> | <tt>\8902</tt> | <tt>+</tt> | <tt>.</tt> | <tt>/</tt> | <tt><</tt> | <tt>=</tt> | <tt>></tt> | <tt>?</tt> | <tt>@</tt>
-                    |	<tt>\</tt> | <tt>^</tt> | <tt>|</tt> | <tt>-</tt> | <tt>~</tt> | <tt>:</tt>
-uniSymbol	→	any Unicode symbol or punctuation
-digit	→	ascDigit | uniDigit
-ascDigit	→	0 | 1 | … | 9
-uniDigit	→	any Unicode decimal digit
-octit	→	0 | 1 | … | 7
-hexit	→	digit | A | … | F | a | … | f
+<em>ascSymbol</em>	→ <tt>!</tt> | <tt>#</tt> | <tt>$</tt> | <tt>%</tt> | <tt>&</tt> | <tt>⋆</tt> | <tt>+</tt> | <tt>.</tt> | <tt>/</tt> | <tt><</tt> | <tt>=</tt> | <tt>></tt> | <tt>?</tt> | <tt>@</tt>
+                | <tt>\</tt> | <tt>^</tt> | <tt>|</tt> | <tt>-</tt> | <tt>~</tt> | <tt>:</tt>
+<em>uniSymbol</em>	→ any Unicode symbol or punctuation
+<em>digit</em>		→ <em>ascDigit</em> | <em>uniDigit</em>
+<em>ascDigit</em>	→ <tt>0</tt> | <tt>1</tt> | … | <tt>9</tt>
+<em>uniDigit</em>	→ any Unicode decimal digit
+<em>octit</em>		→ <tt>0</tt> | <tt>1</tt> | … | <tt>7</tt>
+<em>hexit</em>		→ <em>digit</em> | <tt>A</tt> | … | <tt>F</tt> | <tt>a</tt> | … | <tt>f</tt>
  
-varid	→	(small {small | large | digit | ' })⟨reservedid⟩
-conid	→	large {small | large | digit | ' }
-reservedid	→	case | class | data | default | deriving | do | else
-|	foreign | if | import | in | infix | infixl
-|	infixr | instance | let | module | newtype | of
-|	then | type | where | _
+<em>varid</em>		→ (<em>small</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <tt>'</tt> })<sub>⟨reservedid⟩</sub>
+<em>conid</em>		→ <em>large</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <tt>'</tt> }
+<em>reservedid</em>	→ <tt>case</tt> | <tt>class</tt> | <tt>data</tt> | <tt>default</tt> | <tt>deriving</tt> | <tt>do</tt> | <tt>else</tt>
+		| <tt>foreign</tt> | <tt>if</tt> | <tt>import</tt> | <tt>in</tt> | <tt>infix</tt> | <tt>infixl</tt>
+		| <tt>infixr</tt> | <tt>instance</tt> | <tt>let</tt> | <tt>module</tt> | <tt>newtype</tt> | <tt>of</tt>
+		| <tt>then</tt> | <tt>type</tt> | <tt>where</tt> | <tt>_</tt>
  
-varsym	→	( symbol⟨:⟩ {symbol} )⟨reservedop | dashes⟩
-consym	→	( : {symbol})⟨reservedop⟩
-reservedop	→	.. | : | :: | = | \ | | | <- | -> |  @ | ~ | =>
+<em>varsym</em>		→ ( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop | dashes⟩</sub>
+<em>consym</em>		→ ( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub>
+<em>reservedop</em>	→ <tt>..</tt> | <tt>:</tt> | <tt>::</tt> | <tt>=</tt> | <tt>\</tt> | <tt>|</tt> | <tt><-</tt> | <tt>-></tt> |  <tt>@</tt> | <tt>~</tt> | <tt>=></tt>
  
-varid	    	    (variables)
-conid	    	    (constructors)
-tyvar	→	varid	    (type variables)
-tycon	→	conid	    (type constructors)
-tycls	→	conid	    (type classes)
-modid	→	{conid .} conid	    (modules)
+<em>varid</em>	    	    (variables)
+<em>conid</em>	    	    (constructors)
+<em>tyvar</em>		→ <em>varid</em>	    (type variables)
+<em>tycon</em>		→ <em>conid</em>	    (type constructors)
+<em>tycls</em>		→ <em>conid</em>	    (type classes)
+<em>modid</em>		→ {<em>conid</em> <tt>.</tt>} <em>conid</em>	    (modules)
  
-qvarid	→	[ modid . ] varid
-qconid	→	[ modid . ] conid
-qtycon	→	[ modid . ] tycon
-qtycls	→	[ modid . ] tycls
-qvarsym	→	[ modid . ] varsym
-qconsym	→	[ modid . ] consym
+<em>qvarid</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>varid</em>
+<em>qconid</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>conid</em>
+<em>qtycon</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>tycon</em>
+<em>qtycls</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>tycls</em>
+<em>qvarsym</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>varsym</em>
+<em>qconsym</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>consym</em>
  
-decimal	→	digit{digit}
-octal	→	octit{octit}
-hexadecimal	→	hexit{hexit}
+<em>decimal</em>		→ <em>digit</em>{<em>digit</em>}
+<em>octal</em>		→ <em>octit</em>{<em>octit</em>}
+<em>hexadecimal</em>	→ <em>hexit</em>{<em>hexit</em>}
  
-integer	→	decimal
-|	0o octal | 0O octal
-|	0x hexadecimal | 0X hexadecimal
-float	→	decimal . decimal [exponent]
-|	decimal exponent
-exponent	→	(e | E) [+ | -] decimal
+<em>integer</em>		→ <em>decimal</em>
+		| <tt>0o</tt> <em>octal</em> | <tt>0O</tt> <em>octal</em>
+		| <tt>0x</tt> <em>hexadecimal</em> | <tt>0X</tt> <em>hexadecimal</em>
+<em>float</em>		→ <em>decimal</em> <tt>.</tt> <em>decimal</em> [<em>exponent</em>]
+		|	<em>decimal</em> <em>exponent</em>
+<em>exponent</em>	→ (<tt>e</tt> | <tt>E</tt>) [<tt>+</tt> | <tt>-</tt>] <em>decimal</em>
  
-char	→	' (graphic⟨' | \⟩ | space | escape⟨\&⟩) '
-string	→	" {graphic⟨" | \⟩ | space | escape | gap} "
-escape	→	\ ( charesc | ascii | decimal | o octal | x hexadecimal )
-charesc	→	a | b | f | n | r | t | v | \ | " | ' | &
-ascii	→	^cntrl | NUL | SOH | STX | ETX | EOT | ENQ | ACK
-|	BEL | BS | HT | LF | VT | FF | CR | SO | SI | DLE
-|	DC1 | DC2 | DC3 | DC4 | NAK | SYN | ETB | CAN
-|	EM | SUB | ESC | FS | GS | RS | US | SP | DEL
-cntrl	→	ascLarge | @ | [ | \ | ] | ^ | _
-gap	→	\ whitechar {whitechar} \
+<em>char</em>		→ <tt>'</tt> (<em>graphic</em><sub>⟨<tt>'</tt> | <tt>\</tt>⟩</sub> | <em>space</em> | <em>escape</em><sub>⟨<tt>\&</tt>⟩</sub>) <tt>'</tt>
+<em>string</em>		→ <tt>"</tt> {<em>graphic</em><sub>⟨<tt>"</tt> | <tt>\</tt>⟩</sub> | <em>space</em> | <em>escape</em> | <em>gap</em>} <tt>"</tt>
+<em>escape</em>		→ <tt>\</tt> ( <em>charesc</em> | <em>ascii</em> | <em>decimal</em> | <tt>o</tt> <em>octal</em> | <tt>x</tt> <em>hexadecimal</em> )
+<em>charesc</em>		→ <tt>a</tt> | <tt>b</tt> | <tt>f</tt> | <tt>n</tt> | <tt>r</tt> | <tt>t</tt> | <tt>v</tt> | <tt>\</tt> | <tt>"</tt> | <tt>'</tt> | <tt>&</tt>
+<em>ascii</em>		→ <tt>^</tt><em>cntrl</em> | <tt>NUL</tt> | <tt>SOH</tt> | <tt>STX</tt> | <tt>ETX</tt> | <tt>EOT</tt> | <tt>ENQ</tt> | <tt>ACK</tt>
+		| <tt>BEL</tt> | <tt>BS</tt> | <tt>HT</tt> | <tt>LF</tt> | <tt>VT</tt> | <tt>FF</tt> | <tt>CR</tt> | <tt>SO</tt> | <tt>SI</tt> | <tt>DLE</tt>
+		| <tt>DC1</tt> | <tt>DC2</tt> | <tt>DC3</tt> | <tt>DC4</tt> | <tt>NAK</tt> | <tt>SYN</tt> | <tt>ETB</tt> | <tt>CAN</tt>
+		| <tt>EM</tt> | <tt>SUB</tt> | <tt>ESC</tt> | <tt>FS</tt> | <tt>GS</tt> | <tt>RS</tt> | <tt>US</tt> | <tt>SP</tt> | <tt>DEL</tt>
+<em>cntrl</em>		→ <em>ascLarge</em> | <tt>@</tt> | <tt>[</tt> | <tt>\</tt> | <tt>]</tt> | <tt>^</tt> | <tt>_</tt>
+<em>gap</em>		→ <tt>\</tt> <em>whitechar</em> {<em>whitechar</em>} <tt>\</tt>
 </pre>
 
 ### レイアウト
