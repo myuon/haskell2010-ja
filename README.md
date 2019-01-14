@@ -12,4 +12,7 @@ Original: [Haskell2010 Language Report](https://www.haskell.org/onlinereport/has
 
 ## Contribute
 
-issueを見て翻訳したい章を宣言してください。WIPなPRを送りこまめに反映してくれると助かります。
+- 翻訳作業の担当単位は章単位またはセクション単位とします。
+- issueを見て翻訳したい章またはセクションを宣言してください。
+- WIPなPRを送りこまめに反映するのが望ましいです。
+
