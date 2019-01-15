@@ -26,7 +26,7 @@ Simon Marlow (editor)
    - Haskell のコア
    - 値と型
    - 名前空間
-2. 字句構造
+2. [字句構造](./chapters/2-lexical-structure.md)
    - 慣習的表記
    - 字句の構造
    - コメント
