@@ -100,11 +100,12 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 整数リテラルは`Integer`型に適した値へ`formInteger`関数を適応することを表す。同様に、浮動小数点リテラルは`Rational`型(つまり、`Ratio Integer`)の値に`fromRational`を適応することを表す。
 
-<div>
-[原文では境界線で囲まれていた]
-変換: 整数リテラル`i`は`fromInteger i`に等しく、`fromInteger`は`Num`クラスのメソッドである。(セクション[6.4.1]("./chapters/6-predefined-types-and-classes,md"))
+<div class="column">
+
+**変換:** 整数リテラル`i`は`fromInteger i`に等しく、`fromInteger`は`Num`クラスのメソッドである。(セクション[6.4.1]("./chapters/6-predefined-types-and-classes,md"))
 
 浮動小数点リテラル`f`は`fromRational (n Ratio.% d)`に等しく、`fromRational`は`Fractional`クラスのメソッドで、`Ratio.%`は`Ratio`ライブラリで定義されており、2つの整数から有理数を構築する。整数`n`と`d`は`n/d = f`のように選ばれる。
+
 </div>
 
 ## カリー化された適用とラムダ抽象
@@ -120,13 +121,14 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 パターンの集合は線形でないといけず、変数は集合の中で2回以上出現してはいけない。
 
-<div>
-[原文では境界線で囲まれていた]
-変換: 以下の同一性は保持される。
+<div class="column">
+
+**変換:** 以下の同一性は保持される。
 
 <code>p<sub>1</sub> … p<sub>n</sub> -> e = \ X<sub>1</sub> … X<sub>n</sub> -> case (X<sub>1</sub>, …, X<sub>n</sub>) of (p<sub>1</sub>, …, p<sub>n</sub>) -> e</code>
 
 <code>X<sub>i</sub></code>は新しい識別子である。
+
 </div>
 
 セクション[3.17.3]で説明するが、case式とパターンマッチングの意味論を組み合わされるこの変換が適応されたとき、そのパターンが一致に失敗したなら、そのとき結果は⊥となる。
@@ -146,13 +148,14 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 前置の符号反転演算子はPrelude内(表[4.1](./chapters/4-declarations-and-bindings.md)を参照)で定義された中置演算子`-`と同じ優先順位を持つ。`e1-e2`は二項演算子`-`の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって`e1(-e2)`と書かなければいけない。同様に、`(-)`は中置演算子と同様に`(\ x y -> x-y)`のための構文であるが、`(\ x -> -x)`を表せず、そのためには`negate`を使う必要がある。
 
-<div>
-[原文では境界線で囲まれていた]
-変換：以下の同一性は保持される。
+<div class="column">
+
+**変換：** 以下の同一性は保持される。
 <pre>
 e<sub>1</sub> op e<sub>2</sub>  =	(op) e<sub>1</sub> e<sub>2</sub>
 -e        =	<em>negate</em> (e)
 </pre>
+
 </div>
 
 ## セクション
