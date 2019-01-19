@@ -1,8 +1,6 @@
-[WIP]
-
 # 文法リファレンス
 
-### 慣習的表記
+## 慣習的表記
 
 以下の慣習的表記が文法を表現するのにつかわれる:
 
@@ -21,7 +19,7 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 
 字句文法、文脈自由文法いずれも曖昧さが残るが、これは文法語句をできる限り長く取り、左から右に進む(shift-reduceパースでは、shift/reduceコンフリクトはシフトを取ることで解決する)ことで解決するものとする。字句文法では、これは「最長一致」と呼ばれるルールである。文脈自由文法では、これは条件式やlet式、ラムダ抽象などが右方向に取れるだけ長くとることを表す。
 
-### 字句文法
+## 字句文法
 
 <pre>
 <em>program</em>		→ { <em>lexeme</em> | <em>whitespace</em> }
@@ -118,7 +116,7 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 <em>gap</em>		→ <tt>\</tt> <em>whitechar</em> {<em>whitechar</em>} <tt>\</tt>
 </pre>
 
-### レイアウト
+## レイアウト
 
 セクション2.7(**[訳注]** TODO:リンク)ではレイアウトルールに対する非形式的な議論を見た。このセクションではより正確に定義をする。
 
@@ -211,3 +209,60 @@ let { x = e; y = x } in e'
 ```
 
 閉じ波括弧は上のパースエラーのルールにより挿入される。
+
+
+## 文芸的コメント
+
+「文芸的コメント」の慣習は、リチャード・バードとフィリップ・ワドラーらがOrwell言語のために初めて導入し、そして次にドナルド・クヌースの「文芸的プログラミング」に影響を与えたものであるが、Haskellのソースコードを記述するためのもう一つのスタイルである。文芸的スタイルはコメントを書くことを、それをデフォルトとすることで推奨している。始めの文字が">"である行はプログラムの一部として扱われ、それ以外の行はすべてコメントとなる。
+
+プログラムの本文は">"で始まる行のみを拾い、">"とそれに続く空白を置き換えることで復元することができる。その結果残る本文の中では、レイアウトやコメントは[10章](./10-syntax-reference.md)で説明したとおりに適用される。
+
+">"を間違って省略してしまった場合に備えて、空でないコメント行に隣接するプログラム行はエラーになる。ここで空のコメント行とは、空白しか含まないもののことである。
+
+慣習的に、コメントのスタイルはファイル拡張子によって指定される。".hs"であれば通常のHaskellファイルであり、".lhs"であれば文芸的Haskellファイルである。このスタイルを用いると、階乗の簡単なプログラムは次のようになる。
+
+(**訳注**: 文芸的Haskellに対応するsyntax highlighterがないので通常のHaskellハイライトで代用しています。本来コメントとして扱われる`This literate...`や`This is the factorial...`などに色が付いていますがここは上でも説明があった通りコメントです。)
+
+```hs
+   This literate program prompts the user for a number  
+   and prints the factorial of that number:  
+ 
+> main :: IO ()  
+ 
+> main = do putStr "Enter a number: "  
+>           l <- readLine  
+>           putStr "n!= "  
+>           print (fact (read l))  
+ 
+  This is the factorial function.  
+ 
+> fact :: Integer -> Integer  
+> fact 0 = 1  
+> fact n = n ⋆ fact (n-1)
+```
+
+文芸的プログラミングという代替スタイルは、文章処理システムのLaTeXを使う際に特に適している。この慣習の下では、`\begin{code}...\end{code}`デリミタで囲まれた部分全体が文芸的プログラムのプログラム本文として扱われ、その他の行はすべてコメントである。より正確には:
+
+- プログラムコードは`\begin{code}`に続く次の行から始まり
+- プログラムコードは`\end{code}`で始まる行の直前で終わる (文字列リテラルは当然除く)
+
+これらデリミタの前後に余分な空白行を挿入する必要は必ずしもないが、スタイルとしてはそれが望ましいであろう。例えば次のようになる。
+
+```tex
+\documentstyle{article}  
+ 
+\begin{document}  
+ 
+\chapter{Introduction}  
+ 
+This is a trivial program that prints the first 20 factorials.  
+ 
+\begin{code}  
+main :: IO ()  
+main =  print [ (n, product [1..n]) | n <- [1..20]]  
+\end{code}  
+ 
+\end{document}
+```
+
+このスタイルは同じファイル拡張子を用いる。同じファイルに対してこれら2つのスタイルを混ぜるのはおすすめできない。
