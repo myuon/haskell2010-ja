@@ -7,11 +7,11 @@
 <pre>
 <em>exp</em>        →	<em>infixexp</em> :: [context =>] type	    (expression type signature)
             |	<em>infixexp</em>
- 
+
 <em>infixexp</em>   →	<em>lexp</em> qop <em>infixexp</em>	            (infix operator application)
             |	- <em>infixexp</em>	                    (prefix negation)
             |	<em>lexp</em>
- 
+
 <em>lexp</em>       →	\ apat1 … apatn -> <em>exp</em>             (lambda abstraction, n ≥ 1)
             |	<tt>let</tt> <em>decls</em> <tt>in</tt> <em>exp</em>	            (let expression)
             |	<tt>if</tt> <em>exp</em> [;] <tt>then</tt> <em>exp</em> [;] <tt>else</tt> <em>exp</em>    (conditional)
@@ -19,7 +19,7 @@
             |	<tt>do</tt> { <em>stmts</em> }	                    (do expression)
             |	<em>fexp</em>
 <em>fexp</em>       →	[<em>fexp</em>] <em>aexp</em>	                    (function application)
- 
+
 <em>aexp</em>	    →	<em>qvar</em>                                (variable)
             |	<em>gcon</em>                                (general constructor)
             |	<em>literal</em>
@@ -76,7 +76,7 @@ Haskellの式の変換は実行時エラーが発生したことを明示的に�
         |	[]
         |	(,{,})
         |	<em>qcon</em>
- 
+
 <em>var</em>	→	<em>varid</em>| ( <em>varsym</em> )	    (variable)
 <em>qvar</em>	→	<em>qvarid</em> | ( <em>qvarsym</em> )	    (qualified variable)
 <em>con</em>	→	<em>conid</em> | ( <em>consym</em> )	    (constructor)
@@ -385,7 +385,7 @@ As indicated by the translation of list comprehensions, variables bound by let h
 <em>alt</em>	→	<em>pat</em> -> <em>exp</em> [<tt>where</tt> <em>decls</em>]
         |	<em>pat</em> <em>gdpat</em> [<tt>where</tt> <em>decls</em>]
         |		                    (empty alternative)
- 
+
 <em>gdpat</em>	→	<em>guards</em> -> <em>exp</em> [ <em>gdpat</em> ]
 <em>guards</em>	→	| <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>	    (n ≥ 1)
 <em>guard</em>	→	<em>pat</em> <- <em>infixexp</em>	            (pattern guard)
@@ -439,7 +439,153 @@ As indicated by the translation of list comprehensions, variables bound by let h
 
 ## Do式
 
+<pre>
+<em>lexp</em> 	→ 	<tt>do</tt> { <em>stmts</em> } 	           (do expression)
+<em>stmts</em> 	→ 	<em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<tt>;</tt>] 	   (n ≥ 0)
+<em>stmt</em> 	→ 	<em>exp</em> ;
+	| 	<em>pat</em> <- <em>exp</em> ;
+	| 	<tt>let</tt> <em>decls</em> ;
+	| 	<tt>;</tt> 	                   (empty statement)
+</pre>
+
+do式は単項のプログラミングのためのより従来的な構文を提供する。それは以下のような式を許す。
+
+<pre><code>putStr "x: "    >>  
+getLine         >>= \l ->  
+return (words l)
+</code></pre>
+
+より、旧来の方法による書き方は次のものになる。
+
+<pre><code>do putStr "x: "  
+   l <- getLine  
+   return (words l)
+</code></pre>
+
+<div class="column">
+
+**変換：** Do式はこれらの等式を満たし、排除した空の`stmts`の後にカーネルの中への変換のように使われるかもしれない。
+
+<pre>
+do {e} 	= 	e
+do {e;stmts} 	= 	e >> do {stmts}
+do {p <- e; stmts} 	= 	let ok p = do {stmts}
+		    ok _ = fail "..."
+		  in e >>= ok
+do {let decls; stmts} 	= 	let decls in do {stmts}
+</pre>
+
+省略記号"..."はコンパイラーが生成したエラーメッセージを表し、`fail`へ渡され、できれば、パターンマッチングに失敗した箇所のしるしを与える。関数`>>`,`>>=`と`fail`はPreludeで定義されたクラス`Monad`の操作であり、`ok`は新しい識別子である。
+
+</div>
+
+`do`の変換によって示されたように、`let`によって束縛された変数はこれらが`<-`がラムダ束縛とそれに従う単相によって定義されている完全な多様体型を持つ。
+
 ## フィールドラベル付きのデータ型
+
+データ型の宣言はフィールドラベルを任意に定義するかもしれない。(セクション[4.2.1]("./4-declarations-and-bindings.md")を参照)これらのフィールドラベルは構築、形式の選択、データ型全体の構造に依存した方法でのフィールドの更新することに使用される。
+
+異なるデータ型は同じスコープの共通のフィールドラベルを共有することはない。フィールドラベルはコンストラクタ内で多くは一度、使用することができる。データ型内で、しかしながら、フィールドラベルはすべてのコンストラクタで同じ型付けを持つフィールドを提供したコンストラクタが同じ型を持つより多く使うことができる。最後のポイントを説明していることについて考えてください。
+
+<pre><code>data S = S1 { x :: Int } | S2 { x :: Int }   -- OK  
+data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
+</code></pre>
+
+ここでの`s`は正当であるが`T`はそうではない。また`y`は後者では矛盾する型付けが与えられている。
+
+### フィールドセレクション
+
+<pre>
+aexp 	→ 	qvar
+</pre>
+
+フィールドラベルはセレクタ関数のように使用される。変数のように使われる際は、フィールドラベルはオブジェクトからフィールドを抽出した関数のように振る舞う。セレクタは最上位の束縛であり、ローカル変数によって覆われているが、他の同名の最上位の束縛と衝突することはできない。この覆いはセレクタ関数にのみ影響を及ぼし、レコード作成(セクション[3.15.2]("#3.15.2"))及びに更新(セクション[3.15.3]("#3.15.3"))、フィールドラベルは通常の変数と混合されることはない。
+
+<div class="column">
+
+**変換:** フィールドラベル`f`は次のようなセレクタ関数を生成する。
+
+<code>f x 	= 	case x of { C<sub>1</sub> p<sub>11</sub> … p<sub>1k</sub>  ->  e<sub>1</sub> ;… ; C<sub>n</sub> p<sub>n1</sub> … p<sub>nk</sub>  ->  e<sub>n</sub> }
+</code>
+
+<code>C<sub>1</sub> ... C<sub>n</sub></code>は全て<code>f</code>とラベルされたフィールドを含むデータ型のコンストラクタで、<code>p<sub>ij</sub></code>
+</pre>は`f`が<code>C<sub>i</sub></code>の要素の`j`番目、または`_`をラベルした時の`y`であり、<code>e<code>i</code></code>は<code>C<sub>i</sub></code>のフィールドが`f`または`undefined`のラベルを持つ時の`y`である。
+
+</div>
+
+### フィールドラベルを使用する構築
+
+<pre>
+aexp 	→ 	qcon { fbind<sub>1</sub> , … , fbind<sub>n</sub> } 	    (labeled construction, n ≥ 0)
+fbind 	→ 	qvar = exp
+</pre>
+
+ラベル付けされたフィールドを使うコンストラクタは要素が位置によらず名前によって明記される値を構築することに使われるかもしれない。宣言リストの中で使われる中括弧とは異なりレイアウトの対象にならない。`{`と`}`の文字は明白でなければならない。(これもフィールドの更新、フィールドパターンともに真である。)フィールドラベルを使用する構築は次の制約に応じる。
+
+- 明記されたコンストラクタで宣言されたフィールドラベルのみ言及されるかもしれない。
+- フィールドラベルは一回以上言及されるかもしれない。
+- 言及されないフィールドは`⊥`で初期化される。
+- コンパイル時エラーは厳格なフィールド(宣言された型のフィールドの接頭語に`!`が付けられている)が構築の間に切り捨てられる時に発生する。厳格なフィールドはセクション[4.2.1]("./4-declarations-and-bindings.md")で説明される。
+
+式`F {}`は、`F`はデータコンストラクタであり、`F`が記録的な構文(用意された`F`は厳格なフィールドを持たない。上の4番目の箇条書きを参照)で宣言されるかどうかは正当である。それは<code>F ⊥<sub>1</sub> … ⊥<sub>n</sub></code>を表し、`n`は`F`の引数の数である。
+
+<div class="column">
+
+**変換：** `f = v`の束縛で、フィールド`f`は`v`でラベルする。
+<pre><code>C { bs } 	= 	C (pick<sub>1</sub><sup>C</sup> bs <sub>undefined</sub>) … (pick<sub>k</sub><sup>C</sup> bs <sub>undefined</sub>)
+</code></pre>
+`k`は`C`の引数の数である。
+
+補助関数<code>pick<sub>i</sub><sup>C</sup> bs d</code>は次にように定義される。
+<p>
+もし、コンストラクタ`C`の`i`番目の要素がフィールドラベル`f`を持ち、`if f=v`は束縛された`bs`に表示されるなら、その時は<code>pick<sub>i</sub><sup>C</sup> bs d</code>は`v`である。言い換えると<code>pick<sub>i</sub><sup>C</sup> bs d</code>はデフォルト値`d`である。
+</p>
+</div>
+
+### フィールドラベルを使用した更新
+
+<pre>
+aexp 	→ 	aexp⟨qcon⟩ { fbind<sub>1</sub> , … , fbind<sub>n</sub> } 	    (labeled update, n ≥ 1)
+</pre>
+
+フィールドラベルを使ったデータ型に所属する値は非破壊的に更新されるかもしれない。これは明記されたフィールド値が存在する値へ置き換える新しい値を作成する。更新は次の方法に制限される。
+
+- 全てのラベルは同じデータ型から取られなければいけない。
+- 少なくともあるコンストラクタは更新の中で全ての言及されたラベルを定義しなければいけない。
+- ラベルは2つ以上言及されないかもしれない。
+- 実行エラーは更新された値が全ての明記されたラベルを含まない時に発生する。
+
+<div class="column">
+
+**変換:** 以下は以前の`pick`の定義を使用する。
+
+[未対応：subタグの子subタグがある]
+<pre><code>
+e { bs } = <tt>case</tt> e <tt>of</tt>
+		        C<sub>1</sub> v<sub>1</sub> … v<sub>k1</sub> -> C<sub>1</sub> (pick<sub>1</sub><sup>C1</sup> bs v<sub>1</sub>) … (pick<sub>k 1</sub><sup>C1</sup> bs v <sub>k1</sub>)
+		             ...
+		        C<sub>j</sub> v<sub>1</sub> … v<sub>kj</sub> -> C<sub>j</sub> (pick<sub>1</sub><sup>Cj</sup> bs v<sub>1</sub>) … (pick<sub>k j</sub><sup>Cj</sup> bs v <sub>k<sub>j</sub></sub>)
+		        _ -> error "Update error"
+</code></pre>
+
+<code>{ C<sub>1</sub>,...,C<sub>j</sub>}</code>は`bs`内の全てのラベルを含むコンストラクタの集合で、ｋ<sub>i</sub>はC<sub>i</sub>の引数の数である。
+
+</div>
+
+これはラベル付けされたフィールドを使用している例である。
+
+<pre><code>data T    = C1 {f1,f2 :: Int}  
+          | C2 {f1 :: Int,  
+                f3,f4 :: Char}
+</code></pre>
+
+|式|変換|
+|--|--|
+| C1 {f1 = 3} | C1 3 <tt>undefined</tt> |
+|  C2 {f1 = 1, f4 = 'A', f3 = 'B'} | C2 1 'B' 'A' |
+| x {f1 = 1} | <pre><tt>case</tt> x <tt>of</tt> C1 _ f2    -> C1 1 f2<br>          C2 _ f3 f4 -> C2 1 f3 f4</pre> |
+
+フィールド`f1`は両方の`T`のコンストラクタに共通である。この例はフィールドラベルを使わない同じコンストラクタを使う等しい式の中へフィールドラベル記法にコンストラクタを使用する式を変換する。もし、`x {f2 = 1, f3 = 'x'}`のように、複数のコンストラクタが更新の中で使われるフィールドラベルの集合を定義されていたなら、コンパイル時エラーという結果になるだろう。
 
 ## 式の型シグネチャ
 
