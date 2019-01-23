@@ -52,7 +52,7 @@ Simon Marlow (editor)
    - フィールドラベルのついたデータ型
    - 型シグネチャ
    - パターンマッチ
-4. 宣言と束縛
+4. [宣言と束縛](./chapters/4-declarations-and-bindings.md)
    - 型とクラスの概観
    - ユーザー定義データ型
    - 型クラスとオーバーロード
