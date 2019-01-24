@@ -173,9 +173,87 @@ Haskellの型システムは`型`をプログラム内の各式に帰する。�
 
 式`e`の型は型を`e`に開放する変数へ与える**型環境**とどの型がどのクラスのインスタンスであるかを宣言する**クラス環境**に依存する。(型は`インスタンス`宣言または`導出`節の存在経由のみのクラスのインスタンスになる。)
 
+型は一般化の先行順(下に明記されている)によって関連する。多くの一般的な型は、一般化の先行順によって同等まで導かれ、(与えられた環境の)個々の式は**主要な型**と呼ばれるものに割り当てられる。Haskellの拡張されたHindley-Milner型システムは全式の主要な型を推論でき、オーバーロードされたクラスメソッドの妥当な使用を含んでいる(セクション[4.3.4]("#4.3.4")で説明するように、確実に曖昧なオーバーロードが起こり得るのだが)。したがって、明示的な型付け(型署名と呼ぶ)は通常、オプションである(セクション[3.16]("./3-expressions,md")と[4.4.1]("#4.4.1")を参照)。
+
+型<code>∀ &umacr;. cx<sub>1</sub>  ⇒  t<sub>1</sub></code>は領域が以下のような`u`の代用`S`がある場合に限り、型<code>∀ &wmacr;. cx<sub>2</sub>  ⇒  t<sub>2</sub></code>**より一般的**である。
+
+- <code>t<sub>2</sub></code>は<code>S(t<sub>1</sub>)</code>と同じである。
+- <code>cx<sub>2</sub></code>はそのクラスの環境を保持し、<code>S(cx<sub>1</sub>)</code>も保持する。
+
+型`∀ &umacr;. cx  ⇒  t`の値は内容`cx[&smacr;/&umacr;]`を保持する場合に限り型`&smacr;`でインスタンス化されるかもしれない。例えば、関数`double`について考えてみる。
+
+<pre><code>double x = x + x</code></pre>
+
+`double`の多くの一般的な型は`∀ a`である。`Num   a⇒  a  →  a`。`double`は(`Int`にインスタンス化する)型`Int`の値に提供されるかもしれない。`Num Int`が保持するゆえに、`Int`はクラス`Num`のインスタンスである。しかしながら、`double`は型`Char`の値に通常提供されないかもしれない。なぜなら、`Char`は通常、クラス`Num`のインスタンスではないからだ。ユーザーはインスタンスのような宣言を選択するかもしれない。その場合、`double`は実際に`Char`へ提供されるかもしれない。
+
 ## ユーザー定義のデータ型
 
+このセクションでは、代数のデータ型(`data`宣言)や新たに命名するデータ型(`newtype`宣言)、型の同意語(`type`宣言)を説明する。これらの宣言はモジュールの最上位で現れるかもしれない。
+
 ### 代数データ型宣言
+
+<pre>
+
+topdecl     →   <tt>data</tt> [context =>] simpletype [= constrs] [deriving]
+
+simpletype  →   tycon tyvar<sub>1</sub> … tyvark                               (k ≥ 0)
+
+constrs     →   constr<sub>1</sub> | … | constrn                               (n ≥ 1)
+constr      →   con [<tt>!</tt>] atype1 … [<tt>!</tt>] atype<sub>k</sub>                         (arity con  =  k, k ≥ 0)
+            |   (btype | <tt>!</tt> atype) conop (btype | <tt>!</tt> atype)           (infix conop)
+            |   con { fielddecl<sub>1</sub> , … , fielddecl<sub>n</sub> }                 (n ≥ 0)
+fielddecl   →   vars :: (type | <tt>!</tt> atype)
+
+deriving    →   <tt>deriving</tt> (dclass | (dclass<sub>1</sub>, … , dclass<sub>n</sub>))          (n ≥ 0)
+dclass      →   qtycls
+
+</pre>
+
+**constr**の優先順位は式と同じである。通常のコンストラクタの適用が中置コンストラクタの適用より高い優先順位を持つ(そのため`a : Foo a`は`a : (Foo a)`のように解析する)。
+
+代数的なデータ型の宣言は、`cx`が内容である形式<code>data cs => T u<sub>1</sub> ... u<sub>k</sub> = K<sub>1</sub> t<sub>1 1</sub> ... t<sub>1k<sub>1</sub></sub> | ... | K<sub>n</sub> t<sub>n1</sub> ... t<sub>nk<sub>n</sub></sub></code>を持つ。この宣言は一つ以上の構成要素<code>データコンストラクタ　K<sub>1</sub>, …, K<sub>n</sub></code>を使う新しい`型コンストラクタT`を紹介する。このリポートで、修飾されていない用語"コンストラクタ"は"データコンストラクタ"を常に意味する。
+
+データコンストラクタの型は<code>K<sub>i</sub>  ::  ∀ u<sub>1</sub> … u<sub>k</sub>.  cx<sub>i</sub>  ⇒  t<sub>i1</sub>  →  ⋅⋅⋅  →  t<sub>ik<sub>i</sub></sub>  →  (T u<sub>1</sub> … u<sub>k</sub>)</code>によって与えられる。<code>cx<sub>i</sub></code>は型`t<sub>i1</sub>, …, t<sub>ik<sub>i</sub></sub>`にこれらの型変数の開放のみを強制する`cx`の巨大な部分集合である。型変数<code>u<sub>1</sub></code>から<code>u<sub>k</sub></code>ははっきりとしなければならず、`cx`と<code>t<sub>ij</sub></code>に現れるかもしれない。`cx`またはその右手側に現れる他の型変数への静的なエラーである。新しい型定数`T`は<code>κ<sub>i</sub></code>形式<code>κ<sub>1</sub> →… → κ<sub>k</sub> →∗</code>種類を持つ。引数の変数<code>u<sub>i</sub></code>の種類<code>κ<sub>i</sub></code>はセクション[4.6]("#4.6")で説明される種類推論によって決定される。これは`T`が0からk引数のどこでも型式に使われるかもしれないということを意味する。
+
+例えば、以下の宣言は
+
+<pre><code>data Eq a => Set a = NilSet | ConsSet a (Set a)</code></pre>
+
+種類`∗→∗`の型コンストラクタ`Set`を導入し、型ありのコンストラクタ`NilSet`と`ConsSet`は以下のものである。
+
+<pre><code>NilSet  ::  ∀ a.  Set  a
+ConsSet ::  ∀ a.  Eq   a  ⇒  a  →  Set   a  →  Set   a
+</code></pre>
+
+与えられた例では、`ConsSet`にオーバーロードされた型は`ConsSet`は型がクラス`Eq`のインスタンスである値に提供されることのみ可能であることを保証する。`ConsSet`に対照したパターンマッチングは`Eq a`拘束にも発生する。例えば、
+
+<pre><code>f (ConsSet a s) = a</code></pre>
+関数`f`は推論された型`Eq a => Set a -> a`を持つ。`data`宣言の内容は他に何も効果を持たない。
+
+データ型が定義される中でモジュールの外側のデータ型のコンストラクタ(例：データ型の”抽象度”)の可視性はセクション[5.8]("./5-modules.md")で説明されるエクスポートリスト内のデータ型の名前の形式によって制御される。
+
+`data`宣言の内容は他に何も効果を持たない付加的な`deriving`の部分は`派生されたインスタンス`と関係しており、セクション[4.3.3]("#4.3.3")で説明される。
+
+<strong class="strong-point">ラベル付けされたフィールド</strong> 引数`k`個とるデータコンストラクタは`k`要素のオブジェクトを作成する。これらの要素は通常、式またはパターンの中のコンストラクタへの引数のように位置付けして呼び出される。巨大なデータ型のために、データオブジェクトの要素に**フィールドラベル**を割り当てることは便利である。これはコンストラクタ内でその位置を独立して参照されるために明記するフィールドを許す。
+
+`data`宣言のコンストラクタ定義はラベルを記録構文`(C { ... })`を使用するコンストラクタのフィールドに割り当てるかもしれない。フィールドラベルを使用するコンストラクタはそれらなしにコンストラクタを自由に組み合わされるかもしれない。フィールドラベルに関係するコンストラクタは通常のコンストラクタのようにまだ使われるかもしれない。ラベルを使う機能は基礎となる位置上のコンストラクタを使う操作のための単純な簡略記法である。その位置上のコンストラクタの引数はラベル付されたフィールドのように同じ順序で発生する。例えば、以下の宣言は
+
+<pre><code>data C = F { f1,f2 :: Int, f3 :: Bool }</code></pre>
+
+下のように生成されるものと同一な型とコンストラクタを定義する。
+
+<pre><code>data C = F Int Int Bool </code></pre>
+
+フィールドラベルを使用する操作はセクション[3.15]("./3-expressions.md")で説明される。`data`宣言はフィールドの型付けが型の同意語の拡張語の全てのケースと同じであるのと同様に複数のコンストラクタで同じフィードラベルを使うかもしれない。ラベルはスコープ内の型以上で共有されることはできない。フィールド名は通常の変数とクラスメソッドを使う最上位の名前空間を共有し、スコープ内の他の最上位の名前と衝突してはいけない。
+
+パターン`F {}`はコンストラクタ`F`が記録構文を使って宣言されているかどうかにかかわらず`F`によって構築された任意の値と一致する。
+
+<strong class="strong-point">厳格なフラグ</strong> データコンストラクタが適用されるたびに、代数的データ型の宣言に対応する型が感嘆符`!`で表される厳格なフラグを持つ場合に限り、コンストラクタの各引数は評価される。語彙的に、`"!"`は**reservedop**ではない普通のvarsymである。それはデータ宣言の引数の型の内容にのみ特別な意味を持つ。
+
+<div class="column">
+
+**変換** 各<code>s<sub>i</sub></code>が形式<code>!t<sub>i</sub></code>か<code>t<sub>i</sub></code>のいずれかである形式<code><tt>data</tt> cx => T u<sub>1</sub> … u<sub>k</sub> = … | K s<sub>1</sub> … s<sub>n</sub> | …</code>の宣言は<code>(\ x<sub>1</sub> … x<sub>n</sub> -> ( ((K op<sub>1</sub> x<sub>1</sub>) op<sub>2</sub> x<sub>2</sub>) … ) op<sub>n</sub> x<sub>n</sub>)</code>という式の中の`K`の全ての発生を置き換える。<code>op<sub>i</sub></code>はもし<code>s<sub>i</sub></code>が形式<code>t<sub>i</sub></code>なら、厳格ではない適用関数`$`であり、<code>op<sub>i</sub></code>はもし<code>s<sub>i</sub></code>が形式<code>！ t<sub>i</sub></code>であるなら厳格に起用する関数`$!`である(セクション[6.2]("./6-predefined-types-and-classes.md")を参照)。
+</div>
 
 ### 型同意語の宣言
 
