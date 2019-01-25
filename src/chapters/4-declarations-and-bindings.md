@@ -258,6 +258,35 @@ ConsSet ::  ∀ a.  Eq   a  ⇒  a  →  Set   a  →  Set   a
 ### 型同意語の宣言
 
 ### データ型のリネイム
+<pre>
+
+topdecl    → 	type simpletype = type
+simpletype → 	tycon tyvar<sub>1</sub> … tyvark    (k ≥ 0)
+
+</pre>
+
+型同意語の宣言は古い型と等しい新しい型を生成する。それは新しいコンストラクタ`T`を生成する形式<code><tt>type</tt> T u<sub>1</sub> ... u<sub>k</sub> = t</code>を持つ。型<code>(T t<sub>1</sub> …t<sub>k</sub>)</code>は型<code>t[t<sub>1</sub>∕u<sub>1</sub>, …, t<sub>k</sub>∕u<sub>k</sub>]</code>に等しい。型変数<code>u<sub>1</sub></code>から<code>u<sub>k</sub></code>は明確でなければならず、`t`上のみにスコープされる。`t`の中に他の型変数が現れたら静的エラーになる。新しい型コンストラクタ`T`の種類は引数<code>u<sub>i</sub></code>の種類<code>κ<sub>i</sub></code>は形式<code>κ<sub>1</sub> →… → κ<sub>k</sub> → κ</code>であり、`t`の右側の`κ`はセクション[4.6]("#4.6")で説明される種類の推論によって決定される。例えば、次の定義はリスト型のコンストラクタを書く方法の代替案を提供することに使用されることができる。
+
+<pre><code>type List = []</code></pre>
+
+型同意語の宣言によって生成された型コンストラクタのシンボル`T`は一部のみを提供されることはできない。十分な数の引数なしに`T`を使うことは静的エラーになる。
+
+再帰的と相互再帰的なデータ型は許されるのだが、**代数的データ型** が入り込む限り、型同意語ではそうではない。例えば、
+
+<pre><code>type Rec a   =  [Circ a]  
+data Circ a  =  Tag [Rec a]
+</code></pre>
+
+は許されるが、それに反して、
+
+<pre><code>type Rec a   =  [Circ a]        -- invalid  
+type Circ a  =  [Rec a]         -- invalid
+</code></pre>
+
+はそうではない。似たもので、<code>type Rec a = [Rec a]</code>も許されない。
+
+型同意語はより読みやすい型著名を作る便利な、しかし厳密な構文的で仕組みである。同義語とその定義は`instance`宣言ののインスタンス型を除いて、完全に置き換えできる(セクション[4.3.2]("./#4.3.2")を参照)。
+
 
 ## 型クラスとオーバーロード
 
