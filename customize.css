@@ -32,3 +32,8 @@ tt tt {
 pre {
   font-size: 12px;
 }
+
+/*文字の上に横線をつけるスタイル*/
+.overline {
+  text-decoration: overline;
+}
