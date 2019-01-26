@@ -4,45 +4,44 @@
 
 この章では、Haskellの宣言の構文と簡略した意味論を説明する。
 
-<pre>
-module 	→ 	<tt>module</tt> modid [exports] <tt>where</tt> body
-	| 	body
-body 	→ 	{ impdecls ; topdecls }
-	| 	{ impdecls }
-	| 	{ topdecls }
+|||||
+|---|---|---|---|
+|module| → |<tt>module</tt> modid [exports] <tt>where</tt> body| |
+|      |&#124;|body| |
+|  body| → |{ impdecls ; topdecls }| |
+|      |&#124;|{ impdecls }| |
+|      |&#124;|{ topdecls }| |
+|||||
+|topdecls| → |topdecl<sub>1</sub> ; … ; topdecl<sub>n</sub>|(n ≥ 1)|
+| topdecl| → |<tt>type</tt> simpletype = type| |
+|        |&#124;|<tt>data</tt> [context =>] simpletype [= constrs] [deriving]| |
+|        |&#124;|<tt>newtype</tt> [context =>] simpletype = newconstr [deriving]| |
+|        |&#124;|<tt>class</tt> [scontext =>] tycls tyvar [<tt>where</tt> cdecls]| |
+|        |&#124;|<tt>instance</tt> [scontext =>] qtycls inst [<tt>where</tt> idecls]| |
+|        |&#124;|<tt>default</tt> (type<sub>1</sub> , … , type<sub>n</sub>)|(n ≥ 0)|
+|        |&#124;|<tt>foreign</tt> fdecl||
+|        |&#124;|decl| |
+|||||
+|  decls| → |{ decl<sub>1</sub> ; … ; decl<sub>n</sub> }|(n ≥ 0)|
+|   decl| → |gendecl| |
+|       |&#124;|(funlhs &#124; pat) rhs| |
+|||||
+| cdecls| → |{ cdecl<sub>1</sub> ; … ; cdecl<sub>n</sub> }|(n ≥ 0)|
+|  cdecl| → |gendecl||
+|       |&#124;|(funlhs | var) rhs||
+|||||
+| idecls| → |{ idecl<sub>1</sub> ; … ; idecl<sub>n</sub> }|(n ≥ 0)|
+|  idecl| → |(funlhs &#124; var) rhs||
+|       |&#124;|  |(empty)|
+|gendecl|→|vars :: [context <tt>=></tt>] type|(type signature)|
+|       |&#124;|fixity [integer] ops|(fixity declaration)|
+|       |&#124;|  |(empty declaration)|
+|||||
+|    ops|→|op<sub>1</sub> , … , op<sub>n</sub>|(n ≥ 1)|
+|   vars|→|var<sub>1</sub> , … , var<sub>n</sub>|(n ≥ 1)|
+| fixity|→|<tt>infixl</tt> &#124; <tt>infixr</tt> &#124; <tt>infix</tt>| |
 
-topdecls→ 	topdecl<sub>1</sub> ; … ; topdecl<sub>n</sub> 	    (n ≥ 1)
-topdecl → 	<tt>type</tt> simpletype = type
-	| 	<tt>data</tt> [context =>] simpletype [= constrs] [deriving]
-	| 	<tt>newtype</tt> [context =>] simpletype = newconstr [deriving]
-	| 	<tt>class</tt> [scontext =>] tycls tyvar [<tt>where</tt> cdecls]
-	| 	<tt>instance</tt> [scontext =>] qtycls inst [<tt>where</tt> idecls]
-	| 	<tt>default</tt> (type<sub>1</sub> , … , type<sub>n</sub>) 	      (n ≥ 0)
-	| 	<tt>foreign</tt> fdecl
-	| 	decl
-
-decls 	→ 	{ decl<sub>1</sub> ; … ; decl<sub>n</sub> } 	    (n ≥ 0)
-decl 	→ 	gendecl
-	| 	(funlhs | pat) rhs
-
-cdecls 	→ 	{ cdecl<sub>1</sub> ; … ; cdecl<sub>n</sub> } 	    (n ≥ 0)
-cdecl 	→ 	gendecl
-	| 	(funlhs | var) rhs
-
-idecls 	→ 	{ idecl<sub>1</sub> ; … ; idecl<sub>n</sub> } 	    (n ≥ 0)
-idecl 	→ 	(funlhs | var) rhs
-	| 		    (empty)
-
-gendecl 	→ 	vars :: [context <tt>=></tt>] type 	    (type signature)
-	| 	fixity [integer] ops 	    (fixity declaration)
-	| 		    (empty declaration)
-
-ops 	→ 	op<sub>1</sub> , … , op<sub>n</sub> 	    (n ≥ 1)
-vars 	→ 	var<sub>1</sub> , … , var<sub>n</sub> 	    (n ≥ 1)
-fixity 	→ 	<tt>infixl</tt> | <tt>infixr</tt> | <tt>infix</tt>
-</pre>
-
-**topdecls**構文的なカテゴリの宣言はHaskellモジュール([5章]("./5-modules.md"))の最上位のみ許す一方で**decls**は最上位またはネストされたスコープ(例えば、`let`か`where`の内で`topdecls`を構築する)のいずれかで使われるかもしれない。
+**topdecls**構文的なカテゴリの宣言はHaskellモジュール([5章]("./5-modules.md"))の最上位のみ許す一方で**decls**は最上位またはネストされたスコープのいずれかで使われるかもしれない(例えば、`let`か`where`の内で`topdecls`を構築する)。
 
 説明のため、`type`と`newtype`、`data`宣言からなるユーザー定義のデータ型(セクション[4.2](”#4.2”))と`class`と`instance`、`default`宣言からなる型クラスとオーバーロード(セクション[4.3]("#4.3"))、値束縛と型シグネチャ、固定の宣言からなるネストされた宣言(セクション[4.4]("#4.4"))の3つのグループに宣言を分割する。
 
@@ -89,23 +88,23 @@ Haskellは静的型意味論[4.6]("#4.6")を提供するために伝統的なHin
 
 ### 型の構文
 
-<pre>
-type 	→ 	btype [-> type]         (function type)
-
-btype 	→ 	[btype] atype           (type application)
-
-atype 	→ 	gtycon
-	| 	tyvar
-	| 	( type1 , … , typek )   (tuple type, k ≥ 2)
-	| 	[ type ] 	        (list type)
-	| 	( type ) 	        (parenthesised constructor)
-
-gtycon 	→ 	qtycon
-	| 	() 	                (unit type)
-	| 	[] 	                (list constructor)
-	| 	(->) 	                (function constructor)
-	| 	(,{,}) 	                (tupling constructors)
-</pre>
+|||||
+|---|---|---|---|
+|type| → |btype [-> type]|(function type)|
+|||||
+|btype|→|[btype] atype|(type application)|
+|||||
+|atype|→|gtycon| |
+|  |&#124;|tyvar| |
+|  |&#124;|( type<sub>1</sub> , … , type<sub>k</sub> )|(tuple type, k ≥ 2)|
+|  |&#124;|[ type ]|(list type)|
+|  |&#124;|( type )|(parenthesised constructor)|
+|||||
+|gtycon|→|qtycon| |
+|  |&#124;|()|(unit type)|
+|  |&#124;|[]|(list constructor)|
+|  |&#124;|(->)|(function constructor)|
+|  |&#124;|(,{,})|(tupling constructors)|
 
 Haskellの型式のための構文は上に与えられる。データ値と同じようにデータコンストラクタを使って作られる、型値は`型コンストラクタ`から作られる。データコンストラクタと同様に、型コンストラクタの名前は大文字で始められる。データコンストラクタとは違い、中置型コンストラクタは許されない(`(->)以外`)。
 
@@ -146,15 +145,15 @@ Haskellの型式のための構文は上に与えられる。データ値と同�
 
 ### クラス表明と文脈の構文
 
-<pre>
-context → 	class
-	| 	( class1 , … , classn ) 	    (n ≥ 0)
-class 	→ 	qtycls tyvar
-	| 	qtycls ( tyvar atype1 … atypen )    (n ≥ 1)
-qtycls 	→ 	[ modid . ] tycls
-tycls 	→ 	conid
-tyvar 	→ 	varid
-</pre>
+|||||
+|--|--|--|--|
+|context| → |class| |
+|       | &#124; |( class<sub>1</sub> , … , class<sub>n</sub> )|(n ≥ 0)|
+| class | → |qtycls tyvar| |
+|       | &#124; |qtycls ( tyvar atype<sub>1</sub> … atype<sub>n</sub> )|(n ≥ 1)|
+| qtycls| → |[ modid . ] tycls| |
+|  tycls| → |conid| |
+|  tyvar| → |varid| |
 
 **クラス表明** は形式**qtycls tyvar**を持ち、クラス`qtycls`の型**tyvar**のメンバを示す。クラス識別子は大文字で始める。`内容`は0個以上のクラス表明からなり、<code>( C<sub>1</sub>, …, C<sub>n</sub></code>がクラス識別子である一般的な形式<code>( C<sub>1</sub> u<sub>1</sub>, …, C<sub>n</sub> u<sub>n</sub> )</code>を持つ。<code>( u<sub>1</sub>, …, u<sub>n</sub></code>の各々は変数型か一つ以上の型への変数型の適応のいずれかである。括弧の外側は`n = 1`のとき省かれるかもしれない。一般的に、内容を示すために`cx`を使用し、`cx => t`を内容`cx`によって型制限された型`t`を示すために書く。内容`cx`は`t`によって参照される変数型のみを含まなければいけない。利便性のために、内容`cx`が空であっても、具体的な構文は`=>`を含まないケースであるが、`cx => t`を書く。
 
@@ -192,22 +191,20 @@ Haskellの型システムは`型`をプログラム内の各式に帰する。�
 
 ### 代数データ型宣言
 
-<pre>
-
-topdecl     →   <tt>data</tt> [context =>] simpletype [= constrs] [deriving]
-
-simpletype  →   tycon tyvar<sub>1</sub> … tyvark                               (k ≥ 0)
-
-constrs     →   constr<sub>1</sub> | … | constrn                               (n ≥ 1)
-constr      →   con [<tt>!</tt>] atype1 … [<tt>!</tt>] atype<sub>k</sub>                         (arity con  =  k, k ≥ 0)
-            |   (btype | <tt>!</tt> atype) conop (btype | <tt>!</tt> atype)           (infix conop)
-            |   con { fielddecl<sub>1</sub> , … , fielddecl<sub>n</sub> }                 (n ≥ 0)
-fielddecl   →   vars :: (type | <tt>!</tt> atype)
-
-deriving    →   <tt>deriving</tt> (dclass | (dclass<sub>1</sub>, … , dclass<sub>n</sub>))          (n ≥ 0)
-dclass      →   qtycls
-
-</pre>
+|||||
+|---|---|---|---|
+|topdecl|→|<tt>data</tt> [context =>] simpletype [= constrs] [deriving]| |
+|||||
+|simpletype|→|tycon tyvar<sub>1</sub> … tyvar<sub>k</sub>|(k ≥ 0)|
+|||||
+|constrs|→|constr<sub>1</sub> &#124; … &#124; constr<sub>n</sub>|(n ≥ 1)|
+| constr|→|con [<tt>!</tt>] atype<sub>1</sub> … [<tt>!</tt>] atype<sub>k</sub>|(arity con  =  k, k ≥ 0)|
+|  |&#124;|(btype &#124; <tt>!</tt> atype) conop (btype &#124; <tt>!</tt> atype)|(infix conop)|
+|  |&#124;|con { fielddecl<sub>1</sub> , … , fielddecl<sub>n</sub> }|(n ≥ 0)|
+|fielddecl|→|vars :: (type &#124; <tt>!</tt> atype)| |
+|||||
+| deriving|→|<tt>deriving</tt> (dclass &#124; (dclass<sub>1</sub>, … , dclass<sub>n</sub>))|(n ≥ 0)|
+|dclass|→|qtycls| |
 
 **constr**の優先順位は式と同じである。通常のコンストラクタの適用が中置コンストラクタの適用より高い優先順位を持つ(そのため`a : Foo a`は`a : (Foo a)`のように解析する)。
 
@@ -257,12 +254,10 @@ ConsSet ::  ∀ a.  Eq   a  ⇒  a  →  Set   a  →  Set   a
 
 ### 型シノニムの宣言
 
-<pre>
-
-topdecl    → 	type simpletype = type
-simpletype → 	tycon tyvar<sub>1</sub> … tyvark    (k ≥ 0)
-
-</pre>
+|||||
+|---|---|---|---|
+|   topdecl|→|type simpletype = type| |
+|simpletype|→|tycon tyvar<sub>1</sub> … tyvar<sub>k</sub>|(k ≥ 0)|
 
 型シノニムの宣言は古い型と等しい新しい型を生成する。それは新しいコンストラクタ`T`を生成する形式<code><tt>type</tt> T u<sub>1</sub> ... u<sub>k</sub> = t</code>を持つ。型<code>(T t<sub>1</sub> …t<sub>k</sub>)</code>は型<code>t[t<sub>1</sub>∕u<sub>1</sub>, …, t<sub>k</sub>∕u<sub>k</sub>]</code>に等しい。型変数<code>u<sub>1</sub></code>から<code>u<sub>k</sub></code>は明確でなければならず、`t`上のみにスコープされる。`t`の中に他の型変数が現れたら静的エラーになる。新しい型コンストラクタ`T`の種類は引数<code>u<sub>i</sub></code>の種類<code>κ<sub>i</sub></code>は形式<code>κ<sub>1</sub> →… → κ<sub>k</sub> → κ</code>であり、`t`の右側の`κ`はセクション[4.6]("#4.6")で説明される種類の推論によって決定される。例えば、次の定義はリスト型のコンストラクタを書く方法の代替案を提供することに使用されることができる。
 
@@ -288,12 +283,12 @@ type Circ a  =  [Rec a]         -- invalid
 
 ### データ型のリネーム
 
-<pre>
-topdecl    → newtype [context =>] simpletype = newconstr [deriving]
-newconstr  → con atype
-           | con { var :: type }
-simpletype → tycon tyvar<sub>1</sub> … tyvar<sub>k</sub>                                  (k ≥ 0)
-</pre>
+|||||
+|---|---|---|---|
+| topdecl|→|<tt>newtype</tt> [context =>] simpletype = newconstr [deriving]| |
+| newconstr|→|con atype| |
+|  |&#124;|con { var :: type }| |
+|simpletype|→|tycon tyvar<sub>1</sub> … tyvar<sub>k</sub>|(k ≥ 0)|
 
 形式<code>newtype cs => T u<sub>1</sub> ... u<sub>k</sub> = N t</code>の宣言は表記法が存在している型と同じである新しい型を生成する。型<code>(T u<sub>1</sub>… u<sub>k</sub>)</code>はデータ型`t`を改名する。それは型シノニムからオリジナルな型からまたはその型へ明示的に強制されなければならない厳密な型を作成することとは異なる。また型シノニムと異なり、`newtype`は再帰的な方を定義することに使用されるかもしれない。式の中のコンストラクタ`N`は型`t`から型<code>(T u<sub>1</sub> … u<sub>k</sub>)</code>へ値を強制する。パターンの中の`N`は型<code>(T u<sub>1</sub> … u<sub>k</sub>)</code>から型`t`へ値を強制する。これらの強制は実行時のオーバーヘッドなしに実装されるかもしれない。`newtype`はオブジェクトの根底にある表現を変更しない。
 
@@ -330,15 +325,15 @@ unAge :: Age -> Int
 
 ### クラス宣言
 
-<pre>
-topdecl     → class [scontext =>] tycls tyvar [where cdecls]
-scontext    → simpleclass
-            | ( simpleclass1 , … , simpleclassn ) 	     (n ≥ 0)
-simpleclass → qtycls tyvar
-cdecls      → { cdecl1 ; … ; cdecln } 	                     (n ≥ 0)
-cdecl       → gendecl
-            | (funlhs | var) rhs
-</pre>
+|||||
+|---|---|---|---|
+| topdecl|→|<tt>class</tt> [scontext =>] tycls tyvar [<tt>where</tt> cdecls]| |
+|scontext|→|simpleclass| |
+| |&#124;|( simpleclass<sub>1</sub> , … , simpleclass<sub>n</sub> )|(n ≥ 0)|
+|simpleclass|→|qtycls tyvar| |
+|  cdecls|→|{ cdecl<sub>1</sub> ; … ; cdecl<sub>n</sub> }|(n ≥ 0)|
+|   cdecl|→|gendecl| |
+| |&#124;|(funlhs &#124; var) rhs||
 
 **クラス宣言**は新しいクラスとその中のオペレーション(**クラスメソッド**)を生成する。クラス宣言は次の一般的な形式を持つ。
 
