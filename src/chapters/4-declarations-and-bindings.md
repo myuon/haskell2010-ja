@@ -331,6 +331,51 @@ unAge :: Age -> Int
 
 ### クラス宣言
 
+<pre>
+topdecl     → class [scontext =>] tycls tyvar [where cdecls]
+scontext    → simpleclass
+            | ( simpleclass1 , … , simpleclassn ) 	     (n ≥ 0)
+simpleclass → qtycls tyvar
+cdecls      → { cdecl1 ; … ; cdecln } 	                     (n ≥ 0)
+cdecl       → gendecl
+            | (funlhs | var) rhs
+</pre>
+
+**クラス宣言**は新しいクラスとその中のオペレーション(**クラスメソッド**)を生成する。クラス宣言は次の一般的な形式を持つ。
+
+<pre><code><tt>class</tt> cx => C u <tt>where</tt> cdecls
+</code></pre>
+
+これは新しいクラスの名前`C`を生成し、型変数`u`はそのクラスの本体のクラスメソッドシグネチャ上でのみスコープされる。内容`cx`は下で説明する`C`のスーパークラスを明記する。`cx`の中で参照されるであろう型変数のみが`u`である。
+
+スーパークラスの関係は循環してはいけない。例)指示された非環式のグラフを構成しなければいけない。
+
+`class`宣言の**cdecls**部分は3つの宣言の種類を含む。
+- クラス宣言は新しい<code>クラスメソッドv<sub>i</sub></code>生成し、スコープは`class`宣言の外側に展開する。
+    クラス宣言のクラスメソッドは`cdecls`内の明示的な型シグネチャ<code>v<sub>i</sub> :: cx<sub>i</sub> => t<sub>i</sub></code>にある<code>v<sub>i</sub></code>そのものである。クラスメソッドは変数束縛とフィールド名と一緒に最上位の名前空間を共有する。それらはスコープの他の最上位の束縛と衝突してはならない。そのため、クラスメソッドは最上位の定義やフィールド名、他のクラスメソッドのように同じ名前を持つことはできない。
+    <br><br>
+		最上位のクラスメソッド<code>v<sub>i</sub></code>の型は<code>v<sub>i</sub> :: ∀u,<span class="overline">w</span>.</code>である。<code>(Cu,cx<sub>i</sub>) ⇒ t<sub>i</sub></code>(訳注:誤字なのかピリオドがなかった)。<code>t<sub>i</sub></code>は`u`を言及しなければいけない。それは<code>u</code>より型変数<code><span class="overline">w</span></code>を言及するかもしれない。その場合、<code>v<sub>i</sub></code>の型は`u`と<code><span class="overline">w</span></code>の両方にポリモフィックである。<code>cx<sub>i</sub></code>は<code><span class="overline">w</span></code>のみ束縛するだろう。特に、<code>cx<sub>i</sub></code>は`u`を束縛しないだろう。例えば、
+		<pre><code>
+<tt>class</tt> Foo a <tt>where</tt>
+  op :: Num b => a -> b -> a
+		</code></pre>
+		ここでの`op`型は`∀ a, b`である。`(Foo a, Num b)   ⇒  a  →  b  →  a. `
+- **cdecls**は(他の値ではなく)クラスメソッドのいずれかへの**fixity declarations**も含めるだろう。しかしながら、クラスメソッドは最上位の値を宣言することから、クラスメソッドのためのfixity declarationsはクラス宣言の外側、或いは最上位を表現するだろう。
+- 最後に、**cdecls**は<code>v<sub>i</sub></code>のいずれかの**デフォルトクラスメソッド**を含むだろう(セクション[4.3.2]("#4.3.2"))。デフォルトメソッドの宣言は通常、左手側が変数か関数定義のみであろうことを除いて値の定義である。例えば、
+    <pre><code>class Foo a where  
+  op1, op2 :: a -> a  
+  (op1, op2) = ...
+		</code></pre>
+		は、許可されない。デフォルト宣言の左手側がパターンだからだ。
+
+これらのケース以外に、`cdecls`内の宣言は許されない。
+
+`where`部を伴わない`class`宣言はオリジナルの全てのクラスメソッドを継承する巨大なクラスのコレクションを合成することに便利であろう。例えば、
+<pre><code>class  (Read a, Show a) => Textual a</code></pre>
+
+このような場合、型が全スーパークラスのインスタンスであるなら、たとえサブクラスが直ちにクラスメソッドを持たなくても、
+自動的にサブクラスのインスタンスではない。｀instance｀宣言は`where`部を伴わず明示的に与えられなければならない。
+
 ### インスタンス宣言
 
 ### 派生インスタンス
