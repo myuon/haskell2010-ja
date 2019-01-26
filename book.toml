@@ -3,3 +3,6 @@ authors = ["myuon"]
 multilingual = false
 src = "src"
 title = "Haskell2010 Language Report 日本語訳"
+
+[output.html]
+additional-css = ["customize.css"]
