@@ -175,12 +175,12 @@ Haskellの型システムは`型`をプログラム内の各式に帰する。�
 
 型は一般化の先行順(下に明記されている)によって関連する。多くの一般的な型は、一般化の先行順によって同等まで導かれ、(与えられた環境の)個々の式は**主要な型**と呼ばれるものに割り当てられる。Haskellの拡張されたHindley-Milner型システムは全式の主要な型を推論でき、オーバーロードされたクラスメソッドの妥当な使用を含んでいる(セクション[4.3.4]("#4.3.4")で説明するように、確実に曖昧なオーバーロードが起こり得るのだが)。したがって、明示的な型付け(型署名と呼ぶ)は通常、オプションである(セクション[3.16]("./3-expressions,md")と[4.4.1]("#4.4.1")を参照)。
 
-型<code>∀ &umacr;. cx<sub>1</sub>  ⇒  t<sub>1</sub></code>は領域が以下のような`u`の代用`S`がある場合に限り、型<code>∀ &wmacr;. cx<sub>2</sub>  ⇒  t<sub>2</sub></code>**より一般的**である。
+型<code>∀ <span class="overline">u</span>;. cx<sub>1</sub>  ⇒  t<sub>1</sub></code>は領域が以下のような`u`の代用`S`がある場合に限り、型<code>∀ <span class="overline">w</span>;. cx<sub>2</sub>  ⇒  t<sub>2</sub></code>**より一般的**である。
 
 - <code>t<sub>2</sub></code>は<code>S(t<sub>1</sub>)</code>と同じである。
 - <code>cx<sub>2</sub></code>はそのクラスの環境を保持し、<code>S(cx<sub>1</sub>)</code>も保持する。
 
-型`∀ &umacr;. cx  ⇒  t`の値は内容`cx[&smacr;/&umacr;]`を保持する場合に限り型`&smacr;`でインスタンス化されるかもしれない。例えば、関数`double`について考えてみる。
+型<code>∀ <span class="overline">u</span>. cx  ⇒  t</code>の値は内容<code>cx[<span class="overline">s</span>;/<span class="overline">u</span>]</code>を保持する場合に限り型<code><span class="overline">s</span></code>でインスタンス化されるかもしれない。例えば、関数`double`について考えてみる。
 
 <pre><code>double x = x + x</code></pre>
 
@@ -257,7 +257,6 @@ ConsSet ::  ∀ a.  Eq   a  ⇒  a  →  Set   a  →  Set   a
 
 ### 型同意語の宣言
 
-### データ型のリネイム
 <pre>
 
 topdecl    → 	type simpletype = type
