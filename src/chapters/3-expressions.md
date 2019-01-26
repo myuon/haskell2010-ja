@@ -727,8 +727,193 @@ f ~(x,y,z) [a] | (a == y) = 1
 
 ### パターンマッチングの正式な意味論
 
-全てのパターンマッチングの意味論は<tt>case</tt>式が与えた<tt>case</tt>式を構築することに関係する識別子によって定義されたもの以外を構築する。<tt>case</tt>式の意味論自体は図[3.1]("#3.1")、[3.3](#3.3)の、一連の識別子のように順番に与えられる。どんな実装でもこれらの識別子を保持するために振る舞わなければいけず、かなり非効率的なコードを生成することから、それはそれらを直接使用することは期待されない。
+全てのパターンマッチングの意味論は<tt>case</tt>式が与えた<tt>case</tt>式を構築することに関係する識別子によって定義されたもの以外を構築する。<tt>case</tt>式の意味論自体は図[3.1]("#figure-3.1")、[3.3](#figure-3.3)の、一連の識別子のように順番に与えられる。どんな実装でもこれらの識別子を保持するために振る舞わなければならず、かなり非効率的なコードを生成することから、それはそれらを直接使用することは期待されない。
 
-<pre class="fbox"><code>
+<a name="figure-3.1"></a>
+<table class="fbox">
+<tbody>
+ <tr>
+  <td class="code-number">(a)</td>
+  <td><pre>
+<tt>case</tt> e <tt>of</tt> { alts } = (\v <tt>-></tt> <tt>case</tt> v <tt>of</tt> { alts }) e
+<tt>where</tt> v <tt>is</tt> a <tt>new</tt> <tt>variable</tt> </pre></td>
+ </tr>
+ <tr>
+  <td class="code-number">(b)</td>
+  <td><pre>
+<tt>case</tt>  v <tt>of</tt> {  p <sub>1</sub>  match<sub>1</sub>;  … ; p<sub>n</sub>  match<sub>n</sub> }
+=  <tt>case</tt> v <tt>of</tt> { p<sub>1</sub>  match<sub>1</sub> ;
+               _  -> … <tt>case</tt> v <tt>of</tt> {
+                         p<sub>n</sub>  match<sub>n</sub> ;
+                         _  -> <tt>error</tt> "No match" }…}
+<tt>where</tt> <tt>each</tt> match<sub>i</sub> <tt>has the form:</tt>
+ | gs<sub>i,1</sub>  -> e<sub>i,1</sub> ; … ; | gs<sub>i,m<sub>i</sub></sub> -> e<sub>i,m<sub>i</sub></sub> <tt>where</tt> { decls<sub>i</sub> } </pre></td>
+ </tr>
+ <tr>
+  <td class="code-number">(c)</td>
+  <td><pre>
+<tt>case</tt> v <tt>of</tt> { p | gs<sub>1</sub> -> e<sub>1</sub> ; …
+             | gs<sub>n</sub> -> e<sub>n</sub> <tt>where</tt> { decls }
+            _     -> e′ }
+= <tt>case</tt> e′ <tt>of</tt> { y ->
+   <tt>case</tt> v <tt>of</tt> {
+     p -> <tt>let</tt> { decls } <tt>in</tt>
+          <tt>case</tt> () <tt>of</tt> {
+            () | gs<sub>1</sub> -> e<sub>1</sub>;
+            _ -> … <tt>case</tt> () <tt>of</tt> {
+                       () | gs<sub>n</sub> -> e<sub>n</sub>;
+                       _  -> y } … }
+     _ -> y }}
+<tt>where</tt> y <tt>is a new variable</tt></pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(d)</td>
+ <td><pre>
+<tt>case</tt> v <tt>of</tt> { ~p -> e; _ -> e′ }
+= (\x<sub>1</sub> … x<sub>n</sub> -> e ) (<tt>case</tt> v <tt>of</tt> { p-> x<sub>1</sub> })… (<tt>case</tt> v <tt>of</tt> { p -> x<sub>n</sub>})
+<tt>where</tt> x<sub>1</sub>,…,x<sub>n</sub> <tt>are all the variables in</tt> p</pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(e)</td>
+ <td><pre>
+<tt>case</tt> v <tt>of</tt> { x<tt>@</tt>p -> e; _ -> e′ }
+=  <tt>case</tt> v <tt>of</tt> { p -> ( \ x -> e ) v ; _ -> e′ }</pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(f)</td>
+ <td><pre>
+<tt>case</tt> v <tt>of</tt> { _ -> e; _ -> e′ } = e </pre></td>
+ </tr>
+</tobdy>
+</table>
 
-</code></pre>
+**図 3.1:** case式の意味論、パート1
+<div class="separator"></div>
+
+<div class="separator"></div>
+
+<a name="figure-3.2"></a>
+<table class="fbox">
+<tbody>
+ <tr>
+  <td class="code-number">(g)</td>
+  <td><pre><tt>case</tt> v <tt>of</tt> { K p<sub>1</sub>…p<sub>n</sub> -> e; _ -> e′ }
+	= <tt>case</tt> v <tt>of</tt> {
+	     K x<sub>1</sub>…x<sub>n</sub> -> <tt>case</tt> x<sub>1</sub> <tt>of</tt> {
+	                    p<sub>1</sub> -> … <tt>case</tt> xn <tt>of</tt> { p<sub>n</sub> -> e ; _ -> e′ } …
+	                    _  -> e′ }
+	     _ -> e′ }
+	<tt>at least one of</tt> p<sub>1</sub>,…,p<sub>n</sub> <tt>is not a variable;</tt> x<sub>1</sub>,…,x<sub>n</sub> <tt>are new variables</tt> </pre></td>
+ </tr>
+ <tr>
+  <td class="code-number">(h)</td>
+  <td><pre><tt>case</tt> v <tt>of</tt> { k -> e; _ -> e′ } = <tt>if</tt> (v==k) <tt>then</tt> e <tt>else</tt> e′
+	<tt>where</tt> k <tt>is a numeric, character, or string literal</tt></pre></td>
+ </tr>
+ <tr>
+  <td class="code-number">(i)</td>
+  <td><pre><tt>case</tt> v <tt>of</tt> { x -> e; _ -> e′ } = <tt>case</tt> v <tt>of</tt> { x -> e }</pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(j)</td>
+ <td><pre><tt>case</tt> v <tt>of</tt> { x -> e } = ( \ x -> e ) v </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(k)</td>
+ <td><pre><tt>case</tt> N v <tt>of</tt> { N p -> e; _ -> e′ }
+	= <tt>case</tt> v <tt>of</tt> { p -> e; _ -> e′ }
+	<tt>where</tt> N <tt>is a newtype constructor</tt> </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(l)</td>
+ <td><pre><tt>case</tt> ⊥ <tt>of</tt> { N p -> e; _ -> e′ } = <tt>case</tt> ⊥ <tt>of</tt> { p -> e }
+	<tt>where</tt> N <tt>is a newtype constructor</tt> </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(m)</td>
+ <td><pre><tt>case<tt>  v  <tt>of<tt> {  K  { f<sub>1</sub>  =  p<sub>1</sub>  ,  f<sub>2</sub>  =  p<sub>2</sub>  , … } ->  e ; _ ->  e′ }
+	=  <tt>case</tt> e′ <tt>of</tt> {
+	    y ->
+	    <tt>case</tt>  v  <tt>of</tt> {
+	      K  {  f<sub>1</sub>  =  p<sub>1</sub>  } ->
+	            <tt>case</tt>  v  <tt>of</tt> { K  { f<sub>2</sub>  =  p<sub>2</sub>  , …  } ->  e ; _ ->  y  };
+	            _ ->  y  }}
+	<tt>where</tt> f<sub>1</sub>, f<sub>2</sub>, … <tt>are fields of constructor</tt> K; y <tt>is a new variable</tt> </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(n)</td>
+ <td><pre><tt>case</tt>  v  <tt>of</tt> {  K  { f  =  p } ->  e ; _ ->  e′ }
+  = <tt>case</tt>  v  <tt>of</tt> {
+       K p<sub>1</sub> … p<sub>n</sub>  ->  e ; _ ->  e′ }
+  <tt>where</tt> p<sub>i</sub> <tt>is</tt> p <tt>if f labels the ith component of</tt> K, _ <tt>otherwise</tt> </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(o)</td>
+ <td><pre><tt>case</tt>  v  <tt>of</tt> {  K  {} ->  e ; _ ->  e′ }
+  = <tt>case</tt>  v  <tt>of</tt> {
+       K _… _ ->  e ; _ ->  e′ }</pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(p)</td>
+ <td><pre><tt>case</tt> (K′ e<sub>1</sub> … em) <tt>of</tt> { K x<sub>1</sub> … x<sub>n</sub> -> e; _ -> e′ } = e′
+  <tt>where</tt> K <tt>and</tt> K′ <tt>are distinct data constructors of arity</tt> n <tt>and</tt> m<tt>, respectively</tt></pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(q)</td>
+ <td><pre><tt>case</tt> (K e<sub>1</sub> … e<sub>n</sub>) <tt>of</tt> { K x<sub>1</sub> … x<sub>n</sub> -> e; _ -> e′ }
+  = (\x<sub>1</sub> … x<sub>n</sub> -> e) e<sub>1</sub> … e<sub>n</sub>
+  <tt>where</tt> K <tt>is a data constructor of arity</tt> n </pre></td>
+ </tr>
+ <tr>
+ <td class="code-number">(r)</td>
+ <td><pre><tt>case</tt> ⊥ <tt>of</tt> { K x<sub>1</sub> … x<sub>n</sub> -> e; _ -> e′ } =  ⊥
+  <tt>where</tt> K <tt>is a data constructor of arity</tt> n</pre></td>
+ </tr>
+</tobdy>
+</table>
+
+**図 3.2:** case式の意味論、パート2
+<div class="separator"></div>
+
+<div class="separator"></div>
+
+<a name="figure-3.3"></a>
+<table class="fbox">
+<tbody>
+<tr>
+ <td class="code-number">(s)</td>
+ <td><pre><tt>case</tt> () <tt>of</tt> { () | g<sub>1</sub>, …, g<sub>n</sub> -> e; _ -> e′ }
+= <tt>case</tt> () <tt>of</tt> {
+     () | g<sub>1</sub> -> … <tt>case</tt> () <tt>of</tt> {
+                    () | g<sub>n</sub> -> e;
+                    _ -> e′ } …
+     _ -> e′ }
+ where y is a new variable </pre></td>
+</tr>
+ <td class="code-number">(t)</td>
+ <td><pre>case () <tt>of</tt> { () | p <- e<sub>0</sub> -> e; _ -> e′ }
+= <tt>case</tt> e<sub>0</sub> <tt>of</tt> { p -> e; _ -> e′ }</pre></td>
+</tr>
+<tr>
+<td class="code-number">(u)</td>
+<td><pre><tt>case</tt> () <tt>of</tt> { () | <tt>let</tt> decls -> e; _ -> e′ }
+= <tt>let</tt> decls in e </pre></td>
+</tr>
+<tr>
+ <td class="code-number">(v)</td>
+ <td><pre><tt>case</tt> () <tt>of</tt> { () | e<sub>0</sub> -> e; _ -> e′ }
+  = if e<sub>0</sub> then e else e′ </pre></td>
+</tr>
+</tobdy>
+</table>
+
+**図 3.3:** case式の意味論、パート3
+<div class="separator"></div>
+
+図[3.1]("#figure-3.1")-[3.3]("#figure-3.3")の<code>e, e'とe<sub>i</sub></code>は式で、<code>g<sub>i</sub>とgs<sub>i</sub></code>はガードと各々のガードの並びであり、<code>pとp<sub>i</sub></code>はパターン、<code>v, x, x<sub>i</sub></code>は変数、`K,K'`は代数的データ型`(data)`コンストラクタ(タプルコンストラクタを含む)で、`N`は`newtype`コンストラクタである。
+
+ルール(b)はガードを実際に含むかどうか関わらず、一般的なソース言語case式を合わせる。もしガードが書かれていなければ、その時、`True`が形式<code>match<sub>i</sub></code>内のガード<code>gs<sub>i,j</sub></code>に代用される。各々の識別子はもっと簡単な形式へと`case`式の結果を操作する。
+
+図[3.2]("#figure-3.2")のルール(h)はオーバロードされた`==`演算子を起動し、パターンマッチングの意味をオーバーロードされた定数に対して定義するというルールである。
+
+これらの識別子は静的な意味論を全て保存する。ルール(d)、(e)、(j)、(q)は`let`ではなくラムダを使っていて、これは`case`によって束縛された変数が単相型ということを示す(セクション[4.1.4]("./4-declarations-and-bindings.md")を参照)。
