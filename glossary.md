@@ -23,6 +23,8 @@
 |vocabulary|語彙|
 
 ## 専門用語
+|英単語|日本語訳|
+|--|--|
 |bind, binding|束縛する, 束縛|
 |class|クラス|
 |class methods|クラスメソッド|
@@ -31,4 +33,3 @@
 |instance|インスタンス|
 |module|モジュール|
 |top level|トップレベル|
-
