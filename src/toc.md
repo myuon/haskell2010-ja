@@ -89,20 +89,20 @@ Simon Marlow (editor)
    - Prelude `PreludeList`
    - Prelude `PreludeText`
    - Prelude `PreludeIO`
-10. 文法リファレンス
+10. [文法リファレンス](./chapters/10-syntax-reference.md)
     - 慣習的表記
     - 字句文法
     - レイアウト
     - 文芸的コメント
     - 文脈自由文法
     - 結合の解決
-11. [インスタンス導出の仕様](./chapters/spec-derived-instances.md)
+11. [インスタンス導出の仕様](./chapters/11-specification-of-derived-instances.md)
     - `Eq`と`Ord`のインスタンス導出
     - `Enum`のインスタンス導出
     - `Bounded`のインスタンス導出
     - `Read`と`Show`のインスタンス導出
     - 例
-12. [コンパイラプラグマ](./chapters/compiler-pragma.md)
+12. [コンパイラプラグマ](./chapters/12-compiler-pragmas.md)
     - インライン化
     - 限定化
     - 言語拡張
