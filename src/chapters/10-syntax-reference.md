@@ -270,7 +270,6 @@ main =  print [ (n, product [1..n]) | n <- [1..20]]
 ## 文脈自由構文
 
 ```
-
 module	→	module modid [exports] where body 
 |	body
 body	→	{ impdecls ; topdecls }
