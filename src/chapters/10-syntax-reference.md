@@ -269,7 +269,7 @@ main =  print [ (n, product [1..n]) | n <- [1..20]]
 
 ## 文脈自由構文
 
-```
+<pre>
 module	→	module modid [exports] where body 
 |	body
 body	→	{ impdecls ; topdecls }
@@ -478,7 +478,7 @@ qconop	→	gconsym | `  qconid `	    (qualified constructor operator)
 op	→	varop | conop	    (operator)
 qop	→	qvarop | qconop	    (qualified operator)
 gconsym	→	: | qconsym
-```
+</pre>
 
 ## 結合性解決
 
