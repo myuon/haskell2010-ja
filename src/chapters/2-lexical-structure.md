@@ -194,10 +194,10 @@ HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。し�
 “maximal munch”に従って、文字列内の数字のエスケープ文字は全て連続した数字で構成され、任意の長さにすることができる。同様に、"\SOH"のような奇妙なASCIIエスケープコードは長さ1の文字列としてパ－スされる。'\&'エスケープ文字は"\137\&9"や"SO\&H"のような文字列(共に長さは2)が構成できるように"ヌル文字"として提供される。その代わり"\&"は""に等しく、'\&'文字は許されない。文字の等価性はセクション[6.1.2](./chapters/6-predefined-types-and-classes.md)で定義されている。
 
 文字列は無視される"ギャップ"(白い文字を囲む2つのバックスラント)を含むかもしれない。これにより1行の終わりと次の行の始めにバックスラントを書くことによって、複数の行に長い文字列を書くことが可能だ。例としては以下のものになる。
-<pre>
-<code>"Here is a backslant \\ as well as \137, \  
+``` hs
+"Here is a backslant \\ as well as \137, \  
     \a numeric escape character, and \^X, a control character."
-</code></pre>
+```
 
 文字列リテラルは実際には文字のリストの略記である。(セクション[3.7](./chapters/3-expressions.md)を参照)
 
@@ -213,55 +213,58 @@ Haskellはレイアウトを使用して同じ情報を伝えることによっ�
 
 これらの規則を考えると、1つの改行で実際に複数のレイアウトリストを終了させることができる。
 これらの規則は以下のコードを許す。
-<pre><code>f x = let a = 1; b = 2  
+``` hs
+f x = let a = 1; b = 2  
           g y = exp2  
        in exp1
-</code></pre>
-
+```
 生成したa, b, gは全て同じレイアウトリストの一部である。
 
 例として、図[2.1](#figure2.1)は(ややわざとらしい)モジュールを示し、図[2.2](#figure2.2)はそのレイアウトルールを適応した結果を示している。次の部分に注意: (a) "}};pop"で行が開始している個所において、前の行が終了すると、ネストしたwhere区の深さ(3)に対応する3つレイアウトルールの利用が呼び出される。(b)where句の閉じ括弧はタプルとcase式にネストされており、タプルの終了を検出されたため挿入された。(c)一番最後の閉じ括弧は、Eofトークンの0列のインデントにより挿入された。
 
-
-<pre><code>module AStack( Stack, push, pop, top, size ) where  
+``` hs
+module AStack( Stack, push, pop, top, size ) where  
 data Stack a = Empty  
              | MkStack a (Stack a)  
- 
+
 push :: a -> Stack a -> Stack a  
 push x s = MkStack x s  
- 
+
 size :: Stack a -> Int  
 size s = length (stkToLst s)  where  
            stkToLst  Empty         = []  
            stkToLst (MkStack x s)  = x:xs where xs = stkToLst s  
- 
+
 pop :: Stack a -> (a, Stack a)  
 pop (MkStack x s)  
   = (x, case s of r -> i r where i x = x) -- (pop Empty) is an error  
- 
+
 top :: Stack a -> a  
 top (MkStack x s) = x                     -- (top Empty) is an error
-</code></pre>
+```
+
 <a name="figure2.1">図2.1:</a> サンプルプログラム
 
-<pre><code>module AStack( Stack, push, pop, top, size ) where  
+``` hs
+module AStack( Stack, push, pop, top, size ) where  
 {data Stack a = Empty  
              | MkStack a (Stack a)  
- 
+
 ;push :: a -> Stack a -> Stack a  
 ;push x s = MkStack x s  
- 
+
 ;size :: Stack a -> Int  
 ;size s = length (stkToLst s)  where  
            {stkToLst  Empty         = []  
            ;stkToLst (MkStack x s)  = x:xs where {xs = stkToLst s  
- 
+
 }};pop :: Stack a -> (a, Stack a)  
 ;pop (MkStack x s)  
   = (x, case s of {r -> i r where {i x = x}}) -- (pop Empty) is an error  
- 
+
 ;top :: Stack a -> a  
 ;top (MkStack x s) = x                        -- (top Empty) is an error  
 }
-</code></pre>
+```
+
 <a name="figure2.2">図2.2:</a> レイアウトを展開したサンプルプログラム
