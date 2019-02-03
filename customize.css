@@ -25,6 +25,11 @@
   font-size: 12px;
 }
 
+tt {
+  background-color: #efefef;
+  font-size: 10px;
+}
+
 tt tt {
   line-height: 9px;
 }
