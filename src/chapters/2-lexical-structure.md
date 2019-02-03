@@ -102,9 +102,9 @@ HaskellはUnicode\[[2](./bibliogrphy.md)\]文字セットを使っている。�
 
 ||||
 |--|--|--|
-|varid | → | (small {small &#124; large &#124; digit &#124; ' })<sub>⟨reservedid⟩</sub>|
-|conid | → | large {small &#124; large &#124; digit &#124; ' }|
-|reservedid | → | <sub>case</sub> &#124; <sub>class</sub> &#124; <sub>data</sub> &#124; <sub>default</sub> &#124; <sub>deriving</sub> &#124; <sub>do</sub> &#124; <sub>else</sub> &#124; <sub>foreign</sub> &#124; <sub>if</sub> &#124; <sub>import</sub> &#124; <sub>in</sub> &#124; <sub>infix</sub> &#124; <sub>infixl</sub> &#124; <sub>infixr</sub> &#124; <sub>instance</sub> &#124; <sub>let</sub> &#124; <sub>module</sub> &#124; <sub>newtype</sub> &#124; <sub>of</sub> &#124; <sub>then</sub> &#124; <sub>type</sub> &#124; <sub>where</sub> &#124; <sub>_</sub>|
+|<em>varid</em> | → | (<em>small</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` })<sub>⟨<em>reservedid</em>⟩</sub>|
+|<em>conid</em> | → | <em>large</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` }|
+|<em>reservedid</em> | → | `case` &#124; `class` &#124; `data` &#124; `default` &#124; `deriving` &#124; `do` &#124; `else` &#124; `foreign` &#124; `if` &#124; `import` &#124; `in` &#124; `infix` &#124; `infixl` &#124; `infixr` &#124; `instance` &#124; `let` &#124; `module` &#124; `newtype` &#124; `of` &#124; `then` &#124; `type` &#124; `where` &#124; `_`|
 
 識別子は0個以上の文字、数字、アンダースコア、およびシングルクォートで構成される。識別子は字句的に小文字で始まる字句(変数識別子)と大文字から始まる字句(コンストラクタ識別子)の二つの名前空間に区別される。(セクション[1.4](./chapter1-introduction.md))これらの識別子は大文字と小文字を区別する。name、naMe、Nameは3つの判然たる識別子である。(初め2つは変数識別子で、最後のはコンストラクタ識別子である。)
 
@@ -112,9 +112,9 @@ HaskellはUnicode\[[2](./bibliogrphy.md)\]文字セットを使っている。�
 
 ||||
 |--|--|--|
-|varsym | → | ( symbol⟨:⟩ {symbol} )<sub>⟨reservedop &#124; dashes⟩</sub>|
-|consym | → | ( : {symbol})⟨reservedop⟩|
-|reservedop | → | <sub> .. </sub> &#124; <sub> : </sub> &#124; <sub> :: </sub> &#124; <sub> = </sub> &#124; <sub> \ </sub> &#124; <sub> </sub> &#124; <sub> </sub> &#124; <sub> <- </sub> &#124; <sub> -> </sub> &#124; <sub> @ </sub> &#124; <sub> ~ </sub> &#124; <sub> => </sub>|
+|<em>varsym</em> | → | ( <em>symbol</em>⟨`:`⟩ {<em>symbol</em>} )<sub>⟨<em>reservedop</em> &#124; <em>dashes</em>⟩</sub>|
+|<em>consym</em> | → | ( `:` {<em>symbol</em>})⟨<em>reservedop</em>⟩|
+|<em>reservedop></em> | → | `..` &#124; `:` &#124; `::` &#124; `=` &#124; `\` &#124; <code>&#124;</code> &#124; `<-` &#124; `->` &#124; `@` &#124; `~` &#124; `=>`|
 
 演算子シンボルは上で定義したように、1つ以上の記号文字から形成され、2つの名前空間に字句的に区別される。(セクション[1.4](./chapters/1-introduction.md))
 

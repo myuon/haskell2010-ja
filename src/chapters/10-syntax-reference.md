@@ -23,51 +23,49 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 
 |||||
 |--|--|--|--|
-|<em>program</em>|→|{ <em>lexeme</em> &#124; <em>whitespace</em> }| |
-|<em>lexeme</em>|→|<em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em>| |
-|		|&#124;| <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em>| |
-|<em>literal</em>|→|<em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em>| |
-|<em>special</em>|→|( &#124; ) &#124; , &#124; ; &#124; [ &#124; ] &#124; ` &#124; { &#124; } | |
-|||||
-|<em>whitespace</em>|→|<em>whitestuff</em> {<em>whitestuff</em>| |
-|<em>whitestuff</em>|→|<em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em>| |
-|<em>whitechar</em>|→|<em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em>| |
-|<em>newline</em>|→|<em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em>| |
-|<em>return</em>|→|a carriage return| |
-|<em>linefeed</em>|→|a line feed| |
-|<em>vertab</em>|→|a vertical tab| |
-|<em>formfeed</em>|→|a form feed| |
-|<em>space</em>|→|a space| |
-|<em>tab</em>|→|a horizontal tab| |
-|<em>uniWhite</em>|→|any Unicode character defined as whitespace| |
-|||||
-|<em>comment</em>|→|dashes [ any⟨symbol⟩ {any} ] newline| |
-|<em>dashes</em>|→|-- {-}| |
-|<em>opencom</em>|→|{-| |
-|<em>closecom</em>|→|-}| |
-|<em>ncomment</em>|→|<em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em>| |
-|<em>ANY seq</em>|→|{<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub>| |
-|<em>ANY</em>|→|<em>graphic</em> &#124; <em>whitechar</em>| |
-|<em>any</em>|→|<em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em>| |
-|<em>graphic</em>|→|<em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; " &#124; '| |
-|||||
-|<em>small</em>|→|<em>ascSmall</em> &#124; <em>uniSmall</em> &#124; _| |
-|<em>ascSmall</em>|→|<tt>a</tt> &#124; <tt>b</tt> &#124; … &#124; <tt>z</tt>| |
-|<em>uniSmall</em>|→|any Unicode lowercase letter| |
-|||||
-|<em>large</em>|→|<em>ascLarge</em> &#124; <em>uniLarge</em>| |
-|<em>ascLarge</em>|→|<tt>A</tt> &#124; <tt>B</tt> &#124; … &#124; <tt>Z</tt>| |
-|<em>uniLarge</em>|→|any uppercase or titlecase Unicode letter| |
-|<em>symbol</em>|→|<em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; _ &#124; " &#124; '⟩</sub>| |
-|||||
-|<em>ascSymbol</em>|→|<tt>!</tt> &#124; <tt>#</tt> &#124; <tt>$</tt> &#124; <tt>%</tt> &#124; <tt>&</tt> &#124; <tt>⋆</tt> &#124; <tt>+</tt> &#124; <tt>.</tt> &#124; <tt>/</tt> &#124; <tt><</tt> &#124; <tt>=</tt> &#124; <tt>></tt> &#124; <tt>?</tt> &#124; <tt>@</tt>| |
-|                |&#124;| <tt>\\</tt> &#124; <tt>^</tt> &#124; <tt>&#124;</tt> &#124; <tt>-</tt> &#124; <tt>~</tt> &#124; <tt>:</tt>| |
-|<em>uniSymbol</em>|→|any Unicode symbol or punctuation| |
-|<em>digit</em>|→|<em>ascDigit</em> &#124; <em>uniDigit</em>| |
-|<em>ascDigit</em>|→|<tt>0</tt> &#124; <tt>1</tt> &#124; … &#124; <tt>9</tt>| |
-|<em>uniDigit</em>|→|any Unicode decimal digit| |
-|<em>octit</em>|→|<tt>0</tt> &#124; <tt>1</tt> &#124; … &#124; <tt>7</tt>| |
-|<em>hexit</em>|→|<em>digit</em> &#124; <tt>A</tt> &#124; … &#124; <tt>F</tt> &#124; <tt>a</tt> &#124; … &#124; <tt>f</tt>| |
+| <em>program</em> |→| {<em>lexeme</em> &#124; <em>whietespace</em>}|
+| <em>lexeme</em> |→| <em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em> &#124; <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em> |
+| <em>literal</em> |→| <em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em> |
+| <em>special</em> |→| `(` &#124; `)` &#124; `,` &#124; `;` &#124; `[` &#124; `]` &#124; <code>&#096;</code> &#124; `{` &#124; `}` |
+| | | |
+| <em>whitespace</em> |→| <em>whitestuff</em> {<em>whitestuff</em>}|
+| <em>whitestuff</em> |→| <em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em> |
+| <em>whitechar</em> |→| <em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em> |
+| <em>newline</em> |→| <em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em> |
+| <em>return</em> |→| キャレッジ⏎ |
+| <em>linefeed</em> |→| 改行 |
+| <em>vertab</em> |→| 垂直タブ |
+| <em>formfeed</em> |→| 改ページ |
+| <em>space</em> |→| 空白 |
+| <em>tab</em> |→| 水平タブ |
+| <em>uniWhite</em> |→|	空白として定義されたUnicode文字 |
+| | | |
+| <em>comment</em> |→| <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> |
+|<em>dashes</em> |→| `--` {`-`} |
+|<em>opencom</em> |→| `{-` |
+|<em>closecom</em> |→| `-}` |
+|<em>ncomment</em> |→| <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> |
+|<em>ANY seq</em> |→| {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub> |
+|<em>ANY</em> |→| <em>graphic</em> &#124; <em>whitechar</em> |
+|<em>any</em> |→| <em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em> |
+|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; `"` &#124; `'` |
+| | | |
+|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; `_` |
+|<em>ascSmall</em> |→| `a` &#124; `b` &#124; … &#124; `z` |
+|<em>uniSmall</em> |→| 小文字Unicode |
+| | | |
+|<em>large</em> |→| <em>ascLarge</em> &#124; <em>uniLarge</em> |
+|<em>ascLarge</em> |→| `A` &#124; `B` &#124; … &#124; `Z` |
+|<em>uniLarge</em> |→| 任意の大文字またはタイトルケース(**訳注**: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 |
+|<em>symbol</em> |→| <em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; `_` &#124; `"` &#124; `'`⟩</sub> |
+| | | |
+|<em>ascSymbol</em> |→| `!` &#124; `#` &#124; `$` &#124; `%` &#124; `&` &#124; `⋆` &#124; `+` &#124; `.` &#124; `/` &#124; `<` &#124; `=` &#124; `>` &#124; `?` &#124; `@` &#124; `\` &#124; `^` &#124; <code>&#124;</code> &#124; `-` &#124; `~` &#124; `:`|
+|<em>uniSymbol</em> |→| Unicodeのシンボル、または句読点 |
+|<em>digit</em> |→| <em>ascDigit</em> &#124; <em>uniDigit</em> |
+|<em>ascDigit</em> |→| `0` &#124; `1` &#124; … &#124; `9` |
+|<em>uniDigit</em> |→| 10進数Unicode |
+|<em>octit</em> |→| `0` &#124; `1` &#124; … &#124; `7` |
+|<em>hexit</em> |→| <em>digit</em> &#124; `A` &#124; … &#124; `F` &#124; `a` &#124; … &#124; `f` |
 |||||
 |<em>varid</em>|→|(<em>small</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; <tt>'</tt> })<sub>⟨reservedid⟩</sub>| |
 |<em>conid</em>|→|<em>large</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; <tt>'</tt> }| |
