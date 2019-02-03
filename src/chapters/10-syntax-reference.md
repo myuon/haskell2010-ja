@@ -23,94 +23,94 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 
 |||||
 |--|--|--|--|
-| <em>program</em> |→| {<em>lexeme</em> &#124; <em>whietespace</em>}| |
-| <em>lexeme</em> |→| <em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em> &#124; <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em> | |
-| <em>literal</em> |→| <em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em> | |
-| <em>special</em> |→| `(` &#124; `)` &#124; `,` &#124; `;` &#124; `[` &#124; `]` &#124; <code>&#096;</code> &#124; `{` &#124; `}` | |
-| | | | |
-| <em>whitespace</em> |→| <em>whitestuff</em> {<em>whitestuff</em>}| |
-| <em>whitestuff</em> |→| <em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em> | |
-| <em>whitechar</em> |→| <em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em> | |
-| <em>newline</em> |→| <em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em> | |
-| <em>return</em> |→| キャレッジ⏎ | |
-| <em>linefeed</em> |→| 改行 | |
-| <em>vertab</em> |→| 垂直タブ | |
-| <em>formfeed</em> |→| 改ページ | |
-| <em>space</em> |→| 空白 | |
-| <em>tab</em> |→| 水平タブ | |
-| <em>uniWhite</em> |→|	空白として定義されたUnicode文字 | |
-| | | | |
-| <em>comment</em> |→| <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> | |
-|<em>dashes</em> |→| `--` {`-`} | |
-|<em>opencom</em> |→| `{-` | |
-|<em>closecom</em> |→| `-}` | |
-|<em>ncomment</em> |→| <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> | |
-|<em>ANY seq</em> |→| {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub> | |
-|<em>ANY</em> |→| <em>graphic</em> &#124; <em>whitechar</em> | |
-|<em>any</em> |→| <em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em> | |
-|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; `"` &#124; `'` | |
-| | | | |
-|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; `_` | |
-|<em>ascSmall</em> |→| `a` &#124; `b` &#124; … &#124; `z` | |
-|<em>uniSmall</em> |→| 小文字Unicode | |
-| | | | |
-|<em>large</em> |→| <em>ascLarge</em> &#124; <em>uniLarge</em> | |
-|<em>ascLarge</em> |→| `A` &#124; `B` &#124; … &#124; `Z` | |
-|<em>uniLarge</em> |→| 任意の大文字またはタイトルケース(**訳注**: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 | |
-|<em>symbol</em> |→| <em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; `_` &#124; `"` &#124; `'`⟩</sub> ||
-| | | | |
-|<em>ascSymbol</em> |→| `!` &#124; `#` &#124; `$` &#124; `%` &#124; `&` &#124; `⋆` &#124; `+` &#124; `.` &#124; `/` &#124; `<` &#124; `=` &#124; `>` &#124; `?` &#124; `@` &#124; `\` &#124; `^` &#124; <code>&#124;</code> &#124; `-` &#124; `~` &#124; `:`| |
-|<em>uniSymbol</em> |→| Unicodeのシンボル、または句読点 | |
-|<em>digit</em> |→| <em>ascDigit</em> &#124; <em>uniDigit</em> | |
-|<em>ascDigit</em> |→| `0` &#124; `1` &#124; … &#124; `9` | |
-|<em>uniDigit</em> |→| 10進数Unicode | |
-|<em>octit</em> |→| `0` &#124; `1` &#124; … &#124; `7` | |
-|<em>hexit</em> |→| <em>digit</em> &#124; `A` &#124; … &#124; `F` &#124; `a` &#124; … &#124; `f` | |
-| | | | |
-|<em>varid</em> | → | (<em>small</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` })<sub>⟨<em>reservedid</em>⟩</sub>| |
-|<em>conid</em> | → | <em>large</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` }| |
-|<em>reservedid</em> | → | `case` &#124; `class` &#124; `data` &#124; `default` &#124; `deriving` &#124; `do` &#124; `else` | |
-| | | `foreign` &#124; `if` &#124; `import` &#124; `in` &#124; `infix` &#124; `infixl` | |
-| | | `infixr` &#124; `instance` &#124; `let` &#124; `module` &#124; `newtype` &#124; `of` | |
-| | | `then` &#124; `type` &#124; `where` &#124; `_`| |
-|<em>varsym</em>|→|( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop &#124; dashes⟩</sub>| |
-|<em>consym</em>|→|( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub>| |
-|<em>reservedop</em>|→|<tt>..</tt> &#124; <tt>:</tt> &#124; <tt>::</tt> &#124; <tt>=</tt> &#124; <tt>\\</tt> &#124; <tt>&#124;</tt> &#124; <tt><-</tt> &#124; <tt>-></tt> &#124;  <tt>@</tt> &#124; <tt>~</tt> &#124; <tt>=></tt>| |
-|||||
-|<em>varid</em>| | |(変数)|
-|<em>conid</em>| | |(コンストラクタ)|
-|<em>tyvar</em>|→|<em>varid</em>|(型変数)|
-|<em>tycon</em>|→|<em>conid</em>|(型コンストラクタ)|
-|<em>tycls</em>|→|<em>conid</em>|(型クラス)|
-|<em>modid</em>|→|{<em>conid</em> `.`} <em>conid</em>|(モジュール)|
-|<em>qvarid</em>|→|[ <em>modid</em> `.` ] <em>varid</em>| |
-|<em>qconid</em>|→|[ <em>modid</em> `.` ] <em>conid</em>| |
-|<em>qtycon</em>|→|[ <em>modid</em> `.` ] <em>tycon</em>| |
-|<em>qtycls</em>|→|[ <em>modid</em> `.` ] <em>tycls</em>| |
-|<em>qvarsym</em>|→|[ <em>modid</em> `.` ] <em>varsym</em>| |
-|<em>qconsym</em>|→|[ <em>modid</em> `.` ] <em>consym</em>| |
-|||||
-|<em>decimal</em>|→|<em>digit</em>{<em>digit</em>}| |
-|<em>octal</em>|→|<em>octit</em>{<em>octit</em>}| |
-|<em>hexadecimal</em>|→|<em>hexit</em>{<em>hexit</em>}| |
-|||||
-|<em>integer</em>|→|<em>decimal</em>| |
-|		|&#124;| `0o` <em>octal</em> &#124; `0O` <em>octal</em>| |
-|		|&#124;| `0x` <em>hexadecimal</em> &#124; `0X` <em>hexadecimal</em>| |
-|<em>float</em>|→|<em>decimal</em> `.` <em>decimal</em> [<em>exponent</em>| |
-|		|&#124;|	<em>decimal</em> <em>exponent</em>| |
-|<em>exponent</em>|→|(`e` &#124; `E`) [`+` &#124; `-`] <em>decimal</em>| |
-|||||
-|<em>char</em>|→|`'` (<em>graphic</em><sub>⟨`'` &#124; `\\`⟩</sub> &#124; <em>space</em> &#124; <em>escape</em><sub>⟨`\&`⟩</sub>) `'`| |
-|<em>string</em>|→|`"` {<em>graphic</em><sub>⟨`"` &#124; `\\`⟩</sub> &#124; <em>space</em> &#124; <em>escape</em> &#124; <em>gap</em>} `"`| |
-|<em>escape</em>|→|`\\` ( <em>charesc</em> &#124; <em>ascii</em> &#124; <em>decimal</em> &#124; `o` <em>octal</em> &#124; `x` <em>hexadecimal</em> )| |
-|<em>charesc</em>|→|`a` &#124; `b` &#124; `f` &#124; `n` &#124; `r` &#124; `t` &#124; `v` &#124; `\\` &#124; `"` &#124; `'` &#124; `&`| |
-|<em>ascii</em>|→|`^`<em>cntrl</em> &#124; `NUL` &#124; `SOH` &#124; `STX` &#124; `ETX` &#124; `EOT` &#124; `ENQ` &#124; `ACK`| |
-|		|&#124;| `BEL` &#124; `BS` &#124; `HT` &#124; `LF` &#124; `VT` &#124; `FF` &#124; `CR` &#124; `SO` &#124; `SI` &#124; `DLE`| |
-|		|&#124;| `DC1` &#124; `DC2` &#124; `DC3` &#124; `DC4` &#124; `NAK` &#124; `SYN` &#124; `ETB` &#124; `CAN`| |
-|		|&#124;| `EM` &#124; `SUB` &#124; `ESC` &#124; `FS` &#124; `GS` &#124; `RS` &#124; `US` &#124; `SP` &#124; `DEL`| |
-|<em>cntrl</em>|→|<em>ascLarge</em> &#124; `@` &#124; `[` &#124; `\\` &#124; `]` &#124; `^` &#124; `_`| |
-|<em>gap</em>|→|`\\` <em>whitechar</em> {<em>whitechar</em>} `\\`| |
+| <em>program</em> |→| {<em>lexeme</em> &#124; <em>whietespace</em>}|
+| <em>lexeme</em> |→| <em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em> &#124; <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em> |
+| <em>literal</em> |→| <em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em> |
+| <em>special</em> |→| `(` &#124; `)` &#124; `,` &#124; `;` &#124; `[` &#124; `]` &#124; <code>&#096;</code> &#124; `{` &#124; `}` |
+| | | |
+| <em>whitespace</em> |→| <em>whitestuff</em> {<em>whitestuff</em>}|
+| <em>whitestuff</em> |→| <em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em> |
+| <em>whitechar</em> |→| <em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em> |
+| <em>newline</em> |→| <em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em> |
+| <em>return</em> |→| キャレッジ⏎ |
+| <em>linefeed</em> |→| 改行 |
+| <em>vertab</em> |→| 垂直タブ |
+| <em>formfeed</em> |→| 改ページ |
+| <em>space</em> |→| 空白 |
+| <em>tab</em> |→| 水平タブ |
+| <em>uniWhite</em> |→|	空白として定義されたUnicode文字 |
+| | | |
+| <em>comment</em> |→| <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> |
+|<em>dashes</em> |→| `--` {`-`} |
+|<em>opencom</em> |→| `{-` |
+|<em>closecom</em> |→| `-}` |
+|<em>ncomment</em> |→| <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> |
+|<em>ANY seq</em> |→| {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub> |
+|<em>ANY</em> |→| <em>graphic</em> &#124; <em>whitechar</em> |
+|<em>any</em> |→| <em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em> |
+|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; `"` &#124; `'` |
+| | | |
+|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; `_` |
+|<em>ascSmall</em> |→| `a` &#124; `b` &#124; … &#124; `z` |
+|<em>uniSmall</em> |→| 小文字Unicode |
+| | | |
+|<em>large</em> |→| <em>ascLarge</em> &#124; <em>uniLarge</em> |
+|<em>ascLarge</em> |→| `A` &#124; `B` &#124; … &#124; `Z` |
+|<em>uniLarge</em> |→| 任意の大文字またはタイトルケース(**訳注**: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 |
+|<em>symbol</em> |→| <em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; `_` &#124; `"` &#124; `'`⟩</sub> |
+| | | |
+|<em>ascSymbol</em> |→| `!` &#124; `#` &#124; `$` &#124; `%` &#124; `&` &#124; `⋆` &#124; `+` &#124; `.` &#124; `/` &#124; `<` &#124; `=` &#124; `>` &#124; `?` &#124; `@` &#124; `\` &#124; `^` &#124; <code>&#124;</code> &#124; `-` &#124; `~` &#124; `:`|
+|<em>uniSymbol</em> |→| Unicodeのシンボル、または句読点 |
+|<em>digit</em> |→| <em>ascDigit</em> &#124; <em>uniDigit</em> |
+|<em>ascDigit</em> |→| `0` &#124; `1` &#124; … &#124; `9` |
+|<em>uniDigit</em> |→| 10進数Unicode |
+|<em>octit</em> |→| `0` &#124; `1` &#124; … &#124; `7` |
+|<em>hexit</em> |→| <em>digit</em> &#124; `A` &#124; … &#124; `F` &#124; `a` &#124; … &#124; `f` |
+| | | |
+|<em>varid</em> | → | (<em>small</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` })<sub>⟨<em>reservedid</em>⟩</sub>|
+|<em>conid</em> | → | <em>large</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; `'` }|
+|<em>reservedid</em> | → | `case` &#124; `class` &#124; `data` &#124; `default` &#124; `deriving` &#124; `do` &#124; `else` |
+| | | `foreign` &#124; `if` &#124; `import` &#124; `in` &#124; `infix` &#124; `infixl` |
+| | | `infixr` &#124; `instance` &#124; `let` &#124; `module` &#124; `newtype` &#124; `of` |
+| | | `then` &#124; `type` &#124; `where` &#124; `_`|
+|<em>varsym</em>|→|( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop &#124; dashes⟩</sub>|
+|<em>consym</em>|→|( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub>|
+|<em>reservedop</em>|→|<tt>..</tt> &#124; <tt>:</tt> &#124; <tt>::</tt> &#124; <tt>=</tt> &#124; <tt>\\</tt> &#124; <tt>&#124;</tt> &#124; <tt><-</tt> &#124; <tt>-></tt> &#124;  <tt>@</tt> &#124; <tt>~</tt> &#124; <tt>=></tt>|
+||||
+|<em>varid</em>| |(変数)|
+|<em>conid</em>| |(コンストラクタ)|
+|<em>tyvar</em>|→|<em>varid</em>(型変数)|
+|<em>tycon</em>|→|<em>conid</em>(型コンストラクタ)|
+|<em>tycls</em>|→|<em>conid</em>(型クラス)|
+|<em>modid</em>|→|{<em>conid</em> `.`} <em>conid</em>(モジュール)|
+|<em>qvarid</em>|→|[ <em>modid</em> `.` ] <em>varid</em>|
+|<em>qconid</em>|→|[ <em>modid</em> `.` ] <em>conid</em>|
+|<em>qtycon</em>|→|[ <em>modid</em> `.` ] <em>tycon</em>|
+|<em>qtycls</em>|→|[ <em>modid</em> `.` ] <em>tycls</em>|
+|<em>qvarsym</em>|→|[ <em>modid</em> `.` ] <em>varsym</em>|
+|<em>qconsym</em>|→|[ <em>modid</em> `.` ] <em>consym</em>|
+||||
+|<em>decimal</em>|→|<em>digit</em>{<em>digit</em>}|
+|<em>octal</em>|→|<em>octit</em>{<em>octit</em>}|
+|<em>hexadecimal</em>|→|<em>hexit</em>{<em>hexit</em>}|
+||||
+|<em>integer</em>|→|<em>decimal</em>|
+|		|&#124;| `0o` <em>octal</em> &#124; `0O` <em>octal</em>|
+|		|&#124;| `0x` <em>hexadecimal</em> &#124; `0X` <em>hexadecimal</em>|
+|<em>float</em>|→|<em>decimal</em> `.` <em>decimal</em> [<em>exponent</em>|
+|		|&#124;|	<em>decimal</em> <em>exponent</em>|
+|<em>exponent</em>|→|(`e` &#124; `E`) [`+` &#124; `-`] <em>decimal</em>|
+||||
+|<em>char</em>|→|`'` (<em>graphic</em><sub>⟨`'` &#124; `\`⟩</sub> &#124; <em>space</em> &#124; <em>escape</em><sub>⟨`\&`⟩</sub>) `'`|
+|<em>string</em>|→|`"` {<em>graphic</em><sub>⟨`"` &#124; `\\`⟩</sub> &#124; <em>space</em> &#124; <em>escape</em> &#124; <em>gap</em>} `"`|
+|<em>escape</em>|→|`\\` ( <em>charesc</em> &#124; <em>ascii</em> &#124; <em>decimal</em> &#124; `o` <em>octal</em> &#124; `x` <em>hexadecimal</em> )|
+|<em>charesc</em>|→|`a` &#124; `b` &#124; `f` &#124; `n` &#124; `r` &#124; `t` &#124; `v` &#124; `\\` &#124; `"` &#124; `'` &#124; `&`|
+|<em>ascii</em>|→|`^`<em>cntrl</em> &#124; `NUL` &#124; `SOH` &#124; `STX` &#124; `ETX` &#124; `EOT` &#124; `ENQ` &#124; `ACK`|
+|		|&#124;| `BEL` &#124; `BS` &#124; `HT` &#124; `LF` &#124; `VT` &#124; `FF` &#124; `CR` &#124; `SO` &#124; `SI` &#124; `DLE`|
+|		|&#124;| `DC1` &#124; `DC2` &#124; `DC3` &#124; `DC4` &#124; `NAK` &#124; `SYN` &#124; `ETB` &#124; `CAN`|
+|		|&#124;| `EM` &#124; `SUB` &#124; `ESC` &#124; `FS` &#124; `GS` &#124; `RS` &#124; `US` &#124; `SP` &#124; `DEL`|
+|<em>cntrl</em>|→|<em>ascLarge</em> &#124; `@` &#124; `[` &#124; `\\` &#124; `]` &#124; `^` &#124; `_`|
+|<em>gap</em>|→|`\` <em>whitechar</em> {<em>whitechar</em>} `\`|
 
 ## レイアウト
 
