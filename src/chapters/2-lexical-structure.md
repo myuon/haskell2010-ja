@@ -13,7 +13,7 @@
 | (pattern)                         | グルーピング |
 | pat<sub>1</sub> &#124; pat<sub>2</sub> | 選択 |
 | pat<sub>(pat')</sub> |  相違 ー pat'によって生成されたものを除いた、patによって生成された要素|
-| <sub>fibonacci</sub> | タイプライターフォントの終端構文 |
+| <tt>fibonacci</tt> | タイプライターフォントの終端構文 |
 
 このセクション内の構文は字句構造を説明しているため、全ての空白は明示的に表現されているが、並置されたシンボル間には暗黙的な空白はない。BNFのような構文は今後使われ、次の形式を取る。
 
@@ -22,9 +22,9 @@
 | nonterm | → | alt<sub>1</sub> &#124; alt<sub>2</sub> &#124; … &#124; alt<sub>n</sub> |
 
 通常は文脈によって区別が明確になるが、
-<sub>'|'</sub>や<sub>'[…]'</sub>のような(タイプライターフォントで指定された)具体的な終端構文から'|'や'[…]'のようなメタデータ構文の区別には注意が必要である。
+`|`や`[…]`のような(タイプライターフォントで指定された)具体的な終端構文から|や[…]のようなメタデータ構文の区別には注意が必要である。
 
-HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。しかしながら、プログラムソースは現在、以前のHaskellバージョンで使われていたASCII文字セットに偏っている。
+HaskellはUnicode\[[2](./bibliogrphy.md)\]文字セットを使っている。しかしながら、プログラムソースは現在、以前のHaskellバージョンで使われていたASCII文字セットに偏っている。
 
 この構文はUnicodeコンソーシアムによって定義されているUnicode文字の文字符号化スキームによって異なる。Haskellコンパイラーは新しいバージョンのUnicodeが利用可能になるにつれてそれらを利用されることが期待されている。
 
@@ -32,49 +32,49 @@ HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。し�
 
 ||||
 |--|--|--|
-| program |→| {lexeme &#124; whietespace}|
-| lexeme |→| qvarid &#124; qconid &#124; qvarsym &#124; qconsym &#124; literal &#124; special &#124; reservedop &#124; reservedid |
-| literal |→| integer &#124; float &#124; char &#124; string |
-| special |→| (&#124;) &#124; , &#124; ; &#124; [ &#124; ] &#124; ` &#124; { &#124; } |
+| <em>program</em> |→| {<em>lexeme</em> &#124; <em>whietespace</em>}|
+| <em>lexeme</em> |→| <em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em> &#124; <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em> |
+| <em>literal</em> |→| <em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em> |
+| <em>special</em> |→| `(` &#124; `)` &#124; `,` &#124; `;` &#124; `[` &#124; `]` &#124; <code>&#096;</code> &#124; `{` &#124; `}` |
 | | | |
-| whitespace |→| whitestuff {whitestuff}|
-| whitestuff |→| whitechar &#124; comment &#124; ncomment |
-| whitechar |→| newline &#124; vertab &#124; space &#124; tab &#124; uniWhite |
-| newline |→| return linefeed &#124; return &#124; linefeed &#124; formfeed |
-| return |→| キャレッジ⏎ |
-| linefeed |→| 改行 |
-| vertab |→| 垂直タブ |
-| formfeed |→| 改ページ |
-| space |→| 空白 |
-| tab |→| 水平タブ |
-| uniWhite |→|	空白として定義されたUnicode文字 |
+| <em>whitespace</em> |→| <em>whitestuff</em> {<em>whitestuff</em>}|
+| <em>whitestuff</em> |→| <em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em> |
+| <em>whitechar</em> |→| <em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em> |
+| <em>newline</em> |→| <em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em> |
+| <em>return</em> |→| キャレッジ⏎ |
+| <em>linefeed</em> |→| 改行 |
+| <em>vertab</em> |→| 垂直タブ |
+| <em>formfeed</em> |→| 改ページ |
+| <em>space</em> |→| 空白 |
+| <em>tab</em> |→| 水平タブ |
+| <em>uniWhite</em> |→|	空白として定義されたUnicode文字 |
 | | | |
-|comment |→| dashes [ any<sub>symbol</sub> {any} ] newline |
-|dashes |→| -- {-} |
-|opencom |→| {- |
-|closecom |→| -} |
-|ncomment |→| opencom ANY seq {ncomment ANY seq} closecom |
-|ANY seq |→| {ANY }<sub>⟨{ANY } ( opencom &#124; closecom ) {ANY }⟩</sub> |
-|ANY |→| graphic &#124; whitechar |
-|any |→| graphic &#124; space &#124; tab |
-|graphic |→| small &#124; large &#124; symbol &#124; digit &#124; special &#124; " &#124; ' |
+| <em>comment</em> |→| <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> |
+|<em>dashes</em> |→| `--` {`-`} |
+|<em>opencom</em> |→| `{-` |
+|<em>closecom</em> |→| `-}` |
+|<em>ncomment</em> |→| <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> |
+|<em>ANY seq</em> |→| {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub> |
+|<em>ANY</em> |→| <em>graphic</em> &#124; <em>whitechar</em> |
+|<em>any</em> |→| <em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em> |
+|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; `"` &#124; `'` |
 | | | |
-|small |→| ascSmall &#124; uniSmall &#124; _ |
-|ascSmall |→| <sub>a</sub> &#124; <sub>b</sub> &#124; … &#124; <sub>z</sub> |
-|uniSmall |→| 小文字Unicode |
+|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; `_` |
+|<em>ascSmall</em> |→| `a` &#124; `b` &#124; … &#124; `z` |
+|<em>uniSmall</em> |→| 小文字Unicode |
 | | | |
-|large |→| ascLarge &#124; uniLarge |
-|ascLarge |→| A &#124; B &#124; … &#124; Z |
-|uniLarge |→| any uppercase or titlecase Unicode letter |
-|symbol |→| ascSymbol &#124; uniSymbol<sub>⟨special &#124; _ &#124; " &#124; '⟩</sub> |
+|<em>large</em> |→| <em>ascLarge</em> &#124; <em>uniLarge</em> |
+|<em>ascLarge</em> |→| `A` &#124; `B` &#124; … &#124; `Z` |
+|<em>uniLarge</em> |→| 任意の大文字またはタイトルケース(**訳注**: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 |
+|<em>symbol</em> |→| <em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; `_` &#124; `"` &#124; `'`⟩</sub> |
 | | | |
-|ascSymbol |→| <sub>!</sub> &#124; <sub>#</sub> &#124; <sub>$</sub> &#124; <sub>%</sub> &#124; <sub>&</sub> &#124; <sub>⋆</sub> &#124; <sub>+</sub> &#124; <sub>.</sub> &#124; <sub>/</sub> &#124; <sub><</sub> &#124; <sub>=</sub> &#124; <sub>></sub> &#124; <sub>?</sub> &#124; <sub>@</sub> &#124; <sub>\\</sub> &#124; <sub>^</sub> &#124; <sub>&#124;</sub> &#124; <sub>-</sub> &#124; <sub>~</sub> &#124; <sub>:</sub>|
-|uniSymbol |→| Unicodeのシンボル、または句読点 |
-|digit |→| ascDigit &#124; uniDigit |
-|ascDigit |→| <sub>0</sub> &#124; <sub>1</sub> &#124; <sub>…</sub> &#124; <sub>9</sub> |
-|uniDigit |→| 10進数Unicode |
-|octit |→| <sub>0</sub> &#124; <sub>1</sub> &#124; <sub>…</sub> &#124; <sub>7</sub> |
-|hexit |→| <sub>digit</sub> &#124; <sub>A</sub> &#124; <sub>…</sub> &#124; <sub>F</sub> &#124; <sub>a</sub> &#124; <sub>…</sub> &#124; <sub>f</sub> |
+|<em>ascSymbol</em> |→| `!` &#124; `#` &#124; `$` &#124; `%` &#124; `&` &#124; `⋆` &#124; `+` &#124; `.` &#124; `/` &#124; `<` &#124; `=` &#124; `>` &#124; `?` &#124; `@` &#124; `\` &#124; `^` &#124; <code>&#124;</code> &#124; `-` &#124; `~` &#124; `:`|
+|<em>uniSymbol</em> |→| Unicodeのシンボル、または句読点 |
+|<em>digit</em> |→| <em>ascDigit</em> &#124; <em>uniDigit</em> |
+|<em>ascDigit</em> |→| `0` &#124; `1` &#124; … &#124; `9` |
+|<em>uniDigit</em> |→| 10進数Unicode |
+|<em>octit</em> |→| `0` &#124; `1` &#124; … &#124; `7` |
+|<em>hexit</em> |→| <em>digit</em> &#124; `A` &#124; … &#124; `F` &#124; `a` &#124; … &#124; `f` |
 
 字句解析は"maximal munch"規則に従うべきである。すなわち、語彙素生成規則を満たす可能な限り長くとった語彙素が読み取られる([訳注]: "longest match" ともいう)。したがって、caseは予約語だが、casesは予約語ではない。同様に=は予約されているが、==と~=は予約されていない。
 
