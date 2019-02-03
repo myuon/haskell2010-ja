@@ -21,100 +21,100 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 
 ## 字句文法
 
-<pre>
-<em>program</em>		→ { <em>lexeme</em> | <em>whitespace</em> }
-<em>lexeme</em>		→ <em>qvarid</em> | <em>qconid</em> | <em>qvarsym</em> | <em>qconsym</em>
-		| <em>literal</em> | <em>special</em> | <em>reservedop</em> | <em>reservedid</em>
-<em>literal</em>		→ <em>integer</em> | <em>float</em> | <em>char</em> | <em>string</em>
-<em>special</em>		→ ( | ) | , | ; | [ | ] | ` | { | }
- 
-<em>whitespace</em>	→ <em>whitestuff</em> {<em>whitestuff</em>}
-<em>whitestuff</em>	→ <em>whitechar</em> | <em>comment</em> | <em>ncomment</em>
-<em>whitechar</em>	→ <em>newline</em> | <em>vertab</em> | <em>space</em> | <em>tab</em> | <em>uniWhite</em>
-<em>newline</em>		→ <em>return</em> <em>linefeed</em> | <em>return</em> | <em>linefeed</em> | <em>formfeed</em>
-<em>return</em>		→ a carriage return
-<em>linefeed</em>	→ a line feed
-<em>vertab</em>		→ a vertical tab
-<em>formfeed</em>	→ a form feed
-<em>space</em>		→ a space
-<em>tab</em>		→ a horizontal tab
-<em>uniWhite</em>	→ any Unicode character defined as whitespace
- 
-<em>comment</em>		→ dashes [ any⟨symbol⟩ {any} ] newline
-<em>dashes</em>		→ -- {-}
-<em>opencom</em>		→ {-
-<em>closecom</em>	→ -}
-<em>ncomment</em>	→ <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em>
-<em>ANY seq</em>		→ {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> | <em>closecom</em> ) {<em>ANY</em>}⟩</sub>
-<em>ANY</em>		→ <em>graphic</em> | <em>whitechar</em>
-<em>any</em>		→ <em>graphic</em> | <em>space</em> | <em>tab</em>
-<em>graphic</em>		→ <em>small</em> | <em>large</em> | <em>symbol</em> | <em>digit</em> | <em>special</em> | " | '
- 
-<em>small</em>		→ <em>ascSmall</em> | <em>uniSmall</em> | _
-<em>ascSmall</em>	→ <tt>a</tt> | <tt>b</tt> | … | <tt>z</tt>
-<em>uniSmall</em>	→ any Unicode lowercase letter
- 
-<em>large</em>		→ <em>ascLarge</em> | <em>uniLarge</em>
-<em>ascLarge</em>	→ <tt>A</tt> | <tt>B</tt> | … | <tt>Z</tt>
-<em>uniLarge</em>	→ any uppercase or titlecase Unicode letter
-<em>symbol</em>		→ <em>ascSymbol</em> | <em>uniSymbol</em><sub>⟨<em>special</em> | _ | " | '⟩</sub>
- 
-<em>ascSymbol</em>	→ <tt>!</tt> | <tt>#</tt> | <tt>$</tt> | <tt>%</tt> | <tt>&</tt> | <tt>⋆</tt> | <tt>+</tt> | <tt>.</tt> | <tt>/</tt> | <tt><</tt> | <tt>=</tt> | <tt>></tt> | <tt>?</tt> | <tt>@</tt>
-                | <tt>\</tt> | <tt>^</tt> | <tt>|</tt> | <tt>-</tt> | <tt>~</tt> | <tt>:</tt>
-<em>uniSymbol</em>	→ any Unicode symbol or punctuation
-<em>digit</em>		→ <em>ascDigit</em> | <em>uniDigit</em>
-<em>ascDigit</em>	→ <tt>0</tt> | <tt>1</tt> | … | <tt>9</tt>
-<em>uniDigit</em>	→ any Unicode decimal digit
-<em>octit</em>		→ <tt>0</tt> | <tt>1</tt> | … | <tt>7</tt>
-<em>hexit</em>		→ <em>digit</em> | <tt>A</tt> | … | <tt>F</tt> | <tt>a</tt> | … | <tt>f</tt>
- 
-<em>varid</em>		→ (<em>small</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <tt>'</tt> })<sub>⟨reservedid⟩</sub>
-<em>conid</em>		→ <em>large</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <tt>'</tt> }
-<em>reservedid</em>	→ <tt>case</tt> | <tt>class</tt> | <tt>data</tt> | <tt>default</tt> | <tt>deriving</tt> | <tt>do</tt> | <tt>else</tt>
-		| <tt>foreign</tt> | <tt>if</tt> | <tt>import</tt> | <tt>in</tt> | <tt>infix</tt> | <tt>infixl</tt>
-		| <tt>infixr</tt> | <tt>instance</tt> | <tt>let</tt> | <tt>module</tt> | <tt>newtype</tt> | <tt>of</tt>
-		| <tt>then</tt> | <tt>type</tt> | <tt>where</tt> | <tt>_</tt>
- 
-<em>varsym</em>		→ ( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop | dashes⟩</sub>
-<em>consym</em>		→ ( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub>
-<em>reservedop</em>	→ <tt>..</tt> | <tt>:</tt> | <tt>::</tt> | <tt>=</tt> | <tt>\</tt> | <tt>|</tt> | <tt><-</tt> | <tt>-></tt> |  <tt>@</tt> | <tt>~</tt> | <tt>=></tt>
- 
-<em>varid</em>	    	    (variables)
-<em>conid</em>	    	    (constructors)
-<em>tyvar</em>		→ <em>varid</em>	    (type variables)
-<em>tycon</em>		→ <em>conid</em>	    (type constructors)
-<em>tycls</em>		→ <em>conid</em>	    (type classes)
-<em>modid</em>		→ {<em>conid</em> <tt>.</tt>} <em>conid</em>	    (modules)
- 
-<em>qvarid</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>varid</em>
-<em>qconid</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>conid</em>
-<em>qtycon</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>tycon</em>
-<em>qtycls</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>tycls</em>
-<em>qvarsym</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>varsym</em>
-<em>qconsym</em>		→ [ <em>modid</em> <tt>.</tt> ] <em>consym</em>
- 
-<em>decimal</em>		→ <em>digit</em>{<em>digit</em>}
-<em>octal</em>		→ <em>octit</em>{<em>octit</em>}
-<em>hexadecimal</em>	→ <em>hexit</em>{<em>hexit</em>}
- 
-<em>integer</em>		→ <em>decimal</em>
-		| <tt>0o</tt> <em>octal</em> | <tt>0O</tt> <em>octal</em>
-		| <tt>0x</tt> <em>hexadecimal</em> | <tt>0X</tt> <em>hexadecimal</em>
-<em>float</em>		→ <em>decimal</em> <tt>.</tt> <em>decimal</em> [<em>exponent</em>]
-		|	<em>decimal</em> <em>exponent</em>
-<em>exponent</em>	→ (<tt>e</tt> | <tt>E</tt>) [<tt>+</tt> | <tt>-</tt>] <em>decimal</em>
- 
-<em>char</em>		→ <tt>'</tt> (<em>graphic</em><sub>⟨<tt>'</tt> | <tt>\</tt>⟩</sub> | <em>space</em> | <em>escape</em><sub>⟨<tt>\&</tt>⟩</sub>) <tt>'</tt>
-<em>string</em>		→ <tt>"</tt> {<em>graphic</em><sub>⟨<tt>"</tt> | <tt>\</tt>⟩</sub> | <em>space</em> | <em>escape</em> | <em>gap</em>} <tt>"</tt>
-<em>escape</em>		→ <tt>\</tt> ( <em>charesc</em> | <em>ascii</em> | <em>decimal</em> | <tt>o</tt> <em>octal</em> | <tt>x</tt> <em>hexadecimal</em> )
-<em>charesc</em>		→ <tt>a</tt> | <tt>b</tt> | <tt>f</tt> | <tt>n</tt> | <tt>r</tt> | <tt>t</tt> | <tt>v</tt> | <tt>\</tt> | <tt>"</tt> | <tt>'</tt> | <tt>&</tt>
-<em>ascii</em>		→ <tt>^</tt><em>cntrl</em> | <tt>NUL</tt> | <tt>SOH</tt> | <tt>STX</tt> | <tt>ETX</tt> | <tt>EOT</tt> | <tt>ENQ</tt> | <tt>ACK</tt>
-		| <tt>BEL</tt> | <tt>BS</tt> | <tt>HT</tt> | <tt>LF</tt> | <tt>VT</tt> | <tt>FF</tt> | <tt>CR</tt> | <tt>SO</tt> | <tt>SI</tt> | <tt>DLE</tt>
-		| <tt>DC1</tt> | <tt>DC2</tt> | <tt>DC3</tt> | <tt>DC4</tt> | <tt>NAK</tt> | <tt>SYN</tt> | <tt>ETB</tt> | <tt>CAN</tt>
-		| <tt>EM</tt> | <tt>SUB</tt> | <tt>ESC</tt> | <tt>FS</tt> | <tt>GS</tt> | <tt>RS</tt> | <tt>US</tt> | <tt>SP</tt> | <tt>DEL</tt>
-<em>cntrl</em>		→ <em>ascLarge</em> | <tt>@</tt> | <tt>[</tt> | <tt>\</tt> | <tt>]</tt> | <tt>^</tt> | <tt>_</tt>
-<em>gap</em>		→ <tt>\</tt> <em>whitechar</em> {<em>whitechar</em>} <tt>\</tt>
-</pre>
+|||||
+|--|--|--|--|
+|<em>program</em>|→|{ <em>lexeme</em> &#124; <em>whitespace</em> }| |
+|<em>lexeme</em>|→|<em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em>| |
+|		|&#124;| <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em>| |
+|<em>literal</em>|→|<em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em>| |
+|<em>special</em>|→|( &#124; ) &#124; , &#124; ; &#124; [ &#124; ] &#124; ` &#124; { &#124; } | |
+|||||
+|<em>whitespace</em>|→|<em>whitestuff</em> {<em>whitestuff</em>| |
+|<em>whitestuff</em>|→|<em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em>| |
+|<em>whitechar</em>|→|<em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em>| |
+|<em>newline</em>|→|<em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em>| |
+|<em>return</em>|→|a carriage return| |
+|<em>linefeed</em>|→|a line feed| |
+|<em>vertab</em>|→|a vertical tab| |
+|<em>formfeed</em>|→|a form feed| |
+|<em>space</em>|→|a space| |
+|<em>tab</em>|→|a horizontal tab| |
+|<em>uniWhite</em>|→|any Unicode character defined as whitespace| |
+|||||
+|<em>comment</em>|→|dashes [ any⟨symbol⟩ {any} ] newline| |
+|<em>dashes</em>|→|-- {-}| |
+|<em>opencom</em>|→|{-| |
+|<em>closecom</em>|→|-}| |
+|<em>ncomment</em>|→|<em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em>| |
+|<em>ANY seq</em>|→|{<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub>| |
+|<em>ANY</em>|→|<em>graphic</em> &#124; <em>whitechar</em>| |
+|<em>any</em>|→|<em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em>| |
+|<em>graphic</em>|→|<em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; " &#124; '| |
+|||||
+|<em>small</em>|→|<em>ascSmall</em> &#124; <em>uniSmall</em> &#124; _| |
+|<em>ascSmall</em>|→|<tt>a</tt> &#124; <tt>b</tt> &#124; … &#124; <tt>z</tt>| |
+|<em>uniSmall</em>|→|any Unicode lowercase letter| |
+|||||
+|<em>large</em>|→|<em>ascLarge</em> &#124; <em>uniLarge</em>| |
+|<em>ascLarge</em>|→|<tt>A</tt> &#124; <tt>B</tt> &#124; … &#124; <tt>Z</tt>| |
+|<em>uniLarge</em>|→|any uppercase or titlecase Unicode letter| |
+|<em>symbol</em>|→|<em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; _ &#124; " &#124; '⟩</sub>| |
+|||||
+|<em>ascSymbol</em>|→|<tt>!</tt> &#124; <tt>#</tt> &#124; <tt>$</tt> &#124; <tt>%</tt> &#124; <tt>&</tt> &#124; <tt>⋆</tt> &#124; <tt>+</tt> &#124; <tt>.</tt> &#124; <tt>/</tt> &#124; <tt><</tt> &#124; <tt>=</tt> &#124; <tt>></tt> &#124; <tt>?</tt> &#124; <tt>@</tt>| |
+|                |&#124;| <tt>\\</tt> &#124; <tt>^</tt> &#124; <tt>&#124;</tt> &#124; <tt>-</tt> &#124; <tt>~</tt> &#124; <tt>:</tt>| |
+|<em>uniSymbol</em>|→|any Unicode symbol or punctuation| |
+|<em>digit</em>|→|<em>ascDigit</em> &#124; <em>uniDigit</em>| |
+|<em>ascDigit</em>|→|<tt>0</tt> &#124; <tt>1</tt> &#124; … &#124; <tt>9</tt>| |
+|<em>uniDigit</em>|→|any Unicode decimal digit| |
+|<em>octit</em>|→|<tt>0</tt> &#124; <tt>1</tt> &#124; … &#124; <tt>7</tt>| |
+|<em>hexit</em>|→|<em>digit</em> &#124; <tt>A</tt> &#124; … &#124; <tt>F</tt> &#124; <tt>a</tt> &#124; … &#124; <tt>f</tt>| |
+|||||
+|<em>varid</em>|→|(<em>small</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; <tt>'</tt> })<sub>⟨reservedid⟩</sub>| |
+|<em>conid</em>|→|<em>large</em> {<em>small</em> &#124; <em>large</em> &#124; <em>digit</em> &#124; <tt>'</tt> }| |
+|<em>reservedid</em>|→|<tt>case</tt> &#124; <tt>class</tt> &#124; <tt>data</tt> &#124; <tt>default</tt> &#124; <tt>deriving</tt> &#124; <tt>do</tt> &#124; <tt>else</tt>| |
+|		|&#124;| <tt>foreign</tt> &#124; <tt>if</tt> &#124; <tt>import</tt> &#124; <tt>in</tt> &#124; <tt>infix</tt> &#124; <tt>infixl</tt>| |
+|		|&#124;| <tt>infixr</tt> &#124; <tt>instance</tt> &#124; <tt>let</tt> &#124; <tt>module</tt> &#124; <tt>newtype</tt> &#124; <tt>of</tt>| |
+|		|&#124;| <tt>then</tt> &#124; <tt>type</tt> &#124; <tt>where</tt> &#124; <tt>_</tt>| |
+|||||
+|<em>varsym</em>|→|( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop &#124; dashes⟩</sub>| |
+|<em>consym</em>|→|( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub>| |
+|<em>reservedop</em>|→|<tt>..</tt> &#124; <tt>:</tt> &#124; <tt>::</tt> &#124; <tt>=</tt> &#124; <tt>\\</tt> &#124; <tt>&#124;</tt> &#124; <tt><-</tt> &#124; <tt>-></tt> &#124;  <tt>@</tt> &#124; <tt>~</tt> &#124; <tt>=></tt>| |
+|||||
+|<em>varid</em>| | |(variables)|
+|<em>conid</em>| | |(constructors)|
+|<em>tyvar</em>|→|<em>varid</em>|(type variables)|
+|<em>tycon</em>|→|<em>conid</em>|(type constructors)|
+|<em>tycls</em>|→|<em>conid</em>|(type classes)|
+|<em>modid</em>|→|{<em>conid</em> <tt>.</tt>} <em>conid</em>|(modules)|
+|||||
+|<em>qvarid</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>varid</em>| |
+|<em>qconid</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>conid</em>| |
+|<em>qtycon</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>tycon</em>| |
+|<em>qtycls</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>tycls</em>| |
+|<em>qvarsym</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>varsym</em>| |
+|<em>qconsym</em>|→|[ <em>modid</em> <tt>.</tt> ] <em>consym</em>| |
+|||||
+|<em>decimal</em>|→|<em>digit</em>{<em>digit</em>| |
+|<em>octal</em>|→|<em>octit</em>{<em>octit</em>| |
+|<em>hexadecimal</em>|→|<em>hexit</em>{<em>hexit</em>| |
+|||||
+|<em>integer</em>|→|<em>decimal</em>| |
+|		|&#124;| <tt>0o</tt> <em>octal</em> &#124; <tt>0O</tt> <em>octal</em>| |
+|		|&#124;| <tt>0x</tt> <em>hexadecimal</em> &#124; <tt>0X</tt> <em>hexadecimal</em>| |
+|<em>float</em>|→|<em>decimal</em> <tt>.</tt> <em>decimal</em> [<em>exponent</em>| |
+|		|&#124;|	<em>decimal</em> <em>exponent</em>| |
+|<em>exponent</em>|→|(<tt>e</tt> &#124; <tt>E</tt>) [<tt>+</tt> &#124; <tt>-</tt>] <em>decimal</em>| |
+|||||
+|<em>char</em>|→|<tt>'</tt> (<em>graphic</em><sub>⟨<tt>'</tt> &#124; <tt>\\</tt>⟩</sub> &#124; <em>space</em> &#124; <em>escape</em><sub>⟨<tt>\&</tt>⟩</sub>) <tt>'</tt>| |
+|<em>string</em>|→|<tt>"</tt> {<em>graphic</em><sub>⟨<tt>"</tt> &#124; <tt>\\</tt>⟩</sub> &#124; <em>space</em> &#124; <em>escape</em> &#124; <em>gap</em>} <tt>"</tt>| |
+|<em>escape</em>|→|<tt>\\</tt> ( <em>charesc</em> &#124; <em>ascii</em> &#124; <em>decimal</em> &#124; <tt>o</tt> <em>octal</em> &#124; <tt>x</tt> <em>hexadecimal</em> )| |
+|<em>charesc</em>|→|<tt>a</tt> &#124; <tt>b</tt> &#124; <tt>f</tt> &#124; <tt>n</tt> &#124; <tt>r</tt> &#124; <tt>t</tt> &#124; <tt>v</tt> &#124; <tt>\\</tt> &#124; <tt>"</tt> &#124; <tt>'</tt> &#124; <tt>&</tt>| |
+|<em>ascii</em>|→|<tt>^</tt><em>cntrl</em> &#124; <tt>NUL</tt> &#124; <tt>SOH</tt> &#124; <tt>STX</tt> &#124; <tt>ETX</tt> &#124; <tt>EOT</tt> &#124; <tt>ENQ</tt> &#124; <tt>ACK</tt>| |
+|		|&#124;| <tt>BEL</tt> &#124; <tt>BS</tt> &#124; <tt>HT</tt> &#124; <tt>LF</tt> &#124; <tt>VT</tt> &#124; <tt>FF</tt> &#124; <tt>CR</tt> &#124; <tt>SO</tt> &#124; <tt>SI</tt> &#124; <tt>DLE</tt>| |
+|		|&#124;| <tt>DC1</tt> &#124; <tt>DC2</tt> &#124; <tt>DC3</tt> &#124; <tt>DC4</tt> &#124; <tt>NAK</tt> &#124; <tt>SYN</tt> &#124; <tt>ETB</tt> &#124; <tt>CAN</tt>| |
+|		|&#124;| <tt>EM</tt> &#124; <tt>SUB</tt> &#124; <tt>ESC</tt> &#124; <tt>FS</tt> &#124; <tt>GS</tt> &#124; <tt>RS</tt> &#124; <tt>US</tt> &#124; <tt>SP</tt> &#124; <tt>DEL</tt>| |
+|<em>cntrl</em>|→|<em>ascLarge</em> &#124; <tt>@</tt> &#124; <tt>[</tt> &#124; <tt>\\</tt> &#124; <tt>]</tt> &#124; <tt>^</tt> &#124; <tt>_</tt>| |
+|<em>gap</em>|→|<tt>\\</tt> <em>whitechar</em> {<em>whitechar</em>} <tt>\\</tt>| |
 
 ## レイアウト
 
@@ -226,16 +226,16 @@ let { x = e; y = x } in e'
 ```hs
    This literate program prompts the user for a number  
    and prints the factorial of that number:  
- 
+
 > main :: IO ()  
- 
+
 > main = do putStr "Enter a number: "  
 >           l <- readLine  
 >           putStr "n!= "  
 >           print (fact (read l))  
- 
+
   This is the factorial function.  
- 
+
 > fact :: Integer -> Integer  
 > fact 0 = 1  
 > fact n = n ⋆ fact (n-1)
@@ -250,18 +250,18 @@ let { x = e; y = x } in e'
 
 ```tex
 \documentstyle{article}  
- 
+
 \begin{document}  
- 
+
 \chapter{Introduction}  
- 
+
 This is a trivial program that prints the first 20 factorials.  
- 
+
 \begin{code}  
 main :: IO ()  
 main =  print [ (n, product [1..n]) | n <- [1..20]]  
 \end{code}  
- 
+
 \end{document}
 ```
 
@@ -269,216 +269,216 @@ main =  print [ (n, product [1..n]) | n <- [1..20]]
 
 ## 文脈自由構文
 
-<pre>
-module	→	module modid [exports] where body 
-|	body
-body	→	{ impdecls ; topdecls }
-|	{ impdecls }
-|	{ topdecls }
- 
-impdecls	→	impdecl1 ; … ; impdecln	    (n ≥ 1)
- 
-exports	→	( export1 , … , exportn [ , ] )	    (n ≥ 0)
- 
-export	→	qvar
-|	qtycon [(..) | ( cname1 , … , cnamen )]	    (n ≥ 0)
-|	qtycls [(..) | ( qvar1 , … , qvarn )]	    (n ≥ 0)
-|	module modid
- 
-impdecl	→	import [qualified] modid [as modid] [impspec]
-|		    (empty declaration)
- 
-impspec	→	( import1 , … , importn [ , ] )	    (n ≥ 0)
-|	hiding ( import1 , … , importn [ , ] )	    (n ≥ 0)
- 
-import	→	var
-|	tycon [ (..) | ( cname1 , … , cnamen )]	    (n ≥ 0)
-|	tycls [(..) | ( var1 , … , varn )]	    (n ≥ 0)
-cname	→	var | con
- 
-topdecls	→	topdecl1 ; … ; topdecln	    (n ≥ 0)
-topdecl	→	type simpletype = type
-|	data [context =>] simpletype [= constrs] [deriving]
-|	newtype [context =>] simpletype = newconstr [deriving]
-|	class [scontext =>] tycls tyvar [where cdecls]
-|	instance [scontext =>] qtycls inst [where idecls]
-|	default (type1 , … , typen)	    (n ≥ 0)
-|	foreign fdecl
-|	decl
- 
-decls	→	{ decl1 ; … ; decln }	    (n ≥ 0)
-decl	→	gendecl
-|	(funlhs | pat) rhs
- 
-cdecls	→	{ cdecl1 ; … ; cdecln }	    (n ≥ 0)
-cdecl	→	gendecl
-|	(funlhs | var) rhs
- 
-idecls	→	{ idecl1 ; … ; idecln }	    (n ≥ 0)
-idecl	→	(funlhs | var) rhs
-|		    (empty)
- 
-gendecl	→	vars :: [context =>] type	    (type signature)
-|	fixity [integer] ops	    (fixity declaration)
-|		    (empty declaration)
- 
-ops	→	op1 , … , opn	    (n ≥ 1)
-vars	→	var1 , …, varn	    (n ≥ 1)
-fixity	→	infixl | infixr | infix
- 
-type	→	btype [-> type]	    (function type)
- 
-btype	→	[btype] atype	    (type application)
- 
-atype	→	gtycon
-|	tyvar
-|	( type1 , … , typek )	    (tuple type, k ≥ 2)
-|	[ type ]	    (list type)
-|	( type )	    (parenthesized constructor)
- 
-gtycon	→	qtycon
-|	()	    (unit type)
-|	[]	    (list constructor)
-|	(->)	    (function constructor)
-|	(,{,})	    (tupling constructors)
- 
-context	→	class
-|	( class1 , … , classn )	    (n ≥ 0)
-class	→	qtycls tyvar
-|	qtycls ( tyvar atype1 … atypen )	    (n ≥ 1)
-scontext	→	simpleclass
-|	( simpleclass1 , … , simpleclassn )	    (n ≥ 0)
-simpleclass	→	qtycls tyvar
- 
-simpletype	→	tycon tyvar1 … tyvark	    (k ≥ 0)
-constrs	→	constr1 | … | constrn	    (n ≥ 1)
-constr	→	con [!] atype1 … [!] atypek	    (arity con  =  k, k ≥ 0)
-|	(btype | ! atype) conop (btype | ! atype)	    (infix conop)
-|	con { fielddecl1 , … , fielddecln }	    (n ≥ 0)
-newconstr	→	con atype
-|	con { var :: type }
-fielddecl	→	vars :: (type | ! atype)
-deriving	→	deriving (dclass | (dclass1, … , dclassn))	    (n ≥ 0)
-dclass	→	qtycls
- 
-inst	→	gtycon
-|	( gtycon tyvar1 … tyvark )	    (k ≥ 0, tyvars distinct)
-|	( tyvar1 , … , tyvark )	    (k ≥ 2, tyvars distinct)
-|	[ tyvar ]
-|	( tyvar1 -> tyvar2 )	    tyvar1 and tyvar2 distinct
- 
-fdecl	→	import callconv [safety] impent var :: ftype	    (define variable)
-|	export callconv expent var :: ftype	    (expose variable)
-callconv	→	ccall | stdcall | cplusplus	    (calling convention)
-|	jvm | dotnet
-|	 system-specific calling conventions
-impent	→	[string]	    (see Section 8.5.1)
-expent	→	[string]	    (see Section 8.5.1)
-safety	→	unsafe | safe
- 
-ftype	→	frtype
-|	fatype  →  ftype
-frtype	→	fatype
-|	()
-fatype	→	qtycon atype1 … atypek	    (k  ≥  0)
- 
-funlhs	→	var apat { apat }
-|	pat varop pat
-|	( funlhs ) apat { apat }
- 
-rhs	→	= exp [where decls]
-|	gdrhs [where decls]
- 
-gdrhs	→	guards = exp [gdrhs]
- 
-guards	→	| guard1, …, guardn	    (n ≥ 1)
-guard	→	pat <- infixexp	    (pattern guard)
-|	let decls	    (local declaration)
-|	infixexp	    (boolean guard)
- 
-exp	→	infixexp :: [context =>] type	    (expression type signature)
-|	infixexp
- 
-infixexp	→	lexp qop infixexp	    (infix operator application)
-|	- infixexp	    (prefix negation)
-|	lexp
- 
-lexp	→	\ apat1 … apatn -> exp	    (lambda abstraction, n ≥ 1)
-|	let decls in exp	    (let expression)
-|	if exp [;] then exp [;] else exp	    (conditional)
-|	case exp of { alts }	    (case expression)
-|	do { stmts }	    (do expression)
-|	fexp
-fexp	→	[fexp] aexp	    (function application)
- 
-aexp	→	qvar	    (variable)
-|	gcon	    (general constructor)
-|	literal
-|	( exp )	    (parenthesized expression)
-|	( exp1 , … , expk )	    (tuple, k ≥ 2)
-|	[ exp1 , … , expk ]	    (list, k ≥ 1)
-|	[ exp1 [, exp2] .. [exp3] ]	    (arithmetic sequence)
-|	[ exp | qual1 , … , qualn ]	    (list comprehension, n ≥ 1)
-|	( infixexp qop )	    (left section)
-|	( qop⟨-⟩ infixexp )	    (right section)
-|	qcon { fbind1 , … , fbindn }	    (labeled construction, n ≥ 0)
-|	aexp⟨qcon⟩ { fbind1 , … , fbindn }	    (labeled update, n  ≥  1)
- 
-qual	→	pat <- exp	    (generator)
-|	let decls	    (local declaration)
-|	exp	    (guard)
- 
-alts	→	alt1 ; … ; altn	    (n ≥ 1)
-alt	→	pat -> exp [where decls]
-|	pat gdpat [where decls]
-|		    (empty alternative)
- 
-gdpat	→	guards -> exp [ gdpat ]
- 
-stmts	→	stmt1 … stmtn exp [;]	    (n ≥ 0)
-stmt	→	exp ;
-|	pat <- exp ;
-|	let decls ;
-|	;	    (empty statement)
- 
-fbind	→	qvar = exp
- 
-pat	→	lpat qconop pat	    (infix constructor)
-|	lpat
- 
-lpat	→	apat
-|	- (integer | float)	    (negative literal)
-|	gcon apat1 … apatk	    (arity gcon  =  k, k ≥ 1)
- 
-apat	→	var [ @ apat]	    (as pattern)
-|	gcon	    (arity gcon  =  0)
-|	qcon { fpat1 , … , fpatk }	    (labeled pattern, k ≥ 0)
-|	literal
-|	_	    (wildcard)
-|	( pat )	    (parenthesized pattern)
-|	( pat1 , … , patk )	    (tuple pattern, k ≥ 2)
-|	[ pat1 , … , patk ]	    (list pattern, k ≥ 1)
-|	~ apat	    (irrefutable pattern)
- 
-fpat	→	qvar = pat
- 
-gcon	→	()
-|	[]
-|	(,{,})
-|	qcon
- 
-var	→	varid | ( varsym )	    (variable)
-qvar	→	qvarid | ( qvarsym )	    (qualified variable)
-con	→	conid | ( consym )	    (constructor)
-qcon	→	qconid | ( gconsym )	    (qualified constructor)
-varop	→	varsym | `  varid `	    (variable operator)
-qvarop	→	qvarsym | `  qvarid `	    (qualified variable operator)
-conop	→	consym | `  conid `	    (constructor operator)
-qconop	→	gconsym | `  qconid `	    (qualified constructor operator)
-op	→	varop | conop	    (operator)
-qop	→	qvarop | qconop	    (qualified operator)
-gconsym	→	: | qconsym
-</pre>
+|||||
+|--|--|--|--|
+|<em>module</em>|→|<tt>module</tt> <em>modid</em> [<em>exports</em>] <tt>where</tt> <em>body</em>| |
+| |&#124;|	<em>body</em>| |
+|<em>body</em>|→|{ <em>impdecls</em> <tt>;</tt> <em>topdecls</em> }| |
+| |&#124;|	{ <em>impdecls</em> }| |
+| |&#124;|	{ <em>topdecls</em> }| |
+|||||
+|<em>impdecls</em>|→|<em>impdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>impdecl<sub>n</sub></em>|(<em>n</em> ≥ 1)|
+|||||
+|<em>exports</em>|→|( <em>export<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>export<sub>n</sub></em> [ <tt>,</tt> ] )|(<em>n</em> ≥ 0)|
+|||||
+|<em>export</em>|→|<em>qvar</em>| |
+| |&#124;|	<em>qtycon</em> [(..) &#124; ( <em>cname<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>cname<sub>n</sub></em> )]|(<em>n</em> ≥ 0)|
+| |&#124;|	<em>qtycls</em> [(..) &#124; ( <em>qvar<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>qvar<sub>n</sub></em> )]|(<em>n</em> ≥ 0)|
+| |&#124;|	<tt>module</tt> <em>modid</em>| |
+|||||
+|<em>impdecl</em>|→|<tt>import</tt> [<tt>qualified</tt>] <em>modid</em> [<tt>as</tt> <em>modid</em>] [<em>impspec</em>]| |
+| |&#124;| |(empty declaration)|
+|||||
+|<em>impspec</em>|→|( <em>import<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>import<sub>n</sub></em> [ <tt>,</tt> ] ) |(<em>n</em> ≥ 0)|
+| |&#124;|	<tt>hiding</tt> ( <em>import<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>import<sub>n</sub></em> [ <tt>,</tt> ] )	    |(<em>n</em> ≥ 0)|
+|||||
+|<em>import</em>|→|<em>var</em>| |
+| |&#124;|	<em>tycon</em> [ (..) &#124; ( <em>cname<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>cname<sub>n</sub></em> )]	    |(<em>n</em> ≥ 0)|
+| |&#124;|	<em>tycls</em> [(..) &#124; ( <em>var<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>var<sub>n</sub></em> )]	    |(<em>n</em> ≥ 0)|
+|<em>cname</em>|→|<em>var</em> &#124; <em>con</em>| |
+|||||
+|<em>topdecls</em>|→|<em>topdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>topdecl<sub>n</sub></em>	    |(<em>n</em> ≥ 0)|
+|<em>topdecl</em>|→|<tt>type</tt> <em>simpletype</em> = <em>type</em>| |
+| |&#124;|	<tt>data</tt> [<em>context</em> =>] <em>simpletype</em> [= <em>constrs</em>] [<em>deriving</em>]| |
+| |&#124;|	<tt>newtype</tt> [<em>context</em> =>] <em>simpletype</em> = <em>newconstr</em> [<em>deriving</em>]| |
+| |&#124;|	<tt>class</tt> [<em>scontext</em> =>] <em>tycls</em> <em>tyvar</em> [<tt>where</tt> <em>cdecls</em>]| |
+| |&#124;|	<tt>instance</tt> [<em>scontext</em> =>] <em>qtycls</em> <em>inst</em> [<tt>where</tt> <em>idecls</em>]| |
+| |&#124;|	<tt>default</tt> (type1 <tt>,</tt> … <tt>,</tt> <em>type<sub>n</sub></em>)	    |(<em>n</em> ≥ 0)|
+| |&#124;|	<tt>foreign</tt> <em>fdecl</em>| |
+| |&#124;|	<em>decl</em>| |
+|||||
+|<em>decls</em>|→|{ <em>decl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>decl<sub>n</sub></em> }	    |(<em>n</em> ≥ 0)|
+|<em>decl</em>|→|<em>gendecl</em>| |
+| |&#124;|	(<em>funlhs</em> &#124; <em>pat</em>) <em>rhs</em>| |
+|||||
+|<em>cdecls</em>|→|{ <em>cdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>cdecl<sub>n</sub></em> }	    |(<em>n</em> ≥ 0)|
+|<em>cdecl</em>|→|<em>gendecl</em>| |
+| |&#124;|	(<em>funlhs</em> &#124; <em>var</em>) <em>rhs</em>| |
+|||||
+|<em>idecls</em>|→|{ <em>idecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>idecl<sub>n</sub></em> }	    |(<em>n</em> ≥ 0)|
+|<em>idecl</em>|→|(<em>funlhs</em> &#124; <em>var</em>) <em>rhs</em>| |
+| |&#124;|		    |(empty)|
+|||||
+|<em>gendecl</em>|→|<em>vars</em> <tt>::</tt> [<em>context</em> =>] <em>type</em>	    |(type signature)|
+| |&#124;|	<em>fixity</em> [<em>integer</em>] <em>ops</em>	    |(fixity declaration)|
+| |&#124;|		    |(empty declaration)|
+|||||
+|<em>ops</em>|→|<em>op<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>op<sub>n</sub></em>	    |(<em>n</em> ≥ 1)|
+|<em>vars</em>|→|<em>var<sub>1</sub></em> <tt>,</tt> …, <em>var<sub>n</sub></em>	    |(<em>n</em> ≥ 1)|
+|<em>fixity</em>|→|<tt>infixl</tt> &#124; <tt>infixr</tt> &#124; <em>infix</em>| |
+|||||
+|<em>type</em>|→|<em>btype</em> [-> <em>type</em>]	    |(function type)|
+|||||
+|<em>btype</em>|→|[<em>btype</em>] <em>atype</em>	    |(type application)
+|||||
+|<em>atype</em>|→|<em>gtycon</em>| |
+| |&#124;|	<em>tyvar</em>| |
+| |&#124;|	( <em>type<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>type<sub>k</sub></em> )	    |(tuple type, <em>k</em> ≥ 2)|
+| |&#124;|	[ <em>type</em> ]	    |(list type)
+| |&#124;|	( <em>type</em> )	    |(parenthesized constructor)
+|||||
+|<em>gtycon</em>|→|<em>qtycon</em>| |
+| |&#124;|	<tt>()</tt>	    |(unit type)
+| |&#124;|	<tt>[]</tt>	    |(list constructor)
+| |&#124;|	<tt>(->)</tt>	    |(function constructor)
+| |&#124;|	<tt>(,{,})</tt>	    |(tupling constructors)
+|||||
+|<em>context</em>|→|<em>class</em>| |
+| |&#124;|	( <em>class<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>class<sub>n</sub></em> )	    |(<em>n</em> ≥ 0)|
+|<em>class</em>|→|<em>qtycls</em> <em>tyvar</em>| |
+| |&#124;|	<em>qtycls</em> ( <em>tyvar</em> <em>atype<sub>1</sub></em> … <em>atype<sub>n</sub></em> )	    |(<em>n</em> ≥ 1)|
+|<em>scontext</em>|→|<em>simpleclass</em>| |
+| |&#124;|	( <em>simpleclass<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>simpleclass<sub>n</sub></em> )	    |(<em>n</em> ≥ 0)|
+|<em>simpleclass</em>|→|<em>qtycls</em> <em>tyvar</em>| |
+|||||
+|<em>simpletype</em>|→|<em>tycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em>	    |(<em>k</em> ≥ 0)|
+|<em>constrs</em>|→|<em>constr<sub>1</sub></em> &#124; … &#124; <em>constr<sub>n</sub></em>	    |(<em>n</em> ≥ 1)|
+|<em>constr</em>|→|<em>con</em> [!] <em>atype<sub>1</sub></em> … [!] <em>atype<sub>k</sub></em>	    |(arity <em>con</em>  =  <em>k</em>, <em>k</em> ≥ 0)|
+| |&#124;|	(<em>btype</em> &#124; ! <em>atype</em>) <em>conop</em> (<em>btype</em> &#124; ! <em>atype</em>)	    |(infix <em>conop</em>)
+| |&#124;|	<em>con</em> { <em>fielddecl<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fielddecl<sub>n</sub></em> }	    |(<em>n</em> ≥ 0)|
+|<em>newconstr</em>|→|<em>con</em> <em>atype</em>| |
+| |&#124;|	<em>con</em> { <em>var</em> <tt>::</tt> <em>type</em> }| |
+|<em>fielddecl</em>|→|<em>vars</em> <tt>::</tt> (<em>type</em> &#124; ! <em>atype</em>) |
+|<em>deriving</em>|→|<tt>deriving</tt> (dclass &#124; (<em>dclass<tt>1</tt></em>, … <tt>,</tt> <em>dclass<sub>n</sub></em>))	    |(<em>n</em> ≥ 0)|
+|<em>dclass</em>|→|<em>qtycls</em>| |
+|||||
+|<em>inst</em>|→|<em>gtycon</em>| |
+| |&#124;|	( <em>gtycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em> )	    |(<em>k</em> ≥ 0, <em>tyvars</em> distinct)
+| |&#124;|	( <em>tyvar<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>tyvar<sub>k</sub></em> )	    |(<em>k</em> ≥ 2, <em>tyvars</em> distinct)
+| |&#124;|	[ <em>tyvar</em> ]| |
+| |&#124;|	( <em>tyvar<sub>1</sub></em> -> <em>tyvar<sub>2</sub></em> )	    |<em>tyvar<sub>1</sub></em> and <em>tyvar<sub>2</sub></em> distinct|
+|||||
+|<em>fdecl</em>|→|<tt>import</tt> <em>callconv</em> [<em>safety</em>] <em>impent</em> <em>var</em> <tt>::</tt> <em>ftype</em>	    |(define variable)|
+| |&#124;|	<tt>export</tt> <em>callconv</em> <em>expent</em> <em>var</em> <tt>::</tt> <em>ftype</em>	    |(expose variable)|
+|<em>callconv</em>|→|<tt>ccall</tt> &#124; <tt>stdcall</tt> &#124; <tt>cplusplus</tt>	    |(calling convention)|
+| |&#124;|	<tt>jvm</tt> &#124; <tt>dotnet</tt>| |
+| |&#124;|	 **system-specific calling conventions**| |
+|<em>impent</em>|→|[<em>string</em>]	    |(see Section [8.5.1]("./8-foreign-function-interface.md"))|
+|<em>expent</em>|→|[<em>string</em>]	    |(see Section [8.5.1]("./8-foreign-function-interface.md"))|
+|<em>safety</em>|→|<tt>unsafe</tt> &#124; <tt>safe</tt>| |
+|||||
+|<em>ftype</em>|→|<em>frtype</em>| |
+| |&#124;|	<em>fatype</em> → <em>ftype</em>| |
+|<em>frtype</em>|→|<em>fatype</em>| |
+| |&#124;|	()| |
+|<em>fatype</em>|→|<em>qtycon</em> <em>atype<sub>1</sub></em> … <em>atype<sub>k</sub></em>	    |(<em>k</em>  ≥  0)|
+|||||
+|<em>funlhs</em>|→|<em>var</em> <em>apat</em> { <em>apat</em> }| |
+| |&#124;|	<em>pat</em> <em>varop</em> <em>pat</em>| |
+| |&#124;|	( <em>funlhs</em> ) <em>apat</em> { <em>apat</em> }| |
+|||||
+|<em>rhs</em>|→|= <em>exp</em> [<tt>where</tt> <em>decls</em>]| |
+| |&#124;|	<em>gdrhs</em> [<tt>where</tt> <em>decls</em>]| |
+|||||
+|<em>gdrhs</em>|→|<em>guards</em> = <em>exp</em> [<em>gdrhs</em>]| |
+|||||
+|<em>guards</em>|→|&#124; <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>	    |(<em>n</em> ≥ 1)|
+|<em>guard</em>|→|<em>pat</em> <- <em>infixexp</em>	    |(pattern guard)|
+| |&#124;|	<tt>let</tt> <em>decls</em>	    |(local declaration)|
+| |&#124;|	<em>infixexp</em>	    |(boolean guard)|
+|||||
+|<em>exp</em>|→|<em>infixexp</em> <tt>::</tt> [<em>context</em> =>] <em>type</em>	    |(expression type signature)|
+| |&#124;|	<em>infixexp</em>| |
+|||||
+|<em>infixexp</em>|→|<em>lexp</em> <em>qop</em> <em>infixexp</em>	    |(infix operator application)|
+| |&#124;|	- <em>infixexp</em>	    |(prefix negation)|
+| |&#124;|	<em>lexp</em>| |
+|||||
+|<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>	    |(lambda abstraction, <em>n</em> ≥ 1)|
+| |&#124;|	<tt>let</tt> <em>decls</em> <tt>in</tt> <em>exp</em>	    |(let expression)|
+| |&#124;|	<tt>if</tt> <em>exp</em> [<tt>;</tt>] <tt>then</tt> <em>exp</em> [<tt>;</tt>] <tt>else</tt> <em>exp</em>	    |(conditional)|
+| |&#124;|	<tt>case</tt> <em>exp</em> <tt>of</tt> { <em>alts</em> }	    |(case expression)|
+| |&#124;|	<tt>do</tt> { <em>stmts</em> }	    |(do expression)|
+| |&#124;|	<em>fexp</em>| |
+|<em>fexp</em>|→|[<em>fexp</em>] <em>aexp</em>	    |(function application)|
+|||||
+|<em>aexp</em>|→|<em>qvar</em>	    |(variable)|
+| |&#124;|	<em>gcon</em>	    |(general constructor)|
+| |&#124;|	<em>literal</em>| |
+| |&#124;|	( <em>exp</em> )	    |(parenthesized expression)|
+| |&#124;|	( <em>exp<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>exp<sub>k</sub></em> )	    |(tuple, <em>k</em> ≥ 2)|
+| |&#124;|	[ <em>exp<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>exp<sub>k</sub></em> ]	    |(list, <em>k</em> ≥ 1)|
+| |&#124;|	[ <em>exp<sub>1</sub></em> [<tt>,</tt> <em>exp<sub>2</sub></em>] .. [<em>exp<sub>3</sub></em>] ]	    |(arithmetic sequence)|
+| |&#124;|	[ <em>exp</em> &#124; <em>qual<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>qual<sub>n</sub></em> ]	    |(list comprehension, <em>n</em> ≥ 1)|
+| |&#124;|	( <em>infixexp</em> <em>qop</em> )	    |(left section)
+| |&#124;|	( <em>qop</em>⟨-⟩ <em>infixexp</em> )	    |(right section)
+| |&#124;|	<em>qcon</em> { <em>fbind<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fbind<sub>n</sub></em> }	    |(labeled construction, <em>n</em> ≥ 0)|
+| |&#124;|	<em>aexp</em>⟨qcon⟩ { <em>fbind<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fbind<sub>n</sub></em> }	    |(labeled update, <em>n</em>  ≥  1)|
+|||||
+|<em>qual</em>|→|<em>pat</em> <- <em>exp</em>	    |(generator)|
+| |&#124;|	<tt>let</tt> <em>decls</em>	    |(local declaration)
+| |&#124;|	<em>exp</em>	    |(guard)|
+|||||
+|<em>alts</em>|→|<em>alt<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>alt<sub>n</sub></em>	    |(<em>n</em> ≥ 1)|
+|<em>alt</em>|→|<em>pat</em> -> <em>exp</em> [<tt>where</tt> <em>decls</em>]| |
+| |&#124;|	<em>pat</em> <em>gdpat</em> [<tt>where</tt> <em>decls</em>]| |
+| |&#124;|		    |(empty alternative)|
+|||||
+|<em>gdpat</em>|→|<em>guards</em> -> <em>exp</em> [ <em>gdpat</em> ]| |
+|||||
+|<em>stmts</em>|→|<em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<tt>;</tt>]	    |(<em>n</em> ≥ 0)|
+|<em>stmt</em>|→|<em>exp</em> ;| |
+| |&#124;|	<em>pat</em> <- <em>exp</em> ;| |
+| |&#124;|	<tt>let</tt> <em>decls</em> ;| |
+| |&#124;|	<tt>;</tt>	    |(<em>empty statement</em>)|
+|||||
+|<em>fbind</em>|→|<em>qvar</em> = <em>exp</em>| |
+|||||
+|<em>pat</em>|→|<em>lpat</em> <em>qconop</em> <em>pat</em>	    |(infix constructor)|
+| |&#124;|	<em>lpat</em>| |
+|||||
+|<em>lpat</em>|→|<em>apat</em>| |
+| |&#124;|	- (integer &#124; <em>float</em>)	    |(negative literal)
+| |&#124;|	<em>gcon</em> <em>apat<sub>1</sub></em> … <em>apat<sub>k</sub></em>	    |(arity <em>gcon</em>  =  <em>k</em>, <em>k</em> ≥ 1)|
+|||||
+|<em>apat</em>|→|<em>var</em> [ @ <em>apat</em>]	    |(as pattern)
+| |&#124;|	<em>gcon</em>	    |(arity <em>gcon</em>  =  0)|
+| |&#124;|	<em>qcon</em> { <em>fpat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fpat<sub>k</sub></em> }	    |(labeled pattern, <em>k</em> ≥ 0)|
+| |&#124;|	<em>literal</em>| |
+| |&#124;|	<em>_</em>	    |(wildcard)|
+| |&#124;|	( <em>pat</em> )	    |(parenthesized pattern)
+| |&#124;|	( <em>pat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>pat<sub>k</sub></em> )	    |(tuple pattern, <em>k</em> ≥ 2)|
+| |&#124;|	[ <em>pat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>pat<sub>k</sub></em> ]	    |(list pattern, <em>k</em> ≥ 1)|
+| |&#124;|	~ <em>apat</em>	    |(irrefutable pattern)
+|||||
+|<em>fpat</em>|→|<em>qvar</em> = <em>pat</em>| |
+|||||
+|<em>gcon</em>|→|()| |
+| |&#124;|	[<em></em>]| |
+| |&#124;|	(,{,})| |
+| |&#124;|	<em>qcon</em>| |
+|||||
+|<em>var</em>|→|<em>varid</em> &#124; ( <em>varsym</em> )	    |(variable)|
+|<em>qvar</em>|→|<em>qvarid</em> &#124; ( <em>qvarsym</em> )	    |(qualified variable)
+|<em>con</em>|→|<em>conid</em> &#124; ( <em>consym</em> )	    |(constructor)|
+|<em>qcon</em>|→|<em>qconid</em> &#124; ( <em>gconsym</em> )	    |(qualified constructor)
+|<em>varop</em>|→|<em>varsym</em> &#124; <em>\`</em>  <em>varid</em> <em>\`</em>	    |(variable operator)
+|<em>qvarop</em>|→|<em>qvarsym</em> &#124; <em>\`</em>  <em>qvarid</em> <em>\`</em>	    |(qualified <em>variable</em> operator)
+|<em>conop</em>|→|<em>consym</em> &#124; <em>\`</em>  <em>conid</em> <em>\`</em>	    |(constructor operator)
+|<em>qconop</em>|→|<em>gconsym</em> &#124; <em>\`</em>  <em>qconid</em> <em>\`</em>	    |(qualified <em>constructor</em> operator)
+|<em>op</em>|→|<em>varop</em> &#124; <em>conop</em>	    |(operator)|
+|<em>qop</em>|→|<em>qvarop</em> &#124; <em>qconop</em>	    |(qualified operator)
+|<em>gconsym</em>|→|<tt>:</tt> &#124; <em>qconsym</em>| |
 
 ## 結合性解決
 
@@ -488,22 +488,22 @@ gconsym	→	: | qconsym
 
 ```hs
 import Control.Monad  
- 
+
 type Prec   = Int  
 type Var    = String  
- 
+
 data Op = Op String Prec Fixity  
   deriving (Eq,Show)  
- 
+
 data Fixity = Leftfix | Rightfix | Nonfix  
   deriving (Eq,Show)  
- 
+
 data Exp = Var Var | OpApp Exp Op Exp | Neg Exp  
   deriving (Eq,Show)  
- 
+
 data Tok = TExp Exp | TOp Op | TNeg  
   deriving (Eq,Show)  
- 
+
 resolve :: [Tok] -> Maybe Exp  
 resolve tokens = fmap fst $ parseNeg (Op "" (-1) Nonfix) tokens  
   where  
@@ -516,18 +516,18 @@ resolve tokens = fmap fst $ parseNeg (Op "" (-1) Nonfix) tokens
             parse op1 (Neg r) rest'  
        where  
           Op _ prec1 fix1 = op1  
- 
+
     parse :: Op -> Exp -> [Tok] -> Maybe (Exp, [Tok])  
     parse _   e1 [] = Just (e1, [])  
     parse op1 e1 (TOp op2 : rest)  
        -- case (1): 不当な式をチェック
        | prec1 == prec2 && (fix1 /= fix2 || fix1 == Nonfix)  
        = Nothing  
- 
+
        -- case (2): op1とop2は左結合であるべきである
        | prec1 > prec2 || (prec1 == prec2 && fix1 == Leftfix)  
        = Just (e1, TOp op2 : rest)  
- 
+
        -- case (3): op1とop2は右結合であるべきである
        | otherwise  
        = do (r,rest') <- parseNeg op2 rest  
