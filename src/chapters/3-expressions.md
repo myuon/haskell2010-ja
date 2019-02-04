@@ -200,11 +200,12 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 **変換:** 以下の等式が成り立つ。
 
-<pre><code>(op e)  =       \ x -> x op e
-(e op)  =       \ X -> e op x
-</code></pre>
+```hs
+(op e)  =       \ x -> x op e
+(e op)  =       \ x -> e op x
+```
 
-`op`は二項演算子で、`e`は式である。and x is a variable that does not occur free in e.
+`op`は二項演算子で、`e`は式であり、`x`は`e`の中で自由出現ではない変数である。
 </div>
 
 ## 条件文
