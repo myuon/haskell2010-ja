@@ -42,3 +42,7 @@ pre {
 .overline {
   text-decoration: overline;
 }
+
+table td {
+  white-space: nowrap;
+}
