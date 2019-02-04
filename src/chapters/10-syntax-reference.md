@@ -29,7 +29,7 @@ nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
 |<em>literal</em>|→|<em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em>| |
 |<em>special</em>|→|( &#124; ) &#124; , &#124; ; &#124; [ &#124; ] &#124; ` &#124; { &#124; } | |
 |||||
-|<em>whitespace</em>|→|<em>whitestuff</em> {<em>whitestuff</em>| |
+|<em>whitespace</em>|→|<em>whitestuff</em> {<em>whitestuff</em>}| |
 |<em>whitestuff</em>|→|<em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em>| |
 |<em>whitechar</em>|→|<em>newline</em> &#124; <em>vertab</em> &#124; <em>space</em> &#124; <em>tab</em> &#124; <em>uniWhite</em>| |
 |<em>newline</em>|→|<em>return</em> <em>linefeed</em> &#124; <em>return</em> &#124; <em>linefeed</em> &#124; <em>formfeed</em>| |
