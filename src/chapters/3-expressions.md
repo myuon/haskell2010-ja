@@ -2,7 +2,7 @@
 
 # 式
 
-この章では、私たちはHaskellの式の構文と非形式的な意味論を説明する。また必要であらばHaskellカーネルへの変換についても説明する。`let`式の場合を除いて、これらの変換は静的、動的な意味論の両方を保存する。これらの変換を使った束縛されていない変数とコンストラクタは常に`Prelude`によって定義された実体を参照する。例えば、リスト内包表記の変換(セクション[3.11])で使われる`"concatMap"`は`Prelude`によって定義された`concatMap`を意味する。これは識別子`"concatMap"`がリスト内包表記で使われているスコープ内にあるかないかは関係なく、また、(もしスコープ内にあったとしても)束縛されていても関係はない。
+この章では、私たちはHaskellの式の構文と非形式的な意味論を説明する。また必要であらばHaskellカーネルへの変換についても説明する。<code>let</code>式の場合を除いて、これらの変換は静的、動的な意味論の両方を保存する。これらの変換を使った束縛されていない変数とコンストラクタは常に<code>Prelude</code>によって定義された実体を参照する。例えば、リスト内包表記の変換(セクション[3.11])で使われる<code>"concatMap"</code>は<code>Prelude</code>によって定義された<code>concatMap</code>を意味する。これは識別子<code>"concatMap"</code>がリスト内包表記で使われているスコープ内にあるかないかは関係なく、また、(もしスコープ内にあったとしても)束縛されていても関係はない。
 
 |||||
 |--|--|--|--|
@@ -14,10 +14,10 @@
 |            |&#124;|<em>lexp</em>| |
 | | | | |
 |<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
-|        |&#124;|<tt>let</tt> <em>decls</em> <tt>in</tt> <em>exp</em>|(let expression)|
-|        |&#124;|<tt>if</tt> <em>exp</em> [;] <tt>then</tt> <em>exp</em> [;] <tt>else</tt> <em>exp</em>|(conditional)|
-|	       |&#124;|<tt>case</tt> <em>exp</em> of { <em>alts</em> }|(case expression)|
-|        |&#124;|<tt>do</tt> { <em>stmts</em> }|(do expression)|
+|        |&#124;|<code>let</code> <em>decls</em> <code>in</code> <em>exp</em>|(let expression)|
+|        |&#124;|<code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em>|(conditional)|
+|	       |&#124;|<code>case</code> <em>exp</em> of { <em>alts</em> }|(case expression)|
+|        |&#124;|<code>do</code> { <em>stmts</em> }|(do expression)|
 |        |&#124;|<em>fexp</em>| |
 | | | | |
 |<em>fexp</em>|→|[<em>fexp</em>] <em>aexp</em>|(function application)|
@@ -35,7 +35,7 @@
 |        |&#124;|<em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled construction, <em>n</em> ≥ 0)|
 |        |&#124;|<em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled update, <em>n</em>  ≥  1)|
 
-中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション[4.4.2](./4-declarations-and-bindings.md)参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>"x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z"</em> ( <em>qop<sup>(a,i)</sup></em>は`a`と優先順位`i`に関連付いた演算子を意味する)が与えられた場合、括弧は`i = j`でかつ`a = b = l`か`a = b = r`でない時は、<em>"x qop<sup>(a,i)</sup> y"</em>か<em>"y qop<sup>(b,i)</sup> z"</em>のどちらかを囲むよう追加されなければいけない。
+中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション[4.4.2](./4-declarations-and-bindings.md)参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>"x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z"</em> ( <em>qop<sup>(a,i)</sup></em>は<em>a</em>と優先順位<em>i</em>に関連付いた演算子を意味する)が与えられた場合、括弧は<em>i = j</em>でかつ<em>a = b = l</em>か<em>a = b = r</em>でない時は、<em>"x qop<sup>(a,i)</sup> y"</em>か<em>"y qop<sup>(b,i)</sup> z"</em>のどちらかを囲むよう追加されなければいけない。
 
 中置演算子を含む式の解決するためのアルゴリズムの例はセクション[10.6](./10-syntax-reference.md)にある。
 
@@ -64,9 +64,9 @@ error     :: String -> a
 undefined :: a
 ```
 
-`error`の呼び出しはプログラムの実行を終了させ、OSに適切なエラー表示を返す。そのエラー表示にはシステム依存の方法で文字列を画面に表示するべきである。`undefined`が使われたとき、そのエラーメッセージはコンパイラーによって作成される。
+<code>error</code>の呼び出しはプログラムの実行を終了させ、OSに適切なエラー表示を返す。そのエラー表示にはシステム依存の方法で文字列を画面に表示するべきである。<code>undefined</code>が使われたとき、そのエラーメッセージはコンパイラーによって作成される。
 
-Haskellの式の変換は実行時エラーが発生したことを明示的に表示するため`error`と`undefined`を使用する。エラーが発生した際の実際のプログラムの振舞は実装次第である。そのメッセージはこれらの変換のみ提案するため`error`関数へ渡される。エラー発生時、詳しい情報または乏しい情報を表示することを実装側は選択するかもしれない。
+Haskellの式の変換は実行時エラーが発生したことを明示的に表示するため<code>error</code>と<code>undefined</code>を使用する。エラーが発生した際の実際のプログラムの振舞は実装次第である。そのメッセージはこれらの変換のみ提案するため<code>error</code>関数へ渡される。エラー発生時、詳しい情報または乏しい情報を表示することを実装側は選択するかもしれない。
 
 ## 変数、コンストラクタ、演算子、リテラル
 
@@ -93,21 +93,21 @@ Haskellの式の変換は実行時エラーが発生したことを明示的に�
 |    <em>qop</em>|→|<em>qvarop</em> &#124; <em>qconop</em>|(qualified operator)|
 |<em>gconsym</em>|→|: &#124; <em>qconsym</em>
 
-Haskellは中置記法に対応するため特別な構文を提供している。**演算子**は中置構文を用いて適用が可能である(セクション[3.4]("#3.4"))か、**セクション**(セクション[3.5]("#3.5"))を用いて部分的に適用が可能な関数のことである。
+Haskellは中置記法に対応するため特別な構文を提供している。**演算子** は中置構文を用いて適用が可能である(セクション[3.4]("#3.4"))か、**セクション** (セクション[3.5]("#3.5"))を用いて部分的に適用が可能な関数のことである。
 
-**演算子**は、`+`や`$$`といった**演算子シンボル**か、`op`のようにグレイブ・アクセント(バッククォート)で囲まれた通常の識別子かのいずれかである。例えば、`op x y`という前置適用を書く代わりに、<code>x \`op\` y</code>という中置適用を書くことができる。もし、<code>\` op \`</code>に対して結合性が宣言されていない場合には、優先順位は最高で左結合をデフォルトとする。(セクション[4.4.2]("./4-declarations-andbindings.md")参照)。
+**演算子** は、<code>+</code>や<code>$$</code>といった **演算子シンボル** か、<code>\` op \`</code>のようにグレイブ・アクセント(バッククォート)で囲まれた通常の識別子かのいずれかである。例えば、<code>op x y</code>という前置適用を書く代わりに、<code>x \`op\` y</code>という中置適用を書くことができる。もし、<code>\` op \`</code>に対して結合性が宣言されていない場合には、優先順位は最高で左結合をデフォルトとする。(セクション[4.4.2](./4-declarations-andbindings.md)参照)。
 
-対照的に、演算子シンボルは括弧で閉じられた普通の識別子へ変換可能である。例として、`(+) x y`は`x + y`に等しく、`foldr (⋆) 1 xs`は`foldr (\x y -> x⋆y) 1 xs`に等しくなる。
+対照的に、演算子シンボルは括弧で閉じられた普通の識別子へ変換可能である。例として、<code>(+) x y</code>は<code>x + y</code>に等しく、<code>foldr (⋆) 1 xs</code>は<code>foldr (\x y -> x⋆y) 1 xs</code>に等しくなる。
 
-一部の組み込み型のコンストラクタの名前をつけるのに特別な構文がつかわれているものがあり、実際に`qcon`や`literal`で見ることができる。これらについてはセクション[6.1]("./6-predefined-types-and-classes.md")で説明される。
+一部の組み込み型のコンストラクタの名前をつけるのに特別な構文がつかわれているものがあり、実際に<em>gcon</em>や<em>literal</em>で見ることができる。これらについてはセクション[6.1](./6-predefined-types-and-classes.md)で説明される。
 
-整数リテラルは`fromInteger`関数を`Integer`型の適した値への適用を表す。同様に、浮動小数点リテラルは`Rational`型(つまり、`Ratio Integer`)の値に`fromRational`を適用することを表す。
+整数リテラルは<code>fromInteger</code>関数を<code>Integer</code>型の適した値への適用を表す。同様に、浮動小数点リテラルは<code>Rational</code>型(つまり、<code>Ratio Integer</code>)の値に<code>fromRational</code>を適用することを表す。
 
 <div class="column">
 
-**変換:** 整数リテラル`i`は`fromInteger i`に等しく、`fromInteger`は`Num`クラスのメソッドである。(セクション[6.4.1]("./6-predefined-types-and-classes,md"))
+**変換:** 整数リテラル<em>i</em>は<code>fromInteger *i*</code>に等しく、<code>fromInteger</code>は<code>Num</code>クラスのメソッドである。(セクション[6.4.1](./6-predefined-types-and-classes,md))
 
-浮動小数点リテラル`f`は`fromRational (n Ratio.% d)`に等しく、`fromRational`は`Fractional`クラスのメソッドで、`Ratio.%`は`Ratio`ライブラリで定義されており、2つの整数から有理数を構築する。整数`n`と`d`は`n/d = f`を満たすものとして選ばれる。
+浮動小数点リテラル<em>f</em>は<code>fromRational</code> (<em>n</em> <code>Ratio.%</code> <em>d</em>)に等しく、<code>fromRational</code>は<code>Fractional</code>クラスのメソッドで、<code>Ratio.%</code>は<code>Ratio</code>ライブラリで定義されており、2つの整数から有理数を構築する。整数<em>n</em>と<em>d</em>は<em>n/d = f</em>を満たすものとして選ばれる。
 
 </div>
 
@@ -118,9 +118,9 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |<em>fexp</em>|→|[<em>fexp</em>] <em>aexp</em>|(function application)|
 |<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
 
-関数適用は<code><em>e<sub>1</sub></em> <em>e<sub>2</sub></em></code>と書く。適用は左結合性をもつので、`(f x) y`の括弧は省略することができる。`e1`はデータ構成子である可能性もあるため、データ構成子の部分的な適用は許されている。
+関数適用は<code><em>e<sub>1</sub></em> <em>e<sub>2</sub></em></code>と書く。適用は左結合性をもつので、<code>(f x) y</code>の括弧は省略することができる。<code>e<sub>1</sub></code>はデータ構成子である可能性もあるため、データ構成子の部分的な適用は許されている。
 
-ラムダ抽象は<code>\ <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e</code>と書き、<code><em>p<sub>i</sub></em></code>はパターンである。`\x:xs->x`のような式は構文的に正しくない。`\(x:xs)->x`と書くのが正しい。
+ラムダ抽象は<code>\ <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e</code>と書き、<code><em>p<sub>i</sub></em></code>はパターンである。<code>\x:xs->x</code>のような式は構文的に正しくない。<code>\(x:xs)->x</code>と書くのが正しい。
 
 パターンの集合は線形でなければならない。つまり、変数は集合の中で2回以上出現してはいけない。
 
@@ -145,38 +145,39 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |            |&#124;|<em>lexp</em>| |
 |<em>qop</em>|→|<em>qvarop</em> &#124; <em>qconop</em>|(qualified operator)|
 
-<code><em>e<sub>1</sub></em> qop <em>e<sub>2</sub></em></code>という形式は二項演算子`qop`の式<code><em>e<sub>1</sub></em></code>と<code><em>e<sub>2</sub></em></code>への中置適用である。
+<code><em>e<sub>1</sub></em> qop <em>e<sub>2</sub></em></code>という形式は二項演算子<em>qop</em>の式<code><em>e<sub>1</sub></em></code>と<code><em>e<sub>2</sub></em></code>への中置適用である。
 
-特殊な形式`-e`は前置の符号反転演算子を表す。この演算子はHaskellにおける唯一の前置演算子であり、`negate (e)`という意味の構文である。二項演算子`-`はPrelude内の`-`の定義への参照を必要とせず、モジュールシステムによって再束縛されるかもしれない。しかしながら、単項演算子`-`はPrelude内で定義された`negate`関数を常に参照する。`-`演算子の局所的な意味と単項の符号反転演算との間には何の関連もない。
+特殊な形式<em><code>-</code>e</em>は前置の符号反転演算子を表す。この演算子はHaskellにおける唯一の前置演算子であり、<code>negate (*e*)</code>という意味の構文である。二項演算子<code>-</code>はPrelude内の<code>-</code>の定義への参照を必要とせず、モジュールシステムによって再束縛されるかもしれない。しかしながら、単項演算子<code>-</code>はPrelude内で定義された<code>negate</code>関数を常に参照する。<code>-</code>演算子の局所的な意味と単項の符号反転演算との間には何の関連もない。
 
-前置の符号反転演算子はPrelude内(表[4.1](./4-declarations-and-bindings.md)を参照)で定義された中置演算子`-`と同じ優先順位を持つ。`e1-e2`は二項演算子`-`の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって`e1(-e2)`と書かなければいけない。同様に、`(-)`は中置演算子と同様に`(\ x y -> x-y)`のための構文であるが、`(\ x -> -x)`を表せず、そのためには`negate`を使う必要がある。
+前置の符号反転演算子はPrelude内(表[4.1](./4-declarations-and-bindings.md)を参照)で定義された中置演算子<code>-</code>と同じ優先順位を持つ。<code>e1-e2</code>は二項演算子<code>-</code>の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって<code>e1(-e2)</code>と書かなければいけない。同様に、<code>(-)</code>は中置演算子と同様に<code>(\ x y -> x-y)</code>のための構文であるが、<code>(\ x -> -x)</code>を表せず、そのためには<code>negate</code>を使う必要がある。
 
 <div class="column">
 
 **変換：** 以下の等式が成り立つ。
 <pre>
-<em>e<sub>1</sub></em> op <em>e<sub>2</sub></em>  =	(op) <em>e<sub>1</sub></em> <em>e<sub>2</sub></em>
+<code><em>e<sub>1</sub></em> op <em>e<sub>2</sub></em>  =	(op) <em>e<sub>1</sub></em> <em>e<sub>2</sub></em>
 -e        =	<em>negate</em> (e)
-</pre>
+</code></pre>
 
 </div>
 
 ## セクション
 
-<pre>
-<em>aexp</em>	→	( <em>infixexp</em> <em>qop</em> )	    (left section)
-        |	( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )	    (right section)
-</pre>
+|||||
+|--|--|--|--|
+|<em>aexp</em>|→| ( <em>infixexp</em> <em>qop</em> )              |(left section)|
+|        |&#124;| ( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )|(right section)|
 
-**セクション**は<code>( <em>op</em> <em>e</em> )</code>や<code>( <em>e</em> <em>op</em> )</code>のように書かれる。このときの`op`は二項演算子で`e`は式である。セクションは二項演算子を部分的に適用する便利な構文である。
 
-シンタックスの先行ルールは次のとおりのセクションへ適用する。(op e) is legal if and only if (x op e) parses in the same way as (x op (e)); and similarly for (e op).例えば、`(⋆a+b)`は構文的に不当であるが、`(+a⋆b)`と`(⋆(a+b))`は有効である。なぜなら`(+)`は左結合であり、`(a+b+)`は構文的に正しいが、`(+a+b)`はそうではない。後者は`(+(a+b))`のように書かれるのが正当である。他の例として、次の式は
+**セクション** は<code>( <em>op</em> <em>e</em> )</code>や<code>( <em>e</em> <em>op</em> )</code>のように書かれる。このときの<em>op</em>は二項演算子で<em>e</em>は式である。セクションは二項演算子を部分的に適用する便利な構文である。
+
+シンタックスの先行ルールは次のとおりのセクションへ適用する。<em><code>(</code>op e<code>)</code></em>は<em><code>(</code>x op e<code>)</code></em>が<em><code>(</code>x op <code>(</code>e<code>))</code></em>と同じ方法でパースする場合に限り正当であり、<em><code>(</code>e op<code>)</code></em>も同様である。例えば、<code>(⋆a+b)</code>は構文的に不当であるが、<code>(+a⋆b)</code>と<code>(⋆(a+b))</code>は有効である。なぜなら<code>(+)</code>は左結合であり、<code>(a+b+)</code>は構文的に正しいが、<code>(+a+b)</code>はそうではない。後者は<code>(+(a+b))</code>のように書かれるのが正当である。他の例として、次の式は
 
 ``` hs
 (let n = 10 in n +)
 ```
 
-セクション[3]("./3-expressions.md")にあるように、letとラムダに関するメタルールにより誤りである。次の式は
+セクション[3](./3-expressions.md)にあるように、letとラムダに関するメタルールにより誤りである。次の式は
 
 ``` hs
 (let n = 10 in n + x)
@@ -194,7 +195,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 ((let n = 10 in n) + x)
 ```
 
-なぜなら、`-`は文法内で特別に扱われるからだ。前のセクションで説明したように、`(- exp)`はセクションではなく、前置の符号反転演算子の適用である。しかしながら、Prelude名で定義された`subtract`関数があり、それによって<code>(<em>subtract</em> exp)</code>が不正なセクション(**訳注**: (- exp)のこと)と同じ意味となる。式`(+ (- exp))`は同じ用途で役立つことができる。
+なぜなら、<code>-</code>は文法内で特別に扱われるからだ。前のセクションで説明したように、<code>(- exp)</code>はセクションではなく、前置の符号反転演算子の適用である。しかしながら、Prelude名で定義された<code>subtract</code>関数があり、それによって<code>(<em>subtract</em> exp)</code>が不正なセクション(**訳注**: (- exp)のこと)と同じ意味となる。式<code>(+ (- exp))</code>は同じ用途で役立つことができる。
 
 <div class="column">
 
@@ -202,28 +203,35 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 ```hs
 (op e)  =       \ x -> x op e
+<<<<<<< HEAD
 (e op)  =       \ x -> e op x
 ```
 
 `op`は二項演算子で、`e`は式であり、`x`は`e`の中で自由出現ではない変数である。
+=======
+(e op)  =       \ X -> e op x
+```
+
+<em>op</em>は二項演算子で、<em>e</em>は式である。and x is a variable that does not occur free in e.
+>>>>>>> fix writing format in chapter-3
 </div>
 
 ## 条件文
 
 |||||
 |--|--|--|--|
-|<em>lexp</em>|→|<tt>if</tt> <em>exp</em> [;] <tt>then</tt> <em>exp</em> [;] <tt>else</tt> <em>exp</em>| |
+|<em>lexp</em>|→|<code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em>| |
 
-条件式は<code><tt>if</tt> <em>e<sub>1</sub></em> <tt>then</tt> <em>e<sub>2</sub></em> <tt>else</tt> <em>e<sub>3</sub></em></code>の形式をとり、もし<code><em>e<sub>1</sub></em></code>が真なら、<code><em>e<sub>2</sub></em></code>を返し、<code><em>e<sub>1</sub></em></code>が偽なら<code><em>e<sub>3</sub></em></code>を返し、それ以外なら`⊥`を返す。
+条件式は<code><code>if</code> <em>e<sub>1</sub></em> <code>then</code> <em>e<sub>2</sub></em> <code>else</code> <em>e<sub>3</sub></em></code>の形式をとり、もし<code><em>e<sub>1</sub></em></code>が真なら、<code><em>e<sub>2</sub></em></code>を返し、<code><em>e<sub>1</sub></em></code>が偽なら<code><em>e<sub>3</sub></em></code>を返し、それ以外なら<em>⊥</em>を返す。
 
 <div class="column">
 
 **変換:** 以下の等式が成り立つ。
 
-<pre><code><tt>if</tt> <em>e<sub>1</sub></em> <tt>then</tt> <em>e<sub>2</sub></em> <tt>else</tt> <em>e<sub>3</sub></em>(op e) = <tt>case</tt> <em>e<sub>1</sub></em> <tt>of</tt> { <tt>True</tt> -> <em>e<sub>2</sub></em> <tt>;</tt> <tt>False</tt> -> <em>e<sub>3</sub></em> }
+<pre><code>if <em>e<sub>1</sub></em> then <em>e<sub>2</sub></em> else <em>e<sub>3</sub></em>(op e) = case <em>e<sub>1</sub></em> of { True -> <em>e<sub>2</sub></em> ; False -> <em>e<sub>3</sub></em> }
 </code></pre>
 
-<tt>True</tt>と<tt>False</tt>はPrelude内で定義されている<tt>Bool</tt>型の2つの引数のないコンストラクタである。<code><em>e<sub>1</sub></em></code>は<tt>Bool型</tt>でなければならず、<code><em>e<sub>2</sub></em></code>と<code><em>e<sub>3</sub></em></code>も同じ型でなければならない。条件式全体の型も同様である。
+<code>True</code>と<code>False</code>はPrelude内で定義されている<code>Bool</code>型の2つの引数のないコンストラクタである。<code><em>e<sub>1</sub></em></code>は<code>Bool型</code>でなければならず、<code><em>e<sub>2</sub></em></code>と<code><em>e<sub>3</sub></em></code>も同じ型でなければならない。条件式全体の型も同様である。
 </div>
 
 ## リスト
@@ -233,14 +241,14 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |<em>infixexp</em>|→|<em>exp<sub>1</sub></em> <em>qop</em> <em>exp<sub>2</sub></em>| |
 |    <em>aexp</em>|→|[ <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> ]|(k ≥ 1)|
 |            |&#124;|<em>gcon</em>| |
-|    <em>gcon</em>|→|<tt>[]</tt>| |
+|    <em>gcon</em>|→|<code>[]</code>| |
 |            |&#124;|<em>qcon</em>| |
 |    <em>qcon</em>|→|( <em>gconsym</em> )| |
 |     <em>qop</em>|→|<em>qconop</em>| |
 |  <em>qconop</em>|→|<em>gconsym</em>| |
-| <em>gconsym</em>|→|<tt>:</tt>| |
+| <em>gconsym</em>|→|<code>:</code>| |
 
-**List**は`k ≥ 1`として、<code>[<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>]</code>のように書く。リストコンストラクタは `:`であり、空リストは`[]`で表記される。リストの標準操作はPrelude内で与えられる(セクション[6.1.3]("./6-predefined-types-and-classes.md")と[9章]("./9-standard-prelude.md")の特にセクション[9.1]("./9-standard-prelude.md")を参照)。
+**List** は<em>k ≥ 1</em>として、<code>[<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>]</code>のように書く。リストコンストラクタは <code>:</code>であり、空リストは<code>[]</code>で表記される。リストの標準操作はPrelude内で与えられる(セクション[6.1.3](./6-predefined-types-and-classes.md)と[9章](./9-standard-prelude.md)の特にセクション[9.1](./9-standard-prelude.md)を参照)。
 
 <div class="column">
 
@@ -248,24 +256,24 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 <code>[<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>]</code> = <code><em>e<sub>1</sub></em> : (<em>e<sub>2</sub></em> : ( … (<em>e<sub>k</sub></em> : [])))</code>
 
-`:`と`[]`はPredule内(セクション[6.1.3]("./6-predefined-types-and-classes.md"))で定義されたリストのコンストラクタである。<code><em>e<sub>1</sub></em></code>から<code><em>e<sub>k</sub></em></code>までの型は同じでなければならない(それを`t`と呼ぶ)。式全体の型は`[t]`になる(セクション[4.1.2]("./4-declarations-and-bindings.md"))。
+<code>:</code>と<code>[]</code>はPredule内(セクション[6.1.3](./6-predefined-types-and-classes.md))で定義されたリストのコンストラクタである。<code><em>e<sub>1</sub></em></code>から<code><em>e<sub>k</sub></em></code>までの型は同じでなければならない(それを<em>t</em>と呼ぶ)。式全体の型は<em>[t]</em>になる(セクション[4.1.2](./4-declarations-and-bindings.md))。
 </div>
 
-コンストラクタ`:`はリストコンストラクタとしてのみ予約されており、言語構文の一部と見做されている。また、それは隠すことも再定義することもできない。`:`は優先順位レベル5の右結合演算子である(セクション[4.4.2]("./4-declarations-and-bindings.md"))。
+コンストラクタ<code>:</code>はリストコンストラクタとしてのみ予約されており、言語構文の一部と見做されている。また、それは隠すことも再定義することもできない。<code>:</code>は優先順位レベル5の右結合演算子である(セクション[4.4.2](./4-declarations-and-bindings.md))。
 
 ## タプル
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )|(k ≥ 2)|
+|<em>aexp</em>|→|( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )|(<em>k</em> ≥ 2)|
 |        |&#124;|<em>qcon</em>| |
 |<em>qcon</em>|→|(,{,})| |
 
-**タプル**は`k ≥ 2`以上の<code>(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em></code>のように書く。`n-tuple`のコンストラクタは`(,…,)`と表記され、`n-1`のコンマがある。従って、`(a,b,c)`と`(,,) a b c`は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション[6.1.4]("./6-predefined-types-and-classes.md")と[9章]("./9-standard-prelude.md"))。
+**タプル** は<em>k ≥ 2</em>以上の<code>(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em></code>のように書く。<em>n-tuple</em>のコンストラクタは<em>(,…,)</em>と表記され、<em>n - 1</em>のコンマがある。従って、<code>(a,b,c)</code>と<code>(,,) a b c</code>は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション[6.1.4](./6-predefined-types-and-classes.md)と[9章](./9-standard-prelude.md))。
 
 <div class="column">
 
-**変換:** `k ≥ 2`のときの<code>(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em></code>はPrelude内で定義された`k-tuple`のインスタンスになり、変換は要求されない。もし、<code>t<sub>1</sub></code>から<code>t<sub>k</sub></code>はそれぞれ<code><em>e<sub>1</sub></em></code>から<code><em>e<sub>k</sub></em></code>の型があり、最終的なタプルの型は<code>t<sub>1</sub>,…,t<sub>k</sub></code>になる(セクション[4.1.2]("./4-declarations-and-bindings.md"))。
+**変換:** <em>k ≥ 2</em>のときの<code>(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em></code>はPrelude内で定義された<em>k-tuple</em>のインスタンスになり、変換は要求されない。もし、<code>t<sub>1</sub></code>から<code>t<sub>k</sub></code>はそれぞれ<code><em>e<sub>1</sub></em></code>から<code><em>e<sub>k</sub></em></code>の型があり、最終的なタプルの型は<code>t<sub>1</sub>,…,t<sub>k</sub></code>になる(セクション[4.1.2](./4-declarations-and-bindings.md))。
 
 </div>
 
@@ -277,11 +285,11 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |        |&#124;|( <em>exp</em> )| |
 |<em>gcon</em>|→|()| |
 
-`(e)`の形式はシンプルに**括弧付き式**であり、`e`と等しい。**ユニット(unit)**式`()`は`()`型を持つ(セクション[4.1.2]("./4-declarations-and-bindings.md")を参照)。それは⊥以外の型のメンバのみで、"引数のないタプル"のように考えられる(セクション[6.1.5]("./6-predefined-types-and-classes.md")を参照)。
+<em>(e)</em>の形式はシンプルに **括弧付き式** であり、<em>e</em>と等しい。**ユニット(unit)** 式<code>()</code>は<code>()</code>型を持つ(セクション[4.1.2](./4-declarations-and-bindings.md)を参照)。それは⊥以外の型のメンバのみで、"引数のないタプル"のように考えられる(セクション[6.1.5](./6-predefined-types-and-classes.md)を参照)。
 
 <div class="column">
 
-**変換:** `(e)`は`e`と等しい。
+**変換:** <em>(e)</em>は<em>e</em>と等しい。
 </div>
 
 ## 数列
@@ -290,23 +298,23 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |--|--|--|--|
 |<em>aexp</em>|→|[ <em>exp<sub>1</sub></em> [, <em>exp<sub>2</sub></em>] .. [<em>exp<sub>3</sub></em>] ]| |
 
-**数列**[<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型`t`の値のリストを表し、各<code><em>e<sub>i</sub></em></code>は型`t`を持ち、`t`は`Enum`クラスのインスタンスである。
+**数列** [<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型<em>t</em>の値のリストを表し、各<code><em>e<sub>i</sub></em></code>は型<em>t</em>を持ち、<em>t</em>は<code>Enum</code>クラスのインスタンスである。
 
 <div class="column">
 
-**変換:**　数列はこれらの等式を満たす。
+**変換:** 数列はこれらの等式を満たす。
 
-<pre>
-[ <em><em>e<sub>1</sub></em></em>.. ]	=	<tt>enumFrom</tt> <em><em>e<sub>1</sub></em></em>
-[ <em><em>e<sub>1</sub></em></em>,<em><em>e<sub>2</sub></em></em>.. ]	=	<tt>enumFromThen</tt> <em><em>e<sub>1</sub></em></em> <em><em>e<sub>2</sub></em></em>
-[ <em><em>e<sub>1</sub></em></em>..<em><em>e<sub>3</sub></em></em> ]	=	<tt>enumFromTo</tt> <em><em>e<sub>1</sub></em></em> <em><em>e<sub>3</sub></em></em>
-[ <em><em>e<sub>1</sub></em></em>,<em><em>e<sub>2</sub></em></em>..<em><em>e<sub>3</sub></em></em> ]	=	<tt>enumFromThenTo</tt> <em><em>e<sub>1</sub></em></em> <em><em>e<sub>2</sub></em></em> <em><em>e<sub>3</sub></em></em>
-</pre>
+||||
+|--|--|--|
+|[ <em>e<sub>1</sub></em>.. ]                                              |=| <code>enumFrom</code> <em>e<sub>1</sub></em>|
+|[ <em>e<sub>1</sub></em>,<em>e<sub>2</sub></em>.. ]                       |=| <code>enumFromThen</code> <em>e<sub>1</sub></em> <em>e<sub>2</sub></em>|
+|[ <em>e<sub>1</sub></em>..<em>e<sub>3</sub></em> ]                        |=|	<code>enumFromTo</code> <em>e<sub>1</sub></em> <em>e<sub>3</sub></em>|
+|[ <em>e<sub>1</sub></em>,<em>e<sub>2</sub></em>..<em>e<sub>3</sub></em> ] |=| <code>enumFromThenTo</code> <em>e<sub>1</sub></em> <em>e<sub>2</sub></em> <em>e<sub>3</sub></em>|
 
-`enumForm`、`enumFormThen`、`enumFormTo`、`enumFormThenTo`はPrelude内で定義されている`Enum`クラスのクラスメソッドになる。
+<code>enumForm</code>、<code>enumFormThen</code>、<code>enumFormTo</code>、<code>enumFormThenTo</code>はPrelude内で定義されている<code>Enum</code>クラスのクラスメソッドになる。
 </div>
 
-故に数列の意味論は型`t`のインスタンス宣言に完全に依存している。どの`Prelude`型が`Enum`型にあるか、そしてそれらの意味論についてのより詳しいことについてはセクション[6.3.4]("./6-predefined-types-and-classes.md")を参照すること。
+故に数列の意味論は型<em>t</em>のインスタンス宣言に完全に依存している。どの<code>Prelude</code>型が<code>Enum</code>型にあるか、そしてそれらの意味論についてのより詳しいことについてはセクション[6.3.4](./6-predefined-types-and-classes.md)を参照すること。
 
 ## リスト内包表記
 
@@ -314,16 +322,16 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |--|--|--|--|
 |<em>aexp</em>|→|[ <em>exp</em> | <em>qual<sub>1</sub></em> , … , <em>qual<sub>n</sub></em> ]|(list comprehension, <em>n</em> ≥ 1)|
 |<em>qual</em>|→|<em>pat</em> <- <em>exp</em>|(generator)|
-|        |&#124;|<tt>let</tt> <em>decls</em>|(local declaration)|
+|        |&#124;|<code>let</code> <em>decls</em>|(local declaration)|
 |        |&#124;|<em>exp</em>|(boolean guard)|
 
-**リスト内包表記**は<code>[ <em>e</em> | q<sub>1</sub>, …, q<sub>n</sub> ]</code>、`n ≥ 1`形式を持ち、<code>q<sub>i</sub></code>修飾子は次のいずれかである。
+**リスト内包表記** は<code>[ <em>e</em> | q<sub>1</sub>, …, q<sub>n</sub> ]</code>、<em>n ≥ 1</em>形式を持ち、<code>q<sub>i</sub></code>修飾子は次のいずれかである。
 
-- 形式`<em>p</em> <- e`の**ジェネレータ**。`p`は型`t`のパターン(セクション[3.17](#3.17))であり、`e`は型`[t]`の式である。
+- 形式<em>p <- e</em>の **ジェネレータ** 。<em>p</em>は型<em>t</em>のパターン(セクション[3.17](#3.17))であり、<em>e</em>は型<code>[t]</code>の式である。
 - 生成された式eで、あるいは後方のブーリアンガードとジェネレータで使われる新しい定義を提供するローカル束縛。
-- **ブーリアンガード**。Bool型の任意の式を表すことができる。
+- **ブーリアンガード** 。Bool型の任意の式を表すことができる。
 
-このようなリスト内包表記は修飾子リスト内のジェネレータのネストされた深さ優先探索の評価によって作成された連続した環境で`e`を評価することによって生成された要素のリストを返す。変数の束縛は通常のパターンマッチングルール(セクション[3.17]("#3.17"))に従って発生し、もし一致に失敗したら、その時はそのリストの要素は単純にスキップされる。従って、
+このようなリスト内包表記は修飾子リスト内のジェネレータのネストされた深さ優先探索の評価によって作成された連続した環境で<em>e</em>を評価することによって生成された要素のリストを返す。変数の束縛は通常のパターンマッチングルール(セクション[3.17]("#3.17"))に従って発生し、もし一致に失敗したら、その時はそのリストの要素は単純にスキップされる。従って、
 
 ```hs
 [ x |  xs   <- [ [(1,2),(3,4)], [(5,4),(3,2)] ],  
@@ -342,97 +350,97 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 ||||
 |--|--|--|
-|[  <em>e</em> &#124; <tt>True</tt> ]	         |=|[<em>e</em>]|
-|[  <em>e</em> &#124; <em>q</em> ]	             |=|[  <em>e</em> &#124; <em>q</em>, <tt>True</tt> ]|
-|[  <em>e</em> &#124; <em>b</em>,  <em>Q</em>  ]|=|<tt>if</tt> <em>b</em> <tt>then</tt> [  <em>e</em> &#124; <em>Q</em> ] <tt>else</tt> []|
-|[  <em>e</em> &#124; <em>p</em> <- <em>l</em>,  <em>Q</em> ]|=|<tt>let</tt> <tt>ok</tt> <em>p</em> = [  <em>e</em> &#124; <em>Q</em> ]|
-|                                       | |<tt>ok</tt> _ = []|
-|                              | |<tt>in</tt> <tt>concatMap</tt> <tt>ok</tt>  <em>l</em>|
-|[  <em>e</em> &#124; <tt>let</tt> <em>decls</em>,  Q ]|=|<tt>let</tt> <em>decls</em> <tt>in</tt> [  <em>e</em> &#124; <em>Q</em> ]|
+|[  <em>e</em> &#124; <code>True</code> ]	                       |=|[<em>e</em>]|
+|[  <em>e</em> &#124; <em>q</em> ]	                         |=|[  <em>e</em> &#124; <em>q</em>, <code>True</code> ]|
+|[  <em>e</em> &#124; <em>b</em>,  <em>Q</em>  ]             |=|<code>if</code> <em>b</em> <code>then</code> [  <em>e</em> &#124; <em>Q</em> ] <code>else</code> []|
+|[  <em>e</em> &#124; <em>p</em> <- <em>l</em>,  <em>Q</em> ]|=|<code>let</code> <code>ok</code> <em>p</em> = [  <em>e</em> &#124; <em>Q</em> ]|
+|                                                            | |<code>ok</code> _ = []|
+|                                                            | |<code>in</code> <code>concatMap</code> <code>ok</code>  <em>l</em>|
+|[  <em>e</em> &#124; <code>let</code> <em>decls</em>,  Q ]      |=|<code>let</code> <em>decls</em> <code>in</code> [  <em>e</em> &#124; <em>Q</em> ]|
 
-<em>e</em>は式にわたる範囲で、`p`はパターンにわたり、`l`はリスト値式にわたり、`b`はブーリアン式にわたり、**decls**は宣言リストにわたり、`q`は修飾子にわたり、`Q`は修飾子の列にわたる範囲をもつ。`ok`は新しい変数である。関数`concatMap`とブーリアン値`True`はPrelude内で定義されている。
+<em>e</em>は式にわたる範囲で、<em>p</em>はパターンにわたり、<em>l</em>はリスト値式にわたり、<em>b</em>はブーリアン式にわたり、**decls** は宣言リストにわたり、<em>q</em>は修飾子にわたり、<em>Q</em>は修飾子の列にわたる範囲をもつ。<code>ok</code>は新しい変数である。関数<code>concatMap</code>とブーリアン値<code>True</code>はPrelude内で定義されている。
 
 </div>
 
-リスト内法表記の変換で示した通り、letによって束縛された変数は最大限多相的な型を持つ一方で<-によって束縛されたものはラムダ束縛であり、よって単相的になる。 (セクション[4.5.4]("./4-declarations-and-bindings.md")を参照).
+リスト内法表記の変換で示した通り、letによって束縛された変数は最大限多相的な型を持つ一方で<-によって束縛されたものはラムダ束縛であり、よって単相的になる。 (セクション[4.5.4](./4-declarations-and-bindings.md)を参照).
 
 ## Let式
 
 |||||
 |--|--|--|--|
-|<em>lexp</em>|→|<tt>let</tt> <em>decls</em> <tt>in</tt> <em>exp</em>| |
+|<em>lexp</em>|→|<code>let</code> <em>decls</em> <code>in</code> <em>exp</em>| |
 
-**let**式は一般的な形式<code><tt>let</tt> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em> } <tt>in</tt> <em>e</em></code>を持ち、ネストされたレキシカルスコープをもつ相互再帰的な宣言のリストを導入する(<tt>let</tt>は他の言語で<tt>letrc</tt>としばしば呼ばれる)。宣言の範囲は式`e`と宣言の右側である。宣言は[4章]("./4-declarations-and-bindings.md")で説明される。パターン束縛のマッチは遅延され、暗黙的な`~`がこれらのパターンを反駁不可にする。 例えば、
+**let** 式は一般的な形式<code><code>let</code> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em> } <code>in</code> <em>e</em></code>を持ち、ネストされたレキシカルスコープをもつ相互再帰的な宣言のリストを導入する(<code>let</code>は他の言語で<code>letrc</code>としばしば呼ばれる)。宣言の範囲は式<em>e</em>と宣言の右側である。宣言は[4章](./4-declarations-and-bindings.md)で説明される。パターン束縛のマッチは遅延され、暗黙的な<em>~</em>がこれらのパターンを反駁不可にする。 例えば、
 
 ```hs
-<tt>let</tt> (x,y) = <tt>undefined</tt> <tt>in</tt> e
+<code>let</code> (x,y) = <code>undefined</code> <code>in</code> e
 ```
 
-は`x`または`y`が評価されるまでランタイムエラーをもたらさない。
+は<code>x</code>または<code>y</code>が評価されるまでランタイムエラーをもたらさない。
 
 <div class="column">
 
-**変換:** 式<code><tt>let</tt> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em>} in <em>e<sub>0</sub></em></code>の動的な意味論は次の変換によって捕捉される。全ての型シグネチャを取り除いた後、それぞれの宣言<em>d<sub>i</sub></em>は<code><em>p<sub>i</sub></em> = <em>e<sub>i</sub></em></code>の形の等式へと変換される。<code>p<sub>i</sub></code>と<code><em>e<sub>i</sub></em></code>はセクション[4.4.3]("./4-declarations-and-bindings.md")での変換を使用する、各々のパターンと式である。一度この変換が終われば、次のような等式が成り立つ。この等式はカーネルへの変換として使われる場合がある。
+**変換:** 式<code><code>let</code> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em>} in <em>e<sub>0</sub></em></code>の動的な意味論は次の変換によって捕捉される。全ての型シグネチャを取り除いた後、それぞれの宣言<em>d<sub>i</sub></em>は<code><em>p<sub>i</sub></em> = <em>e<sub>i</sub></em></code>の形の等式へと変換される。<code>p<sub>i</sub></code>と<code><em>e<sub>i</sub></em></code>はセクション[4.4.3](./4-declarations-and-bindings.md)での変換を使用する、各々のパターンと式である。一度この変換が終われば、次のような等式が成り立つ。この等式はカーネルへの変換として使われる場合がある。
 
 ||||
 |--|--|--|
-|<tt>let</tt> {<em>p<sub>1</sub></em> = <em>e<sub>1</sub></em>;  ... ; <em>p<sub>n</sub></em> = <em>e<sub>n</sub></em>} <tt>in</tt> <em>e<sub>0</sub></em>|=|<tt>let</tt> (<tt>~</tt><em>p<sub>1</sub></em>, ... ,<tt>~</tt><em>p<sub>n</sub></em>) = (<em>e<sub>1</sub></em>, ... ,<em>e<sub>n</sub></em>) in <em>e<sub>0</sub></em>|
-|<tt>let</tt> <em>p</em> = <em>e<sub>1</sub></em>  <tt>in</tt>  e<sub>0</sub>|=|<tt>case</tt> <em>e<sub>1</sub></em> of <tt>~</tt><em>p</em> -> <em>e<sub>0</sub></em>|
-|                                               | |where no variable in <em>p</em> appears free in <em>e<sub>1</sub></em>|
-|<tt>let</tt> <em>p</em> = <em>e<sub>1</sub></em>  <tt>in</tt>  <em>e<sub>0</sub></em>|=|<tt>let</tt> <em>p</em> = <tt>fix</tt> ( \ <tt>~</tt><em>p</em> -> <em>e<sub>1</sub></em>) in <em>e<sub>0</sub></em>|
+|<code>let</code> {<em>p<sub>1</sub></em> = <em>e<sub>1</sub></em>;  ... ; <em>p<sub>n</sub></em> = <em>e<sub>n</sub></em>} <code>in</code> <em>e<sub>0</sub></em> |=| <code>let</code> (<code>~</code><em>p<sub>1</sub></em>, ... ,<code>~</code><em>p<sub>n</sub></em>) = (<em>e<sub>1</sub></em>, ... ,<em>e<sub>n</sub></em>) in <em>e<sub>0</sub></em>|
+|<code>let</code> <em>p</em> = <em>e<sub>1</sub></em>  <code>in</code>  e<sub>0</sub>                                                                              |=| <code>case</code> <em>e<sub>1</sub></em> of <code>~</code><em>p</em> -> <em>e<sub>0</sub></em>|
+|                                                                                                                                                          | |where no variable in <em>p</em> appears free in <em>e<sub>1</sub></em>|
+|<code>let</code> <em>p</em> = <em>e<sub>1</sub></em>  <code>in</code>  <em>e<sub>0</sub></em>                                                                     |=|<code>let</code> <em>p</em> = <code>fix</code> ( \ <code>~</code><em>p</em> -> <em>e<sub>1</sub></em>) in <em>e<sub>0</sub></em>|
 
-`fix`は最小不動点演算子である。反駁不可パターン`~p`の使用は注意すべきだ。この変換は静的な意味論を保存しない。なぜなら、caseを使用すると束縛変数が完全な多相型へ型付けされなくなるからである。`let`式で束縛された静的な意味論はセクション[4.4.3]("./4-declarations-and-bindings.md")で説明される。
+<code>fix</code>は最小不動点演算子である。反駁不可パターン<em>~p</em>の使用は注意すべきだ。この変換は静的な意味論を保存しない。なぜなら、<code>case</code>を使用すると束縛変数が完全な多相型へ型付けされなくなるからである。<code>let</code>式で束縛された静的な意味論はセクション[4.4.3](./4-declarations-and-bindings.md)で説明される。
 </div>
 
 ## Case式
 
 |||||
 |--|--|--|--|
-|<em>lexp</em>|→|<tt>case</tt> <em>exp</em> <tt>of</tt> { <em>alts</em> }| |
+|<em>lexp</em>|→|<code>case</code> <em>exp</em> <code>of</code> { <em>alts</em> }| |
 |<em>alts</em>|→|<em>alt<sub>1</sub></em> ; … ; <em>alt<sub>n</sub></em>|(n ≥ 1)|
-| <em>alt</em>|→|<em>pat</em> -> <em>exp</em> [<tt>where</tt> <em>decls</em>]| |
-|        |&#124;|	<em>pat</em> <em>gdpat</em> [<tt>where</tt> <em>decls</em>]
+| <em>alt</em>|→|<em>pat</em> -> <em>exp</em> [<code>where</code> <em>decls</em>]| |
+|        |&#124;|	<em>pat</em> <em>gdpat</em> [<code>where</code> <em>decls</em>]
 |        |&#124;|                |(empty alternative)|
 |||||
 | <em>gdpat</em>|→|<em>guards</em> -> <em>exp</em> [ <em>gdpat</em> ]| |
-|<em>guards</em>|→| <tt>&#124;</tt> <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>|(n ≥ 1)|
+|<em>guards</em>|→| <code>&#124;</code> <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>|(n ≥ 1)|
 | <em>guard</em>|→|<em>pat</em> <- <em>infixexp</em>|(pattern guard)|
-|          |&#124;|	<tt>let</tt> <em>decls</em>	           |(local declaration)|
+|          |&#124;|	<code>let</code> <em>decls</em>	           |(local declaration)|
 |          |&#124;|	<em>infixexp</em>	            |(boolean guard)|
 
-**case**式は一般的な形式<code><tt>case</tt> <em>e</em> <tt>of</tt> { <em>p<sub>1</sub></em> <em>match<sub>1</sub></em> ; … ; <em>p<sub>n</sub></em> <em>match<sub>n</sub></em> }</code>を持つ。各<code><em>match</em><sub>i</sub></code>は一般的な形式
+**case** 式は一般的な形式<code><code>case</code> <em>e</em> <code>of</code> { <em>p<sub>1</sub></em> <em>match<sub>1</sub></em> ; … ; <em>p<sub>n</sub></em> <em>match<sub>n</sub></em> }</code>を持つ。各<code><em>match</em><sub>i</sub></code>は一般的な形式
 
 <pre>
 | <em>gs<sub>i1</sub></em>    -> <em>e<sub>i1</sub></em>
 …
 | <em>gs<sub>imi</sub></em>   -> <em>e<sub>imi</sub></em>
-<tt>where</tt> <em>decls</em><sub>i</sub>
+<code>where</code> <em>decls</em><sub>i</sub>
 </pre>
 
-(**ガード**の構文ルールについて注目して欲しい。`|`は区切りを表す構文的なメタシンボルではなく終端記号である。)各選択子<code><em><em>p<sub>i</sub></em> match<sub>i</sub></em></code>はパターン<em>p<sub>i</sub></em>から成り、<code>match<sub>i</sub></code>と一致する。各マッチは順繰りにガード<code>gs<sub>ij</sub></code>と本体<code><em>e<sub>ij</sub></em></code>のペアの列から成り、代替となる全てのガードと式上の範囲での付加的な束縛(<code>decls<sub>i</sub></code>)に従う。
+(**ガード** の構文ルールについて注目して欲しい。<em>|</em>は区切りを表す構文的なメタシンボルではなく終端記号である。)各選択子<code><em><em>p<sub>i</sub></em> match<sub>i</sub></em></code>はパターン<em>p<sub>i</sub></em>から成り、<code>match<sub>i</sub></code>と一致する。各マッチは順繰りにガード<code>gs<sub>ij</sub></code>と本体<code><em>e<sub>ij</sub></em></code>のペアの列から成り、代替となる全てのガードと式上の範囲での付加的な束縛(<code>decls<sub>i</sub></code>)に従う。
 
-**ガード**は次の形式をの一つを持つ。
+**ガード** は次の形式をの一つを持つ。
 
-- **パターンガード**は形式`<em>p</em> <- e`で、`p`は型`t`のパターンで、`e`は式の種類`t`である。もし、式`e`がパターン`p`に一致するなら成功し、パターンの束縛をその環境にもたらす。
-- **局地的束縛**は形式<code><tt>let</tt> <em>decls</em></code>である。それらは常に成功し、その環境に`decls`と定義した名前をもたらす。
-- **ブーリアンガード**は`Bool`型の数式である。もし、式が`True`と評価するなら成功し、その環境に新しい名前をもたらさない。ブーリアンガード`g`はパターンガード`True <- g`に意味的に等しい。
+- **パターンガード** は形式<em>p</em> <code><-</code> <em>e</em>で、<em>p</em>は型<em>t</em>のパターンで、<em>e</em>は式の種類<em>t</em>である。もし、式<em>e</em>がパターン<em>p</em>に一致するなら成功し、パターンの束縛をその環境にもたらす。
+- **局地的束縛** は形式<code><code>let</code> <em>decls</em></code>である。それらは常に成功し、その環境に<em>decls</em>と定義した名前をもたらす。
+- **ブーリアンガード** は<code>Bool</code>型の数式である。もし、式が<code>True</code>と評価するなら成功し、その環境に新しい名前をもたらさない。ブーリアンガード<em>g</em>はパターンガード<code><code>True</code> <- g</code>に意味的に等しい。
 
-形式`pat -> exp where decls`の代わりの以下の簡略記法が扱われる。
+形式<em>pat</em> <code>-></code> <em>exp</em> <code>where</code> <em>decls</em>の代わりの以下の簡略記法が扱われる。
 
 <pre>
-<em>pat</em> | <tt>True</tt> -> <em>exp</em>
-<tt>where</tt> <em>decls</em>
-</pre>
+<code><em>pat</em> | <code>True</code> -> <em>exp</em>
+<code>where</code> <em>decls</em>
+</code></pre>
 
 ケース式は少なくとも1つの選択句を持たなければならず、各選択句は一つの実体を持たないといけない。各実体は同じ型を持たなければならず、式全体の型はその型になる。
 
-ケース式は式`e`が個々の選択句に反するパターンマッチングによって評価される。その選択子は上から下へ連続的に試される。もし、`e`が選択句のパターンと一致したら、そのとき選択句のガード式は始めにパターンの一致の間に生成された束縛によって展開されたケース式の環境内で上から下へ連続的に試される。その時、`where`句内の<code>decls<sub>i</sub></code>のよって、その選択句は関連付けられる。
+ケース式は式<em>e</em>が個々の選択句に反するパターンマッチングによって評価される。その選択子は上から下へ連続的に試される。もし、<em>e</em>が選択句のパターンと一致したら、そのとき選択句のガード式は始めにパターンの一致の間に生成された束縛によって展開されたケース式の環境内で上から下へ連続的に試される。その時、<code>where</code>句内の<code>decls<sub>i</sub></code>のよって、その選択句は関連付けられる。
 
 各ガード式のためにコンマ区切りのガードは左から右へ連続的に試される。もし、そのすべてに成功したなら、そのときは対応する式はガードによって生成された束縛で展開された環境で評価される。すなわち、(let句かパターンガードのいずれかを使った)ガードによって生成された束縛は続くガードと対応する式のスコープ内にある。もし、あらゆるガードが失敗したら、その時はこのガード式は失敗し、次のガード式を試す。
 
-もし選択句に与えられたガード式の`none`が成功したら、その時マッチングは次の選択句を続行する。もし、どの選択句も成功しなければ、そのときの結果は`⊥`となる。パターンマッチングはセクション[3.17]("#3.17")で説明され、ケース式の正式な意味論はセクション[3.17.3]("#3.17.3")で説明される。
+もし選択句に与えられたガード式のnoneが成功したら、その時マッチングは次の選択句を続行する。もし、どの選択句も成功しなければ、そのときの結果は<em>⊥</em>となる。パターンマッチングはセクション[3.17]("#3.17")で説明され、ケース式の正式な意味論はセクション[3.17.3]("#3.17.3")で説明される。
 
-**パースについての注意点**。以下の式は
+**パースについての注意点** 。以下の式は
 
 ```hs
 case x of { (a,_) | let b = not a in b :: Bool -> a }
@@ -444,18 +452,18 @@ case x of { (a,_) | let b = not a in b :: Bool -> a }
 case x of { (a,_) | (let b = not a in b :: Bool) -> a }
 ```
 
-しかしながら、`Bool -> a`というフレーズは型として構文的に正当であり、先読みが制限されているパーサーは、この選択に誤ってコミットする可能性があり、それゆえプログラムは拒否する。故に、プログラマーは型シグネチャで終わるガードを避けるように勧められる。これは実際にガードが`exp`ではなく`infixexp`を含んでいる理由になる。
+しかしながら、<code>Bool -> a</code>というフレーズは型として構文的に正当であり、先読みが制限されているパーサーは、この選択に誤ってコミットする可能性があり、それゆえプログラムは拒否する。故に、プログラマーは型シグネチャで終わるガードを避けるように勧められる。これは実際にガードが<em>exp</em>ではなく<em>infixexp</em>を含んでいる理由になる。
 
 ## Do式
 
 |||||
 |--|--|--|--|
-| <em>lexp</em>|→|<tt>do</tt> { <em>stmts</em> }|(do expression)|
-|<em>stmts</em>|→|<em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<tt>;</tt>]|(n ≥ 0)|
+| <em>lexp</em>|→|<code>do</code> { <em>stmts</em> }|(do expression)|
+|<em>stmts</em>|→|<em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<code>;</code>]|(<em>n</em> ≥ 0)|
 | <em>stmt</em>|→|<em>exp</em> ;| |
 |	        |&#124;|<em>pat</em> <- <em>exp</em> ;| |
-|         |&#124;|<tt>let</tt> <em>decls</em> ;| |
-|         |&#124;|<tt>;</tt> 	                   |(empty statement)|
+|         |&#124;|<code>let</code> <em>decls</em> ;| |
+|         |&#124;|<code>;</code> 	                   |(empty statement)|
 
 do式はモナドのプログラミングのためのより従来的な構文を提供する。それは以下のような式を許す。
 
@@ -475,26 +483,26 @@ do putStr "x: "
 
 <div class="column">
 
-**変換：** Do式はこれらの等式を満たし、排除した空の`stmts`の後にカーネルの中への変換のように使われるかもしれない。
+**変換：** Do式はこれらの等式を満たし、排除した空の<em>stmts</em>の後にカーネルの中への変換のように使われるかもしれない。
 
 ||||
 |--|--|--|
-|<tt>do</tt> {<em>e</em>} |=| 	<em>e</em>|
-|<tt>do</tt> {<em>e</em>;<em>stmts</em>} |=| 	<em>e</em> >> <tt>do</tt> {<em>stmts</em>}|
-|<tt>do</tt> {<em>p</em> <- e; <em>stmts</em>}|=|<tt>let</tt> <tt>ok</tt> <em>p</em> = <tt>do</tt> {<em>stmts</em>}|
-|		  　　　　　　　　| |&ensp;&emsp;<tt>ok</tt> _ = <tt>fail</tt> "..."|
-|		               | |&ensp;<tt>in</tt> <em>e<em> >>= <tt>ok</tt>|
-|<tt>do</tt> {<tt>let</tt> <em>decls</em>; <em>stmts</em>}|=|<tt>let</tt> <em>decls</em> <tt>in</tt> <tt>do</tt> {<em>stmts</em>}|
+|<code>do</code> {<em>e</em>} |=| 	<em>e</em>|
+|<code>do</code> {<em>e</em>;<em>stmts</em>} |=| 	<em>e</em> >> <code>do</code> {<em>stmts</em>}|
+|<code>do</code> {<em>p</em> <- e; <em>stmts</em>}|=|<code>let</code> <code>ok</code> <em>p</em> = <code>do</code> {<em>stmts</em>}|
+|		  　　　　　　　　| |&ensp;&emsp;<code>ok</code> _ = <code>fail</code> "..."|
+|		               | |&ensp;<code>in</code> <em>e<em> >>= <code>ok</code>|
+|<code>do</code> {<code>let</code> <em>decls</em>; <em>stmts</em>}|=|<code>let</code> <em>decls</em> <code>in</code> <code>do</code> {<em>stmts</em>}|
 
-コンパイラが生成したエラーメッセージを表す省略記号`"..."`の部分は`fail`へ渡され、そして可能であればパターンマッチに失敗した場所を表示する。関数`>>`,`>>=`と`fail`はPreludeで定義されたクラス`Monad`の操作であり、`ok`は新しい識別子である。
+コンパイラが生成したエラーメッセージを表す省略記号<em>"..."</em>の部分は<code>fail</code>へ渡され、そして可能であればパターンマッチに失敗した場所を表示する。関数<code>>></code>,<code>>>=</code>と<code>fail</code>はPreludeで定義されたクラス<code>Monad</code>の操作であり、<code>ok</code>は新しい識別子である。
 
 </div>
 
-`do`の変換でも示したように、`let`に束縛された変数は完全に多相的な型をもつ一方で`<-`によって定義された変数はラムダ束縛であり、ゆえに単相的である。
+<code>do</code>の変換でも示したように、<code>let</code>に束縛された変数は完全に多相的な型をもつ一方で<code><-</code>によって定義された変数はラムダ束縛であり、ゆえに単相的である。
 
 ## フィールドラベル付きのデータ型
 
-データ型の宣言はフィールドラベルを必要に応じて定義してもよい。(セクション[4.2.1]("./4-declarations-and-bindings.md")を参照)これらのフィールドラベルは構築、形式の選択、データ型全体の構造に依存した方法でのフィールドの更新することに使用される。
+データ型の宣言はフィールドラベルを必要に応じて定義してもよい。(セクション[4.2.1](./4-declarations-and-bindings.md)を参照)これらのフィールドラベルは構築、形式の選択、データ型全体の構造に依存した方法でのフィールドの更新することに使用される。
 
 異なるデータ型は同じスコープの共通のフィールドラベルを共有することはできない。フィールドラベルはコンストラクタ内で高々一度だけ、使用することができる。しかしながら、データ型の中で、あるフィールドがすべてのコンストラクタ内で同じ型を持つときに限り1つのフィールドを複数のコンストラクタで使用することができる。最後の点については次が良い例である:
 
@@ -503,7 +511,7 @@ data S = S1 { x :: Int } | S2 { x :: Int }   -- OK
 data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 ```
 
-ここでの`s`は正当であるが`T`はそうではない。また`y`は後者では矛盾する型付けが与えられている。
+ここでの<code>s</code>は正当であるが<code>T</code>はそうではない。また<code>y</code>は後者では矛盾する型付けが与えられている。
 
 ### フィールドセレクション
 
@@ -515,13 +523,13 @@ data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 
 <div class="column">
 
-**変換:** フィールドラベル`f`は次のようなセレクタ関数を生成する。
+**変換:** フィールドラベル<em>f</em>は次のようなセレクタ関数を生成する。
 
 ||||
 |--|--|--|
-|f x|=|<tt>case</tt> x <tt>of</tt> { <em>C<sub>1</sub></em> <em>p<sub>11</sub></em> … <em>p<sub>1k</sub></em>  ->  <em>e<sub>1</sub></em> ;… ; <em>C<sub>n</sub> p<sub>n1</sub></em> … <em>p<sub>nk</sub></em>  ->  <em>e<sub>n</sub></em> }|
+|f x|=|<code>case</code> x <code>of</code> { <em>C<sub>1</sub></em> <em>p<sub>11</sub></em> … <em>p<sub>1k</sub></em>  ->  <em>e<sub>1</sub></em> ;… ; <em>C<sub>n</sub> p<sub>n1</sub></em> … <em>p<sub>nk</sub></em>  ->  <em>e<sub>n</sub></em> }|
 
-<code>C<sub>1</sub> ... C<sub>n</sub></code>は全て<code>f</code>とラベルされたフィールドを含むデータ型のコンストラクタで、<code>p<sub>ij</sub></code>は`f`が<code>C<sub>i</sub></code>の要素の`j`番目、または`_`をラベルした時の`y`であり、<code><em>e<code>i</code></em></code>は<code><em>C<sub>i</sub></em></code>のフィールドが`f`または`undefined`のラベルを持つ時の`y`である。
+<code>C<sub>1</sub> ... C<sub>n</sub></code>は全て<code>f</code>とラベルされたフィールドを含むデータ型のコンストラクタで、<code>p<sub>ij</sub></code>は<em>f</em>が<code>C<sub>i</sub></code>の要素の<em>j</em>番目、または<code>\_</code>をラベルした時の<code>y</code>であり、<code><em>e<code>i</code></em></code>は<code><em>C<sub>i</sub></em></code>のフィールドが<em>f</em>または<code>undefined</code>のラベルを持つ時の<code>y</code>である。
 
 </div>
 
@@ -532,28 +540,28 @@ data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 | <em>aexp</em>|→|<em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled construction, <em>n</em> ≥ 0)|
 |<em>fbind</em>|→|<em>qvar</em> = <em>exp</em>| |
 
-ラベル付けされたフィールドを使うコンストラクタが値の生成に使われる場合があるが、その時には各コンポーネントは位置ではなく名前によって指定する。宣言リストの中で使われる中括弧とは異なりレイアウトの対象にならない。`{`と`}`の文字は明示しなければならない。(これはフィールドの更新、フィールドパターンにおいても正しい。)フィールドラベルを使用する構築は次の制約に応じる。
+ラベル付けされたフィールドを使うコンストラクタが値の生成に使われる場合があるが、その時には各コンポーネントは位置ではなく名前によって指定する。宣言リストの中で使われる中括弧とは異なりレイアウトの対象にならない。<code>{</code>と<code>}</code>の文字は明示しなければならない。(これはフィールドの更新、フィールドパターンにおいても正しい。)フィールドラベルを使用する構築は次の制約に応じる。
 
 - 指定されたコンストラクタで宣言されたフィールドラベルのみ言及してよい。
 - フィールドラベルは複数回言及してはならない。
-- 言及されないフィールドは`⊥`で初期化される。
-- 正格なフィールド(宣言された型のフィールドの接頭語に`!`が付けられている)が生成の際に省略された時はコンパイルエラーが発生する。厳格なフィールドはセクション[4.2.1]("./4-declarations-and-bindings.md")で説明される。
+- 言及されないフィールドは<em>⊥</em>で初期化される。
+- 正格なフィールド(宣言された型のフィールドの接頭語に<em>!</em>が付けられている)が生成の際に省略された時はコンパイルエラーが発生する。厳格なフィールドはセクション[4.2.1](./4-declarations-and-bindings.md)で説明される。
 
-式`F {}`は、`F`はデータコンストラクタであり、<strong><code>F</code>がレコード構文により宣言されたかどうかに関わらず</strong>、正当である(ただし`F`が正格フィールドを持たない時に限る。上の4番目の箇条書きを参照)。それは<code>F ⊥<sub>1</sub> … ⊥<sub>n</sub></code>を表し、`n`は`F`の引数の数である。
+式<code>F {}</code>は、<code>F</code>はデータコンストラクタであり、<strong><code>F</code>がレコード構文により宣言されたかどうかに関わらず</strong>、正当である(ただし<code>F</code>が正格フィールドを持たない時に限る。上の4番目の箇条書きを参照)。それは<code>F ⊥<sub>1</sub> … ⊥<sub>n</sub></code>を表し、<em>n</em>は<code>F</code>の引数の数である。
 
 <div class="column">
 
-**変換：** `f = v`の束縛で、フィールド`f`は`v`でラベルする。
+**変換：** <em>f = v</em>の束縛で、フィールド<em>f</em>は<em>v</em>でラベルする。
 
 ||||
 |--|--|--|
 |<em>C</em> { <em>bs</em> }|=|C (<em>pick<sub>1</sub><sup>C</sup></em> <em>bs</em> <em><sub>undefined</sub></em>) … (<em>pick<sub>k</sub><sup>C</sup></em> <em>bs</em> <em><sub>undefined</sub></em>)|
 
-`k`は`C`の引数の数である。
+<em>k</em>は<em>C</em>の引数の数である。
 
 補助関数<code>pick<sub>i</sub><sup>C</sup> bs d</code>は次にように定義される。
 <p>
-もし、コンストラクタ`C`の`i`番目の要素がフィールドラベル`f`を持ち、`if f=v`は束縛された`bs`に表示されるなら、その時は<code>pick<sub>i</sub><sup>C</sup> bs d</code>は`v`である。言い換えると<code>pick<sub>i</sub><sup>C</sup> bs d</code>はデフォルト値`d`である。
+もし、コンストラクタ<em>C</em>の<em>i</em>番目の要素がフィールドラベル<em>f</em>を持ち、<em>if f=v</em>は束縛された<em>bs</em>に表示されるなら、その時は<code>pick<sub>i</sub><sup>C</sup> bs d</code>は<em>v</em>である。言い換えると<code>pick<sub>i</sub><sup>C</sup> bs d</code>はデフォルト値<em>d</em>である。
 </p>
 </div>
 
@@ -572,17 +580,17 @@ data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 
 <div class="column">
 
-**変換:** 以下は以前の`pick`の定義を使用する。
+**変換:** 以下は以前の<em>pick</em>の定義を使用する。
 
 ||||
 |--|--|--|
-|e { bs }|=|<tt>case</tt> <em>e</em> <tt>of</tt>|
+|e { bs }|=|<code>case</code> <em>e</em> <code>of</code>|
 |		     | |&emsp;&emsp;&emsp;&emsp;<em>C<sub>1</sub></em> <em>v<sub>1</sub></em> … <em>v<sub>k1</sub></em> -> <em>C<sub>1</sub></em> (<em>pick<sub>1</sub><sup>C1</sup></em> <em>bs</em> <em>v<sub>1</sub></em>) … (<em>pick<sub>k 1</sub><sup>C1</sup></em> <em>bs</em> <em>v <sub>k1</sub></em>)
 |		     | |&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;...|
 |		     | |&emsp;&emsp;&emsp;&emsp;<em>C<sub>j</sub></em> <em>v<sub>1</sub></em> … <em>v<sub>kj</sub></em> -> <em>C<sub>j</sub></em> (<em>pick<sub>1</sub><sup>Cj</sup></em> <em>bs</em> <em>v<sub>1</sub></em>) … (<em>pick<sub>k j</sub><sup>Cj</sup></em> <em>bs</em> <em>v <sub>k<sub>j</sub></sub></em>)|
-|		     | |&emsp;&emsp;&emsp;&emsp;_ -> error "Update error"|
+|		     | |&emsp;&emsp;&emsp;&emsp;_ -> <code>error</code> "Update error"|
 
-<code>{ <em>C<sub>1</sub></em>,...,<em>C<sub>j</sub></em>}</code>は`bs`内の全てのラベルを含むコンストラクタの集合で、ｋ<sub>i</sub>は<em>C<sub>i</sub></em>の引数の数である。
+<code>{ <em>C<sub>1</sub></em>,...,<em>C<sub>j</sub></em>}</code>は<em>bs</em>内の全てのラベルを含むコンストラクタの集合で、ｋ<sub>i</sub>は<em>C<sub>i</sub></em>の引数の数である。
 
 </div>
 
@@ -596,31 +604,31 @@ data T    = C1 {f1,f2 :: Int}
 
 |式|変換|
 |--|--|
-| C1 {f1 = 3} | C1 3 <tt>undefined</tt> |
+| C1 {f1 = 3} | C1 3 <code>undefined</code> |
 |  C2 {f1 = 1, f4 = 'A', f3 = 'B'} | C2 1 'B' 'A' |
-| x {f1 = 1} | <pre><tt>case</tt> x <tt>of</tt> C1 _ f2    -> C1 1 f2<br>          C2 _ f3 f4 -> C2 1 f3 f4</pre> |
+| x {f1 = 1} | <pre><code>case</code> x <code>of</code> C1 _ f2    -> C1 1 f2<br>          C2 _ f3 f4 -> C2 1 f3 f4</pre> |
 
-フィールド`f1`は両方の`T`のコンストラクタに共通である。この例では、フィールドラベル表記でコンストラクタを使った式をフィールドラベルを使わない同じコンストラクタを使った同値な式へと変換している。もし、`x {f2 = 1, f3 = 'x'}`のように、どのコンストラクタも、更新で使われたフィールドラベルの集合を定義していないのであれば、コンパイル時エラーという結果になるだろう。
+フィールド<code>f1</code>は両方の<code>T</code>のコンストラクタに共通である。この例では、フィールドラベル表記でコンストラクタを使った式をフィールドラベルを使わない同じコンストラクタを使った同値な式へと変換している。もし、<code>x {f2 = 1, f3 = 'x'}</code>のように、どのコンストラクタも、更新で使われたフィールドラベルの集合を定義していないのであれば、コンパイル時エラーという結果になるだろう。
 
 ## 式の型シグネチャ
 
 ||||
 |--|--|--|
-|<em>exp</em>|→|<em>exp</em> <tt>::</tt> [<em>context</em> =>] <em>type</em>|
+|<em>exp</em>|→|<em>exp</em> <code>::</code> [<em>context</em> =>] <em>type</em>|
 
-式の型シグネチャは形式`e :: t`を持つ。`e`は式で、`t`は型(セクション[4.1.2]("./4-declarations-and-bindings.md"))であり、それらは明示的に式を分類することに使用され、オーバーロード(セクション[4.1.2](”./4-declarations-and-bindings.md”)を参照)するために曖昧な型付けを解決することに使われるかもしれない。式の値は`exp`の値である。通常の型シグネチャと同様に(セクション[4.4.1](”./4-declarations-and-bindings.md”)を参照)、宣言された型は`exp`から導出可能な主要な型より具体的になるかもしれないが、主要な型より一般的なまたは同程度な型を与えることはエラーである。
+式の型シグネチャは形式<em>e <code>::</code> t</em>を持つ。<em>e</em>は式で、<em>t</em>は型(セクション[4.1.2](./4-declarations-and-bindings.md))であり、それらは明示的に式を分類することに使用され、オーバーロード(セクション[4.1.2](”./4-declarations-and-bindings.md”)を参照)するために曖昧な型付けを解決することに使われるかもしれない。式の値は<em>exp</em>の値である。通常の型シグネチャと同様に(セクション[4.4.1](”./4-declarations-and-bindings.md”)を参照)、宣言された型は<em>exp</em>から導出可能な主要な型より具体的になるかもしれないが、主要な型より一般的なまたは同程度な型を与えることはエラーである。
 
 <div class="column">
 
 **変換：**
 
-<pre><em>e</em> :: <em>t</em> 	= 	<tt>let</tt> { <em>v</em> :: <em>t</em>;  <em>v</em> = <em>e</em> } <tt>in</tt> <em>v</em></pre>
+<pre><em>e</em> :: <em>t</em> 	= 	<code>let</code> { <em>v</em> :: <em>t</em>;  <em>v</em> = <em>e</em> } <code>in</code> <em>v</em></pre>
 
 </div>
 
 ## パターンマッチング
 
-**パターン**はラムダ抽象や関数定義、パターン束縛、リスト内包表記、do式、case式内で現れる。しかしながら、はじめの5つは最終的にcase式に変換されるので、パターンマッチの意味論はcase式のときのみ定めれば十分である。
+**パターン** はラムダ抽象や関数定義、パターン束縛、リスト内包表記、do式、case式内で現れる。しかしながら、はじめの5つは最終的にcase式に変換されるので、パターンマッチの意味論はcase式のときのみ定めれば十分である。
 
 ### パターン
 
@@ -632,30 +640,30 @@ data T    = C1 {f1,f2 :: Int}
 |	      |&#124;|<em>lpat</em>| |
 |||||
 |<em>lpat</em>|→|<em>apat</em>| |
-|	       |&#124;|<tt>-</tt> (<em>integer</em> &#124; <em>float</em>)|(negative literal)|
+|	       |&#124;|<code>-</code> (<em>integer</em> &#124; <em>float</em>)|(negative literal)|
 |	       |&#124;|<em>gcon</em> <em>apat<sub>1</sub></em> … <em>apat<sub>k</sub></em>|(arity gcon  =  <em>k</em>, <em>k</em> ≥ 1)|
 |||||
-|<em>apat</em>|→|<em>var</em> [ <tt>@</tt> <em>apat</em>]|(as pattern)|
+|<em>apat</em>|→|<em>var</em> [ <code>@</code> <em>apat</em>]|(as pattern)|
 |	       |&#124;|<em>gcon</em>|(arity gcon  =  0)|
 |	       |&#124;|<em>qcon</em> { <em>fpat1</em> , … , <em>fpatk</em> }|(labeled pattern, <em>k</em> ≥ 0)|
 |	       |&#124;|<em>literal</em>| |
-|	       |&#124;|<tt>_</tt> 	                    |(wildcard)|
+|	       |&#124;|<code>_</code> 	                    |(wildcard)|
 |	       |&#124;|( <em>pat</em> )                     |(parenthesized pattern)|
 |	       |&#124;|( <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> )|(tuple pattern, <em>k</em> ≥ 2)|
 |	       |&#124;|[ <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> ]|(list pattern, <em>k</em> ≥ 1)|
-|	       |&#124;|<tt>~</tt> <em>apat</em>|(irrefutable pattern)|
+|	       |&#124;|<code>~</code> <em>apat</em>|(irrefutable pattern)|
 |||||
-|<em>fpat</em>|→|<em>qvar</em> <tt>=</tt> <em>pat</em>| |
+|<em>fpat</em>|→|<em>qvar</em> <code>=</code> <em>pat</em>| |
 
 コンストラクタの引数の数はそれに関係するサブパターンの数と一致しなければいけない。部分的に適用されるコンストラクタに反して一致することはできない。
 
-全てのパターンは**線形**でなければならない。変数は2回以上現れないかもしれない。例として、この定義は不正である。
+全てのパターンは **線形** でなければならない。変数は2回以上現れないかもしれない。例として、この定義は不正である。
 
 ```hs
 f (x,x) = x     -- ILLEGAL; x used twice in pattern
 ```
 
-形式`var@pat`のパターンは`as-patterns`と呼ばれ、`var`を`pat`によってマッチされた値に付ける名前として使うことができる。例えば以下のものは、
+形式<em>var@pat</em>のパターンは<em>as-patterns</em>と呼ばれ、<em>var</em>を<em>pat</em>によってマッチされた値に付ける名前として使うことができる。例えば以下のものは、
 
 ```hs
 case e of { xs@(x:rest) -> if x==0 then rest else xs }
@@ -668,7 +676,7 @@ let { xs = e } in
   case xs of { (x:rest) -> if x==0 then rest else xs }
 ```
 
-形式`_`のパターンは`ワイルドカード`であり、パターンのいくつかの部分が右手側で参照されない時に便利である。それは他の場所で使われない識別子がその場所に置かれているかのようである。例えば、以下は、
+形式<code>\_</code>のパターンは<em>ワイルドカード</em>であり、パターンのいくつかの部分が右手側で参照されない時に便利である。それは他の場所で使われない識別子がその場所に置かれているかのようである。例えば、以下は、
 
 ```hs
 case e of { [x,_,_]  ->  if x==0 then True else False }
@@ -682,34 +690,34 @@ case e of { [x,y,z]  ->  if x==0 then True else False }
 
 ### パターンマッチングの非形式的の意味論
 
-パターンは値に対してマッチが行われる。パターンマッチを行おうとした場合、次の3つのいずれかの結果を得る。**失敗**かもしれない、**成功**かもしれず、その時はパターン内の各変数に束縛を返す、**分岐する**かもしれない(例:`⊥`を返す)。パターンマッチングは次のルールによって外から内へ、左から右へ進行する。
+パターンは値に対してマッチが行われる。パターンマッチを行おうとした場合、次の3つのいずれかの結果を得る。**失敗** かもしれない、 **成功** かもしれず、その時はパターン内の各変数に束縛を返す、 **分岐する** かもしれない(例:<em>⊥</em>を返す)。パターンマッチングは次のルールによって外から内へ、左から右へ進行する。
 
-1. 値`v`に対してマッチするパターン`var`のマッチングは常に成功し、`var`を`v`に束縛する。
-1. 値`v`に対してマッチするパターン`~apat`のマッチングは常に成功する。もし`v`に対してマッチする`apat`のマッチングが別の方法で成功するならば、`apat`内の束縛されていない変数は適切な値に束縛される。`v`に対してマッチする`apat`のマッチングが失敗または分岐するなら`⊥ `に束縛される(束縛は評価をほのめかさない)。<br><br>運用上、これはある`apat`内の変数が使われるまで、パターン`~apat`が何とも一致しないことを意味する。その時点でパターン全体はその値に対してマッチし、もし一致が失敗または分岐するなら、全体の計算を行う。
-1. あらゆる値に対してマッチするワイルドパターン`_`のマッチングは常に成功し、束縛は行われない。
-1. 値に対してマッチするパターン`con pat`のマッチングは、`con`は`newtype`によって定義されたコンストラクタである、以下の項目でその値に依存する。
-     - もし値が形式`con v`であるなら、その時`pat`は`v`に対してマッチされる。
-     - もし値が`⊥`なら、その時`pat`は`⊥`に対してマッチする。
+1. 値<em>v</em>に対してマッチするパターン<em>var</em>のマッチングは常に成功し、<em>var</em>を<em>v</em>に束縛する。
+1. 値<em>v</em>に対してマッチするパターン<em>~apat</em>のマッチングは常に成功する。もし<em>v</em>に対してマッチする<em>apat</em>のマッチングが別の方法で成功するならば、<em>apat</em>内の束縛されていない変数は適切な値に束縛される。<em>v</em>に対してマッチする<em>apat</em>のマッチングが失敗または分岐するなら<em>⊥ </em>に束縛される(束縛は評価をほのめかさない)。<br><br>運用上、これはある<em>apat</em>内の変数が使われるまで、パターン<em>~apat</em>が何とも一致しないことを意味する。その時点でパターン全体はその値に対してマッチし、もし一致が失敗または分岐するなら、全体の計算を行う。
+1. あらゆる値に対してマッチするワイルドパターン<code>\_</code>のマッチングは常に成功し、束縛は行われない。
+1. 値に対してマッチするパターン<em>con pat</em>のマッチングは、<em>con</em>は<code>newtype</code>によって定義されたコンストラクタである、以下の項目でその値に依存する。
+     - もし値が形式<em>con v</em>であるなら、その時<em>pat</em>は<em>v</em>に対してマッチされる。
+     - もし値が<em>⊥</em>なら、その時<em>pat</em>は<em>⊥</em>に対してマッチする。
 
-    すなわち`newtype`と関連するコンストラクタが値の型を変更することのみに務める。
-1. 値に対しての<code>con pat<sub>1</sub> ... pat<sub>n</sub></code>のマッチングは、`con`は`data`によって定義されるコンストラクタである、依存するその値に依存する。
+    すなわち<code>newtype</code>と関連するコンストラクタが値の型を変更することのみに務める。
+1. 値に対しての<code>con pat<sub>1</sub> ... pat<sub>n</sub></code>のマッチングは、<em>con</em>は<code>data</code>によって定義されるコンストラクタである、依存するその値に依存する。
      - もし値が形式<code>con pat<sub>1</sub> ... pat<sub>n</sub></code>であるなら、サブパターンはそのデータ値の要素に対して左から右へ一致される。もし、全てのマッチングが成功したなら、マッチング全体は成功し、はじめの失敗または分岐はマッチング全体を各々、失敗または分岐へともたらす。
-     - もし値が形式<code>con' <em>v<sub>1</sub></em> ... <em>v<sub>m</sub></em></code>であるなら、`con`は`con'`への異なるコンストラクタである、そのマッチングは失敗する。
-     - もし値が`⊥`なら、そのマッチングは分岐する。
-1. ラベル付きフィールドを使ったコンストラクタに対してのマッチングはそのフィールドがフィールドリスト内で指定された順序で照合されることを除いて、通常のコンストラクタパターンのマッチングと同じである。全てのリストされたフィールドはコンストラクタによって宣言されなければならず、フィールドは2回以上指定されないかもしれない。パターンによって指定されたフィールドは無視される(`_`に対して一致する)。
-1. 値`v`対する数値、文字、文字列リテラルパターン`k`のマッチングはもし、`v == k`なら成功する。<code><tt>==</tt></code>はパターンの型を元にオーバロードされる。マッチングはもしこのテストが分岐するなら分岐する。<br><br>数値リテラルの解釈はまさにセクション[3.2]("#3.2")で記載のとおりである。即ち、オーバロードされた関数`fromInteger`または`fromRational`は(それぞれ)適切な型へ変換することによって`Integer`または`Rational`リテラルに適用される。
+     - もし値が形式<code>con' <em>v<sub>1</sub></em> ... <em>v<sub>m</sub></em></code>であるなら、<em>con</em>は<em>con'</em>への異なるコンストラクタである、そのマッチングは失敗する。
+     - もし値が<em>⊥</em>なら、そのマッチングは分岐する。
+1. ラベル付きフィールドを使ったコンストラクタに対してのマッチングはそのフィールドがフィールドリスト内で指定された順序で照合されることを除いて、通常のコンストラクタパターンのマッチングと同じである。全てのリストされたフィールドはコンストラクタによって宣言されなければならず、フィールドは2回以上指定されないかもしれない。パターンによって指定されたフィールドは無視される(<code>\_</code>に対して一致する)。
+1. 値<em>v</em>対する数値、文字、文字列リテラルパターン<em>k</em>のマッチングはもし、<em>v == k</em>なら成功する。<code><code>==</code></code>はパターンの型を元にオーバロードされる。マッチングはもしこのテストが分岐するなら分岐する。<br><br>数値リテラルの解釈はまさにセクション[3.2]("#3.2")で記載のとおりである。即ち、オーバロードされた関数<code>fromInteger</code>または<code>fromRational</code>は(それぞれ)適切な型へ変換することによって<code>Integer</code>または<code>Rational</code>リテラルに適用される。
 
 
 静的型の制約(例えば、文字とbooleanを一致させる静的なエラー)は別として、次の静的クラスの制約は保持する。
 
-- 整数リテラルパターンはクラス`Num`の値とのみ照合できる。
-- 浮動小数点リテラルパターンはクラス`Factional`の値とのみ照合できる。
+- 整数リテラルパターンはクラス<code>Num</code>の値とのみ照合できる。
+- 浮動小数点リテラルパターンはクラス<code>Factional</code>の値とのみ照合できる。
 
-2種類のパターンの区別することはしばしば有用である。`反駁できない`パターンの照合は厳密ではなく、そのパターンはもし、照合された値が`⊥`なら一致する。`反駁できる`パターンは厳密であり、その一致される値が`⊥`なら分岐する。反駁できないパターンは次のものである。変数やワイルドカード、`N`が`newtype`と`apat`によって定義されたコンストラクタ`N apat`は反駁できず(セクション[4.2.3]("./4-declarations-and-bindings.md"))、`var@apat`の`apat`は反駁できない、または形式`~apat`(`apat`が反駁できないかどうか)である。他の全てのパターンは反駁できる。
+2種類のパターンの区別することはしばしば有用である。<em>反駁できない</em>パターンの照合は厳密ではなく、そのパターンはもし、照合された値が<em>⊥</em>なら一致する。<em>反駁できる</em>パターンは厳密であり、その一致される値が<em>⊥</em>なら分岐する。反駁できないパターンは次のものである。変数やワイルドカード、<em>N</em>が<code>newtype</code>と<em>apat</em>によって定義されたコンストラクタ<em>N apat</em>は反駁できず(セクション[4.2.3](./4-declarations-and-bindings.md))、<em>var@apat</em>の<em>apat</em>は反駁できない、または形式<em>~apat</em>(<em>apat</em>が反駁できないかどうか)である。他の全てのパターンは反駁できる。
 
 ここにいくつかの例をだす。
 
-1. もし、パターン`['a','b']`が`['x',⊥]`と一致されるなら、その時、`'a'`は`x`との一致に**失敗し**、その結果は失敗と一致する。しかし、もし`['a','b']`が`[⊥,'x']`と一致されるなら、その時、'a'と`⊥`を一致するよう試みることは**分岐**と一致することをもたらす。
+1. もし、パターン<code>['a','b']</code>が<code>['x',⊥]</code>と一致されるなら、その時、<code>'a'</code>は<code>x</code>との一致に **失敗し** 、その結果は失敗と一致する。しかし、もし<code>['a','b']</code>が<code>[⊥,'x']</code>と一致されるなら、その時、<code>'a'</code>と<em>⊥</em>を一致するよう試みることは **分岐** と一致することをもたらす。
 1. これらの例は反駁できるものとできないもののマッチングの実演である。
 
     ||||
@@ -736,7 +744,7 @@ case e of { [x,y,z]  ->  if x==0 then True else False }
     newtype N = N Bool  
     data    D = D !Bool
     ```
-    これらの例は`data`と`newtype`によって定義された型においてのパターンマッチングの違いを説明する。
+    これらの例は<code>data</code>と<code>newtype</code>によって定義された型においてのパターンマッチングの違いを説明する。
 
     ||||
     |--|--|--|
@@ -744,9 +752,9 @@ case e of { [x,y,z]  ->  if x==0 then True else False }
     |(\  (D True) -> True) ⊥|⇒|⊥|
     |(\ ~(D True) -> True) ⊥|⇒|True|
 
-    追加の例はセクション[4.2.3]("./4-declarations-and-bindings.md")で見つかるかもしれない。
+    追加の例はセクション[4.2.3](./4-declarations-and-bindings.md)で見つかるかもしれない。
 
-関数内のcase式内の最上位パターンと最上位パターンの集合またはパターン束縛は0以上の`ガード`に関係する持つかもしれない。ガードの構文と意味論についてはセクション[3.13]("#3.13")を参照してもらいたい。
+関数内のcase式内の最上位パターンと最上位パターンの集合またはパターン束縛は0以上の<em>ガード</em>に関係する持つかもしれない。ガードの構文と意味論についてはセクション[3.13]("#3.13")を参照してもらいたい。
 
 ガード意味論は関数またはcase式の厳密な特徴への影響を持つ。特に、他の反駁できないパターンがガードのために評価されるかもしれない。例えば、次の
 
@@ -755,11 +763,11 @@ f :: (Int,Int,Int) -> [Int] -> Int
 f ~(x,y,z) [a] | (a == y) = 1
 ```
 
-`a`と`y`の両方はガードの`==`によって評価される。
+<code>a</code>と<code>y</code>の両方はガードの<code>==</code>によって評価される。
 
 ### パターンマッチングの正式な意味論
 
-case式を除くすべてのパターンマッチの意味論は、パターンマッチの構成と`case`式との間を関連付ける等式を与えることで定められる(**訳注**: パターンマッチの意味論は一旦case式を使って定義し、そのあとcase式の意味論に従って処理を行う)。<tt>case</tt>式の意味論自体は図[3.1]("#figure-3.1")、[3.3](#figure-3.3)の、一連の識別子のように順番に与えられる。どんな実装でもこれらの識別子を保持するために振る舞わなければならず、かなり非効率的なコードを生成することから、それはそれらを直接使用することは期待されない。
+case式を除くすべてのパターンマッチの意味論は、パターンマッチの構成と<code>case</code>式との間を関連付ける等式を与えることで定められる( **訳注** : パターンマッチの意味論は一旦case式を使って定義し、そのあとcase式の意味論に従って処理を行う)。<code>case</code>式の意味論自体は図[3.1]("#figure-3.1")、[3.3](#figure-3.3)の、一連の識別子のように順番に与えられる。どんな実装でもこれらの識別子を保持するために振る舞わなければならず、かなり非効率的なコードを生成することから、それはそれらを直接使用することは期待されない。
 
 <a name="figure-3.1"></a>
 <table class="fbox">
@@ -767,54 +775,54 @@ case式を除くすべてのパターンマッチの意味論は、パターン�
  <tr>
   <td class="code-number">(a)</td>
   <td><pre>
-<tt>case</tt> <em>e</em> <tt>of</tt> { alts } = (\v <tt>-></tt> <tt>case</tt> <em>v</em> <tt>of</tt> { alts }) <em>e</em>
-<tt>where</tt> <em>v</em> <tt>is</tt> a <tt>new</tt> <tt>variable</tt> </pre></td>
+<code>case</code> <em>e</em> <code>of</code> { alts } = (\v <code>-></code> <code>case</code> <em>v</em> <code>of</code> { alts }) <em>e</em>
+<code>where</code> <em>v</em> <code>is</code> a <code>new</code> <code>variable</code> </pre></td>
  </tr>
  <tr>
   <td class="code-number">(b)</td>
   <td><pre>
-<tt>case</tt>  <em>v</em> <tt>of</tt> {  <em>p</em> <sub>1</sub>  match<sub>1</sub>;  … ; <em>p<sub>n</sub></em>  match<sub>n</sub> }
-=  <tt>case</tt> <em>v</em> <tt>of</tt> { <em>p<sub>1</sub></em>  match<sub>1</sub> ;
-               _  -> … <tt>case</tt> <em>v</em> <tt>of</tt> {
+<code>case</code>  <em>v</em> <code>of</code> {  <em>p</em> <sub>1</sub>  match<sub>1</sub>;  … ; <em>p<sub>n</sub></em>  match<sub>n</sub> }
+=  <code>case</code> <em>v</em> <code>of</code> { <em>p<sub>1</sub></em>  match<sub>1</sub> ;
+               _  -> … <code>case</code> <em>v</em> <code>of</code> {
                          <em>p<sub>n</sub></em>  match<sub>n</sub> ;
-                         _  -> <tt>error</tt> "No match" }…}
-<tt>where</tt> <tt>each</tt> match<sub>i</sub> <tt>has the form:</tt>
- | <em>gs<sub>i,1</sub></em>  -> <em>e<sub>i,1</sub></em> ; … ; | <em>gs<sub>i,m<sub>i</sub></sub></em> -> <em>e<sub>i,m<sub>i</sub></sub></em> <tt>where</tt> { <em>decls</em><sub>i</sub> } </pre></td>
+                         _  -> <code>error</code> "No match" }…}
+<code>where</code> <code>each</code> match<sub>i</sub> <code>has the form:</code>
+ | <em>gs<sub>i,1</sub></em>  -> <em>e<sub>i,1</sub></em> ; … ; | <em>gs<sub>i,m<sub>i</sub></sub></em> -> <em>e<sub>i,m<sub>i</sub></sub></em> <code>where</code> { <em>decls</em><sub>i</sub> } </pre></td>
  </tr>
  <tr>
   <td class="code-number">(c)</td>
   <td><pre>
-<tt>case</tt> <em>v</em> <tt>of</tt> { <em>p</em> | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em> ; …
-             | <em>gs<sub>n</sub></em> -> <em>e<sub>n</sub></em> <tt>where</tt> { <em>decls</em> }
+<code>case</code> <em>v</em> <code>of</code> { <em>p</em> | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em> ; …
+             | <em>gs<sub>n</sub></em> -> <em>e<sub>n</sub></em> <code>where</code> { <em>decls</em> }
             _     -> <em>e′</em> }
-= <tt>case</tt> <em>e′</em> <tt>of</tt> { <em>y</em> ->
-   <tt>case</tt> <em>v</em> <tt>of</tt> {
-     <em>p</em> -> <tt>let</tt> { <em>decls</em> } <tt>in</tt>
-          <tt>case</tt> <tt>()</tt> <tt>of</tt> {
-            <tt>()</tt> | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em>;
-            _ -> … <tt>case</tt> <tt>()</tt> <tt>of</tt> {
-                       <tt>()</tt> | <em>gs<sub>n</sub><em> -> <em>e<sub>n</sub></em>;
+= <code>case</code> <em>e′</em> <code>of</code> { <em>y</em> ->
+   <code>case</code> <em>v</em> <code>of</code> {
+     <em>p</em> -> <code>let</code> { <em>decls</em> } <code>in</code>
+          <code>case</code> <code>()</code> <code>of</code> {
+            <code>()</code> | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em>;
+            _ -> … <code>case</code> <code>()</code> <code>of</code> {
+                       <code>()</code> | <em>gs<sub>n</sub><em> -> <em>e<sub>n</sub></em>;
                        _  -> <em>y</em> } … }
      _ -> <em>y</em> }}
-<tt>where</tt> <em>y</em> <tt>is a new variable</tt></pre></td>
+<code>where</code> <em>y</em> <code>is a new variable</code></pre></td>
  </tr>
  <tr>
  <td class="code-number">(d)</td>
  <td><pre>
-<tt>case</tt> <em>v</em> <tt>of</tt> { ~p -> <em>e</em>; _ -> <em>e′</em> }
-= (\x<sub>1</sub> … x<sub>n</sub> -> <em>e</em> ) (<tt>case</tt> <em>v</em> <tt>of</tt> { p-> x<sub>1</sub> })… (<tt>case</tt> <em>v</em> <tt>of</tt> { <em>p</em> -> x<sub>n</sub>})
-<tt>where</tt> x<sub>1</sub>,…,x<sub>n</sub> <tt>are all the variables in</tt> p</pre></td>
+<code>case</code> <em>v</em> <code>of</code> { ~p -> <em>e</em>; _ -> <em>e′</em> }
+= (\x<sub>1</sub> … x<sub>n</sub> -> <em>e</em> ) (<code>case</code> <em>v</em> <code>of</code> { p-> x<sub>1</sub> })… (<code>case</code> <em>v</em> <code>of</code> { <em>p</em> -> x<sub>n</sub>})
+<code>where</code> x<sub>1</sub>,…,x<sub>n</sub> <code>are all the variables in</code> p</pre></td>
  </tr>
  <tr>
  <td class="code-number">(<em>e</em>)</td>
  <td><pre>
-<tt>case</tt> <em>v</em> <tt>of</tt> { x<tt>@</tt><em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
-=  <tt>case</tt> <em>v</em> <tt>of</tt> { <em>p</em> -> ( \ x -> <em>e</em> ) <em>v</em> ; _ -> <em>e′</em> }</pre></td>
+<code>case</code> <em>v</em> <code>of</code> { x<code>@</code><em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+=  <code>case</code> <em>v</em> <code>of</code> { <em>p</em> -> ( \ x -> <em>e</em> ) <em>v</em> ; _ -> <em>e′</em> }</pre></td>
  </tr>
  <tr>
  <td class="code-number">(f)</td>
  <td><pre>
-<tt>case</tt> <em>v</em> <tt>of</tt> { _ -> <em>e</em>; _ -> <em>e′</em> } = <em>e</em> </pre></td>
+<code>case</code> <em>v</em> <code>of</code> { _ -> <em>e</em>; _ -> <em>e′</em> } = <em>e</em> </pre></td>
  </tr>
 </tobdy>
 </table>
@@ -829,77 +837,77 @@ case式を除くすべてのパターンマッチの意味論は、パターン�
 <tbody>
  <tr>
   <td class="code-number">(g)</td>
-  <td><pre><tt>case</tt> <em>v</em> <tt>of</tt> { <em>K</em> p<sub>1</sub>…p<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
-	= <tt>case</tt> <em>v</em> <tt>of</tt> {
-	     <em>K</em> x<sub>1</sub>…x<sub>n</sub> -> <tt>case</tt> x<sub>1</sub> <tt>of</tt> {
-	                    <em>p<sub>1</sub></em> -> … <tt>case</tt> xn <tt>of</tt> { <em>p<sub>n</sub></em> -> <em>e</em> ; _ -> <em>e′</em> } …
+  <td><pre><code>case</code> <em>v</em> <code>of</code> { <em>K</em> p<sub>1</sub>…p<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
+	= <code>case</code> <em>v</em> <code>of</code> {
+	     <em>K</em> x<sub>1</sub>…x<sub>n</sub> -> <code>case</code> x<sub>1</sub> <code>of</code> {
+	                    <em>p<sub>1</sub></em> -> … <code>case</code> xn <code>of</code> { <em>p<sub>n</sub></em> -> <em>e</em> ; _ -> <em>e′</em> } …
 	                    _  -> <em>e′</em> }
 	     _ -> <em>e′</em> }
-	<tt>at least one of</tt> <em>p<sub>1</sub></em>,…,<em>p<sub>n</sub></em> <tt>is not a variable;</tt> x<sub>1</sub>,…,x<sub>n</sub> <tt>are new variables</tt> </pre></td>
+	<code>at least one of</code> <em>p<sub>1</sub></em>,…,<em>p<sub>n</sub></em> <code>is not a variable;</code> x<sub>1</sub>,…,x<sub>n</sub> <code>are new variables</code> </pre></td>
  </tr>
  <tr>
   <td class="code-number">(h)</td>
-  <td><pre><tt>case</tt> <em>v</em> <tt>of</tt> { <em>k</em> -> <em>e</em>; _ -> <em>e′</em> } = <tt>if</tt> (v==k) <tt>then</tt> <em>e</em> <tt>else</tt> <em>e′</em>
-	<tt>where</tt> <em>k</em> <tt>is a numeric, character, or string literal</tt></pre></td>
+  <td><pre><code>case</code> <em>v</em> <code>of</code> { <em>k</em> -> <em>e</em>; _ -> <em>e′</em> } = <code>if</code> (v==k) <code>then</code> <em>e</em> <code>else</code> <em>e′</em>
+	<code>where</code> <em>k</em> <code>is a numeric, character, or string literal</code></pre></td>
  </tr>
  <tr>
   <td class="code-number">(i)</td>
-  <td><pre><tt>case</tt> <em>v</em> <tt>of</tt> { x -> <em>e</em>; _ -> <em>e′</em> } = <tt>case</tt> <em>v</em> <tt>of</tt> { x -> <em>e</em> }</pre></td>
+  <td><pre><code>case</code> <em>v</em> <code>of</code> { x -> <em>e</em>; _ -> <em>e′</em> } = <code>case</code> <em>v</em> <code>of</code> { x -> <em>e</em> }</pre></td>
  </tr>
  <tr>
  <td class="code-number">(j)</td>
- <td><pre><tt>case</tt> <em>v</em> <tt>of</tt> { x -> <em>e</em> } = ( \ x -> <em>e</em> ) <em>v</em> </pre></td>
+ <td><pre><code>case</code> <em>v</em> <code>of</code> { x -> <em>e</em> } = ( \ x -> <em>e</em> ) <em>v</em> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(k)</td>
- <td><pre><tt>case</tt> <em>N</em> <em>v</em> <tt>of</tt> { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
-	= <tt>case</tt> <em>v</em> <tt>of</tt> { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
-	<tt>where</tt> <em>N</em> <tt>is a newtype constructor</tt> </pre></td>
+ <td><pre><code>case</code> <em>N</em> <em>v</em> <code>of</code> { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+	= <code>case</code> <em>v</em> <code>of</code> { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+	<code>where</code> <em>N</em> <code>is a newtype constructor</code> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(l)</td>
- <td><pre><tt>case</tt> ⊥ <tt>of</tt> { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> } = <tt>case</tt> ⊥ <tt>of</tt> { <em>p</em> -> <em>e</em> }
-	<tt>where</tt> <em>N</em> <tt>is a newtype constructor</tt> </pre></td>
+ <td><pre><code>case</code> ⊥ <code>of</code> { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> } = <code>case</code> ⊥ <code>of</code> { <em>p</em> -> <em>e</em> }
+	<code>where</code> <em>N</em> <code>is a newtype constructor</code> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(m)</td>
  <td><pre><tt>case<tt>  <em>v</em>  <tt>of<tt> {  <em>K</em>  { <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  ,  <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , … } ->  <em>e</em> ; _ ->  <em>e′</em> }
-	=  <tt>case</tt> <em>e′</em> <tt>of</tt> {
+	=  <code>case</code> <em>e′</em> <code>of</code> {
 	    <em>y</em> ->
-	    <tt>case</tt>  <em>v</em>  <tt>of</tt> {
+	    <code>case</code>  <em>v</em>  <code>of</code> {
 	      <em>K</em>  {  <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  } ->
-	            <tt>case</tt>  <em>v</em>  <tt>of</tt> { <em>K</em>  { <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , …  } ->  <em>e</em> ; _ ->  <em>y</em>  };
+	            <code>case</code>  <em>v</em>  <code>of</code> { <em>K</em>  { <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , …  } ->  <em>e</em> ; _ ->  <em>y</em>  };
 	            _ ->  <em>y</em>  }}
-	<tt>where</tt> <em>f<sub>1</sub></em>, <em>f<sub>2</sub></em>, … <tt>are fields of constructor</tt> <em>K</em>; <em>y</em> <tt>is a new variable</tt> </pre></td>
+	<code>where</code> <em>f<sub>1</sub></em>, <em>f<sub>2</sub></em>, … <code>are fields of constructor</code> <em>K</em>; <em>y</em> <code>is a new variable</code> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(n)</td>
- <td><pre><tt>case</tt>  <em>v</em>  <tt>of</tt> {  <em>K</em>  { f  =  <em>p</em> } ->  <em>e</em> ; _ ->  <em>e′</em> }
-  = <tt>case</tt>  <em>v</em>  <tt>of</tt> {
+ <td><pre><code>case</code>  <em>v</em>  <code>of</code> {  <em>K</em>  { f  =  <em>p</em> } ->  <em>e</em> ; _ ->  <em>e′</em> }
+  = <code>case</code>  <em>v</em>  <code>of</code> {
        <em>K</em> <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em>  ->  <em>e</em> ; _ ->  <em>e′</em> }
-  <tt>where</tt> <em>p<sub>i</sub></em> <tt>is</tt> <em>p</em> <tt>if f labels the ith component of</tt> <em>K</em>, _ <tt>otherwise</tt> </pre></td>
+  <code>where</code> <em>p<sub>i</sub></em> <code>is</code> <em>p</em> <code>if f labels the ith component of</code> <em>K</em>, _ <code>otherwise</code> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(o)</td>
- <td><pre><tt>case</tt>  <em>v</em>  <tt>of</tt> {  <em>K</em>  {} ->  <em>e</em> ; _ ->  <em>e′</em> }
-  = <tt>case</tt>  <em>v</em>  <tt>of</tt> {
+ <td><pre><code>case</code>  <em>v</em>  <code>of</code> {  <em>K</em>  {} ->  <em>e</em> ; _ ->  <em>e′</em> }
+  = <code>case</code>  <em>v</em>  <code>of</code> {
        <em>K</em> _ … _ ->  <em>e</em> ; _ ->  <em>e′</em> }</pre></td>
  </tr>
  <tr>
  <td class="code-number">(p)</td>
- <td><pre><tt>case</tt> (K′ <em>e<sub>1</sub></em> … <em>e<sub>m</sub></em>) <tt>of</tt> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } = <em>e′</em>
-  <tt>where</tt> <em>K</em> <tt>and</tt> <em>K′</em> <tt>are distinct data constructors of arity</tt> <em>n</em> <tt>and</tt> m<tt>, respectively</tt></pre></td>
+ <td><pre><code>case</code> (K′ <em>e<sub>1</sub></em> … <em>e<sub>m</sub></em>) <code>of</code> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } = <em>e′</em>
+  <code>where</code> <em>K</em> <code>and</code> <em>K′</em> <code>are distinct data constructors of arity</code> <em>n</em> <code>and</code> m<code>, respectively</code></pre></td>
  </tr>
  <tr>
  <td class="code-number">(q)</td>
- <td><pre><tt>case</tt> (K <em>e<sub>1</sub></em> … <em>e<sub>n</sub></em>) <tt>of</tt> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
+ <td><pre><code>case</code> (K <em>e<sub>1</sub></em> … <em>e<sub>n</sub></em>) <code>of</code> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
   = (\x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>) <em>e<sub>1</sub></em> … <em>e<sub>n</sub></em>
-  <tt>where</tt> <em>K</em> <tt>is a data constructor of arity</tt> <em>n</em> </pre></td>
+  <code>where</code> <em>K</em> <code>is a data constructor of arity</code> <em>n</em> </pre></td>
  </tr>
  <tr>
  <td class="code-number">(r)</td>
- <td><pre><tt>case</tt> ⊥ <tt>of</tt> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } =  ⊥
-  <tt>where</tt> <em>K</em> <tt>is a data constructor of arity</tt> <em>n</em></pre></td>
+ <td><pre><code>case</code> ⊥ <code>of</code> { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } =  ⊥
+  <code>where</code> <em>K</em> <code>is a data constructor of arity</code> <em>n</em></pre></td>
  </tr>
 </tobdy>
 </table>
@@ -914,26 +922,26 @@ case式を除くすべてのパターンマッチの意味論は、パターン�
 <tbody>
 <tr>
  <td class="code-number">(s)</td>
- <td><pre><tt>case</tt> <tt>()</tt> <tt>of</tt> { <tt>()</tt> | <em>g<sub>1</sub></em>, …, <em>g<sub>n</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
-= <tt>case</tt> <tt>()</tt> <tt>of</tt> {
-     <tt>()</tt> | <em>g<sub>1</sub></em> -> … <tt>case</tt> <tt>()</tt> <tt>of</tt> {
-                    <tt>()</tt> | <em>g<sub>n</sub></em> -> <em>e</em>;
+ <td><pre><code>case</code> <code>()</code> <code>of</code> { <code>()</code> | <em>g<sub>1</sub></em>, …, <em>g<sub>n</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+= <code>case</code> <code>()</code> <code>of</code> {
+     <code>()</code> | <em>g<sub>1</sub></em> -> … <code>case</code> <code>()</code> <code>of</code> {
+                    <code>()</code> | <em>g<sub>n</sub></em> -> <em>e</em>;
                     _ -> <em>e′</em> } …
      _ -> <em>e′</em> }
  where <em>y</em> is a new variable </pre></td>
 </tr>
  <td class="code-number">(t)</td>
- <td><pre>case <tt>()</tt> <tt>of</tt> { <tt>()</tt> | <em>p</em> <- <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
-= <tt>case</tt> <em>e</em><sub>0</sub> <tt>of</tt> { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }</pre></td>
+ <td><pre>case <code>()</code> <code>of</code> { <code>()</code> | <em>p</em> <- <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+= <code>case</code> <em>e</em><sub>0</sub> <code>of</code> { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }</pre></td>
 </tr>
 <tr>
 <td class="code-number">(u)</td>
-<td><pre><tt>case</tt> <tt>()</tt> <tt>of</tt> { <tt>()</tt> | <tt>let</tt> <em>decls</em> -> <em>e</em>; _ -> <em>e′</em> }
-= <tt>let</tt> <em>decls</em> in <em>e</em> </pre></td>
+<td><pre><code>case</code> <code>()</code> <code>of</code> { <code>()</code> | <code>let</code> <em>decls</em> -> <em>e</em>; _ -> <em>e′</em> }
+= <code>let</code> <em>decls</em> in <em>e</em> </pre></td>
 </tr>
 <tr>
  <td class="code-number">(v)</td>
- <td><pre><tt>case</tt> <tt>()</tt> <tt>of</tt> { <tt>()</tt> | <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+ <td><pre><code>case</code> <code>()</code> <code>of</code> { <code>()</code> | <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
   = if <em>e<sub>0</sub></em> then <em>e</em> else <em>e′</em> </pre></td>
 </tr>
 </tobdy>
@@ -942,10 +950,10 @@ case式を除くすべてのパターンマッチの意味論は、パターン�
 **図 3.3:** case式の意味論、パート3
 <div class="separator"></div>
 
-図[3.1]("#figure-3.1")-[3.3]("#figure-3.3")の<code>e, e'と<em>e<sub>i</sub></em></code>は式で、<code>g<sub>i</sub>とgs<sub>i</sub></code>はガードと各々のガードの並びであり、<code>pと<em>p<sub>i</sub></em></code>はパターン、<code>v, x, x<sub>i</sub></code>は変数、`K,K'`は代数的データ型`(data)`コンストラクタ(タプルコンストラクタを含む)で、`N`は`newtype`コンストラクタである。
+図[3.1]("#figure-3.1")-[3.3]("#figure-3.3")の<code>e, e'と<em>e<sub>i</sub></em></code>は式で、<code>g<sub>i</sub>とgs<sub>i</sub></code>はガードと各々のガードの並びであり、<code>pと<em>p<sub>i</sub></em></code>はパターン、<code>v, x, x<sub>i</sub></code>は変数、<em>K,K'</em>は代数的データ型<code>(data)</code>コンストラクタ(タプルコンストラクタを含む)で、<em>N</em>は<code>newtype</code>コンストラクタである。
 
-ルール(b)は実際にガードを含むかどうかにはかかわらず、一般的な表層ソース言語の`case`式に適合するものである。もしガードが書かれていなければ、その時、`True`が形式<code>match<sub>i</sub></code>内のガード<code>gs<sub>i,j</sub></code>に代用される。各々の識別子はもっと簡単な形式へと`case`式の結果を操作する。
+ルール(b)は実際にガードを含むかどうかにはかかわらず、一般的な表層ソース言語の<code>case</code>式に適合するものである。もしガードが書かれていなければ、その時、<code>True</code>が形式<code>match<sub>i</sub></code>内のガード<code>gs<sub>i,j</sub></code>に代用される。各々の識別子はもっと簡単な形式へと<code>case</code>式の結果を操作する。
 
-図[3.2]("#figure-3.2")のルール(h)はオーバロードされた`==`演算子を起動し、パターンマッチングの意味をオーバーロードされた定数に対して定義するというルールである。
+図[3.2]("#figure-3.2")のルール(h)はオーバロードされた<code>==</code>演算子を起動し、パターンマッチングの意味をオーバーロードされた定数に対して定義するというルールである。
 
-これらの識別子は静的な意味論を全て保存する。ルール(d)、(e)、(j)、(q)は`let`ではなくラムダを使っていて、これは`case`によって束縛された変数が単相型ということを示す(セクション[4.1.4]("./4-declarations-and-bindings.md")を参照)。
+これらの識別子は静的な意味論を全て保存する。ルール(d)、(e)、(j)、(q)は<code>let</code>ではなくラムダを使っていて、これは<code>case</code>によって束縛された変数が単相型ということを示す(セクション[4.1.4](./4-declarations-and-bindings.md)を参照)。
