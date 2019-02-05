@@ -13,6 +13,7 @@
 |bind, binding|束縛する, 束縛|
 |class|クラス|
 |class methods|クラスメソッド|
+|contraint|制約|
 |declaration|宣言|
 |default|デフォルト|
 |expression|式|
