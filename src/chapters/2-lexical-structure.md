@@ -22,9 +22,9 @@
 | <em>nonterm</em> | → | <em>alt<sub>1</sub></em> &#124; <em>alt<sub>2</sub></em> &#124; … &#124; <em>alt<sub>n</sub></em> |
 
 通常は文脈によって区別が明確になるが、
-<code>'|'</code>や<code>'[…]'</code>のような(タイプライターフォントで指定された)具体的な終端構文から'|'や'[…]'のようなメタデータ構文の区別には注意が必要である。
+`|`や`[…]`のような(タイプライターフォントで指定された)具体的な終端構文から|や[…]のようなメタデータ構文の区別には注意が必要である。
 
-HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。しかしながら、プログラムソースは現在、以前のHaskellバージョンで使われていたASCII文字セットに偏っている。
+HaskellはUnicode\[[2](./bibliogrphy.md)\]文字セットを使っている。しかしながら、プログラムソースは現在、以前のHaskellバージョンで使われていたASCII文字セットに偏っている。
 
 この構文はUnicodeコンソーシアムによって定義されているUnicode文字の文字符号化スキームによって異なる。Haskellコンパイラーは新しいバージョンのUnicodeが利用可能になるにつれてそれらを利用されることが期待されている。
 
@@ -32,10 +32,10 @@ HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。し�
 
 ||||
 |--|--|--|
-| <em>program</em> |→| { <em>lexeme</em> &#124; <em>whietespace</em> }|
+| <em>program</em> |→| {<em>lexeme</em> &#124; <em>whietespace</em>}|
 | <em>lexeme</em> |→| <em>qvarid</em> &#124; <em>qconid</em> &#124; <em>qvarsym</em> &#124; <em>qconsym</em> &#124; <em>literal</em> &#124; <em>special</em> &#124; <em>reservedop</em> &#124; <em>reservedid</em> |
 | <em>literal</em> |→| <em>integer</em> &#124; <em>float</em> &#124; <em>char</em> &#124; <em>string</em> |
-| <em>special</em> |→| (&#124;) &#124; , &#124; ; &#124; [ &#124; ] &#124; ` &#124; { &#124; } |
+| <em>special</em> |→| `(` &#124; `)` &#124; `,` &#124; `;` &#124; `[` &#124; `]` &#124; <code>&#096;</code> &#124; `{` &#124; `}` |
 | | | |
 | <em>whitespace</em> |→| <em>whitestuff</em> {<em>whitestuff</em>}|
 | <em>whitestuff</em> |→| <em>whitechar</em> &#124; <em>comment</em> &#124; <em>ncomment</em> |
@@ -49,32 +49,32 @@ HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。し�
 | <em>tab</em> |→| 水平タブ |
 | <em>uniWhite</em> |→|	空白として定義されたUnicode文字 |
 | | | |
-|<em>comment</em> |→| <em>dashes</em> [ <em>any<sub>symbol</sub></em> {<em>any</em>} ] <em>newline</em> |
-|<em>dashes</em> |→| <code>--</code> <code>{-}</code> |
-|<em>opencom</em> |→| <code>{-</code> |
-|<em>closecom</em> |→| <code>-}</code> |
-|<em>ncomment</em> |→| <em>opencom</em> <em>ANY</em> <em>seq</em> {<em>ncomment</em> <em>ANY</em> <em>seq</em>} <em>closecom</em> |
-|<em>ANY</em> <em>seq</em> |→| {<em>ANY</em> }<sub>⟨{<em>ANY</em> } ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em> }⟩</sub> |
+| <em>comment</em> |→| <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> |
+|<em>dashes</em> |→| `--` {`-`} |
+|<em>opencom</em> |→| `{-` |
+|<em>closecom</em> |→| `-}` |
+|<em>ncomment</em> |→| <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> |
+|<em>ANY seq</em> |→| {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> &#124; <em>closecom</em> ) {<em>ANY</em>}⟩</sub> |
 |<em>ANY</em> |→| <em>graphic</em> &#124; <em>whitechar</em> |
 |<em>any</em> |→| <em>graphic</em> &#124; <em>space</em> &#124; <em>tab</em> |
-|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; <code>"</code> &#124; <code>'</code> |
+|<em>graphic</em> |→| <em>small</em> &#124; <em>large</em> &#124; <em>symbol</em> &#124; <em>digit</em> &#124; <em>special</em> &#124; `"` &#124; `'` |
 | | | |
-|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; <code>_</code> |
-|<em>ascSmall</em> |→| <code>a</code> &#124; <code>b</code> &#124; … &#124; <code>z</code> |
+|<em>small</em> |→| <em>ascSmall</em> &#124; <em>uniSmall</em> &#124; `_` |
+|<em>ascSmall</em> |→| `a` &#124; `b` &#124; … &#124; `z` |
 |<em>uniSmall</em> |→| 小文字Unicode |
 | | | |
 |<em>large</em> |→| <em>ascLarge</em> &#124; <em>uniLarge</em> |
-|<em>ascLarge</em> |→| <code>A</code> &#124; <code>B</code> &#124; … &#124; <code>Z</code> |
-|<em>uniLarge</em> |→| 大文字またはタイトルケースのUnicode文字 |
-|<em>symbol</em> |→| <em>ascSymbol</em> &#124; uniSymbol<sub>⟨special &#124; <code>_</code> &#124; <code>"</code> &#124; <code>'</code>⟩</sub> |
+|<em>ascLarge</em> |→| `A` &#124; `B` &#124; … &#124; `Z` |
+|<em>uniLarge</em> |→| 任意の大文字またはタイトルケース(**訳注**: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 |
+|<em>symbol</em> |→| <em>ascSymbol</em> &#124; <em>uniSymbol</em><sub>⟨<em>special</em> &#124; `_` &#124; `"` &#124; `'`⟩</sub> |
 | | | |
-|<em>ascSymbol</em> |→| <sub>!</sub> &#124; <sub>#</sub> &#124; <sub>$</sub> &#124; <sub>%</sub> &#124; <sub>&</sub> &#124; <sub>⋆</sub> &#124; <sub>+</sub> &#124; <sub>.</sub> &#124; <sub>/</sub> &#124; <sub><</sub> &#124; <sub>=</sub> &#124; <sub>></sub> &#124; <sub>?</sub> &#124; <sub>@</sub> &#124; <sub>\\</sub> &#124; <sub>^</sub> &#124; <sub>&#124;</sub> &#124; <sub>-</sub> &#124; <sub>~</sub> &#124; <sub>:</sub>|
+|<em>ascSymbol</em> |→| `!` &#124; `#` &#124; `$` &#124; `%` &#124; `&` &#124; `⋆` &#124; `+` &#124; `.` &#124; `/` &#124; `<` &#124; `=` &#124; `>` &#124; `?` &#124; `@` &#124; `\` &#124; `^` &#124; <code>&#124;</code> &#124; `-` &#124; `~` &#124; `:`|
 |<em>uniSymbol</em> |→| Unicodeのシンボル、または句読点 |
 |<em>digit</em> |→| <em>ascDigit</em> &#124; <em>uniDigit</em> |
-|<em>ascDigit</em> |→| <code>0</code> &#124; <code>1</code> &#124; <em>…</em> &#124; <code>9</code> |
+|<em>ascDigit</em> |→| `0` &#124; `1` &#124; … &#124; `9` |
 |<em>uniDigit</em> |→| 10進数Unicode |
-|<em>octit</em> |→| <code>0</code> &#124; <code>1</code> &#124; <em>…</em> &#124; <code>7</code> |
-|<em>hexit</em> |→| <em>digit</em> &#124; <code>A</code> &#124; <em>…</em> &#124; <code>F</code> &#124; <code>a</code> &#124; <code>…</code> &#124; <code>f</code> |
+|<em>octit</em> |→| `0` &#124; `1` &#124; … &#124; `7` |
+|<em>hexit</em> |→| <em>digit</em> &#124; `A` &#124; … &#124; `F` &#124; `a` &#124; … &#124; `f` |
 
 字句解析は"maximal munch"規則に従うべきである。すなわち、語彙素生成規則を満たす可能な限り長くとった語彙素が読み取られる([訳注]:日本語訳、最長一致。"longest match" ともいう)。したがって、<code>case</code>は予約語だが、<code>cases</code>は予約語ではない。同様に<code>=</code>は予約されているが、<code>==</code>と<code>~=</code>は予約されていない。
 
@@ -117,7 +117,7 @@ HaskellはUnicode[[2](./bibliogrphy.md)]文字セットを使っている。し�
 |--|--|--|
 |<em>varsym</em> | → | ( <em>symbol</em><sub>⟨:⟩</sub> {<em>symbol</em>} )<sub>⟨<em>reservedop</em> &#124; <em>dashes</em>⟩</sub>|
 |<em>consym</em> | → | ( <code>:</code> {<em>symbol</em>})<sub>⟨<em>reservedop</em>⟩</sub>|
-|<em>reservedop</em> | → | <code> .. </code> &#124; <code> : </code> &#124; <code> :: </code> &#124; <code> = </code> &#124; <code> \ </code> &#124; <code> </code> &#124; <code> </code> &#124; <code> <- </code> &#124; <code> -> </code> &#124; <code> @ </code> &#124; <code> ~ </code> &#124; <code> => </code>|
+|<em>reservedop></em> | → | `..` &#124; `:` &#124; `::` &#124; `=` &#124; `\` &#124; <code>&#124;</code> &#124; `<-` &#124; `->` &#124; `@` &#124; `~` &#124; `=>`|
 
 演算子シンボルは上で定義したように、1つ以上の記号文字から形成され、2つの名前空間に字句的に区別される。(セクション[1.4](./chapters/1-introduction.md))
 
