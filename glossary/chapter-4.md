@@ -21,12 +21,14 @@
 |free|自由|
 |informal, informally|非形式的、非形式的に|
 |instance|インスタンス|
+|kind|種|
 |lexically|レキシカル|
 |module|モジュール|
 |prefix|接頭辞|
 |quantification|量化|
 |quantified|量化された|
 |recursion|再帰|
+|record syntax|レコード構文|
 |semantics|意味論|
 |sequences|並び、列、シーケンス|
 |signature|シグネチャ|
