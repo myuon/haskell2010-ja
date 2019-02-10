@@ -109,7 +109,7 @@ Simon Marlow (editor)
 
 ### Haskell 2010 ライブラリ
 
-13. `Control.Monad`
+13. [Control.Monad](./chapters/13-control-monad.md)
     - ファンクターとモナドクラス
     - 関数
 14. `Data.Array`
