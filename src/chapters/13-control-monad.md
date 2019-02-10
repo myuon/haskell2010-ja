@@ -159,3 +159,227 @@ sum  :: Num a       => [a]   -> a
 msum :: MonadPlus m => [m a] -> m a
 ```
 
+### `Monad`の基本的な関数
+
+```hs
+mapM :: Monad m => (a -> m b) -> [a] -> m [b]
+```
+
+`mapM f`は`sequence . map f`と同値である。
+
+```hs
+mapM_ :: Monad m => (a -> m b) -> [a] -> m ()
+```
+
+`mapM_ f`は`sequence_ . map f`と同値である。
+
+```hs
+forM :: Monad m => [a] -> (a -> m b) -> m [b]
+```
+
+`forM`は`mapM`の引数を逆にしたものである。
+
+```hs
+forM_ :: Monad m => [a] -> (a -> m b) -> m ()
+```
+
+`forM_`は`mapM_`の引数を逆にしたものである。
+
+```hs
+sequence :: Monad m => [m a] -> m [a]
+```
+
+各アクションを左から右に順番に評価し、結果を集める。
+
+```hs
+sequence_ :: Monad m => [m a] -> m ()
+```
+
+各アクションを左から右に順番に評価し、結果を無視する。
+
+```hs
+(=<<) :: Monad m => (a -> m b) -> m a -> m b
+```
+
+`>>=`と同じで、引数が入れ替えたもの。
+
+```hs
+(>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
+```
+
+左から右へのモナドのクライスリ合成。
+
+```hs
+(<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+```
+
+右から左へのモナドのクライスリ合成。`>>=`の引数を逆にしたもの。
+
+```hs
+forever :: Monad m => m a -> m b
+```
+
+`forever act`はアクションを無限に繰り返す。
+
+```hs
+void :: Functor f => f a -> f ()
+```
+
+`void value`は`IO`アクションの結果の値といった評価の結果を捨て、または無視する。
+
+### リストの関数の一般化
+
+```hs
+join :: Monad m => m (m a) -> m a
+```
+
+`join`関数はモナドの従来のjoin演算子である。モナドの構造を1レベル取り除き、(束縛されている)引数をより外側のレベルへ射影するために使われる。
+
+```hs
+msum :: MonadPlus m => [m a] -> m a
+```
+
+リストに対する`concat`関数の一般化である。
+
+```hs
+filterM :: Monad m => (a -> m Bool) -> [a] -> m [a]
+```
+
+リストに対する`filter`関数の一般化である。
+
+```hs
+mapAndUnzipM :: Monad m => (a -> m (b, c)) -> [a] -> m ([b], [c])
+```
+
+`mapAndUnzipM`関数は第一引数をリストに適用し、ペアのリストを結果として返す。この関数は複雑なデータや状態変化を行うようなモナドで主に使われる。
+
+```hs
+zipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]
+```
+
+`zipWithM`関数は`zipWith`を任意のモナドに一般化したものである。
+
+```hs
+zipWithM_ :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m ()
+```
+
+`zipWithM_`は`zipWithM`の拡張で、最後の結果を無視するものである。
+
+```hs
+foldM :: Monad m => (a -> b -> m a) -> a -> [b] -> m a
+```
+
+`foldM`関数は`foldl`に似たものであるが、結果がモナドに包まれているところが異なる。`foldM`は引数であるリストを左から右に向かって走査することに注意せよ。このことは、`>>`と"畳み込み関数"が可換でない場合に問題になりうる。
+
+```hs
+       foldM f a1 [x1, x2, ..., xm]
+==
+
+       do  
+         a2 <- f a1 x1  
+         a3 <- f a2 x2  
+         ...  
+         f am xm
+```
+
+右から左に向かった評価が必要であれば、入力のリストを反転させればよい。
+
+```hs
+foldM_ :: Monad m => (a -> b -> m a) -> a -> [b] -> m ()
+```
+
+`foldM`に近いが、結果を捨てる。
+
+```hs
+replicateM :: Monad m => Int -> m a -> m [a]
+```
+
+`replicateM n act`はアクションを`n`回行い、結果を集める。
+
+```hs
+replicateM_ :: Monad m => Int -> m a -> m ()
+```
+
+`replicateM`に近いが、結果を捨てる。
+
+### モナディックな式の条件付き実行
+
+```hs
+guard :: MonadPlus m => Bool -> m ()
+```
+
+`guard b`は`b`が`True`であれば`return ()`であり、`b`が`False`であれば`mzero`である。
+
+```hs
+when :: Monad m => Bool -> m () -> m ()
+```
+
+モナディックな式の条件付き実行である。例えば、
+
+```hs
+       when debug (putStr "Debugging\n")
+```
+
+はブール値`debug`が`True`であれば文字列`Debugging\n`を出力し、そうでなければ何もしない。
+
+```hs
+unless :: Monad m => Bool -> m () -> m ()
+```
+
+`when`の逆である。
+
+### モナディックな持ち上げ演算子
+
+```hs
+liftM :: Monad m => (a1 -> r) -> m a1 -> m r
+```
+
+関数をモナドに持ち上げる。
+
+```hs
+liftM2 :: Monad m => (a1 -> a2 -> r) -> m a1 -> m a2 -> m r
+```
+
+関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。例えば、
+
+```hs
+    liftM2 (+) [0,1] [0,2] = [0,2,1,3]  
+    liftM2 (+) (Just 1) Nothing = Nothing
+```
+
+```hs
+liftM3 :: Monad m => (a1 -> a2 -> a3 -> r)
+                     -> m a1 -> m a2 -> m a3 -> m r
+```
+
+関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(`liftM2`を参照)
+
+```hs
+liftM4 :: Monad m => (a1 -> a2 -> a3 -> a4 -> r)
+                     -> m a1 -> m a2 -> m a3 -> m a4 -> m r
+```
+
+関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(`liftM2`を参照)
+
+```hs
+liftM5 :: Monad m => (a1 -> a2 -> a3 -> a4 -> a5 -> r)
+                     -> m a1 -> m a2 -> m a3 -> m a4 -> m a5 -> m r
+```
+
+関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(`liftM2`を参照)
+
+```hs
+ap :: Monad m => m (a -> b) -> m a -> m b
+```
+
+多く場合`liftM`演算子は、(関数適用を持ち上げる)`ap`を使用したものに置き換えることができる。
+
+```hs
+       return f ‘ap‘ x1 ‘ap‘ ... ‘ap‘ xn
+```
+
+は次と等しい。
+
+```hs
+       liftMn f x1 x2 ... xn
+```
