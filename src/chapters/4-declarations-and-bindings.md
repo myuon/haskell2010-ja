@@ -440,69 +440,73 @@ class  (Read a, Show a) => Textual a
 
 |||||
 |--|--|--|--|
-|topdecl|→|<tt>instance</tt> [scontext =>] qtycls inst [<tt>where</tt> idecls]| |
-|   inst|→|gtycon| |
-|  |&#124;|( gtycon tyvar<sub>1</sub> … tyvar<sub>k</sub> )|(k ≥ 0, tyvars  distinct)|
-|  |&#124;|( tyvar<sub>1</sub> , … , tyvar<sub>k</sub> )|(k ≥ 2, tyvars  distinct)|
-|  |&#124;|[ tyvar ]| |
-|  |&#124;|( tyvar<sub>1</sub> -> tyvar<sub>2</sub> )|(tyvar<sub>1</sub>  and tyvar<sub>2</sub>  distinct)|
-| idecls|→|{ idecl1 ; … ; idecln }|(n ≥ 0)|
-|  idecl|→|(funlhs | var) rhs| |
-|  |&#124;|(empty)| |
+|<em>topdecl</em>|→|`instance` [<em>scontext</em> =>] <em>qtycls</em> <em>inst</em> [`where` <em>idecls</em>]| |
+|   <em>inst</em>|→|<em>gtycon</em>| |
+|  |&#124;|( <em>gtycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em> )|(<em>k</em> ≥ 0, <em>tyvars</em>  <em>distinct</em>)|
+|  |&#124;|( <em>tyvar<sub>1</sub></em> , … , <em>tyvar<sub>k</sub></em> )|(<em>k</em> ≥ 2, <em>tyvars</em>  <em>distinct</em>)|
+|  |&#124;|[ <em>tyvar</em> ]| |
+|  |&#124;|( <em>tyvar<sub>1</sub></em> -> <em>tyvar<sub>2</sub></em> )|(<em>tyvar<sub>1</sub></em>  <em>and</em> <em>tyvar<sub>2</sub></em>  <em>distinct</em>)|
+| <em>idecls</em>|→|{ <em>idecl<sub>1</sub></em> ; … ; <em>idecl<sub>n</sub></em> }|(<em>n</em> ≥ 0)|
+|  <em>idecl</em>|→|(<em>funlhs</em> &#124; <em>var</em>) <em>rhs</em>| |
+|  |&#124;| |(<em>empty</em>)|
 
-**インスタンス宣言**はクラスのインスタンスを生成する。クラス宣言は<code><tt>class</tt> cx => C u <tt>where</tt> { cbody }</code>という風に行う。対応するインスタンス宣言の一般的な形式は次のものになる：<code><tt>instance</tt> cx′ => C (T u<sub>1</sub> … u<sub>k</sub>) <tt>where</tt> { d } <tt>where</tt> k ≥ 0</code>。型<code>(T u<sub>1</sub> … u<sub>k</sub>)</code>はシンプルな型変数<code>u<sub>1</sub>, … u<sub>k</sub></code>に提供される型コンストラクタ`T`の形式を取らなければいけない。さらに`T`は型シノニムであってはならず、<code>u<sub>i</sub></code>は全て厳格でなけれないけない。
+<em>インスタンス宣言</em>はクラスのインスタンスを生成する。クラス宣言は<code>class <em>cx</em> => <em>C u</em> where { <em>cbody</em> }</code>という風に行う。対応するインスタンス宣言の一般的な形式は次のものになる：<code>instance <em>cx′</em> => <em>C (T u<sub>1</sub> … u<sub>k</sub>)</em> where { <em>d</em> } where <em>k</em> ≥ 0</code>。型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>はシンプルな型変数<em>u<sub>1</sub>, … u<sub>k</sub></em>に提供される型コンストラクタ<em>T</em>の形式を取らなければいけない。さらに<em>T</em>は型シノニムであってはならず、<em>u<sub>i</sub></em>は全て厳格でなけれないけない。
 
 以下のようなインスタンス宣言は禁止である。
 
-<pre><code><tt>instance</tt> C (a,a) <tt>where</tt> ...  
-<tt>instance</tt> C (Int,a) <tt>where</tt> ...  
-<tt>instance</tt> C [[a]] <tt>where</tt> ...
-</code></pre>
+```hs
+instance C (a,a) where ...  
+instance C (Int,a) where ...  
+instance C [[a]] where ...
+```
 
-宣言`d`は`C`のクラスメソッドのみの束縛を含められる。スコープ内にクラスメソッドへ束縛を与えることは不正であるが、スコープ内にある名前は重要ではなく、特に、個々に区別された名前であるべきだ。(このルールはセクション[5.2]("./5-modules.md")のエクスポートリスト内に従属する名前に使われることと同一である。)例として、`range`は個々に区別された名前`Data.Ix.range`だけのスコープ内にあるのだが、これは正当である。
+宣言<em>d</em>は<em>C</em>のクラスメソッドのみの束縛を含められる。スコープ内にクラスメソッドへ束縛を与えることは不正であるが、スコープ内にある名前は重要ではなく、特に、個々に区別された名前であるべきだ。(このルールはセクション[5.2](./5-modules.md#a)のエクスポートリスト内に従属する名前に使われることと同一である。)例として、`range`は個々に区別された名前`Data.Ix.range`だけのスコープ内にあるのだが、これは正当である。
 
-<pre><code>module A where  
+```hs
+module A where  
   import qualified Data.Ix  
 
   instance Data.Ix.Ix T where  
     range = ...
-</code></pre>
+```
 
-`class`宣言内にすでに与えられているゆえに、宣言はあらゆる型シグネチャまたは固定宣言を含めないであろう。デフォルトのクラスメソッド(セクション[4.3.1](”#4.3.1”))の場合のように、メソッド宣言は変数または関数定義の形式を取らなければならない。
+`class`宣言内にすでに与えられているゆえに、宣言はあらゆる型シグネチャまたは固定宣言を含めないであろう。デフォルトのクラスメソッド(セクション[4.3.1](#aクラス宣言))の場合のように、メソッド宣言は変数または関数定義の形式を取らなければならない。
 
 もし、いくつかのクラスメソッドに束縛が与えられなければ、その時、`class`宣言内の対応するデフォルトのクラスメソッドは(提供しているなら)使われる。デフォルトが存在しないなら、その時、このインスタンスのクラスメソッドは`undefined`に束縛され、コンパイル時エラーは発生しない。
 
-型`T`をクラス`C`のインスタンスであるよう生成する`instance`宣言は**C-Tインスタンス宣言**と呼ばれ、以下の静的な制約に従うべきである。
+型<em>T</em>をクラス<em>C</em>のインスタンスであるよう生成する`instance`宣言は<em>C-Tインスタンス宣言</em>と呼ばれ、以下の静的な制約に従うべきである。
 
 - 型はプログラム上で1回以上個々のクラスのインスタンスのように宣言されるだろう。
-- クラスと型は同じ種類を持たなければいけない。これはセクション[4.6]("#4.6")で説明される使用する種類の推論を決定されることが可能だ。
-- インスタンス型<code>(T u<sub>1</sub> … u<sub>k</sub>)</code>内の型変数がインスタンス内容`cx'`に束縛を満たすということを推測するべきだ。この推測の元、次の2つの状態も満たされなければならない。
-    1. `C`のスーパークラスの内容<code>cx[(T u<sub>1</sub> … u<sub>k</sub>)∕u] </code>によって表現された束縛が満たされなければならない。言い換えると、**T**は**C**のスーパークラスの各インスタンスでなければならず、全スーパークラスのインスタンスの内容は<strong>cx'</strong>によって暗示されなければいけない。
-    1. 正しく型付けされた**d**内のクラスメソッド宣言に要求されるインスタンス型内の型変数上の束縛も満たされなければいけない。
+- クラスと型は同じ種類を持たなければいけない。これはセクション[4.6](#a種の推論)で説明される使用する種類の推論を決定されることが可能だ。
+- インスタンス型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>内の型変数がインスタンス内容<em>cx'</em>に束縛を満たすということを推測するべきだ。この推測の元、次の2つの状態も満たされなければならない。
+    1. <em>C</em>のスーパークラスの内容<em>cx[(T u<sub>1</sub> … u<sub>k</sub>)∕u] </em>によって表現された束縛が満たされなければならない。言い換えると、<em>T</em>は<em>C</em>のスーパークラスの各インスタンスでなければならず、全スーパークラスのインスタンスの内容は<em>cx'</em>によって暗示されなければいけない。
+    1. 正しく型付けされた<em>d</em>内のクラスメソッド宣言に要求されるインスタンス型内の型変数上の束縛も満たされなければいけない。
 
-    実際に、異常なケースを除いては、上記の2つの束縛を満たしている多くの一般的なインスタンスの内容<strong>cx'</strong>というインスタンス宣言から推論することが可能である。だが、それでも明示的なインスタンスの内容を書くことは強制される。
+    実際に、異常なケースを除いては、上記の2つの束縛を満たしている多くの一般的なインスタンスの内容<em>cx'</em>というインスタンス宣言から推論することが可能である。だが、それでも明示的なインスタンスの内容を書くことは強制される。
 
 次の例はスーパークラスインスタンスによって強いられた制限事項を説明する。
 
-<pre><code>class Foo a => Bar a where ...  
+```hs
+class Foo a => Bar a where ...  
 
 instance (Eq a, Show a) => Foo [a] where ...  
 
 instance Num a => Bar [a] where ...
-</code></pre>
+```
 
 この例はHaskellにおいて正常である。`Foo`は`Bar`のスーパークラスであるため、2つ目のインスタンス宣言は`[a]`が仮定`Num a`の下で`Foo`のインスタンスである時に正常である。1つめのインスタンス宣言はこの仮定の下で`[a]`が`Foo`のインスタンスであると実際に告げる。なぜなら、`Eq`と`Show`は`Num`のスーパークラスだからだ。
 
 もし2つのインスタンス宣言が代わりにこのように読むなら。
 
-<pre><code>instance Num a => Foo [a] where ...  
+```hs
+instance Num a => Foo [a] where ...  
 
 instance (Eq a, Show a) => Bar [a] where ...
-</code></pre>
+```
 
 そのとき、そのプログラムは不正である。2つ目のインスタンス宣言は`[a]`が仮定`(Eq a, Show a)`の下、`Foo`のインスタンスであるときのみ正常である。しかし、`[a]`がもっと強い仮定`Num a`の下で`Foo`のインスタンスのみであることから、これは保持しない。
 
-`instance`宣言のさらに進んだ例は[9章]("./9-standard-prelude.md")で見つけられるだろう。
+`instance`宣言のさらに進んだ例は[9章](./9-standard-prelude.md)で見つけられるだろう。
 
 ### 派生インスタンス
 
