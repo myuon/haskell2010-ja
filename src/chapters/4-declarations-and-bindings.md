@@ -531,6 +531,71 @@ instance (Eq a, Show a) => Bar [a] where ...
 
 ### 不明瞭な型とオーバーロードされた数値オペレータの既定値
 
+|||||
+|--|--|--|--|
+|<em>topdecl</em>|→|`default` (<em>type<sub>1</sub></em> `,` … `,` <em>type<sub>n</sub></em>)|(<em>n</em> ≥ 0)|
+
+Haskellスタイルのオーバーロード固有の問題は<em>不明瞭な型</em>の可能性があるということである。
+例えば、[11](./11-specification-of-derived-instances)章で定義された`read`と`show`関数を使い、もし単なる`Int`と`Bool`が`Read`と`Show`のメンバーなら、その時の次の式
+
+```hs
+let x = read "..." in show x  -- invalid
+```
+
+は不明瞭である。なぜなら`show`と`read`の型は、下の2つの式の
+
+```hs
+show :: ∀ a. Show  a  ⇒  a  →  String
+read :: ∀ a. Read  a  ⇒  String  →  a 
+```
+
+両方のケースで`a`を`Int`または`Bool`のどちらでもインスタンス化で満たすことが可能だからだ。
+そのような式は不適切な型付けだと考えられ、静的エラーである。
+
+型<code>∀ <em><span class="overline">u</span>. cx  ⇒  t</em></code>内で、もし<em>t</em>ではなく<em>ex</em>の中に存在する<em><span class="overline">u</span></em>に型変数<em>u</em>があるなら、式`e`が<em>不明瞭な型</em>を持つと言う。
+そのような型は不正である。
+
+例えば、先程の`show`と`read`を伴う式はその型が<code>∀ <em>a</em>.  Show  <em>a</em>, Read  <em>a</em>  ⇒  String</code>であるから不明瞭な型を持つ。
+
+不明瞭な型はユーザーからの入力によってのみ回避できる。
+その方法のひとつはセクション[3.16](./3-expressions#a式の型シグネチャ)で説明された<em>式の型シグネチャ</em>の使用を通じてである。
+例として、先程与えられた不明瞭な式において、以下のように書くことで、
+
+```hs
+let x = read "..." in show (x::Bool)
+```
+
+型から曖昧さを取り除く。
+
+時折、別の不明瞭な式は式の型シグネチャを使って固定された型を与えられるよりも、同じ型をいくつかの変数のように振る舞われることに必要になる。
+これは関数`asTypeOf`:<code><em>x</em> `asTypeOf` <em>y</em></code>([9](./9-standard-prelude.md)章)の用途が<em>x</em>の値を持つということであるが、<em>x</em>と<em>y</em>は同じ型を持つように強制される。
+例えば、
+
+```hs
+approxSqrt x = encodeFloat 1 (exponent x ‘div‘ 2) ‘asTypeOf‘ x
+```
+
+(`encodeFloat`と`exponent`の説明についてはセクション[6.4.6](./6-predefined-types-and-classes.md)を参照)
+
+クラス`Num`の不明瞭さはたくさん共通しており、そこでHaskellは<em>n</em> ≥ 0で、各<em>t<sub>i</sub></em>が<code>Num <em>t<sub>i</sub>が保持する</em></code>型でなければならない<em>デフォルト宣言</em><code>default (<em>t<sub>1</sub></em> , … , <em>t<sub>n</esub></em>)</code>と共にそれらを解決するための他の方法を提供する。
+不明瞭な型が発見された状態で、もし以下の条件を満たすなら、不明瞭な型変数`v`はデフォルト可能である。
+
+- <em>v</em>は<em>C</em>がクラスである形式<code><em>C v</em></code>の制約の中でのみ現れ、かつ
+- 少なくともこれらのクラスの一つが数値クラス(`Num`、または`Num`のサブクラス)であり、
+- これらのクラスの全てがPreludeまたは標準ライブラリの中で定義されている(図[6.2](./6-predefined-types-and-classes.md#a)-[6.3](./6-predefined-types-and-classes.md#a)は数値クラスを示し、図[6.1](./6-predefined-types-and-classes.md#a)はPrelude内で定義されたクラスを示す)。
+
+各デフォルト可能な変数は全ての不明瞭な変数のクラスのインスタンスであるデフォルトリストの初めの型によって置き換えられる。
+そのような型が見つからなければ、静的エラーである。
+
+ひとつのデフォルト宣言のみがモジュールごとに許可され、その効果はそのモジュールに制限される。
+もしデフォルト宣言がモジュール内で与えられないなら、その時は次のようなものであると仮定する。
+
+```hs
+default (Integer, Double)
+```
+
+空のデフォルト宣言`default ()`はモジュール内の全てのデフォルトをオフにする。
+
 ## ネストされた宣言
 
 ### 型シグネチャ
