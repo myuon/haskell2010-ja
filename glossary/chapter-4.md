@@ -41,4 +41,5 @@
 |top level|トップレベル|
 |trivial|自明な|
 |unit|ユニット(unit)、unit(Haskellのキーワードとして訳す時)、ユニット(単なる用語として訳す時)|
+|universal quantifier|全称量化|
 |vocabulary|語彙|
