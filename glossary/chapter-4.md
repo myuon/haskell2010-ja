@@ -16,10 +16,12 @@
 |contraint|制約|
 |declaration|宣言|
 |default|デフォルト|
+|defaultable|デフォルト可能|
 |direct acyclic graph|有向非巡回グラフ|
 |expression|式|
 |fixity declarations|結合性宣言|
 |free|自由|
+|ill-typed|不適切な型付け|
 |informal, informally|非形式的、非形式的に|
 |instance|インスタンス|
 |kind|種|
