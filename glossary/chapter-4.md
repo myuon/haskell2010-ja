@@ -16,6 +16,7 @@
 |contraint|制約|
 |declaration|宣言|
 |default|デフォルト|
+|direct acyclic graph|有向非巡回グラフ|
 |expression|式|
 |fixity declarations|結合性宣言|
 |free|自由|
@@ -25,6 +26,7 @@
 |lexically|レキシカル|
 |module|モジュール|
 |prefix|接頭辞|
+|polymorphic|多相的|
 |quantification|量化|
 |quantified|量化された|
 |recursion|再帰|

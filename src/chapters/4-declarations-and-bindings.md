@@ -394,7 +394,7 @@ class cx => C u where cdecls
 
 スーパークラスの関係は循環してはいけない。例)指示された非環式のグラフを構成しなければいけない。
 
-`class`宣言の<em>cdecls</em>部分は宣言の3つの種を含む。
+`class`宣言の<em>cdecls</em>部分は3種類の宣言を含む。
 - クラス宣言は新しい<em>クラスメソッドv<sub>i</sub></em>を生成し、スコープは<em>class</em>宣言の外側に展開する。
     クラス宣言のクラスメソッドは<em>cdecls</em>内の明示的な型シグネチャ<em>v<sub>i</sub> :: cx<sub>i</sub> => t<sub>i</sub></em>にある<em>v<sub>i</sub></em>そのものである。
     クラスメソッドは変数束縛とフィールド名と一緒に最上位の名前空間を共有する。
@@ -403,9 +403,9 @@ class cx => C u where cdecls
     <br><br>
 		トップレベルのクラスメソッド<em>v<sub>i</sub></em>の型は<em>v<sub>i</sub> :: ∀u,<span class="overline">w</span>.(Cu,cx<sub>i</sub>) ⇒ t<sub>i</sub></em>である。
     <em>t<sub>i</sub></em>は<em>u</em>を言及しなければいけないし、<em>u</em>より型変数<em><span class="overline">w</span></em>を言及するかもしれない。
-    その場合、<em>v<sub>i</sub></em>の型は<em>u</em>と<em><span class="overline">w</span></em>の両方にポリモフィックである。
+    その場合、<em>v<sub>i</sub></em>の型は<em>u</em>と<em><span class="overline">w</span></em>の両方に多相的である。
     <em>cx<sub>i</sub></em>は<em><span class="overline">w</span></em>のみ束縛するだろう。
-    特に、<em>cx<sub>i</sub></em>は<em>u</em>を束縛しないだろう。
+    特に、<em>cx<sub>i</sub></em>は<em>u</em>を束縛しなくともよい。
     例えば、
     ```hs
     class Foo a where
@@ -413,8 +413,8 @@ class cx => C u where cdecls
     ```
     <br>
     ここでの`op`型は<code>∀ <em>a</em>, <em>b</em>.(`Foo` <em>a</em>, Num <em>b</em>)   ⇒  <em>a</em>  →  <em>b</em>  →  <em>a</em>.</code>である。
-- <em>cdecls</em>は(他の値ではなく)クラスメソッドのいずれかへの<em>結合性宣言</em>も含めるだろう。
-    しかしながら、クラスメソッドはトップレベルの値を宣言することから、クラスメソッドのための固定宣言はクラス宣言の外側、或いはトップレベルを表現するだろう。
+- <em>cdecls</em>は(他の値ではなく)そのクラスのメソッドに対する<em>結合性宣言</em>を含んでもよい。
+    しかしながら、クラスメソッドはトップレベルの値を宣言することから、他の選択肢としてクラスメソッドの結合性宣言はクラス宣言の外側であるトップレベルに現れてもよい。
 - 最後に、<em>cdecls</em>は<em>v<sub>i</sub></em>のいずれかの<em>デフォルトクラスメソッド</em>を含められる(セクション[4.3.2](#aインスタンス宣言))。
     デフォルトメソッドの宣言は通常、左手側が変数か関数定義のみであろうことを除いて値の定義である。
     例えば、
