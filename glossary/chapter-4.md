@@ -27,7 +27,9 @@
 |kind|種|
 |lexically|レキシカル|
 |module|モジュール|
+|operator|演算子|
 |prefix|接頭辞|
+|propetry|プロパティ|
 |polymorphic|多相的|
 |quantification|量化|
 |quantified|量化された|
