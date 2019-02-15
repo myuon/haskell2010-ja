@@ -31,7 +31,7 @@
 | <em>idecls</em>| → |{ <em>idecl<sub>1</sub></em> ; … ; <em>idecl<sub>n</sub></em> }|(<em>n</em> ≥ 0)|
 |  <em>idecl</em>| → |(<em>funlhs</em> &#124; <em>var</em>) <em>rhs</em>| |
 |       |&#124;|  |(empty)|
-|<em>gendecl</em>|→|<em>vars</em> :: [<em>context</em> <tt>=></tt>] <em>type</em>|(type signature)|
+|<em>gendecl</em>|→|<em>vars</em> :: [<em>context</em> `=>`] <em>type</em>|(type signature)|
 |       |&#124;|<em>fixity</em> [<em>integer</em>] <em>ops</em>|(fixity declaration)|
 |       |&#124;|  |(empty declaration)|
 |||||
