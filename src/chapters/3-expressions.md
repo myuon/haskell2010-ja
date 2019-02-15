@@ -826,7 +826,7 @@ where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
 <code>case <em>v</em> of { _ -> <em>e</em>; _ -> <em>e′</em> } = <em>e</em> </code></pre>
  </td>
  </tr>
-</tobdy>
+</tbody>
 </table>
 
 **図 3.1:** case式の意味論、パート1
@@ -879,7 +879,7 @@ where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
  </tr>
  <tr>
  <td class="code-number">(m)</td>
- <td><pre><code><tt>case<tt>  <em>v</em>  <tt>of<tt> {  <em>K</em>  { <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  ,  <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , … } ->  <em>e</em> ; _ ->  <em>e′</em> }
+ <td><pre><code>case  <em>v</em>  of {  <em>K</em>  { <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  ,  <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , … } ->  <em>e</em> ; _ ->  <em>e′</em> }
 	=  case <em>e′</em> of {
 	    <em>y</em> ->
 	    case  <em>v</em>  of {
@@ -923,7 +923,7 @@ where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
   where <em>K</em> is a data constructor of arity <em>n</em></code></pre>
  </td>
  </tr>
-</tobdy>
+</tbody>
 </table>
 
 **図 3.2:** case式の意味論、パート2
@@ -962,7 +962,7 @@ where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
   = if <em>e<sub>0</sub></em> then <em>e</em> else <em>e′</em> </code></pre>
 </td>
 </tr>
-</tobdy>
+</tbody>
 </table>
 
 **図 3.3:** case式の意味論、パート3
