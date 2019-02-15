@@ -1,6 +1,7 @@
 # Summary
 
 [目次](./toc.md)
+[前書き](./preface.md)
 
 - [序説](./chapters/1-introduction.md)
 - [字句構造](./chapters/2-lexical-structure.md)
