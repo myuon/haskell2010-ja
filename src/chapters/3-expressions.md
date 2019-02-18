@@ -1,5 +1,3 @@
-[WIP]
-
 # 式
 
 この章では、私たちはHaskellの式の構文と非形式的な意味論を説明する。また必要であらばHaskellカーネルへの変換についても説明する。<code>let</code>式の場合を除いて、これらの変換は静的、動的な意味論の両方を保存する。これらの変換を使った束縛されていない変数とコンストラクタは常に<code>Prelude</code>によって定義された実体を参照する。例えば、リスト内包表記の変換(セクション[3.11])で使われる<code>"concatMap"</code>は<code>Prelude</code>によって定義された<code>concatMap</code>を意味する。これは識別子<code>"concatMap"</code>がリスト内包表記で使われているスコープ内にあるかないかは関係なく、また、(もしスコープ内にあったとしても)束縛されていても関係はない。
@@ -946,7 +944,7 @@ where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
 </td>
 </tr>
  <td class="code-number">(t)</td>
- <td><pre>case <code>() of { () | <em>p</em> <- <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+ <td><pre><code>case() of { () | <em>p</em> <- <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
 = case <em>e</em><sub>0</sub> of { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }</code></pre>
 </td>
 </tr>
