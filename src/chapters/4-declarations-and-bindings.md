@@ -733,9 +733,122 @@ module Foo where
 
 ### 関数とパターン束縛
 
+|||||
+|--|--|--|--|
+|  <em>decl</em>|→|(<em>funlhs</em> &#124; <em>pat</em>) <em>rhs</em>| |
+| | | | |
+|<em>funlhs</em>|→|<em>var</em> <em>apat</em> `{` <em>apat</em> `}`| |
+|	         |&#124;|<em>pat</em> <em>varop</em> <em>pat</em>| |
+|	         |&#124;| `(` <em>funlhs</em> `)` <em>apat</em> `{` <em>apat</em> `}`| |
+| | | | |
+|   <em>rhs</em>|→|`=` <em>exp</em> [`where` <em>decls</em>]| |
+|          |&#124;| 	<em>gdrhs</em> [`where` <em>decls</em>]| |
+| | | | |
+| <em>gdrhs</em>|→|<em>guards</em> = <em>exp</em> `[`<em>gdrhs</em>`]`| |
+| | | | |
+|<em>guards</em>|→| &#124; <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>|(<em>n</em> ≥ 1)|
+| | | | |
+|<em>guard</em>|→|<em>pat</em> `<-` <em>infixexp</em>           |(pattern guard)|
+|         |&#124;|`let` <em>decls</em>                        |(local declaration)|
+|         |&#124;|<em>infixexp</em>                           |(boolean guard)|
+
+この文法に置いて我々は次の2つのケースを区別する: **パターンの束縛** がおきているとき(そのとき左手側は`pat`である)と、それ以外の **関数束縛** と呼ばれる束縛がおきているときである。
+どちらの束縛もモジュールのトップレベルでまたは`where`か`let`の構成物の範囲で現れることができる。
+
 #### 関数束縛
 
+関数束縛は関数の値に変数を束縛する。
+変数<em>x</em>へ束縛する関数の一般的な形式は以下のものである。
+
+<pre><code><em>x	p<sub>11</sub> … p<sub>1k</sub>	match<sub>1</sub></em>
+…
+<em>x	p<sub>n1</sub> … p<sub>nk</sub>	match<sub>n</sub></em>
+</code></pre>
+
+上の各<em>p<sub>ij</sub></em>はパターンで、各<em>match<sub>i</sub></em>は次の一般的形式
+
+<pre><code>= <em>e<sub>i</sub></em> where { <em>decls<sub>i</sub></em> }
+</code></pre>
+
+または、
+<pre><code>| <em>gs<sub>i1</sub>  =  e<sub>i1</sub> </em>
+…
+ | <em>gs<sub>imi</sub></em>  =  <em>e<sub>im<sub>i</sub></sub></em>
+            where { <em>decls<sub>i</sub></em> }
+</code></pre>
+
+であり、<em>n</em> ≥ 1, 1 ≤ <em>i</em> ≤ <em>n</em>, <em>m<sub>i</sub></em> ≥ 1である。
+前者は後者の特別な場合であるので、簡略記法として扱われる。
+すなわち、
+
+<pre><code> | `True` = <em>e<sub>i</sub></em> `where` { <em>decls<sub>i</sub></em> } </code></pre>
+
+注意点として関数を定義している全ての句は隣接しなければならず、各句の中のパターンの数は同じでなければならない。
+各適合に対応するパターンのセットは**線形**でなければならず、変数がその実体のセットの中に一回以上現れることは許されていない。
+
+関数の値を中置演算子に束縛するための代わりの構文が与えられている。
+例えば、これらの3つの関数定義は全て等しい。
+
+```hs
+plus x y z = x+y+z
+x ‘plus‘ y = \ z -> x+y+z
+(x ‘plus‘ y) z = x+y+z
+```
+
+結合性の解決は、関数の束縛を中置にしたものにも式の場合と同様に適用することに注意せよ(セクション[10.6](./10-syntax-reference.md#a))。
+関数束縛に等しい左側に適用している結合性の解決はトップレベルで定義されている<em>varop</em>を残さなければいけない。
+例えば、もし優先度6で新しい演算子<em>##</em>を定義しているなら、その時この定義は不正である。
+
+```hs
+a ## b : xs = exp
+```
+
+なぜなら、`:`は優先度5を持ち、従って左手側は<code>(a <em>##</em> x) : xs</code>に解決され、この式は<code>(a <em>##</em> x)</code>が正常なパターンでないためパターン束縛にはできない
+
+<div class="column">
+
+**変換:** 関数への一般的な束縛の形式はこの等式に構文的に等しい(すなわち:シンプルなパターン束縛)。
+<pre><code><em>x</em> = \ <em>x<sub>1</sub></em> … <em>x<sub>k</sub></em> -> case (<em>x<sub>1</sub></em>, …, <em>x<sub>k</sub></em>) of
+(<em>p<sub>11</sub></em>, …, <em>p<sub>1k</sub></em>) <em>match<sub>1</sub></em>
+…
+(<em>p<sub>n1</sub></em>, …, <em>p<sub>nk</sub></em>) <em>match<sub>n</sub></em>
+</code></pre>
+
+<em>x<sub>i</sub></em>は新しい識別子である。
+
+</div>
+
 #### パターン束縛
+
+パターン束縛は値に変数を束縛する。
+**シンプルな** パターン束縛は<em>p = e</em>の形式を持つ。
+まるでその前に暗黙の`~`があるかのように、パターン<em>p</em>は反駁できないパターンとして「遅延的に」適合される。
+セクション[3.12](./3-expressions.md#aLet式)にその変換を確かめられる。
+
+パターン束縛の **一般的な** 形式は **p適合** であり、**適合** は上記の関数束縛において同じ構造である。
+言い換えると、パターン束縛は以下のものである。
+
+<pre><code><em>p</em> | <em>gs<sub>1</sub></em> = <em>e<sub>1</sub></em>
+  | <em>gs<sub>2</sub></em> = <em>e<sub>2</sub></em>
+    …
+  | <em>gs<sub>m</sub></em> = <em>e<sub>m</sub></em>
+  where { <em>decls</em> }
+</code></pre>
+
+<div class="column">
+
+**変換：** 上記のパターン束縛はこのシンプルなパターン束縛と構文的に等しい。
+
+<pre><code><em>p</em> = let <em>decls</em> in
+    case () of
+      () | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em>
+         | <em>gs<sub>2</sub></em> -> <em>e<sub>2</sub></em>
+           …
+         | <em>gs<sub>m</sub></em> -> <em>e<sub>m</sub></em>
+       _ -> error "Unmatched pattern"
+</code></pre>
+
+</div>
 
 ## 関数とパターン束縛の静的な意味論
 
