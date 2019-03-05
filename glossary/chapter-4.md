@@ -35,6 +35,7 @@
 |quantified|量化された|
 |recursion|再帰|
 |record syntax|レコード構文|
+|reduction|簡約|
 |semantics|意味論|
 |sequences|並び、列、シーケンス|
 |signature|シグネチャ|
