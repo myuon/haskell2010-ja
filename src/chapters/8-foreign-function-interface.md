@@ -24,4 +24,19 @@ HaskellのFFIは現状、Haskellのコードと外部コードの間のやり取
 
 ## 字句構造
 
-FFIは単一のキーワード`foreign`と特別な識別子の集合を予約する。後者は
+FFIは単一のキーワード`foreign`と特別な識別子の集合を予約する。後者は外部宣言の中でのみ特別な意味を持つが、他の場所では通常の識別子として使われるだろう。
+
+特別な識別子`ccall, cplusplus, dotnet, jvm, stdcall`は呼び出し規約を記述するために定義されている。しかし、FFIの具体的な実装は自由に、特定のシステムの呼び出し規約でここでは明示的にリストアップされていないものを追加でサポートしてよい。
+
+外部のC言語文脈のオブジェクトを参照するために、次の句を導入する。
+
+|||||
+|--|--|--|--|
+|<em>chname</em>|→|{<em>chchar</em>} `. h`|(C header filename)|
+|<em>cid</em>|→|<em>letter</em> {<em>letter</em> &#124; <em>ascDigit</em>}|(C identifier)|
+|<em>chchar</em>|→|<em>letter</em> &#124; <em>ascSymbol</em><sub>⟨`&`⟩</sub>| |
+|<em>letter</em>|→|<em>ascSmall</em> &#124; <em>ascLarge</em> &#124; `_`| |
+
+<em>chname</em>で利用できる語彙素の範囲として、C言語における`#include`ディレクティブの引数として許容されているもののサブセットが許容されている。特に、ファイル名<em>chname</em>は`.h`を語尾に持たなければならない。<em>cid</em>によって生成される語彙素はC言語の識別子として許容されるものと一致する。具体的には[9]をみよ。
+
+
