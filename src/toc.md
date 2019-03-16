@@ -59,7 +59,7 @@ Simon Marlow (editor)
    - ネストされた宣言
    - 関数とパターン束縛の静的な意味論
    - カインド推論
-5. モジュール
+5. [モジュール](./chapters/5-modules.md)
    - モジュール構造
    - export リスト
    - import 宣言
