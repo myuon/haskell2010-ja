@@ -8,6 +8,7 @@
 
 |英単語|日本語訳|
 |--|--|
+|entity|エンティティ|
 |first class values|ファーストクラス値|
 |module|モジュール|
 
