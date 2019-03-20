@@ -63,3 +63,26 @@ module Main where
 一つは、デフォルト宣言のスコープは単一のモジュール内のみに及ぶ(セクション[4.3.4](./4-declarations-and-bindings.md#曖昧な型とオーバーロードされた数値演算子の既定値))。
 二つめは、単相性の制約のルール2がモジュールの境界によって影響を受ける。
 
+## モジュールの構造
+
+モジュールは値束縛やデータ型、型シノニム、クラスなどへの宣言を含む相互再帰的なスコープを定義する([4](./4-declarations-and-bindings.md)章を参照)。
+
+|||||
+|--|--|--|--|
+|<em>module</em> |→|`module` <em>modid</em> [<em>exports</em>] `where` <em>body</em>| |
+|			|&#124;|<em>body</em>| |
+|<em>body</em>	 |→|{ <em>impdecls</em> ; <em>topdecls</em> }| |
+|			|&#124;|{ <em>impdecls</em> }| |
+|			|&#124;|{ <em>topdecls</em> }| |
+| | | | |
+|<em>impdecls</em> |→|<em>impdecl<sub>1</sub></em> ; … ; <em>impdecl<sub>n</sub></em>|(<em>n</em> ≥ 1)|
+|<em>topdecls</em> |→|<em>topdecl<sub>1</sub></em> ; … ; <em>topdecl<sub>n</sub></em>|(<em>n</em> ≥ 1)|
+
+モジュールは`module`キーワードとその名前、エクスポートされる(丸括弧で囲まれた)エンティティのリストをヘッダーに伴って始まる。
+そのヘッダーの次にはインポートされたモジュールを明記する空かもしれない`import`宣言(`impdecls`、セクション[5.3](#インポート宣言))のリストが続き、
+任意でインポートされた束縛を制限する。
+これには空かもしれないトップレベルの宣言のリストが次に続くであろう(`topdecls`、[4](./4-declarations-and-bindings.md)章)。
+
+モジュールの本体のみで成るモジュールの短縮形式は許される。
+もしこれが使われるなら、そのヘッダーは`‘module Main(main) where’`であると推測される。
+もし短縮されたモジュールの初めの語彙素が`{`でなければ、そのときそのレイアウトルールはそのモジュールのトップレベルへ適用される。
