@@ -1,0 +1,886 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>文法リファレンス - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html" class="active"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#文法リファレンス" id="文法リファレンス"><h1>文法リファレンス</h1></a>
+<a class="header" href="#慣習的表記" id="慣習的表記"><h2>慣習的表記</h2></a>
+<p>以下の慣習的表記が文法を表現するのにつかわれる:</p>
+<ul>
+<li><code>[<em>pattern</em>]</code> 省略可能</li>
+<li><code>{<em>pattern</em>}</code> 0回以上の繰り返し</li>
+<li><code>(<em>pattern</em>)</code> グループ化</li>
+<li><code><em>pat<sub>1</sub></em> | <em>pat<sub>2</sub></em></code> 選択</li>
+<li><code>pat<sub>&lt;pat'&gt;</sub></code> 差(<code>pat</code>によって生成された要素で、<code>pat'</code>で生成されたものを除いたもの)</li>
+<li><tt>fibonacci</tt> タイプライターフォントで表記される終端文法</li>
+</ul>
+<p>BNFのような文法をレポートを通して用いる。文法の生成は次のような形をしている:</p>
+<pre>
+nonterm -> alt<sub>1</sub> | alt<sub>2</sub> | .. | alt<sub>n</sub>
+</pre>
+<p>字句文法、文脈自由文法いずれも曖昧さが残るが、これは文法語句をできる限り長く取り、左から右に進む(shift-reduceパースでは、shift/reduceコンフリクトはシフトを取ることで解決する)ことで解決するものとする。字句文法では、これは「最長一致」と呼ばれるルールである。文脈自由文法では、これは条件式やlet式、ラムダ抽象などが右方向に取れるだけ長くとることを表す。</p>
+<a class="header" href="#字句文法" id="字句文法"><h2>字句文法</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>program</em> </td><td>→</td><td> {<em>lexeme</em> | <em>whietespace</em>}</td><td> </td></tr>
+<tr><td><em>lexeme</em></td><td>→</td><td><em>qvarid</em> | <em>qconid</em> | <em>qvarsym</em> | <em>qconsym</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <em>literal</em> | <em>special</em> | <em>reservedop</em> | <em>reservedid</em></td><td> </td></tr>
+<tr><td> <em>literal</em> </td><td>→</td><td> <em>integer</em> | <em>float</em> | <em>char</em> | <em>string</em> </td><td> </td></tr>
+<tr><td> <em>special</em> </td><td>→</td><td> <code>(</code> | <code>)</code> | <code>,</code> | <code>;</code> | <code>[</code> | <code>]</code> | <code>`</code> | <code>{</code> | <code>}</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td> <em>whitespace</em> </td><td>→</td><td> <em>whitestuff</em> {<em>whitestuff</em>}</td><td> </td></tr>
+<tr><td> <em>whitestuff</em> </td><td>→</td><td> <em>whitechar</em> | <em>comment</em> | <em>ncomment</em> </td><td> </td></tr>
+<tr><td> <em>whitechar</em> </td><td>→</td><td> <em>newline</em> | <em>vertab</em> | <em>space</em> | <em>tab</em> | <em>uniWhite</em> </td><td> </td></tr>
+<tr><td> <em>newline</em> </td><td>→</td><td> <em>return</em> <em>linefeed</em> | <em>return</em> | <em>linefeed</em> | <em>formfeed</em> </td><td> </td></tr>
+<tr><td> <em>return</em> </td><td>→</td><td> キャレッジ⏎ </td><td> </td></tr>
+<tr><td> <em>linefeed</em> </td><td>→</td><td> 改行 </td><td> </td></tr>
+<tr><td> <em>vertab</em> </td><td>→</td><td> 垂直タブ </td><td> </td></tr>
+<tr><td> <em>formfeed</em> </td><td>→</td><td> 改ページ </td><td> </td></tr>
+<tr><td> <em>space</em> </td><td>→</td><td> 空白 </td><td> </td></tr>
+<tr><td> <em>tab</em> </td><td>→</td><td> 水平タブ </td><td> </td></tr>
+<tr><td> <em>uniWhite</em> </td><td>→</td><td> 空白として定義されたUnicode文字 </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td> <em>comment</em> </td><td>→</td><td> <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> </td><td> </td></tr>
+<tr><td><em>dashes</em> </td><td>→</td><td> <code>--</code> {<code>-</code>} </td><td> </td></tr>
+<tr><td><em>opencom</em> </td><td>→</td><td> <code>{-</code> </td><td> </td></tr>
+<tr><td><em>closecom</em> </td><td>→</td><td> <code>-}</code> </td><td> </td></tr>
+<tr><td><em>ncomment</em> </td><td>→</td><td> <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> </td><td> </td></tr>
+<tr><td><em>ANY seq</em> </td><td>→</td><td> {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> | <em>closecom</em> ) {<em>ANY</em>}⟩</sub> </td><td> </td></tr>
+<tr><td><em>ANY</em> </td><td>→</td><td> <em>graphic</em> | <em>whitechar</em> </td><td> </td></tr>
+<tr><td><em>any</em> </td><td>→</td><td> <em>graphic</em> | <em>space</em> | <em>tab</em> </td><td> </td></tr>
+<tr><td><em>graphic</em> </td><td>→</td><td> <em>small</em> | <em>large</em> | <em>symbol</em> | <em>digit</em> | <em>special</em> | <code>&quot;</code> | </td><td> <code>'</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>small</em> </td><td>→</td><td> <em>ascSmall</em> | <em>uniSmall</em> | <code>_</code> </td><td> </td></tr>
+<tr><td><em>ascSmall</em> </td><td>→</td><td> <code>a</code> | <code>b</code> | … | <code>z</code> </td><td> </td></tr>
+<tr><td><em>uniSmall</em> </td><td>→</td><td> 小文字Unicode </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>large</em> </td><td>→</td><td> <em>ascLarge</em> | <em>uniLarge</em> </td><td> </td></tr>
+<tr><td><em>ascLarge</em> </td><td>→</td><td> <code>A</code> | <code>B</code> | … | <code>Z</code> </td><td> </td></tr>
+<tr><td><em>uniLarge</em> </td><td>→</td><td> 任意の大文字またはタイトルケースのユニコード文字<br>(<strong>訳注</strong>: タイトルケース 先頭のみ大文字で後は小文字にするスタイル) </td><td> </td></tr>
+<tr><td><em>symbol</em> </td><td>→</td><td> <em>ascSymbol</em> | <em>uniSymbol</em><sub>⟨<em>special</em> | <code>_</code> | <code>&quot;</code> | <code>'</code>⟩</sub> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>ascSymbol</em></td><td>→</td><td><tt>!</tt> | <tt>#</tt> | <tt>$</tt> | <tt>%</tt> | <tt>&amp;</tt> | <tt>⋆</tt> | <tt>+</tt>  | <tt>.</tt> | <tt>/</tt> | <tt>&lt;</tt> | <tt>=</tt> | <tt>&gt;</tt> | <tt>?</tt> | <tt>@</tt></td><td> </td></tr>
+<tr><td>                </td><td>|</td><td> <tt>\</tt> | <tt>^</tt> | <tt>|</tt> | <tt>-</tt> | <tt>~</tt> | <tt>:</tt></td><td> </td></tr>
+<tr><td><em>uniSymbol</em> </td><td>→</td><td> Unicodeのシンボル、または句読点 </td><td> </td></tr>
+<tr><td><em>digit</em> </td><td>→</td><td> <em>ascDigit</em> | <em>uniDigit</em> </td><td> </td></tr>
+<tr><td><em>ascDigit</em> </td><td>→</td><td> <code>0</code> | <code>1</code> | … | <code>9</code> </td><td> </td></tr>
+<tr><td><em>uniDigit</em> </td><td>→</td><td> 10進数Unicode </td><td> </td></tr>
+<tr><td><em>octit</em> </td><td>→</td><td> <code>0</code> | <code>1</code> | … | <code>7</code> </td><td> </td></tr>
+<tr><td><em>hexit</em> </td><td>→</td><td> <em>digit</em> | <code>A</code> | … | <code>F</code> | <code>a</code> | … | <code>f</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>varid</em> </td><td> → </td><td> (<em>small</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <code>'</code> })<sub>⟨<em>reservedid</em>⟩</sub></td><td> </td></tr>
+<tr><td><em>conid</em> </td><td> → </td><td> <em>large</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <code>'</code> }</td><td> </td></tr>
+<tr><td><em>reservedid</em> </td><td> → </td><td> <code>case</code> | <code>class</code> | <code>data</code> | <code>default</code> | <code>deriving</code> | <code>do</code> | <code>else</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> <code>foreign</code> | <code>if</code> | <code>import</code> | <code>in</code> | <code>infix</code> | <code>infixl</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> <code>infixr</code> | <code>instance</code> | <code>let</code> | <code>module</code> | <code>newtype</code> | <code>of</code> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> <code>then</code> | <code>type</code> | <code>where</code> | <code>_</code></td><td> </td></tr>
+<tr><td><em>varsym</em></td><td>→</td><td>( <em>symbol</em><sub>⟨<tt>:</tt>⟩</sub> {<em>symbol</em>} )<sub>⟨reservedop | dashes⟩</sub></td><td> </td></tr>
+<tr><td><em>consym</em></td><td>→</td><td>( <tt>:</tt> {<em>symbol</em>})<sub>⟨reservedop⟩</sub></td><td> </td></tr>
+<tr><td><em>reservedop</em></td><td>→</td><td><tt>..</tt> | <tt>:</tt> | <tt>::</tt> | <tt>=</tt> | <tt>\</tt> | <tt>|</tt> | <tt>&lt;-</tt> | <tt>-&gt;</tt> |  <tt>@</tt> | <tt>~</tt> | <tt>=&gt;</tt></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> </td></tr>
+<tr><td><em>varid</em></td><td> </td><td> </td><td>(変数)</td></tr>
+<tr><td><em>conid</em></td><td> </td><td> </td><td>(コンストラクタ)</td></tr>
+<tr><td><em>tyvar</em></td><td>→</td><td><em>varid</em></td><td>(型変数)</td></tr>
+<tr><td><em>tycon</em></td><td>→</td><td><em>conid</em></td><td>(型コンストラクタ)</td></tr>
+<tr><td><em>tycls</em></td><td>→</td><td><em>conid</em></td><td>(型クラス)</td></tr>
+<tr><td><em>modid</em></td><td>→</td><td>{<em>conid</em> <code>.</code>} <em>conid</em></td><td>(モジュール)</td></tr>
+<tr><td><em>qvarid</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>varid</em></td><td> </td></tr>
+<tr><td><em>qconid</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>conid</em></td><td> </td></tr>
+<tr><td><em>qtycon</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>tycon</em></td><td> </td></tr>
+<tr><td><em>qtycls</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>tycls</em></td><td> </td></tr>
+<tr><td><em>qvarsym</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>varsym</em></td><td> </td></tr>
+<tr><td><em>qconsym</em></td><td>→</td><td>[ <em>modid</em> <code>.</code> ] <em>consym</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> </td></tr>
+<tr><td><em>decimal</em></td><td>→</td><td><em>digit</em>{<em>digit</em>}</td><td> </td></tr>
+<tr><td><em>octal</em></td><td>→</td><td><em>octit</em>{<em>octit</em>}</td><td> </td></tr>
+<tr><td><em>hexadecimal</em></td><td>→</td><td><em>hexit</em>{<em>hexit</em>}</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> </td></tr>
+<tr><td><em>integer</em></td><td>→</td><td><em>decimal</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <code>0o</code> <em>octal</em> | <code>0O</code> <em>octal</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <code>0x</code> <em>hexadecimal</em> | <code>0X</code> <em>hexadecimal</em></td><td> </td></tr>
+<tr><td><em>float</em></td><td>→</td><td><em>decimal</em> <code>.</code> <em>decimal</em> [<em>exponent</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td>    <em>decimal</em> <em>exponent</em></td><td> </td></tr>
+<tr><td><em>exponent</em></td><td>→</td><td>(<code>e</code> | <code>E</code>) [<code>+</code> | <code>-</code>] <em>decimal</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> </td></tr>
+<tr><td><em>char</em></td><td>→</td><td><code>'</code> (<em>graphic</em><sub>⟨<code>'</code> | <code>\</code>⟩</sub> | <em>space</em> | <em>escape</em><sub>⟨<code>\&amp;</code>⟩</sub>) <code>'</code></td><td> </td></tr>
+<tr><td><em>string</em></td><td>→</td><td><code>&quot;</code> {<em>graphic</em><sub>⟨<code>&quot;</code> | <code>\\</code>⟩</sub> | <em>space</em> | <em>escape</em> | <em>gap</em>} <code>&quot;</code></td><td> </td></tr>
+<tr><td><em>escape</em></td><td>→</td><td><code>\\</code> ( <em>charesc</em> | <em>ascii</em> | <em>decimal</em> | <code>o</code> <em>octal</em> | <code>x</code> <em>hexadecimal</em> )</td><td> </td></tr>
+<tr><td><em>charesc</em></td><td>→</td><td><code>a</code> | <code>b</code> | <code>f</code> | <code>n</code> | <code>r</code> | <code>t</code> | <code>v</code> | <code>\\</code> | <code>&quot;</code> | <code>'</code> | <code>&amp;</code></td><td> </td></tr>
+<tr><td><em>ascii</em></td><td>→</td><td><code>^</code><em>cntrl</em> | <code>NUL</code> | <code>SOH</code> | <code>STX</code> | <code>ETX</code> | <code>EOT</code> | <code>ENQ</code> | <code>ACK</code></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <code>BEL</code> | <code>BS</code> | <code>HT</code> | <code>LF</code> | <code>VT</code> | <code>FF</code> | <code>CR</code> | <code>SO</code> | <code>SI</code> | <code>DLE</code></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <code>DC1</code> | <code>DC2</code> | <code>DC3</code> | <code>DC4</code> | <code>NAK</code> | <code>SYN</code> | <code>ETB</code> | <code>CAN</code></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td> <code>EM</code> | <code>SUB</code> | <code>ESC</code> | <code>FS</code> | <code>GS</code> | <code>RS</code> | <code>US</code> | <code>SP</code> | <code>DEL</code></td><td> </td></tr>
+<tr><td><em>cntrl</em></td><td>→</td><td><em>ascLarge</em> | <code>@</code> | <code>[</code> | <code>\\</code> | <code>]</code> | <code>^</code> | <code>_</code></td><td> </td></tr>
+<tr><td><em>gap</em></td><td>→</td><td><code>\</code> <em>whitechar</em> {<em>whitechar</em>} <code>\</code></td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#レイアウト" id="レイアウト"><h2>レイアウト</h2></a>
+<p>セクション2.7(<strong>[訳注]</strong> TODO:リンク)ではレイアウトルールに対する非形式的な議論を見た。このセクションではより正確に定義をする。</p>
+<p>Haskellプログラムの意味はその<strong>レイアウト</strong>に依存する場合がある。レイアウトが意味に与える効果は波括弧とセミコロンをレイアウトによって決定される位置に追加することで完全に説明できる。このようにして追加されたプログラムの意味は今やレイアウトによって影響を受けない。</p>
+<p>レイアウトがプログラムに対して与える影響は、このセクションで波括弧とセミコロンをどのように追加するかを説明することで指定される。仕様は、プログラムの返還を行う関数<code>L</code>の形で与えられる。<code>L</code>の入力は次のようなものである:</p>
+<ul>
+<li>Haskellレポートにある字句文法によって定められた語句の列であって、さらに次のような追加の語句を含む:
+<ul>
+<li><code>let, where, do, of</code>キーワードの後に<code>{</code>が続かない場合、トークン{n}がキーワードの後に挿入される。ただしnは、続くトークンがあればそのインデントを表し、ファイルの終端に達した場合は0を表す。</li>
+<li>モジュールの最初のトークンが<code>{</code>でも<code>module</code>でもない場合、そのトークンのインデントをnとすると、{n}が先行する。</li>
+<li>同じ行で空白のみが最初のトークンに先行する場合、<code>&lt;n&gt;</code>がこの語句に先行する。ここでnは語句のインデントであり、もしインデントが存在しない場合には先の2つのルールの結果として{n}が先行することとなる。(注意: 文字列リテラルはセクション<a href="./2-lexical-structure.html">2.6</a>で説明したように、複数行に及ぶこともある。よって次のコードにおいては、<code>\Bill</code>の前に<code>&lt;n&gt;</code>が挿入されることはない。なぜなら、これは完全な語句の開始でもなければ<code>,</code>の前でもなく、単純に空白文字によって先行されているだけだからである。)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-haskell">f = (&quot;Hello \  
+        \Bill&quot;, &quot;Jake&quot;)    
+</code></pre>
+<ul>
+<li>&quot;レイアウト文脈&quot;のスタックで、各要素が次のいずれかであるもの:
+<ul>
+<li>文脈の囲みを明示することを表すゼロ(すなわち、プログラマは開いた波括弧を書いていた場合) 最も内側の文脈が0である場合、レイアウトトークンは文脈の囲いが終了するか新しい文脈が追加されるまで挿入されない。</li>
+<li>レイアウト文脈を囲うインデントの段数を表す正の整数</li>
+</ul>
+</li>
+</ul>
+<p>語句の&quot;インデント&quot;とは、語句の最初の文字の段数である。そしてある行のインデントとは、最も左にある語句のインデントである。段数を決定するには、次の慣習に従う固定幅フォントを使っていると仮定する。
+- 次の文字 <code>newline</code>, <code>return</code>, <code>linefeed</code>, <code>formfeed</code> は新しい行を開始する。
+- 最初の段数は0ではなく、1とする。
+- タブは8文字分の幅だけ次の文字位置までの間が空く。
+- タブ文字は現在の位置をタブの次の文字位置まで揃えるためにそれに足りるだけのスペースを挿入させる。</p>
+<p>レイアウトルールのために、ソースコード中のユニコード文字もASCII文字と同じ固定された幅をもつものとみなされる。しかし見た目の混乱を防ぐために、プログラマーは見た目に分からないレイアウトの意味を、空白でない文字幅に依存させるようなプログラムを書くことは避けるべきである。</p>
+<p>関数適用 <code>L tokens []</code>  は、<code>tokens</code>をレイアウトに依存しないものへの変換である。ここで<code>tokens</code>はモジュールを字句解析して得られた結果で、上で説明したような段数を表す数字を追加している。<code>L</code>の定義は次のようになっている。ここで、<code>:</code>をストリームのコンストラクタ演算子として、<code>[]</code>を空のストリームとして使っている。</p>
+<pre><code class="language-haskell">L (&lt; n &gt;: ts) (m : ms)  = ;  :  (L ts (m : ms))             if m = n
+                        = }  :  (L (&lt; n &gt;: ts) ms)          if n &lt; m
+L (&lt; n &gt;: ts) ms        = L ts ms
+L ({n} : ts) (m : ms)   = {  :  (L ts (n : m : ms))         if n &gt; m (ノート) 1)
+L ({n} : ts) []         = {  :  (L ts [n])                  if n &gt; 0 (ノート 1)
+L ({n} : ts) ms         = {  :  }  :  (L (&lt; n &gt;: ts) ms)    (ノート 2)
+L (} : ts) (0 : ms)     = }  :  (L ts ms)                   (ノート 3)
+L (} : ts) ms           = parse-error                       (ノート 3)
+L ({ : ts) ms           = {  :  (L ts (0 : ms))             (ノート 4)
+L (t : ts) (m : ms)     = }  :  (L (t : ts) ms)             if m≠0 and parse-error(t)
+                                                            (ノート 5)
+L (t : ts) ms           = t  :  (L ts ms)
+L [] []                 = []
+L [] (m : ms)           = }  :  L [] ms                     if m≠0 (ノート 6)
+</code></pre>
+<p><strong>ノート1</strong>
+ネストされたコンテキストは文脈の囲い<code>(n &gt; m)</code>よりも深くインデントされなければならない。そうでなければ、<code>L</code>は失敗し、コンパイラはレイアウトエラーを示すだろう。次は例である。</p>
+<pre><code class="language-haskell">  f x = let  
+           h y = let  
+    p z = z  
+                 in p  
+        in h
+</code></pre>
+<p>ここで、<code>p</code>の定義は、ここでは<code>h</code>の定義によって定まっている文脈の囲いのインデントより浅くインデントされている。</p>
+<p><strong>ノート2</strong>
+(例えば)<code>where</code>の後に出現する最初のトークンがレイアウト文脈の囲いよりもインデントされていなかった場合、その<code>where</code>のブロックは空でなければならず、よって中身のないの波括弧が挿入される。<code>{n}</code>トークンは中身のない波括弧が明示されたを模倣して<code>&lt;n&gt;</code>によって置き換えられる。</p>
+<p><strong>ノート3</strong>
+現在のレイアウト文脈を0と比べることで、明示された閉じ波括弧が明示された開き波括弧のみと対応していることを保証できる。明示された閉じ波括弧が明示されていない開き波括弧と対応している場合はパースエラーが出力される。</p>
+<p><strong>ノート4</strong>
+この句は、ラベル付き構成と更新を含めた(セクション<a href="./3-expressions.html">3.15</a>)すべての波括弧の組が明示的なレイアウト文脈として扱われるようにするためのものである。この式はHaskell1.4とは異なっている。</p>
+<p><strong>ノート5</strong>
+横の条件<code>parse-error(t)</code>は次のように解釈される: <code>L</code>によってこれまでに生成された次のトークン<code>t</code>をもつトークン列がHaskell文法において無効なものから始まっていることを表しており、また<code>L</code>によってこれまでに生成された<code>&quot;}&quot;</code>に続くトークン列がHaskell文法において有効なものから始まっていることを表している場合、<code>parse-error(t)</code>は真である。</p>
+<p>m≠0は暗黙的に追加された閉じ波括弧が明示されていない開き波括弧と対応することを確認している。</p>
+<p><strong>ノート6</strong>
+入力に終わりに、保留されている閉じ波括弧が挿入される。非レイアウト文脈に含まれている場合(すなわち、m = 0)、ここでエラーになる。</p>
+<p>上のルールのいずれもマッチしない場合、このアルゴリズムは失敗する。例えば入力の最後に到達したときに、非レイアウト文脈が有効であれば、閉じ波括弧が存在しないので失敗することになる。このアルゴリズムによって検知されないエラー条件も一部存在する。例えば、<code>let }</code>である。</p>
+<p>ノート1はレイアウト処理がパースエラーによって途中で停止する可能性があることを言っている。例えば</p>
+<pre><code class="language-haskell">let x = e; y = x in e'
+</code></pre>
+<p>は有効である。なぜならこれは次のように変換されるからである。</p>
+<pre><code class="language-haskell">let { x = e; y = x } in e'
+</code></pre>
+<p>閉じ波括弧は上のパースエラーのルールにより挿入される。</p>
+<a class="header" href="#文芸的コメント" id="文芸的コメント"><h2>文芸的コメント</h2></a>
+<p>「文芸的コメント」の慣習は、リチャード・バードとフィリップ・ワドラーらがOrwell言語のために初めて導入し、そして次にドナルド・クヌースの「文芸的プログラミング」に影響を与えたものであるが、Haskellのソースコードを記述するためのもう一つのスタイルである。文芸的スタイルはコメントを書くことを、それをデフォルトとすることで推奨している。始めの文字が&quot;&gt;&quot;である行はプログラムの一部として扱われ、それ以外の行はすべてコメントとなる。</p>
+<p>プログラムの本文は&quot;&gt;&quot;で始まる行のみを拾い、&quot;&gt;&quot;とそれに続く空白を置き換えることで復元することができる。その結果残る本文の中では、レイアウトやコメントは<a href="./10-syntax-reference.html">10章</a>で説明したとおりに適用される。</p>
+<p>&quot;&gt;&quot;を間違って省略してしまった場合に備えて、空でないコメント行に隣接するプログラム行はエラーになる。ここで空のコメント行とは、空白しか含まないもののことである。</p>
+<p>慣習的に、コメントのスタイルはファイル拡張子によって指定される。&quot;.hs&quot;であれば通常のHaskellファイルであり、&quot;.lhs&quot;であれば文芸的Haskellファイルである。このスタイルを用いると、階乗の簡単なプログラムは次のようになる。</p>
+<p>(<strong>訳注</strong>: 文芸的Haskellに対応するsyntax highlighterがないので通常のHaskellハイライトで代用しています。本来コメントとして扱われる<code>This literate...</code>や<code>This is the factorial...</code>などに色が付いていますがここは上でも説明があった通りコメントです。)</p>
+<pre><code class="language-hs">   This literate program prompts the user for a number  
+   and prints the factorial of that number:  
+
+&gt; main :: IO ()  
+
+&gt; main = do putStr &quot;Enter a number: &quot;  
+&gt;           l &lt;- readLine  
+&gt;           putStr &quot;n!= &quot;  
+&gt;           print (fact (read l))  
+
+  This is the factorial function.  
+
+&gt; fact :: Integer -&gt; Integer  
+&gt; fact 0 = 1  
+&gt; fact n = n ⋆ fact (n-1)
+</code></pre>
+<p>文芸的プログラミングという代替スタイルは、文章処理システムのLaTeXを使う際に特に適している。この慣習の下では、<code>\begin{code}...\end{code}</code>デリミタで囲まれた部分全体が文芸的プログラムのプログラム本文として扱われ、その他の行はすべてコメントである。より正確には:</p>
+<ul>
+<li>プログラムコードは<code>\begin{code}</code>に続く次の行から始まり</li>
+<li>プログラムコードは<code>\end{code}</code>で始まる行の直前で終わる (文字列リテラルは当然除く)</li>
+</ul>
+<p>これらデリミタの前後に余分な空白行を挿入する必要は必ずしもないが、スタイルとしてはそれが望ましいであろう。例えば次のようになる。</p>
+<pre><code class="language-tex">\documentstyle{article}  
+
+\begin{document}  
+
+\chapter{Introduction}  
+
+This is a trivial program that prints the first 20 factorials.  
+
+\begin{code}  
+main :: IO ()  
+main =  print [ (n, product [1..n]) | n &lt;- [1..20]]  
+\end{code}  
+
+\end{document}
+</code></pre>
+<p>このスタイルは同じファイル拡張子を用いる。同じファイルに対してこれら2つのスタイルを混ぜるのはおすすめできない。</p>
+<a class="header" href="#文脈自由構文" id="文脈自由構文"><h2>文脈自由構文</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>module</em></td><td>→</td><td><tt>module</tt> <em>modid</em> [<em>exports</em>] <tt>where</tt> <em>body</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>body</em></td><td> </td></tr>
+<tr><td><em>body</em></td><td>→</td><td>{ <em>impdecls</em> <tt>;</tt> <em>topdecls</em> }</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  { <em>impdecls</em> }</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  { <em>topdecls</em> }</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>impdecls</em></td><td>→</td><td><em>impdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>impdecl<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>exports</em></td><td>→</td><td>( <em>export<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>export<sub>n</sub></em> [ <tt>,</tt> ] )</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>export</em></td><td>→</td><td><em>qvar</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>qtycon</em> [(..) | ( <em>cname<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>cname<sub>n</sub></em> )]</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>qtycls</em> [(..) | ( <em>qvar<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>qvar<sub>n</sub></em> )]</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>module</tt> <em>modid</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>impdecl</em></td><td>→</td><td><tt>import</tt> [<tt>qualified</tt>] <em>modid</em> [<tt>as</tt> <em>modid</em>] [<em>impspec</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td> </td><td>(empty declaration)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>impspec</em></td><td>→</td><td>( <em>import<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>import<sub>n</sub></em> [ <tt>,</tt> ] ) </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>hiding</tt> ( <em>import<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>import<sub>n</sub></em> [ <tt>,</tt> ] )      </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>import</em></td><td>→</td><td><em>var</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>tycon</em> [ (..) | ( <em>cname<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>cname<sub>n</sub></em> )]     </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>tycls</em> [(..) | ( <em>var<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>var<sub>n</sub></em> )]      </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>cname</em></td><td>→</td><td><em>var</em> | <em>con</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>topdecls</em></td><td>→</td><td><em>topdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>topdecl<sub>n</sub></em>      </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>topdecl</em></td><td>→</td><td><tt>type</tt> <em>simpletype</em> = <em>type</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>data</tt> [<em>context</em> =&gt;] <em>simpletype</em> [= <em>constrs</em>] [<em>deriving</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>newtype</tt> [<em>context</em> =&gt;] <em>simpletype</em> = <em>newconstr</em> [<em>deriving</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>class</tt> [<em>scontext</em> =&gt;] <em>tycls</em> <em>tyvar</em> [<tt>where</tt> <em>cdecls</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>instance</tt> [<em>scontext</em> =&gt;] <em>qtycls</em> <em>inst</em> [<tt>where</tt> <em>idecls</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>default</tt> (type1 <tt>,</tt> … <tt>,</tt> <em>type<sub>n</sub></em>)      </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>foreign</tt> <em>fdecl</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>decl</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>decls</em></td><td>→</td><td>{ <em>decl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>decl<sub>n</sub></em> }       </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>decl</em></td><td>→</td><td><em>gendecl</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  (<em>funlhs</em> | <em>pat</em>) <em>rhs</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>cdecls</em></td><td>→</td><td>{ <em>cdecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>cdecl<sub>n</sub></em> }        </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>cdecl</em></td><td>→</td><td><em>gendecl</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  (<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>idecls</em></td><td>→</td><td>{ <em>idecl<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>idecl<sub>n</sub></em> }        </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>idecl</em></td><td>→</td><td>(<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>          </td><td>(empty)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gendecl</em></td><td>→</td><td><em>vars</em> <tt>::</tt> [<em>context</em> =&gt;] <em>type</em>       </td><td>(type signature)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>fixity</em> [<em>integer</em>] <em>ops</em>     </td><td>(fixity declaration)</td></tr>
+<tr><td> </td><td>|</td><td>          </td><td>(empty declaration)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>ops</em></td><td>→</td><td><em>op<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>op<sub>n</sub></em>     </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>vars</em></td><td>→</td><td><em>var<sub>1</sub></em> <tt>,</tt> …, <em>var<sub>n</sub></em>        </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>fixity</em></td><td>→</td><td><tt>infixl</tt> | <tt>infixr</tt> | <em>infix</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>type</em></td><td>→</td><td><em>btype</em> [-&gt; <em>type</em>]      </td><td>(function type)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>btype</em></td><td>→</td><td>[<em>btype</em>] <em>atype</em>       </td><td>(type application)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>atype</em></td><td>→</td><td><em>gtycon</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>tyvar</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>type<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>type<sub>k</sub></em> )     </td><td>(tuple type, <em>k</em> ≥ 2)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>type</em> ]       </td><td>(list type)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>type</em> )       </td><td>(parenthesized constructor)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gtycon</em></td><td>→</td><td><em>qtycon</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>()</tt>     </td><td>(unit type)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>[]</tt>     </td><td>(list constructor)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>(-&gt;)</tt>       </td><td>(function constructor)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>(,{,})</tt>     </td><td>(tupling constructors)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>context</em></td><td>→</td><td><em>class</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>class<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>class<sub>n</sub></em> )       </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>class</em></td><td>→</td><td><em>qtycls</em> <em>tyvar</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>qtycls</em> ( <em>tyvar</em> <em>atype<sub>1</sub></em> … <em>atype<sub>n</sub></em> )      </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>scontext</em></td><td>→</td><td><em>simpleclass</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>simpleclass<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>simpleclass<sub>n</sub></em> )       </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>simpleclass</em></td><td>→</td><td><em>qtycls</em> <em>tyvar</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>simpletype</em></td><td>→</td><td><em>tycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em>       </td><td>(<em>k</em> ≥ 0)</td></tr>
+<tr><td><em>constrs</em></td><td>→</td><td><em>constr<sub>1</sub></em> | … | <em>constr<sub>n</sub></em>     </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>constr</em></td><td>→</td><td><em>con</em> [!] <em>atype<sub>1</sub></em> … [!] <em>atype<sub>k</sub></em>     </td><td>(arity <em>con</em>  =  <em>k</em>, <em>k</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  (<em>btype</em> | ! <em>atype</em>) <em>conop</em> (<em>btype</em> | ! <em>atype</em>)        </td><td>(infix <em>conop</em>)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>con</em> { <em>fielddecl<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fielddecl<sub>n</sub></em> }      </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>newconstr</em></td><td>→</td><td><em>con</em> <em>atype</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>con</em> { <em>var</em> <tt>::</tt> <em>type</em> }</td><td> </td></tr>
+<tr><td><em>fielddecl</em></td><td>→</td><td><em>vars</em> <tt>::</tt> (<em>type</em> | ! <em>atype</em>) </td></tr>
+<tr><td><em>deriving</em></td><td>→</td><td><tt>deriving</tt> (dclass | (<em>dclass<tt>1</tt></em>, … <tt>,</tt> <em>dclass<sub>n</sub></em>))        </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>dclass</em></td><td>→</td><td><em>qtycls</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>inst</em></td><td>→</td><td><em>gtycon</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>gtycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em> )     </td><td>(<em>k</em> ≥ 0, <em>tyvars</em> distinct)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>tyvar<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>tyvar<sub>k</sub></em> )       </td><td>(<em>k</em> ≥ 2, <em>tyvars</em> distinct)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>tyvar</em> ]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>tyvar<sub>1</sub></em> -&gt; <em>tyvar<sub>2</sub></em> )        </td><td><em>tyvar<sub>1</sub></em> and <em>tyvar<sub>2</sub></em> distinct</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>fdecl</em></td><td>→</td><td><tt>import</tt> <em>callconv</em> [<em>safety</em>] <em>impent</em> <em>var</em> <tt>::</tt> <em>ftype</em>       </td><td>(define variable)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>export</tt> <em>callconv</em> <em>expent</em> <em>var</em> <tt>::</tt> <em>ftype</em>       </td><td>(expose variable)</td></tr>
+<tr><td><em>callconv</em></td><td>→</td><td><tt>ccall</tt> | <tt>stdcall</tt> | <tt>cplusplus</tt>       </td><td>(calling convention)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>jvm</tt> | <tt>dotnet</tt></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>   <strong>system-specific calling conventions</strong></td><td> </td></tr>
+<tr><td><em>impent</em></td><td>→</td><td>[<em>string</em>]        </td><td>(see Section <a href="%22./8-foreign-function-interface.html">8.5.1</a>)</td></tr>
+<tr><td><em>expent</em></td><td>→</td><td>[<em>string</em>]        </td><td>(see Section <a href="%22./8-foreign-function-interface.html">8.5.1</a>)</td></tr>
+<tr><td><em>safety</em></td><td>→</td><td><tt>unsafe</tt> | <tt>safe</tt></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>ftype</em></td><td>→</td><td><em>frtype</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>fatype</em> → <em>ftype</em></td><td> </td></tr>
+<tr><td><em>frtype</em></td><td>→</td><td><em>fatype</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ()</td><td> </td></tr>
+<tr><td><em>fatype</em></td><td>→</td><td><em>qtycon</em> <em>atype<sub>1</sub></em> … <em>atype<sub>k</sub></em>      </td><td>(<em>k</em>  ≥  0)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>funlhs</em></td><td>→</td><td><em>var</em> <em>apat</em> { <em>apat</em> }</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>pat</em> <em>varop</em> <em>pat</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>funlhs</em> ) <em>apat</em> { <em>apat</em> }</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>rhs</em></td><td>→</td><td>= <em>exp</em> [<tt>where</tt> <em>decls</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>gdrhs</em> [<tt>where</tt> <em>decls</em>]</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gdrhs</em></td><td>→</td><td><em>guards</em> = <em>exp</em> [<em>gdrhs</em>]</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>guards</em></td><td>→</td><td>| <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>     </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>guard</em></td><td>→</td><td><em>pat</em> &lt;- <em>infixexp</em>     </td><td>(pattern guard)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>let</tt> <em>decls</em>     </td><td>(local declaration)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>infixexp</em>       </td><td>(boolean guard)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>exp</em></td><td>→</td><td><em>infixexp</em> <tt>::</tt> [<em>context</em> =&gt;] <em>type</em>       </td><td>(expression type signature)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>infixexp</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>infixexp</em></td><td>→</td><td><em>lexp</em> <em>qop</em> <em>infixexp</em>       </td><td>(infix operator application)</td></tr>
+<tr><td> </td><td>|</td><td>  - <em>infixexp</em>     </td><td>(prefix negation)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>lexp</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>lexp</em></td><td>→</td><td>\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -&gt; <em>exp</em>        </td><td>(lambda abstraction, <em>n</em> ≥ 1)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>let</tt> <em>decls</em> <tt>in</tt> <em>exp</em>        </td><td>(let expression)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>if</tt> <em>exp</em> [<tt>;</tt>] <tt>then</tt> <em>exp</em> [<tt>;</tt>] <tt>else</tt> <em>exp</em>        </td><td>(conditional)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>case</tt> <em>exp</em> <tt>of</tt> { <em>alts</em> }        </td><td>(case expression)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>do</tt> { <em>stmts</em> }      </td><td>(do expression)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>fexp</em></td><td> </td></tr>
+<tr><td><em>fexp</em></td><td>→</td><td>[<em>fexp</em>] <em>aexp</em>      </td><td>(function application)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>aexp</em></td><td>→</td><td><em>qvar</em>      </td><td>(variable)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>gcon</em>       </td><td>(general constructor)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>literal</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>exp</em> )        </td><td>(parenthesized expression)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>exp<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>exp<sub>k</sub></em> )       </td><td>(tuple, <em>k</em> ≥ 2)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>exp<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>exp<sub>k</sub></em> ]       </td><td>(list, <em>k</em> ≥ 1)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>exp<sub>1</sub></em> [<tt>,</tt> <em>exp<sub>2</sub></em>] .. [<em>exp<sub>3</sub></em>] ]        </td><td>(arithmetic sequence)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>exp</em> | <em>qual<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>qual<sub>n</sub></em> ]     </td><td>(list comprehension, <em>n</em> ≥ 1)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>infixexp</em> <em>qop</em> )      </td><td>(left section)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>qop</em>⟨-⟩ <em>infixexp</em> )       </td><td>(right section)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>qcon</em> { <em>fbind<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fbind<sub>n</sub></em> }     </td><td>(labeled construction, <em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>aexp</em>⟨qcon⟩ { <em>fbind<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fbind<sub>n</sub></em> }       </td><td>(labeled update, <em>n</em>  ≥  1)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>qual</em></td><td>→</td><td><em>pat</em> &lt;- <em>exp</em>       </td><td>(generator)</td></tr>
+<tr><td> </td><td>|</td><td>  <tt>let</tt> <em>decls</em>     </td><td>(local declaration)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>exp</em>        </td><td>(guard)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>alts</em></td><td>→</td><td><em>alt<sub>1</sub></em> <tt>;</tt> … <tt>;</tt> <em>alt<sub>n</sub></em>      </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>alt</em></td><td>→</td><td><em>pat</em> -&gt; <em>exp</em> [<tt>where</tt> <em>decls</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>pat</em> <em>gdpat</em> [<tt>where</tt> <em>decls</em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>          </td><td>(empty alternative)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gdpat</em></td><td>→</td><td><em>guards</em> -&gt; <em>exp</em> [ <em>gdpat</em> ]</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>stmts</em></td><td>→</td><td><em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<tt>;</tt>]       </td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>stmt</em></td><td>→</td><td><em>exp</em> ;</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>pat</em> &lt;- <em>exp</em> ;</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>let</tt> <em>decls</em> ;</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <tt>;</tt>      </td><td>(<em>empty statement</em>)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>fbind</em></td><td>→</td><td><em>qvar</em> = <em>exp</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>pat</em></td><td>→</td><td><em>lpat</em> <em>qconop</em> <em>pat</em>      </td><td>(infix constructor)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>lpat</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>lpat</em></td><td>→</td><td><em>apat</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  - (integer | <em>float</em>)       </td><td>(negative literal)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>gcon</em> <em>apat<sub>1</sub></em> … <em>apat<sub>k</sub></em>     </td><td>(arity <em>gcon</em>  =  <em>k</em>, <em>k</em> ≥ 1)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>apat</em></td><td>→</td><td><em>var</em> [ @ <em>apat</em>]        </td><td>(as pattern)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>gcon</em>       </td><td>(arity <em>gcon</em>  =  0)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>qcon</em> { <em>fpat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>fpat<sub>k</sub></em> }       </td><td>(labeled pattern, <em>k</em> ≥ 0)</td></tr>
+<tr><td> </td><td>|</td><td>  <em>literal</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>_</em>      </td><td>(wildcard)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>pat</em> )        </td><td>(parenthesized pattern)</td></tr>
+<tr><td> </td><td>|</td><td>  ( <em>pat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>pat<sub>k</sub></em> )       </td><td>(tuple pattern, <em>k</em> ≥ 2)</td></tr>
+<tr><td> </td><td>|</td><td>  [ <em>pat<sub>1</sub></em> <tt>,</tt> … <tt>,</tt> <em>pat<sub>k</sub></em> ]       </td><td>(list pattern, <em>k</em> ≥ 1)</td></tr>
+<tr><td> </td><td>|</td><td>  ~ <em>apat</em>     </td><td>(irrefutable pattern)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>fpat</em></td><td>→</td><td><em>qvar</em> = <em>pat</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gcon</em></td><td>→</td><td>()</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  [<em></em>]</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  (,{,})</td><td> </td></tr>
+<tr><td> </td><td>|</td><td>  <em>qcon</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>var</em></td><td>→</td><td><em>varid</em> | ( <em>varsym</em> )       </td><td>(variable)</td></tr>
+<tr><td><em>qvar</em></td><td>→</td><td><em>qvarid</em> | ( <em>qvarsym</em> )        </td><td>(qualified variable)</td></tr>
+<tr><td><em>con</em></td><td>→</td><td><em>conid</em> | ( <em>consym</em> )       </td><td>(constructor)</td></tr>
+<tr><td><em>qcon</em></td><td>→</td><td><em>qconid</em> | ( <em>gconsym</em> )        </td><td>(qualified constructor)</td></tr>
+<tr><td><em>varop</em></td><td>→</td><td><em>varsym</em> | <em>`</em>  <em>varid</em> <em>`</em>        </td><td>(variable operator)</td></tr>
+<tr><td><em>qvarop</em></td><td>→</td><td><em>qvarsym</em> | <em>`</em>  <em>qvarid</em> <em>`</em>     </td><td>(qualified <em>variable</em> operator)</td></tr>
+<tr><td><em>conop</em></td><td>→</td><td><em>consym</em> | <em>`</em>  <em>conid</em> <em>`</em>        </td><td>(constructor operator)</td></tr>
+<tr><td><em>qconop</em></td><td>→</td><td><em>gconsym</em> | <em>`</em>  <em>qconid</em> <em>`</em>     </td><td>(qualified <em>constructor</em> operator)</td></tr>
+<tr><td><em>op</em></td><td>→</td><td><em>varop</em> | <em>conop</em>     </td><td>(operator)</td></tr>
+<tr><td><em>qop</em></td><td>→</td><td><em>qvarop</em> | <em>qconop</em>      </td><td>(qualified operator)</td></tr>
+<tr><td><em>gconsym</em></td><td>→</td><td><tt>:</tt> | <em>qconsym</em></td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#結合性解決" id="結合性解決"><h2>結合性解決</h2></a>
+<p>次はHaskellの式における結合性解決の実装例である。結合性解決はHaskellのパターンに対しても適用可能であるが、パターンは式のサブセットであるので、以下では簡単のため式のみを考えることにする。</p>
+<p><code>resolve</code>関数はリストであって、それぞれの要素が式または演算子であるもの、すなわち、文脈自由文法において非終端記号<code>infixexp</code>のインスタンスとなるもの(<strong>訳注</strong>: 上の文法表で<em>infixexp</em>に当てはまるもの、の意味)を受け取る。<code>resolve</code>は<code>Just e</code>(ここで<code>e</code>は解決された式)または、入力が意味のある式を表現していない場合には<code>Nothing</code>を返す。もちろん、コンパイラにおいては有益なエラーメッセージを生成するという目的のためには関係する演算子についての情報をより多く返す方がよいであろうが、ここではアルゴリズムを説明するのに<code>Maybe</code>型で十分である。</p>
+<pre><code class="language-hs">import Control.Monad  
+
+type Prec   = Int  
+type Var    = String  
+
+data Op = Op String Prec Fixity  
+  deriving (Eq,Show)  
+
+data Fixity = Leftfix | Rightfix | Nonfix  
+  deriving (Eq,Show)  
+
+data Exp = Var Var | OpApp Exp Op Exp | Neg Exp  
+  deriving (Eq,Show)  
+
+data Tok = TExp Exp | TOp Op | TNeg  
+  deriving (Eq,Show)  
+
+resolve :: [Tok] -&gt; Maybe Exp  
+resolve tokens = fmap fst $ parseNeg (Op &quot;&quot; (-1) Nonfix) tokens  
+  where  
+    parseNeg :: Op -&gt; [Tok] -&gt; Maybe (Exp,[Tok])  
+    parseNeg op1 (TExp e1 : rest)  
+       = parse op1 e1 rest  
+    parseNeg op1 (TNeg : rest)  
+       = do guard (prec1 &lt; 6)  
+            (r, rest') &lt;- parseNeg (Op &quot;-&quot; 6 Leftfix) rest  
+            parse op1 (Neg r) rest'  
+       where  
+          Op _ prec1 fix1 = op1  
+
+    parse :: Op -&gt; Exp -&gt; [Tok] -&gt; Maybe (Exp, [Tok])  
+    parse _   e1 [] = Just (e1, [])  
+    parse op1 e1 (TOp op2 : rest)  
+       -- case (1): 不当な式をチェック
+       | prec1 == prec2 &amp;&amp; (fix1 /= fix2 || fix1 == Nonfix)  
+       = Nothing  
+
+       -- case (2): op1とop2は左結合であるべきである
+       | prec1 &gt; prec2 || (prec1 == prec2 &amp;&amp; fix1 == Leftfix)  
+       = Just (e1, TOp op2 : rest)  
+
+       -- case (3): op1とop2は右結合であるべきである
+       | otherwise  
+       = do (r,rest') &lt;- parseNeg op2 rest  
+            parse op1 (OpApp e1 op2 r) rest'  
+       where  
+         Op _ prec1 fix1 = op1  
+         Op _ prec2 fix2 = op2
+</code></pre>
+<p>このアルゴリズムは次のように働く。各段階において関数呼び出し</p>
+<pre><code class="language-hs">parse op1 E1 (op2 : tokens)
+</code></pre>
+<p>があるが、これは次のような式であることを確かめていることを意味している。(ここで、呼び出し側がE0を保持している)</p>
+<pre><code class="language-hs">E0 ‘op1‘ E1 ‘op2‘ ...     (1)
+</code></pre>
+<p><code>parse</code>の仕事は<code>op1</code>の右側の式を構築し、入力の残りの部分を返すことである。</p>
+<p>3つの場合を考慮する必要がある:</p>
+<ol>
+<li><code>op1</code>と<code>op2</code>が同じ優先度であるが、同じ結合性を持たない場合あるいは不結合(nonfix)であることが宣言されている場合には、式は不当である。</li>
+<li><code>op1</code>が<code>op2</code>よりも高い優先度であるか<code>op1</code>と<code>op2</code>が左結合である場合には、<code>op1</code>の右側の式は<code>E1</code>であることがわかり、よってこれを呼び出し側に返却する。</li>
+<li>いずれでもない場合、<code>E1 `op2` R</code>の形の式が求めているものであることがわかる。<code>R</code>を見つけるには、<code>parseNeg op2 tokens</code>を呼び出して<code>op2</code>の右側の式を計算し、これを今は<code>R</code>と名前を付ける(<code>parseNeg</code>以下の部分についての詳細は以下に示すが、本質的には、もしも<code>tokens</code>が<code>(E2 : tokens)</code>の形をしている場合、<code>parseNeg</code>は<code>parse op2 E2 rest</code>と同値である)。さて、<code>E0 `op1` (E1 `op2` R) `op3` ...</code>の形を得た、ここで<code>op3</code>は入力に出現する次の演算子である。これは上の(1)の場合の具体的な例になっているから、<code>E1 == (E1 `op2` R)</code>と新たに置いて<code>parse</code>を続いて呼び出す。</li>
+</ol>
+<p>アルゴリズムを初期化するには、<code>op1</code>は他の何よりも優先度の低い仮想的な演算子であるとおく。そして<code>parse</code>は入力全体を消費し結果の式を返す。</p>
+<p>前置マイナス演算子の<code>-</code>の扱いは若干込み入っている。前置のマイナスは中置のマイナスと同じ結合性であったことを思い出そう、いずれも左結合で優先度は6だ。<code>-</code>の左にくる演算子は、もし存在すれば、式が正当であるためには優先度が6より低くなければならない。マイナス演算子そのものは同じ結合性を持つ演算子に対しては左結合的にはたらく(例: <code>+</code>)。よって例えば<code>-a + b</code>は正当であり<code>(-a) + b</code>として解決されるが、<code>a + -b</code>は不当である。</p>
+<p>関数<code>parseNeg</code>は前置マイナスを処理する。前置演算子に遭遇して、それがその位置で正当であれば(左側にある演算子の優先度が6より低ければ)、上の(3)のケースと同様にして進めていく。つまり、<code>-</code>の引数を<code>parseNeg</code>を再帰的に呼ぶことで計算し、そして<code>parse</code>を呼んで続けていく。</p>
+<p>このアルゴリズムは優先度の範囲と解決には影響されないことに注意せよ。原則として、Haskellの優先度が1から10までの範囲の整数に制限される理由は何もない。より広い範囲や分数の値を使うことで特別に難しくなるわけではない。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/9-standard-prelude.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/11-specification-of-derived-instances.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/9-standard-prelude.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/11-specification-of-derived-instances.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

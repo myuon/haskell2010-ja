@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>モジュール - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html" class="active"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#モジュール" id="モジュール"><h1>モジュール</h1></a>
+<p>モジュールは(他のモジュールからスコープの中へもたらされたリソースの) <strong>インポート</strong> の一式によって作成された環境の中の値やデータ型、型シノニム、クラスなど(<a href="./4-declarations-and-bindings.html">４</a>章を参照)の集まりを定義する。
+これらのリソースのいくつかを <strong>エクスポート</strong> し、他のモジュールでそれらを利用できるようにする。
+モジュールの中で定義された、またはその中へインポートされた、あるいはエクスポートされた値または型クラスに参照するために項の <strong>エンティティ</strong> を使用する。</p>
+<p>Haskell <strong>プログラム</strong> はモジュールの集まりであり、その中の一つから規約により、<code>Main</code>が呼ばれなければならず、かつ<code>main</code>値をエクスポートしなければいけない。
+プログラムの <strong>値</strong> はモジュール<code>Main</code>の中の識別子<code>main</code>の値であり、そしていくつかの型<code>τ</code>のための型<code>IO τ</code>の計算結果でなければいけない(<a href="./7-basic-input-output.html">７</a>章を参照)。
+プログラムが実行されたとき、計算結果<code>main</code>は行わられ、(型<code>τ</code>の)その結果は捨てられる。</p>
+<p>モジュールは明示的な<code>import</code>宣言により他のモジュールを参照することができ、
+その各々でインポートされたモジュールの名前を与え、かつインポートされるためにそのエンティティを明記する。
+モジュールは互いに再帰的にインポートされることもできる。</p>
+<p>モジュールは名前空間の制御に使われ、かつファーストクラス値ではない。
+複数のモジュールからなるHaskellのプログラムは、単一のモジュールのプログラムに、各エンティティに一意な名前を与え、その参照が出現する全ての場所を適切に一意な名前に変えて全てのモジュールの本体<sup><a href="#footnote-1">1</a></sup>の名前を連結することにより変換することができる。</p>
+<p>例えば、ここに３つのモジュールプログラムがある。</p>
+<pre><code class="language-hs">module Main where  
+    import A  
+    import B  
+    main = A.f &gt;&gt; B.f  
+
+module A where  
+    f = ...  
+
+module B where  
+    f = ... 
+</code></pre>
+<p>それは次の単一モジュールプログラムに等しい。</p>
+<pre><code class="language-hs">module Main where  
+    main = af &gt;&gt; bf  
+
+    af = ...  
+
+    bf = ... 
+</code></pre>
+<p>なぜならそれらは互いに再帰的であることが許可され、モジュールはプログラムを依存の状態に注意することなく自由に分割することを許す。</p>
+<p>モジュールの名前(語彙素<em>modid</em>)は大文字で始まり、ドットで区切られ、空白をはさまない一つ以上の識別子の列である。
+例えば、<code>Data.Bool</code>と<code>Main</code>、<code>Foreign.Marshal.Alloc</code>はすべて有効なモジュール名である。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>modid</em></td><td>→</td><td>{<em>conid</em> .} <em>conid</em></td><td>(modules)</td></tr>
+</tbody></table>
+<p>モジュール名は新しいコンポーネントを追加すると、元々のモジュール名の子を階層の中に作成し、その階層の中に配置されているように考えることができる。
+例えば、モジュール<code>Contorl.Monad.ST</code>は<code>Contorl.Monad</code>下の階層の子である。
+しかしこれは単なる慣習であり、言語の定義には含まれない。このリポートでは<em>modid</em>は平坦な名前空間を占有する単一の識別子のように扱われる。</p>
+<p>中でも特別なモジュール Prelude が存在し、これはデフォルトで全てのモジュールにインポートされる(セクション<a href="#%E6%A8%99%E6%BA%96Prelude">5.6</a>)。
+加えて、必要に応じてインポートされる標準ライブラリのモジュールの集合も特別である(Part<a href="https://www.haskell.org/onlinereport/haskell2010/haskellpa2.html#x20-192000II">2</a>を参照)。</p>
+<p>(訳注:上のリンク先であるPart2はHaskell2010のライブラリの部分でこのリポートの13章から42章までを指す。)</p>
+<p><a name="footnote-1"><sup>1</sup></a> この文に2つの小さな例外がある。
+一つは、デフォルト宣言のスコープは単一のモジュール内のみに及ぶ(セクション<a href="./4-declarations-and-bindings.html#%E6%9B%96%E6%98%A7%E3%81%AA%E5%9E%8B%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89%E3%81%95%E3%82%8C%E3%81%9F%E6%95%B0%E5%80%A4%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4">4.3.4</a>)。
+二つめは、単相性の制約のルール2がモジュールの境界によって影響を受ける。</p>
+<a class="header" href="#モジュールの構造" id="モジュールの構造"><h2>モジュールの構造</h2></a>
+<p>モジュールは値束縛やデータ型、型シノニム、クラスなどへの宣言を含む相互再帰的なスコープを定義する(<a href="./4-declarations-and-bindings.html">4</a>章を参照)。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>module</em> </td><td>→</td><td><code>module</code> <em>modid</em> [<em>exports</em>] <code>where</code> <em>body</em></td><td> </td></tr>
+<tr><td>           </td><td>|</td><td><em>body</em></td><td> </td></tr>
+<tr><td><em>body</em>   </td><td>→</td><td>{ <em>impdecls</em> ; <em>topdecls</em> }</td><td> </td></tr>
+<tr><td>           </td><td>|</td><td>{ <em>impdecls</em> }</td><td> </td></tr>
+<tr><td>           </td><td>|</td><td>{ <em>topdecls</em> }</td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>impdecls</em> </td><td>→</td><td><em>impdecl<sub>1</sub></em> ; … ; <em>impdecl<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>topdecls</em> </td><td>→</td><td><em>topdecl<sub>1</sub></em> ; … ; <em>topdecl<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+</tbody></table>
+<p>モジュールは<code>module</code>キーワードとその名前、エクスポートされる(丸括弧で囲まれた)エンティティのリストをヘッダーに伴って始まる。
+そのヘッダーの次にはインポートされるモジュールを明記する空かもしれない<code>import</code>宣言(<code>impdecls</code>、セクション<a href="#%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E5%AE%A3%E8%A8%80">5.3</a>)のリストが続き、
+必要に応じてインポートされる束縛を制限する。
+これには空かもしれないトップレベルの宣言のリストが次に続くであろう(<code>topdecls</code>、<a href="./4-declarations-and-bindings.html">4</a>章)。</p>
+<p>モジュールの本体のみで成るモジュールの短縮形式は許される。
+もしこれが使われるなら、そのヘッダーは<code>‘module Main(main) where’</code>であると推測される。
+もし短縮されたモジュールの初めの語彙素が<code>{</code>でなければ、そのときそのレイアウトルールはそのモジュールのトップレベルへ適用される。</p>
+<a class="header" href="#エクスポートリスト" id="エクスポートリスト"><h2>エクスポートリスト</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>exports</em></td><td>→</td><td> ( <em>export<sub>1</sub></em> , … , <em>export<sub>n</sub></em> [ , ] )         </td><td> (<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td>  <em>export</em></td><td>→</td><td> <em>qvar</em></td><td> </td></tr>
+<tr><td>   </td><td>|</td><td> <em>qtycon</em> [(..) | ( <em>cname<sub>1</sub></em> , … , <em>cname<sub>n</sub></em> )] </td><td> (<em>n</em> ≥ 0)</td></tr>
+<tr><td>   </td><td>|</td><td> <em>qtycls</em> [(..) | ( <em>var<sub>1</sub></em> , … , <em>var<sub>n</sub></em> )]     </td><td> (<em>n</em> ≥ 0)</td></tr>
+<tr><td>   </td><td>|</td><td> <code>module</code> <em>modid</em> </td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td>   <em>cname</em></td><td>→</td><td> <em>var</em> | <em>con</em> </td><td> </td></tr>
+</tbody></table>
+<p><strong>エクスポートリスト</strong>はモジュール宣言によってエクスポートされるエンティティを識別する。
+モジュールの実装はそのモジュールで宣言しているまたは他のモジュールからインポートしているエンティティのみをエクスポートできる。
+もしエクスポートリストが省略されるなら、モジュールの中で定義されたすべての値や型、クラスはインポートされるものを除いてエクスポートされる。</p>
+<p>エクスポートリストのエンティティは次に従う名前である。</p>
+<ol>
+<li>
+<p>値、フィールド名またはクラスメソッドはそれらがモジュールの本体またはインポートによって宣言されたものかどうかにかかわらず、
+<code>qvarid</code>のように値の名前を与えることによって名前をつけることができ、そしてそれはスコープ内でなければならない。
+演算子はそれらを<code>qvarids</code>に変えるために丸括弧で閉じられなければならない。</p>
+</li>
+<li>
+<p><code>data</code>または<code>newtype</code>宣言で宣言された代数データ型<em>T</em>は次の3つの方法の一つで名前をつけることができる。</p>
+<ul>
+<li>形式<em>T</em>は <strong>コンストラクタまたはフィールド名によってではなく</strong>、 型によって名前がつけられる。
+コンストラクタなしに型をエクスポート出来るという仕様は、抽象データ型のコンストラクタについても同様である(セクション<a href="#%E6%8A%BD%E8%B1%A1%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B">5.8</a>)。</li>
+<li>形式<em>T(c<sub>1</sub>,...,c<sub>n</sub>)</em>は型とそのコンストラクタとフィールド名の複数または全ての名前である。</li>
+<li>略された形式<em>T(..)</em>は(修飾されたかされていないかのどちらにしろ)現在のスコープにある型と全てのそのコンストラクタとフィールド名の名前である。</li>
+</ul>
+<p>全てのケースにおいて(修飾されているかもしれない)型コンストラクタ<em>T</em>はスコープになければならない。
+2番目の形式の中の<em>c<sub>i</sub></em>の名前であるそのコンストラクタとフィールドは修飾されない。
+これらの付随する名前の一つは次の場合にのみ正当である。
+(a) <em>T</em>のコンストラクタまたはフィールドの名前である。かつ、
+(b) コンストラクタまたはフィールドが <strong>修飾されるかされない名前の下のスコープ内にあるかどうかにかかわらず</strong> モジュール本体のスコープ内にある。
+例えば、次のコードは正当である。</p>
+<pre><code class="language-hs">module A( Mb.Maybe( Nothing, Just ) ) where  
+import qualified Data.Maybe as Mb 
+</code></pre>
+<p>データコンストラクタは付随する名前のようなものを除いてエクスポートリストの中で名前をつけることはできない。
+なぜならそうでなければ型コンストラクタから見分けられないからだ。</p>
+</li>
+<li>
+<p><code>data</code>宣言によって宣言される型シノニム<em>T</em>は形式<em>T</em>によって名前をつけられることができ、<em>T</em>はスコープ内にある。</p>
+</li>
+<li>
+<p><code>class</code>宣言で宣言される演算<em>f<em>1</em>,...,f<em>n</em>を伴う</em>クラス<em>C</em>は次の3つの方法のひとつから名前をつけることができる。</p>
+<ul>
+<li>形式<em>C</em>は <strong>クラスメソッドを除いて</strong> クラスの名前である。</li>
+<li>形式<em>C(f<sub>1</sub>,...,f<sub>n</sub>)</em>はクラスとそのメソッドのいくつかまたは全ての名前である。</li>
+<li>略された形式<em>C(..)</em>は(修飾されるされないか関係なく)スコープにあるクラスとその全てのメソッドの名前である。</li>
+</ul>
+<p>全てのケースにおいて、<em>C</em>はスコープになければならない。
+2番目の形式の中で、(修飾されない)付随する名前<em>f<sub>i</sub></em>のひとつは次の場合にのみ正当である。
+(a) <em>C</em>のクラスメソッドの名前である。かつ
+(b) そのクラスメソッドが修飾されるされない名前の下のスコープ内にあるかどうかにかかわらずモジュール本体のスコープ内にある。</p>
+</li>
+<li>
+<p>形式<code>module M</code>は修飾されない名前<code>&quot;e&quot;</code>と修飾される名前<code>&quot;M.e&quot;</code>の両方を伴うスコープ内にある全エンティティのセットの名前である。
+このセットは空でもよい。
+例えば、</p>
+<pre><code class="language-hs">module Queue( module Stack, enqueue, dequeue ) where  
+    import Stack  
+    ... 
+</code></pre>
+<p>ここのモジュール<code>Queue</code>は<code>Stack</code>からインポートされた全エンティティを略して書くためそのエクスポートリスト内のモジュール名<code>Stack</code>を使う。
+モジュールは構文<code>&quot;module M&quot;</code>内のそれが保有する名前を使うエクスポートリストの中で保有するローカルな定義の名前をつけることができる、
+なぜなら、ローカル宣言は修飾されるされない名前の両方をスコープの中へもたらす(セクション<a href="#%E4%BF%AE%E9%A3%BE%E3%81%95%E3%82%8C%E3%81%9F%E5%90%8D%E5%89%8D">5.5.1</a>)。
+例えば、</p>
+<pre><code class="language-hs">module Mod1( module Mod1, module Mod2 ) where  
+import Mod2  
+import Mod3 
+</code></pre>
+<p>ここのモジュール<code>Mod1</code>は<code>Mod2</code>からインポートされたそれらと同様に全てのローカル定義をエクスポートするが、<code>Mod3</code>からインポートされたものは異なる。</p>
+<p><code>M</code>がエクスポートリストをもつモジュールでない限り、または少なくとも1つのインポート宣言によって(修飾されるかどうかにかかわらず)インポートされたモジュールでない限り、<code>module M</code>をエクスポートリストで使うことはエラーとなる。</p>
+</li>
+</ol>
+<p>エクスポートリストは累積される。
+すなわち、エクスポートリストによってエクスポートされるエンティティのセットはリストの個々のアイテムによってエクスポートされたエンティティの和集合である。</p>
+<p>エンティティがどのようにエクスポートされているものであっても、インポートしているモジュールには違いがない。
+例えば、データ型<code>T</code>からフィールド名<code>f</code>は個々に(<code>f</code>、上記のアイテム(1))エクスポートしてよい。
+あるいはそのデータ型(<code>T(f)、アイテム(2)</code>)の明示的に名前をつけられたメンバーのようにしても、
+あるいは暗黙的に名前をつけられたメンバー(<code>T(..)、アイテム(2)</code>)のようにしても、
+モジュール本体(<code>module M</code>、アイテム(5))をエクスポートすることによっても、同様にエクスポートしてもよい。</p>
+<p>モジュールによってエクスポートされたエンティティの <strong>修飾される</strong> 名前は(それら各々の名前空間の範囲で)全て異ならなければならない。
+例えば、</p>
+<pre><code class="language-hs">module A ( C.f, C.g, g, module B ) where   -- an invalid module  
+import B(f)  
+import qualified C(f,g)  
+g = f True
+</code></pre>
+<p>モジュールAそれ自身の範囲で衝突する名前はないが、
+<code>C.g</code>と<code>g</code>の間(<code>C.g</code>と<code>g</code>は異なる実体であると仮定する。モジュールは相互再帰的にインポートできることを思い出してほしい。)と
+<code>module B</code>と<code>C.f</code>の間(<code>B.f</code>と<code>C.f</code>は異なる実体であると仮定する)にエクスポートリスト内で衝突する名前がある。</p>
+<a class="header" href="#インポート宣言" id="インポート宣言"><h2>インポート宣言</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>  <em>impdecl</em></td><td>→</td><td><code>import</code> [<code>qualified</code>] <em>modid</em> [<code>as</code> <em>modid</em>] [<em>impspec</em>]</td><td> </td></tr>
+<tr><td>     </td><td>|</td><td>                                             </td><td>(<em>empty declaration</em>)</td></tr>
+<tr><td>  <em>impspec</em></td><td>→</td><td>( <em>import<sub>1</sub></em> , … , <em>import<sub>n</sub></em> [ , ] )</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>     </td><td>|</td><td><code>hiding</code> ( <em>import<sub>1</sub></em> , … , <em>import<sub>n</sub></em> [ , ] )</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td>   <em>import</em></td><td>→</td><td><em>var</em></td><td> </td></tr>
+<tr><td>     </td><td>|</td><td> <em>tycon</em> [ <code>(..)</code> | ( <em>cname<sub>1</sub></em> , … , <em>cname<sub>n</sub></em> )]</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>     </td><td>|</td><td>  <em>tycls</em> [<code>(..)</code> | ( <em>var<sub>1</sub></em> , … , <em>var<sub>n</sub></em> )]</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>    <em>cname</em></td><td>→</td><td><em>var</em> | <em>con</em> </td><td> </td></tr>
+</tbody></table>
+<p>モジュールによってエクスポートされたエンティティはモジュールのはじめの<code>import</code>宣言を伴って他のモジュールのスコープの中へもたらされる。
+<code>import</code>宣言はインポートされるモジュールの名前をつけ、任意でインポートされるエンティティを明示する。
+単一モジュールは一つ以上の<code>import</code>宣言によってインポートされるかもしれない。
+インポートされた名前はトップレベルの宣言のように扱い、
+そのスコープはモジュールの実体全体に及ぶが、ローカルのトップレベルではない束縛によってシャドーイングされることもある。</p>
+<p>複数の<code>import</code>宣言の効果は厳密に累積し、
+もしモジュール内の<code>import</code>宣言のいずれかでインポートされるなら、エンティティはスコープ内にある。
+インポート宣言の順序は無関係である。</p>
+<p>語彙的に、終端期号<code>&quot;as&quot;</code>や<code>&quot;qualified&quot;</code>、<code>&quot;hiding&quot;</code>はそれぞれ<em>reservedid</em>ではなく<em>varid</em>である。
+それらは<code>import</code>宣言の文脈内でのみ特別な意味を持ち、変数のようにも使われることが出来る。</p>
+<a class="header" href="#何がインポートされるか" id="何がインポートされるか"><h3>何がインポートされるか</h3></a>
+<p>正確にどのエンティティがインポートされるかは次に3つの方法の一つで明示されることが出来る。</p>
+<ol>
+<li>
+<p>インポートされるエンティティは丸括弧の中のリスト化しているものによってはっきりと明示されることが出来る。
+そのリストの中のアイテムは修飾子が許可されないことと<code>module &lt;em&gt;modid&lt;/em&gt;</code>エンティティが許可されないことを除いてエクスポートリスト内のものと同様に同じ形式を持つ。
+インポートの形式<code>(..)</code>が型またはクラスで使われるとき、<code>(..)</code>はモジュールからエクスポートされるコンストラクタまたはメソッド、フィールド名の全てを参照する。</p>
+<p>そのリストはインポートされるモジュールによってエクスポートされるエンティティのみに名前をつけないといけない。
+リストは空でもよく、その場合はインスタンス以外はインポートされない。</p>
+</li>
+<li>
+<p>エンティティは形式<code>hiding</code>(<em>inport<sub>1</sub>, ..., import<sub>n</sub></em>)を使うことによって除外されることができる。
+そして名前がつけられたモジュールによってエクスポートされる全エンティティはリスト内で名前を付けられたものを除いてインポートされるべきことを明示する。
+データコンストラクタは関連する型で接頭辞をつけられることなく隠れているリスト内で直接名前をつけることが出来る。
+例えば、</p>
+<pre><code class="language-hs">import M hiding (C)
+</code></pre>
+<p><code>C</code>と名前を付けられるあらゆるコンストラクタまたはクラス、型は除外される。
+対象的にインポートリスト内で<code>C</code>を使うことはクラスまたは型のみに名前をつける。</p>
+<p>インポートされたモジュールによって実際にエクスポートされないエンティティを隠すことはエラーである。</p>
+</li>
+<li>
+<p>最後にもし<em>impspec</em>は省かれるなら、そのとき明示されたモジュールによってエクスポートされるエンティティはインポートされる。</p>
+</li>
+</ol>
+<a class="header" href="#修飾されるインポート" id="修飾されるインポート"><h3>修飾されるインポート</h3></a>
+<p>セクション<a href="#%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%95%E3%82%8C%E3%82%8B%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B">5.3.1</a>のルールの下で各エンティティに対して、トップレベルの環境は拡張される。
+もしインポート宣言が<code>qualified</code>キーワードを使っていたなら、エンティティの<strong>修飾された名前</strong>のみがスコープ内へともたらされる。
+もし<code>qualified</code>キーワードが省略されているなら、そのときエンティティの修飾される名前 <strong>と</strong> 修飾されない名前の <strong>両者</strong>はスコープの中へともたらされる。
+セクション<a href="">5.5.1</a>では修飾される名前のより詳細を述べていく。</p>
+<p>インポートされる名前の修飾子はインポートされるモジュールの名前か<code>import</code>文の<code>as</code>句に与えられるローカルな別名のどちらかである。
+このゆえに、<strong>修飾子は必ずしもインポートするエンティティが元々宣言されていたモジュールの名前でなくとも良い。</strong></p>
+<p>修飾されない名前を除外するための機能は修飾されない名前空間のプログラマによる完全な制御を許し、
+ローカルで定義されたエンティティは修飾子つきでインポートされたものと同じ名前を共有することが出来る。</p>
+<pre><code class="language-hs">module Ring where  
+import qualified Prelude    -- All Prelude names must be qualified  
+import Data.List( nub )  
+
+l1 + l2 = l1 Prelude.++ l2  -- This + differs from the one in the Prelude  
+l1 ⋆ l2 = nub (l1 + l2)     -- This ⋆ differs from the one in the Prelude  
+
+succ = (Prelude.+ 1)
+</code></pre>
+<a class="header" href="#ローカルな別名" id="ローカルな別名"><h3>ローカルな別名</h3></a>
+<p>インポートされるモジュールは<code>as</code>句を使いインポートするモジュールの中でローカルな別名を割り当てられることができる。
+例えば、次の</p>
+<pre><code class="language-hs">import qualified VeryLongModuleName as C
+</code></pre>
+<p>モジュールの中ではエンティティは<code><code>VeryLongModuleName.</code></code>ではなく<code><code>C.</code></code>という修飾子を用いて参照されなければならない。
+これはインポートされるモジュールで使われる修飾子を変更せずに異なるモジュールを<code>VeryLongModuleName</code>の代わりにされることも許す。
+全ての名前が曖昧さなく解決される限りにおいては、2つ以上のモジュールがスコープ内で同じ修飾子を使用することは正当である。
+例えば、</p>
+<pre><code class="language-hs">module M where  
+    import qualified Foo as A  
+    import qualified Baz as A  
+    x = A.f 
+</code></pre>
+<p>このモジュールは<code>Foo</code>と<code>Baz</code>が両方<code>f</code>をエクスポートしないときに限り正当である。</p>
+<p><code>as</code>句は<code>qualifiedimport</code>ではない式でも使われることができる。</p>
+<pre><code class="language-hs">import Foo as A(f)
+</code></pre>
+<p>この宣言は<code>f</code>と<code>A.f</code>をスコープの中にもたらす。</p>
+<a class="header" href="#例" id="例"><h3>例</h3></a>
+<p>上記のインポートルールを明らかにするため、<code>x</code>と<code>y</code>をエクスポートするモジュール<code>A</code>を想定してほしい。
+そのときこの表は名前が明記されたインポート式によってスコープの中へもたらされることを示す。</p>
+<table><thead><tr><th>インポート宣言</th><th>スコープの中にもたらされる名前</th></tr></thead><tbody>
+<tr><td>import A                       </td><td> x, y, A.x, A.y </td></tr>
+<tr><td>import A()                     </td><td> (nothing) </td></tr>
+<tr><td>import A(x)                    </td><td>   x, A.x </td></tr>
+<tr><td>import qualified A             </td><td> A.x, A.y </td></tr>
+<tr><td>import qualified A()           </td><td> (nothing) </td></tr>
+<tr><td>import qualified A(x)          </td><td> A.x </td></tr>
+<tr><td>import A hiding ()             </td><td> x, y, A.x, A.y </td></tr>
+<tr><td>import A hiding (x)            </td><td> y, A.y </td></tr>
+<tr><td>import qualified A hiding ()   </td><td> A.x, A.y </td></tr>
+<tr><td>import qualified A hiding (x)  </td><td> A.y </td></tr>
+<tr><td>import A as B                  </td><td> x, y, B.x, B.y </td></tr>
+<tr><td>import A as B(x)               </td><td> x, B.x </td></tr>
+<tr><td>import qualified A as B        </td><td> B.x, B.y </td></tr>
+</tbody></table>
+<p>全てのケースで、モジュール<code>A</code>のスコープの中の全インスタンス宣言はインポートされる(セクション<a href="">5.4</a>)。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/4-declarations-and-bindings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/6-predefined-types-and-classes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/4-declarations-and-bindings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/6-predefined-types-and-classes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

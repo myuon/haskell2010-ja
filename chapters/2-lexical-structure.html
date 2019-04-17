@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字句構造 - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html" class="active"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#字句構造" id="字句構造"><h1>字句構造</h1></a>
+<p>この章では、Haskellの低レベルな字句構造を説明する。このレポートを初めて読む場合には、詳細はほとんど読み飛ばしてもよいだろう。</p>
+<a class="header" href="#表記法" id="表記法"><h2>表記法</h2></a>
+<p>以下の表記法は構文を表すために使用される。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td align="left"> [<em>pattern</em>]                         </td><td align="left"> 任意 </td></tr>
+<tr><td align="left"> {<em>pattern</em>}                         </td><td align="left"> 0、またはそれ以上の繰り返し </td></tr>
+<tr><td align="left"> (<em>pattern</em>)                         </td><td align="left"> グルーピング </td></tr>
+<tr><td align="left"> <em>pat<sub>1</sub></em> | <em>pat<sub>2</sub></em> </td><td align="left"> 選択 </td></tr>
+<tr><td align="left"> pat<sub>(pat')</sub> </td><td align="left">  相違 ー <em>pat'</em>によって生成されたものを除いた、<em>pat</em>によって生成された要素</td></tr>
+<tr><td align="left"> <code>fibonacci</code> </td><td align="left"> タイプライターフォントの終端構文 </td></tr>
+</tbody></table>
+<p>このセクション内の構文は字句構造を説明しているため、全ての空白は明示的に表現されているが、並置されたシンボル間には暗黙的な空白はない。BNFのような構文は今後使われ、次の形式を取る。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>nonterm</em> </td><td> → </td><td> <em>alt<sub>1</sub></em> | <em>alt<sub>2</sub></em> | … | <em>alt<sub>n</sub></em> </td></tr>
+</tbody></table>
+<p>通常は文脈によって区別が明確になるが、
+<code>|</code>や<code>[…]</code>のような(タイプライターフォントで指定された)具体的な終端構文から|や[…]のようなメタデータ構文の区別には注意が必要である。</p>
+<p>HaskellはUnicode[<a href="./bibliogrphy.html">2</a>]文字セットを使っている。しかしながら、プログラムソースは現在、以前のHaskellバージョンで使われていたASCII文字セットに偏っている。</p>
+<p>この構文はUnicodeコンソーシアムによって定義されているUnicode文字の文字符号化スキームによって異なる。Haskellコンパイラーは新しいバージョンのUnicodeが利用可能になるにつれてそれらを利用されることが期待されている。</p>
+<a class="header" href="#字句プログラム構造" id="字句プログラム構造"><h2>字句プログラム構造</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>program</em> </td><td>→</td><td> {<em>lexeme</em> | <em>whietespace</em>}</td></tr>
+<tr><td> <em>lexeme</em> </td><td>→</td><td> <em>qvarid</em> | <em>qconid</em> | <em>qvarsym</em> | <em>qconsym</em> | <em>literal</em> | <em>special</em> | <em>reservedop</em> | <em>reservedid</em> </td></tr>
+<tr><td> <em>literal</em> </td><td>→</td><td> <em>integer</em> | <em>float</em> | <em>char</em> | <em>string</em> </td></tr>
+<tr><td> <em>special</em> </td><td>→</td><td> <code>(</code> | <code>)</code> | <code>,</code> | <code>;</code> | <code>[</code> | <code>]</code> | <code>`</code> | <code>{</code> | <code>}</code> </td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td> <em>whitespace</em> </td><td>→</td><td> <em>whitestuff</em> {<em>whitestuff</em>}</td></tr>
+<tr><td> <em>whitestuff</em> </td><td>→</td><td> <em>whitechar</em> | <em>comment</em> | <em>ncomment</em> </td></tr>
+<tr><td> <em>whitechar</em> </td><td>→</td><td> <em>newline</em> | <em>vertab</em> | <em>space</em> | <em>tab</em> | <em>uniWhite</em> </td></tr>
+<tr><td> <em>newline</em> </td><td>→</td><td> <em>return</em> <em>linefeed</em> | <em>return</em> | <em>linefeed</em> | <em>formfeed</em> </td></tr>
+<tr><td> <em>return</em> </td><td>→</td><td> キャレッジ⏎ </td></tr>
+<tr><td> <em>linefeed</em> </td><td>→</td><td> 改行 </td></tr>
+<tr><td> <em>vertab</em> </td><td>→</td><td> 垂直タブ </td></tr>
+<tr><td> <em>formfeed</em> </td><td>→</td><td> 改ページ </td></tr>
+<tr><td> <em>space</em> </td><td>→</td><td> 空白 </td></tr>
+<tr><td> <em>tab</em> </td><td>→</td><td> 水平タブ </td></tr>
+<tr><td> <em>uniWhite</em> </td><td>→</td><td> 空白として定義されたUnicode文字 </td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td> <em>comment</em> </td><td>→</td><td> <em>dashes</em> [ <em>any</em><sub><em>symbol</em></sub> {<em>any</em>} ] <em>newline</em> </td></tr>
+<tr><td><em>dashes</em> </td><td>→</td><td> <code>--</code> {<code>-</code>} </td></tr>
+<tr><td><em>opencom</em> </td><td>→</td><td> <code>{-</code> </td></tr>
+<tr><td><em>closecom</em> </td><td>→</td><td> <code>-}</code> </td></tr>
+<tr><td><em>ncomment</em> </td><td>→</td><td> <em>opencom</em> <em>ANY seq</em> {<em>ncomment</em> <em>ANY seq</em>} <em>closecom</em> </td></tr>
+<tr><td><em>ANY seq</em> </td><td>→</td><td> {<em>ANY</em>}<sub>⟨{<em>ANY</em>} ( <em>opencom</em> | <em>closecom</em> ) {<em>ANY</em>}⟩</sub> </td></tr>
+<tr><td><em>ANY</em> </td><td>→</td><td> <em>graphic</em> | <em>whitechar</em> </td></tr>
+<tr><td><em>any</em> </td><td>→</td><td> <em>graphic</em> | <em>space</em> | <em>tab</em> </td></tr>
+<tr><td><em>graphic</em> </td><td>→</td><td> <em>small</em> | <em>large</em> | <em>symbol</em> | <em>digit</em> | <em>special</em> | <code>&quot;</code> | <code>'</code> </td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td><em>small</em> </td><td>→</td><td> <em>ascSmall</em> | <em>uniSmall</em> | <code>_</code> </td></tr>
+<tr><td><em>ascSmall</em> </td><td>→</td><td> <code>a</code> | <code>b</code> | … | <code>z</code> </td></tr>
+<tr><td><em>uniSmall</em> </td><td>→</td><td> 小文字Unicode </td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td><em>large</em> </td><td>→</td><td> <em>ascLarge</em> | <em>uniLarge</em> </td></tr>
+<tr><td><em>ascLarge</em> </td><td>→</td><td> <code>A</code> | <code>B</code> | … | <code>Z</code> </td></tr>
+<tr><td><em>uniLarge</em> </td><td>→</td><td> 任意の大文字またはタイトルケース(<strong>訳注</strong>: 先頭のみ大文字で後は小文字にするスタイル)のユニコード文字 </td></tr>
+<tr><td><em>symbol</em> </td><td>→</td><td> <em>ascSymbol</em> | <em>uniSymbol</em><sub>⟨<em>special</em> | <code>_</code> | <code>&quot;</code> | <code>'</code>⟩</sub> </td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td><em>ascSymbol</em> </td><td>→</td><td> <code>!</code> | <code>#</code> | <code>$</code> | <code>%</code> | <code>&amp;</code> | <code>⋆</code> | <code>+</code> | <code>.</code> | <code>/</code> | <code>&lt;</code> | <code>=</code> | <code>&gt;</code> | <code>?</code> | <code>@</code> | <code>\</code> | <code>^</code> | <code>|</code> | <code>-</code> | <code>~</code> | <code>:</code></td></tr>
+<tr><td><em>uniSymbol</em> </td><td>→</td><td> Unicodeのシンボル、または句読点 </td></tr>
+<tr><td><em>digit</em> </td><td>→</td><td> <em>ascDigit</em> | <em>uniDigit</em> </td></tr>
+<tr><td><em>ascDigit</em> </td><td>→</td><td> <code>0</code> | <code>1</code> | … | <code>9</code> </td></tr>
+<tr><td><em>uniDigit</em> </td><td>→</td><td> 10進数Unicode </td></tr>
+<tr><td><em>octit</em> </td><td>→</td><td> <code>0</code> | <code>1</code> | … | <code>7</code> </td></tr>
+<tr><td><em>hexit</em> </td><td>→</td><td> <em>digit</em> | <code>A</code> | … | <code>F</code> | <code>a</code> | … | <code>f</code> </td></tr>
+</tbody></table>
+<p>字句解析は&quot;maximal munch&quot;規則に従うべきである。すなわち、語彙素生成規則を満たす可能な限り長くとった語彙素が読み取られる([訳注]:日本語訳、最長一致。&quot;longest match&quot; ともいう)。したがって、<code>case</code>は予約語だが、<code>cases</code>は予約語ではない。同様に<code>=</code>は予約されているが、<code>==</code>と<code>~=</code>は予約されていない。</p>
+<p>空白はどんなものでも正しい字句の区切り文字である。</p>
+<p><strong>Any</strong> カテゴリではない文字はHaskellプログラム内では有効ではなく、字句解析エラーを結果にすべきである。</p>
+<a class="header" href="#コメント" id="コメント"><h2>コメント</h2></a>
+<p>コメントは有効な空白である。</p>
+<p>普通のコメントは二つ以上の連続したダッシュ(<code>--</code>など)で始まり、次の改行まで及ぶ。連続したダッシュは正当な語彙素の一部を形成してはいけない。例として、&quot;--&gt;&quot;や&quot;|--&quot;はコメントの開始としては見なさない。なぜならこれらは正当な語彙素だからだ。しかしながら、<code>&quot;--foo&quot;</code>はコメントの開始として見なされる。</p>
+<p>ネストされたコメントは<code>&quot;{-&quot;</code>で始まり、<code>&quot;-}&quot;</code>で終わる。<code>&quot;{-&quot;</code>は違法な語彙素ではない。それゆえ、例えば<code>&quot;{---&quot;</code>は末尾に余分なダッシュがあるがネストされたコメントの始まりである。</p>
+<p>コメントそれ自体は語彙的に解析されない。代わりに、初めに文字列<code>&quot;-}&quot;</code>が現れた前の部分までがネストされたコメントの範囲である。ネストされたコメントは任意の深さにネストできる。ネストされたコメント内に文字列<code>&quot;{-&quot;</code>があると新しいネストされたコメントが始まり、<code>&quot;-}&quot;</code>によって閉じられる。ネストされたコメント内では、各<code>&quot;{-&quot;</code>は対応する<code>&quot;-}&quot;</code>の出現によって照合される。</p>
+<p>普通のコメント内では<code>&quot;{-&quot;</code>と<code>&quot;-}&quot;</code>の文字の並びは特別な意味を持たず、一方でネストされたコメント内ではダッシュの並びは特別な意味を持たない。</p>
+<p>ネストされたコメントはコンパイラープラグマのためにも使われる。それについては<a href="./chapters/12-compiler-pragmas.html">12章</a>で説明される。</p>
+<p>もし、いくつかのコードがネストされたコメントによってコメントアウトされていたら、その時、そのコード内の文字列内または行末コメントに<code>&quot;{-&quot;</code>と<code>&quot;-}&quot;</code>があるとネストされたコメントに干渉する。</p>
+<a class="header" href="#識別子と演算子" id="識別子と演算子"><h2>識別子と演算子</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>varid</em> </td><td> → </td><td> (<em>small</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <code>'</code> })<sub>⟨reservedid⟩</sub></td></tr>
+<tr><td><em>conid</em> </td><td> → </td><td> <em>large</em> {<em>small</em> | <em>large</em> | <em>digit</em> | <code>'</code> }</td></tr>
+<tr><td><em>reservedid</em> </td><td> → </td><td> <code>case</code> | <code>class</code> | <code>data</code> | <code>default</code> | <code>deriving</code> | <code>do</code> | <code>else</code></td></tr>
+<tr><td> </td><td>|</td><td> <code>foreign</code> | <code>if</code> | <code>import</code> | <code>in</code> | <code>infix</code> | <code>infixl</code></td></tr>
+<tr><td> </td><td>|</td><td> <code>infixr</code> | <code>instance</code> | <code>let</code> | <code>module</code> | <code>newtype</code> | <code>of</code></td></tr>
+<tr><td> </td><td>|</td><td> <code>then</code> | <code>type</code> | <code>where</code> | <code>_</code></td></tr>
+</tbody></table>
+<p>識別子は0個以上の文字、数字、アンダースコア、およびシングルクォートで構成される。識別子は字句的に小文字で始まる字句(変数識別子)と大文字から始まる字句(コンストラクタ識別子)の二つの名前空間に区別される。(セクション<a href="./chapter1-introduction.html">1.4</a>)これらの識別子は大文字と小文字を区別する。<code>name</code>、<code>naMe</code>、<code>Name</code>は3つの判然たる識別子である。(初め2つは変数識別子で、最後のはコンストラクタ識別子である。)</p>
+<p>アンダースコア(<code>&quot;_&quot;</code>)は小文字として扱われ、小文字が許されるところならどこでも使用可能だ。しかしながら、全て<code>&quot;_&quot;</code>なものはパターンのワイルドカードのように使われる識別子として予約されている。未使用の識別子に対して警告を出すコンパイラーはアンダースコアで始まる識別子に対しては警告を抑制することが推奨される。これはプログラマーが未使用であると予想されるパラメータに<code>&quot;_foo&quot;</code>を使うことを許可している。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>varsym</em> </td><td> → </td><td> ( <em>symbol</em><sub>⟨:⟩</sub> {<em>symbol</em>} )<sub>⟨<em>reservedop</em> | <em>dashes</em>⟩</sub></td></tr>
+<tr><td><em>consym</em> </td><td> → </td><td> ( <code>:</code> {<em>symbol</em>})<sub>⟨<em>reservedop</em>⟩</sub></td></tr>
+<tr><td><em>reservedop&gt;</em> </td><td> → </td><td> <code>..</code> | <code>:</code> | <code>::</code> | <code>=</code> | <code>\</code> | <code>|</code> | <code>&lt;-</code> | <code>-&gt;</code> | <code>@</code> | <code>~</code> | <code>=&gt;</code></td></tr>
+</tbody></table>
+<p>演算子シンボルは上で定義したように、1つ以上の記号文字から形成され、2つの名前空間に字句的に区別される。(セクション<a href="./chapters/1-introduction.html">1.4</a>)</p>
+<ul>
+<li>コロンから始まる演算子シンボルはコンストラクタである。</li>
+<li>他の文字から始まる演算子シンボルは普通の識別子である。</li>
+</ul>
+<p>コロン(<code>&quot;:&quot;</code>)はHaskellリストのコンストラクタとして使用されるためだけに予約されている。これにより、<code>&quot;[]&quot;</code>や<code>&quot;[a,b]&quot;</code>のようなリスト構文の他の部分との扱いが統一される。</p>
+<p>接頭辞否定の特殊な構文を除き、全ての演算子は中置である。ただし、各中置演算子をセクション内で使用して、部分的に適応される演算子を生成することができる。(セクション<a href="./chapters/3-expressions.html">3.5</a>を参照)標準の中置演算子はすべて定義済みのシンボルであり、リバウンドすることがある。</p>
+<p>レポートの残りの部分では、6種類の名前が使用される。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>varid</em> </td><td> </td><td>   </td><td> (variables)</td></tr>
+<tr><td><em>conid</em> </td><td> </td><td>   </td><td> (constructors)</td></tr>
+<tr><td><em>tyvar</em> </td><td> → </td><td> <em>varid</em> </td><td>           (type variables)</td></tr>
+<tr><td><em>tycon</em> </td><td> → </td><td> <em>conid</em> </td><td>           (type constructors)</td></tr>
+<tr><td><em>tycls</em> </td><td> → </td><td> <em>conid</em> </td><td>           (type classes)</td></tr>
+<tr><td><em>modid</em> </td><td> → </td><td> {<em>conid</em> <code>.</code>} <em>conid</em> </td><td> (modules)</td></tr>
+</tbody></table>
+<p>変数と型変数は小文字で始まる識別子によって表され、そのほかは大文字で始まる識別子によって表される。また、変数とコンストラクタには中置形式があるが、他の4つにはない。モジュール名はドットで区切られた一連の<em>conid</em>である。名前空間についてはセクション<a href="./chapters/1-introduction.html">1.4</a>でも説明している。</p>
+<p>特定の状況では、名前の前にモジュール識別子を付けることで、名前をオプションで修飾できる。これは変数、コンストラクタ、型コンストラクタ、型クラス、型クラス名に適応されるが、型変数やモジュール名には適応されない。修飾名については、チャプター<a href="./chapters/5-modules.html">5</a>で詳しく説明する。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>qvarid</em>    </td><td> → </td><td> [modid <code>.</code>] <em>varid</em></td></tr>
+<tr><td><em>qconid</em>    </td><td> → </td><td> [modid <code>.</code>] <em>conid</em></td></tr>
+<tr><td><em>qtycon</em>    </td><td> → </td><td> [modid <code>.</code>] <em>tycon</em></td></tr>
+<tr><td><em>qtycls</em>    </td><td> → </td><td> [modid <code>.</code>] <em>tycls</em></td></tr>
+<tr><td><em>qvarsym</em>   </td><td> → </td><td> [modid <code>.</code>] <em>varsym</em></td></tr>
+<tr><td><em>qconsym</em>   </td><td> → </td><td> [modid <code>.</code>] <em>consym</em></td></tr>
+</tbody></table>
+<p>修飾名は語彙素なので、修飾子と名前の間には空白を入れることはできない。サンプルの語彙解析を以下に示す。</p>
+<table><thead><tr><th> これは </th><th> このような語彙 </th></tr></thead><tbody>
+<tr><td> <code>f.g</code> </td><td> <code>f . g</code> (3トークン)</td></tr>
+<tr><td> <code>F.g</code> </td><td> <code>F.g</code> (修飾された'g')</td></tr>
+<tr><td> <code>f..</code> </td><td> <code>f ..</code> (2トークン)</td></tr>
+<tr><td> <code>F..</code> </td><td> <code>F..</code> (修飾された'.') </td></tr>
+<tr><td> <code>F.</code>  </td><td> <code>F .</code> (2トークン) </td></tr>
+</tbody></table>
+<p>修飾子は名前の構文上の扱いを変更しない。例えば、<code>Prelude.+</code>はPrelude(セクション<a href="./chapters/4-declarations-and-bindings.html">4.4.2</a>)での<code>+</code>の定義と同じ固定性を持つ中置演算子である。</p>
+<a class="header" href="#数値リテラル" id="数値リテラル"><h2>数値リテラル</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>decimal</em> </td><td> → </td><td> <em>digit</em>{<em>digit</em>}</td></tr>
+<tr><td><em>octal</em> </td><td> → </td><td> <em>octit</em>{<em>octit</em>}</td></tr>
+<tr><td><em>hexadecimal</em> </td><td> → </td><td> <em>hexit</em>{<em>hexit</em>}</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>integer</em> </td><td> → </td><td> <em>decimal</em></td></tr>
+<tr><td> </td><td>|</td><td> <code>0o</code> <em>octal</em> | <code>0O</code> <em>octal</em></td></tr>
+<tr><td> </td><td>|</td><td> <code>0x</code> <em>hexadecimal</em> | <code>0X</code> <em>hexadecimal</em></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>float</em> </td><td> → </td><td> <em>decimal</em> . <em>decimal</em> [<em>exponent</em>]</td></tr>
+<tr><td> </td><td>|</td><td> <em>decimal</em> <em>exponent</em></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>exponent</em> </td><td> → </td><td> (<code>e</code> | <code>E</code>) [<code>+</code> | <code>-</code>] <em>decimal</em></td></tr>
+</tbody></table>
+<p>数値リテラルには整数と浮動小数点の2種類ある。整数リテラルは10進数(デフォルト)、8進数(<code>0o</code>または<code>0O</code>を先頭に付ける)、16進数表記(<code>0x</code>か<code>0X</code>を先頭に付ける)で指定できる。浮動小数点リテラルは常に10進数である。浮動小数点リテラルは小数点の前後に数値を含まなければいけない。これは小数点が他のドット文字の使い方に誤って認識されないことを保証するためだ。負数リテラルはセクション<a href="./chapters/3-expressions.html">3.4</a>で論じられる。数値リテラルの型はセクション<a href="./chapters/6-predefined-types-and-classes.html">6.4.1</a>で論じられる。</p>
+<a class="header" href="#文字と文字列リテラル" id="文字と文字列リテラル"><h2>文字と文字列リテラル</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>char</em>  </td><td> → </td><td>   <code>'</code> (<em>graphic<sub>⟨' | \⟩</sub></em> | <em>space</em> | <em>escape<sub>⟨\&amp;⟩</sub></em>) <code>'</code></td></tr>
+<tr><td><em>string</em>    </td><td> → </td><td>   <code>&quot;</code> {<em>graphic<sub>⟨&quot; | \⟩</sub></em> | <em>space</em> | <em>escape</em> | <em>gap</em>} <code>&quot;</code></td></tr>
+<tr><td><em>escape</em>    </td><td> → </td><td>   <code>\</code> ( <em>charesc</em> | <em>ascii</em> | <em>decimal</em> | <code>o</code> <em>octal</em> | <code>x</code> <em>hexadecimal</em> )</td></tr>
+<tr><td><em>charesc</em>   </td><td> → </td><td>   <code>a</code> | <code>b</code> | <code>f</code> | <code>n</code> | <code>r</code> | <code>t</code> | <code>v</code> | <sub>\</sub> | <sub>&quot;</sub> | <sub>'</sub> | <sub>&amp;</sub></td></tr>
+<tr><td><em>ascii</em> </td><td> → </td><td>   <em>^cntrl</em> | <code>NUL</code> | <code>SOH</code> | <code>STX</code> | <code>ETX</code> | <code>EOT</code> | <code>ENQ</code> | <code>ACK</code></td></tr>
+<tr><td> </td><td>|</td><td>  <code>BEL</code> | <code>BS</code> | <code>HT</code> | <code>LF</code> | <code>VT</code> | <code>FF</code> | <code>CR</code> | <code>SO</code> | <code>SI</code> | <code>DLE</code></td></tr>
+<tr><td> </td><td>|</td><td>  <code>DC1</code> | <code>DC2</code> | <code>DC3</code> | <code>DC4</code> | <code>NAK</code> | <code>SYN</code> | <code>ETB</code> | <code>CAN</code></td></tr>
+<tr><td> </td><td>|</td><td> <code>EM</code> | <code>SUB</code> | <code>ESC</code> | <code>FS</code> | <code>GS</code> | <code>RS</code> | <code>US</code> | <code>SP</code> | <code>DEL</code></td></tr>
+<tr><td><em>cntrl</em> </td><td> → </td><td>   <em>ascLarge</em> | <code>@</code> | <code>[</code> | <code>\</code> | <code>]</code> | <code>^</code> | <code>_</code></td></tr>
+<tr><td><em>gap</em>   </td><td> → </td><td>   <code>\</code> <em>whitechar</em> {<em>whitechar</em>} <code>\</code></td></tr>
+</tbody></table>
+<p>文字リテラルは<code>'a'</code>のようにシングルクォーテーションで囲まれたものであり、文字列リテラルは<code>&quot;Hello&quot;</code>のようにダブルクォーテーションで囲まれたものである。</p>
+<p>エスケープコードは特殊文字の表現のために文字と文字列で使われる。注意すべきことはシングルクォーテーション(')は文字列においても使われるが、文字でエスケープする必要があることだ。同様に、ダブルクォーテーションは文字の中で使われるが、その際は文字列でエスケープする必要がある。<code>\</code>は常にエスケープしないといけない。<em>charesc</em>カテゴリには&quot;アラート&quot;(<code>\a</code>)、&quot;バックスペース&quot;(<code>\b</code>)、&quot;改ページ&quot;(<code>\f</code>)、&quot;改行&quot;(<code>\n</code>)、&quot;キャリッジ・リターン&quot;(<code>\r</code>)、&quot;水平タブ&quot;(<code>\t</code>)、&quot;垂直タブ&quot;(<code>\v</code>)といった文字のポータブル表現も含まれている。</p>
+<p><code>\^X</code>のような制御文字を含むUnicode文字セットのエスケープ文字も用意している。<code>\137</code>のような数値エスケープは10進数表現の137で文字を指定するために使用され、同様に8進数(例:<code>\o137</code>)や16進数(例:<code>\x37</code>)の表現も可能である。</p>
+<p>“maximal munch”に従って、文字列内の数字のエスケープ文字は全て連続した数字で構成され、任意の長さにすることができる。同様に、<code>&quot;\SOH&quot;</code>のような奇妙なASCIIエスケープコードは長さ1の文字列としてパ－スされる。<code>'\&amp;'</code>エスケープ文字は<code>&quot;\137\&amp;9&quot;</code>や<code>&quot;SO\&amp;H&quot;</code>のような文字列(共に長さは2)が構成できるように&quot;ヌル文字&quot;として提供される。その代わり<code>&quot;\&amp;&quot;</code>は<code>&quot;&quot;</code>に等しく、<code>'\&amp;'</code>文字は許されない。文字の等価性はセクション<a href="./chapters/6-predefined-types-and-classes.html">6.1.2</a>で定義されている。</p>
+<p>文字列は無視される&quot;ギャップ&quot;(白い文字を囲む2つのバックスラント)を含むかもしれない。これにより1行の終わりと次の行の始めにバックスラントを書くことによって、複数の行に長い文字列を書くことが可能だ。例としては以下のものになる。</p>
+<pre><code class="language-hs">&quot;Here is a backslant \\ as well as \137, \  
+    \a numeric escape character, and \^X, a control character.&quot;
+</code></pre>
+<p>文字列リテラルは実際には文字のリストの略記である。(セクション<a href="./chapters/3-expressions.html">3.7</a>を参照)</p>
+<a class="header" href="#レイアウト" id="レイアウト"><h2>レイアウト</h2></a>
+<p>Haskellはレイアウトを使用して同じ情報を伝えることによって、いくつかの文法で使用されている中括弧とセミコロンの省略を許可している。これによりレイアウトに依存するもの、しないものの両方のコーディングスタイルが可能になり、1つのプログラム内で自由に混在させることができる。レイアウトが必要ではないため、Haskellプログラムは他のプログラムによって簡単に作成することができる。</p>
+<p>レイアウトがHaskellプログラムの意味に与える影響は、レイアウトによって決定される場所に中括弧とセミコロンを追加することによって完全に指定できる。この拡張プログラムの意味はレイアウトに影響されなくなった。</p>
+<p>非公式には中括弧とセミコロンは次のように挿入される。キーワードの<code>where</code>、<code>let</code>、<code>do</code>、または<code>of</code>の後に開き括弧が省略されると、レイアウト(または&quot;オフサイド&quot;)規則が有効になる。これが起こると、次の語彙素のインデントが(新しい行にあるかどうかにかかわらず)記録され、省略された開き括弧が挿入される(語彙素の前の空白にはコメントが含まれる場合がある)。後続の行について、空白のみが含まれている場合、またはそれ以上のインデントされている場合は、前の項目が続行される。(何も挿入されない)同じ量だけインデントされている場合は新しい項目が始まる(セミコロンが挿入される)。またインデントが小さくなると、レイアウトリストは終了する(閉じ括弧が挿入される)。<code>where</code>、<code>let</code>、<code>do</code>または<code>of</code>の直後のノンブレース語彙素のインデントが現在のインデントレベル以下である場合は、レイアウトを開始する代わりに、空のリスト<code>&quot;{}&quot;</code>が挿入され、現在のレベルでレイアウト処理が発生する(つまり、セミコロンまたは閉じ括弧を挿入する)。レイアウトリストを含む構文カテゴリが終了するたびに、閉じ括弧も挿入される。つまり、閉じ括弧が合法となる点で違法な語彙素が検出された場合は閉じ括弧が挿入される。レイアウトルールはそれが挿入した開いている中括弧にだけ一致する。明示的な開き括弧は、明示的に閉じ括弧と一致しなければならない。これらの明示的な開き括弧内では、たとえ行が以前の暗黙の開き括弧の左側に字下げされていても、括弧の外側の構成要素に対してレイアウト処理は実行されない。</p>
+<p>セクション<a href="./chapters/10-syntax-reference.html#3">10.3</a>ではレイアウトルールのより正確な定義を示す。</p>
+<p>これらの規則を考えると、1つの改行で実際に複数のレイアウトリストを終了させることができる。
+これらの規則は以下のコードを許す。</p>
+<pre><code class="language-hs">f x = let a = 1; b = 2  
+          g y = exp2  
+       in exp1
+</code></pre>
+<p>生成した<code>a</code>, <code>b</code>, <code>g</code>は全て同じレイアウトリストの一部である。</p>
+<p>例として、図<a href="#figure2.1">2.1</a>は(ややわざとらしい)モジュールを示し、図<a href="#figure2.2">2.2</a>はそのレイアウトルールを適応した結果を示している。次の部分に注意: (a) <code>}};pop</code>で行が開始している個所において、前の行が終了すると、ネストした<code>where</code>区の深さ(3)に対応する3つレイアウトルールの利用が呼び出される。(b)<code>where</code>句の閉じ括弧はタプルと<code>case</code>式にネストされており、タプルの終了を検出されたため挿入された。(c)一番最後の閉じ括弧は、Eofトークンの0列のインデントにより挿入された。</p>
+<pre><code class="language-hs">module AStack( Stack, push, pop, top, size ) where  
+data Stack a = Empty  
+             | MkStack a (Stack a)  
+
+push :: a -&gt; Stack a -&gt; Stack a  
+push x s = MkStack x s  
+
+size :: Stack a -&gt; Int  
+size s = length (stkToLst s)  where  
+           stkToLst  Empty         = []  
+           stkToLst (MkStack x s)  = x:xs where xs = stkToLst s  
+
+pop :: Stack a -&gt; (a, Stack a)  
+pop (MkStack x s)  
+  = (x, case s of r -&gt; i r where i x = x) -- (pop Empty) is an error  
+
+top :: Stack a -&gt; a  
+top (MkStack x s) = x                     -- (top Empty) is an error
+</code></pre>
+<p><a name="figure2.1">図2.1:</a> サンプルプログラム</p>
+<pre><code class="language-hs">module AStack( Stack, push, pop, top, size ) where  
+{data Stack a = Empty  
+             | MkStack a (Stack a)  
+
+;push :: a -&gt; Stack a -&gt; Stack a  
+;push x s = MkStack x s  
+
+;size :: Stack a -&gt; Int  
+;size s = length (stkToLst s)  where  
+           {stkToLst  Empty         = []  
+           ;stkToLst (MkStack x s)  = x:xs where {xs = stkToLst s  
+
+}};pop :: Stack a -&gt; (a, Stack a)  
+;pop (MkStack x s)  
+  = (x, case s of {r -&gt; i r where {i x = x}}) -- (pop Empty) is an error  
+
+;top :: Stack a -&gt; a  
+;top (MkStack x s) = x                        -- (top Empty) is an error  
+}
+</code></pre>
+<p><a name="figure2.2">図2.2:</a> レイアウトを展開したサンプルプログラム</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/1-introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/3-expressions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/1-introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/3-expressions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,974 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>式 - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html" class="active"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#式" id="式"><h1>式</h1></a>
+<p>この章では、私たちはHaskellの式の構文と非形式的な意味論を説明する。また必要であらばHaskellカーネルへの変換についても説明する。<code>let</code>式の場合を除いて、これらの変換は静的、動的な意味論の両方を保存する。これらの変換を使った束縛されていない変数とコンストラクタは常に<code>Prelude</code>によって定義された実体を参照する。例えば、リスト内包表記の変換(セクション[3.11])で使われる<code>&quot;concatMap&quot;</code>は<code>Prelude</code>によって定義された<code>concatMap</code>を意味する。これは識別子<code>&quot;concatMap&quot;</code>がリスト内包表記で使われているスコープ内にあるかないかは関係なく、また、(もしスコープ内にあったとしても)束縛されていても関係はない。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>exp</em></td><td>→</td><td><em>infixexp</em> :: [context =&gt;] type</td><td>(expression type signature)</td></tr>
+<tr><td>       </td><td>|</td><td><em>infixexp</em></td><td>(expression type signature)</td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>infixexp</em></td><td>→</td><td><em>lexp</em> qop <em>infixexp</em></td><td>(infix operator application)</td></tr>
+<tr><td>            </td><td>|</td><td>- <em>infixexp</em></td><td>(prefix negation)</td></tr>
+<tr><td>            </td><td>|</td><td><em>lexp</em></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>lexp</em></td><td>→</td><td>\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -&gt; <em>exp</em></td><td>(lambda abstraction, <em>n</em> ≥ 1)</td></tr>
+<tr><td>        </td><td>|</td><td><code>let</code> <em>decls</em> <code>in</code> <em>exp</em></td><td>(let expression)</td></tr>
+<tr><td>        </td><td>|</td><td><code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em></td><td>(conditional)</td></tr>
+<tr><td>          </td><td>|</td><td><code>case</code> <em>exp</em> of { <em>alts</em> }</td><td>(case expression)</td></tr>
+<tr><td>        </td><td>|</td><td><code>do</code> { <em>stmts</em> }</td><td>(do expression)</td></tr>
+<tr><td>        </td><td>|</td><td><em>fexp</em></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>fexp</em></td><td>→</td><td>[<em>fexp</em>] <em>aexp</em></td><td>(function application)</td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>aexp</em></td><td>→</td><td><em>qvar</em></td><td>(variable)</td></tr>
+<tr><td>        </td><td>|</td><td><em>gcon</em></td><td>(general constructor)</td></tr>
+<tr><td>        </td><td>|</td><td><em>literal</em></td><td> </td></tr>
+<tr><td>        </td><td>|</td><td>( <em>exp</em> )</td><td>(parenthesized expression)</td></tr>
+<tr><td>        </td><td>|</td><td>( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )</td><td>(tuple, <em>k</em> ≥ 2)</td></tr>
+<tr><td>        </td><td>|</td><td>[ <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> ]</td><td>(list, <em>k</em> ≥ 1)</td></tr>
+<tr><td>        </td><td>|</td><td>[ <em>exp<sub>1</sub></em> [, <em>exp<sub>2</sub></em>] .. [<em>exp<sub>3</sub></em>] ]</td><td>(arithmetic sequence)</td></tr>
+<tr><td>        </td><td>|</td><td>[ <em>exp</em> | <em>qual<sub>1</sub></em> , … , <em>qual<sub>n</sub></em> ]</td><td>(list comprehension, <em>n</em> ≥ 1)</td></tr>
+<tr><td>        </td><td>|</td><td>( <em>infixexp</em> <em>qop</em> )</td><td>(left section)</td></tr>
+<tr><td>        </td><td>|</td><td>( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )</td><td>(right section)</td></tr>
+<tr><td>        </td><td>|</td><td><em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }</td><td>(labeled construction, <em>n</em> ≥ 0)</td></tr>
+<tr><td>        </td><td>|</td><td><em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }</td><td>(labeled update, <em>n</em>  ≥  1)</td></tr>
+</tbody></table>
+<p>中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション<a href="./4-declarations-and-bindings.html">4.4.2</a>参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>&quot;x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z&quot;</em> ( <em>qop<sup>(a,i)</sup></em>は<em>a</em>と優先順位<em>i</em>に関連付いた演算子を意味する)が与えられた場合、括弧は<em>i = j</em>でかつ<em>a = b = l</em>か<em>a = b = r</em>でない時は、<em>&quot;x qop<sup>(a,i)</sup> y&quot;</em>か<em>&quot;y qop<sup>(b,i)</sup> z&quot;</em>のどちらかを囲むよう追加されなければいけない。</p>
+<p>中置演算子を含む式の解決するためのアルゴリズムの例はセクション<a href="./10-syntax-reference.html">10.6</a>にある。</p>
+<p>符号反転演算子はHaskellにおいて唯一の接頭語になる。中置と同じ優先順位を持ち、演算子はPreludeの中に定義されている(セクション<a href="./4-declarations-and-bindings.html">4.4.2</a>, 図<a href="./4-declarations-and-bindings.html">4.1</a>)。</p>
+<p>この文法は条件式、let式、ラムダ抽象の拡張については曖昧だ。その曖昧さは各構成ができるだけ右へ拡張されるメタ規則により解決される。</p>
+<p>構文解析の例を以下に示す。</p>
+<table><thead><tr><th>これが</th><th> このように解析される</th></tr></thead><tbody>
+<tr><td> f x + g y </td><td> (f x) + (g y) </td></tr>
+<tr><td> - f x + y </td><td> (- (f x)) + y </td></tr>
+<tr><td> let { ... } in x + y </td><td> let { ... } in (x + y) </td></tr>
+<tr><td> z + let { ... } in x + y </td><td> z + (let { ... } in (x + y)) </td></tr>
+<tr><td> f x y :: Int </td><td> (f x y) :: Int </td></tr>
+<tr><td> \ x -&gt; a+b :: Int </td><td> \ x -&gt; ((a+b) :: Int) </td></tr>
+</tbody></table>
+<p>わかりやすくするため、以後このセクションでは中置演算子を含む式が演算子の結合性に従って解決されているということにする。</p>
+<a class="header" href="#エラー" id="エラー"><h2>エラー</h2></a>
+<p>式の評価中のエラーは、<code>⊥(&quot;bottom&quot;)</code>と表記されるが、停止しないことからHaskellプログラムには区別できない。Haskellは非正格評価の言語なことから、全てのHaskellの型は<code>⊥</code>を含む。つまり、いかなる型の値もユーザーが望めばエラーを返す計算になる可能性がある。評価されたときエラーは直ちにプログラムを停止させ、ユーザーが捕捉されることはできない。Preludeは直接そのようなエラーを引き起こす二つの関数を提供している。</p>
+<pre><code class="language-hs">error     :: String -&gt; a
+undefined :: a
+</code></pre>
+<p><code>error</code>の呼び出しはプログラムの実行を終了させ、OSに適切なエラー表示を返す。そのエラー表示にはシステム依存の方法で文字列を画面に表示するべきである。<code>undefined</code>が使われたとき、そのエラーメッセージはコンパイラーによって作成される。</p>
+<p>Haskellの式の変換は実行時エラーが発生したことを明示的に表示するため<code>error</code>と<code>undefined</code>を使用する。エラーが発生した際の実際のプログラムの振舞は実装次第である。そのメッセージはこれらの変換のみ提案するため<code>error</code>関数へ渡される。エラー発生時、詳しい情報または乏しい情報を表示することを実装側は選択するかもしれない。</p>
+<a class="header" href="#変数コンストラクタ演算子リテラル" id="変数コンストラクタ演算子リテラル"><h2>変数、コンストラクタ、演算子、リテラル</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td><em>qvar</em></td><td>(variable)</td></tr>
+<tr><td>        </td><td>|</td><td><em>gcon</em></td><td>(general constructor)</td></tr>
+<tr><td>        </td><td>|</td><td><em>literal</em></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>gcon</em></td><td>→</td><td>()</td><td> </td></tr>
+<tr><td>          </td><td>|</td><td>[]</td><td> </td></tr>
+<tr><td>          </td><td>|</td><td>(,{,})</td><td> </td></tr>
+<tr><td>          </td><td>|</td><td><em>qcon</em></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td>    <em>var</em></td><td>→</td><td><em>varid</em> | ( <em>varsym</em> )</td><td>(variable)</td></tr>
+<tr><td>   <em>qvar</em></td><td>→</td><td><em>qvarid</em> | ( <em>qvarsym</em> )</td><td>(qualified variable)</td></tr>
+<tr><td>    <em>con</em></td><td>→</td><td><em>conid</em> | ( <em>consym</em> )</td><td>(constructor)</td></tr>
+<tr><td>   <em>qcon</em></td><td>→</td><td><em>qconid</em> | ( <em>gconsym</em> )</td><td>(qualified constructor)</td></tr>
+<tr><td>  <em>varop</em></td><td>→</td><td><em>varsym</em> | `  <em>varid</em> `</td><td>(variable operator)</td></tr>
+<tr><td> <em>qvarop</em></td><td>→</td><td><em>qvarsym</em> | `  <em>qvarid</em> `</td><td>(qualified variable operator)</td></tr>
+<tr><td>  <em>conop</em></td><td>→</td><td><em>consym</em> | `  <em>conid</em> `</td><td>(constructor operator)</td></tr>
+<tr><td> <em>qconop</em></td><td>→</td><td><em>gconsym</em> | `  <em>qconid</em> `</td><td>(qualified constructor operator)</td></tr>
+<tr><td>     <em>op</em></td><td>→</td><td><em>varop</em> | <em>conop</em></td><td>(operator)</td></tr>
+<tr><td>    <em>qop</em></td><td>→</td><td><em>qvarop</em> | <em>qconop</em></td><td>(qualified operator)</td></tr>
+<tr><td><em>gconsym</em></td><td>→</td><td>: | <em>qconsym</em></td></tr>
+</tbody></table>
+<p>Haskellは中置記法に対応するため特別な構文を提供している。 <strong>演算子</strong>  は中置構文を用いて適用が可能である(セクション<a href="%22#3.4%22">3.4</a>)か、 <strong>セクション</strong>  (セクション<a href="%22#3.5%22">3.5</a>)を用いて部分的に適用が可能な関数のことである。</p>
+<p><strong>演算子</strong>  は、<code>+</code>や<code>$$</code>といった  <strong>演算子シンボル</strong>  か、<code>` op `</code>のようにグレイブ・アクセント(バッククォート)で囲まれた通常の識別子かのいずれかである。例えば、<code>op x y</code>という前置適用を書く代わりに、<code>x `op` y</code>という中置適用を書くことができる。もし、<code>` op `</code>に対して結合性が宣言されていない場合には、優先順位は最高で左結合をデフォルトとする。(セクション<a href="./4-declarations-andbindings.html">4.4.2</a>参照)。</p>
+<p>対照的に、演算子シンボルは括弧で閉じられた普通の識別子へ変換可能である。例として、<code>(+) x y</code>は<code>x + y</code>に等しく、<code>foldr (⋆) 1 xs</code>は<code>foldr (\x y -&gt; x⋆y) 1 xs</code>に等しくなる。</p>
+<p>一部の組み込み型のコンストラクタの名前をつけるのに特別な構文がつかわれているものがあり、実際に<em>gcon</em>や<em>literal</em>で見ることができる。これらについてはセクション<a href="./6-predefined-types-and-classes.html">6.1</a>で説明される。</p>
+<p>整数リテラルは<code>fromInteger</code>関数を<code>Integer</code>型の適した値への適用を表す。同様に、浮動小数点リテラルは<code>Rational</code>型(つまり、<code>Ratio Integer</code>)の値に<code>fromRational</code>を適用することを表す。</p>
+<div class="column">
+<p><strong>変換:</strong> 整数リテラル<em>i</em>は<code>fromInteger <em>i</em></code>に等しく、<code>fromInteger</code>は<code>Num</code>クラスのメソッドである。(セクション<a href="./6-predefined-types-and-classes,md">6.4.1</a>)</p>
+<p>浮動小数点リテラル<em>f</em>は<code>fromRational (<em>n</em> Ratio.% <em>d</em>)</code>に等しく、<code>fromRational</code>は<code>Fractional</code>クラスのメソッドで、<code>Ratio.%</code>は<code>Ratio</code>ライブラリで定義されており、2つの整数から有理数を構築する。整数<em>n</em>と<em>d</em>は<em>n/d = f</em>を満たすものとして選ばれる。</p>
+</div>
+<a class="header" href="#カリー化された適用とラムダ抽象" id="カリー化された適用とラムダ抽象"><h2>カリー化された適用とラムダ抽象</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>fexp</em></td><td>→</td><td>[<em>fexp</em>] <em>aexp</em></td><td>(function application)</td></tr>
+<tr><td><em>lexp</em></td><td>→</td><td>\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -&gt; <em>exp</em></td><td>(lambda abstraction, <em>n</em> ≥ 1)</td></tr>
+</tbody></table>
+<p>関数適用は<em>e<sub>1</sub></em> <em>e<sub>2</sub></em>と書く。適用は左結合性をもつので、<code>(f x) y</code>の括弧は省略することができる。<em>e<sub>1</sub></em>はデータ構成子である可能性もあるため、データ構成子の部分的な適用は許されている。</p>
+<p><strong>ラムダ抽象</strong> は<code>\ <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -&gt; e</code>と書き、<code><em>p<sub>i</sub></em></code>はパターンである。<code>\x:xs-&gt;x</code>のような式は構文的に正しくない。<code>(x:xs)-&gt;x</code>と書くのが正しい。</p>
+<p>パターンの集合は <strong>線形</strong> でなければならない。つまり、変数は集合の中で2回以上出現してはいけない。</p>
+<div class="column">
+<p><strong>変換:</strong> 以下の等式が成り立つ。</p>
+<pre><code><em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e = \ X<sub>1</sub> … X<sub>n</sub> -> case (X<sub>1</sub>, …, X<sub>n</sub>) of (<em>p<sub>1</sub></em>, …, <em>p<sub>n</sub></em>) -> e</code></pre>
+<p><em>X<sub>i</sub></em>は新しい識別子である。</p>
+</div>
+<p>この変換がセクション<a href="%22#3.17.3%22">3.17.3</a>で説明するcase式とパターンマッチの意味論と組み合わさって与えられたとき、もしもパターンマッチに失敗すれば結果は<code>⊥</code>となる。</p>
+<a class="header" href="#演算子適用" id="演算子適用"><h2>演算子適用</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>infixexp</em></td><td>→</td><td><em>lexp</em> <em>qop</em> <em>infixexp</em></td><td> </td></tr>
+<tr><td>            </td><td>|</td><td>- <em>infixexp</em></td><td>(prefix negation)</td></tr>
+<tr><td>            </td><td>|</td><td><em>lexp</em></td><td> </td></tr>
+<tr><td><em>qop</em></td><td>→</td><td><em>qvarop</em> | <em>qconop</em></td><td>(qualified operator)</td></tr>
+</tbody></table>
+<p><em>e<sub>1</sub> qop e<sub>2</sub></em>という形式は二項演算子<em>qop</em>の式<em>e<sub>1</sub></em>と<em>e<sub>2</sub></em>への中置適用である。</p>
+<p>特殊な形式<em>-e</em>は前置の符号反転演算子を表す。この演算子はHaskellにおける唯一の前置演算子であり、<code>negate (<em>e</em>)</code>という意味の構文である。二項演算子<code>-</code>はPrelude内の<code>-</code>の定義への参照を必要とせず、モジュールシステムによって再束縛されるかもしれない。しかしながら、単項演算子<code>-</code>はPrelude内で定義された<code>negate</code>関数を常に参照する。<code>-</code>演算子の局所的な意味と単項の符号反転演算との間には何の関連もない。</p>
+<p>前置の符号反転演算子はPrelude内(表<a href="./4-declarations-and-bindings.html">4.1</a>を参照)で定義された中置演算子<code>-</code>と同じ優先順位を持つ。<code>e1-e2</code>は二項演算子<code>-</code>の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって<code>e1(-e2)</code>と書かなければいけない。同様に、<code>(-)</code>は中置演算子と同様に<code>(\ x y -&gt; x-y)</code>のための構文であるが、<code>(\ x -&gt; -x)</code>を表せず、そのためには<code>negate</code>を使う必要がある。</p>
+<div class="column">
+<p><strong>変換：</strong> 以下の等式が成り立つ。</p>
+<pre>
+<code><em>e<sub>1</sub></em> op <em>e<sub>2</sub></em>  =	(op) <em>e<sub>1</sub></em> <em>e<sub>2</sub></em>
+-e        =	<em>negate</em> (e)
+</code></pre>
+</div>
+<a class="header" href="#セクション" id="セクション"><h2>セクション</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td> ( <em>infixexp</em> <em>qop</em> )              </td><td>(left section)</td></tr>
+<tr><td>        </td><td>|</td><td> ( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )</td><td>(right section)</td></tr>
+</tbody></table>
+<p><strong>セクション</strong> は( <em>op</em> <em>e</em> )や( <em>e</em> <em>op</em> )のように書かれる。このときの<em>op</em>は二項演算子で<em>e</em>は式である。セクションは二項演算子を部分的に適用する便利な構文である。</p>
+<p>シンタックスの先行ルールは次のとおりのセクションへ適用する。<em>(op e)</em>は<em>(x op e)</em>が<em>(x op (e))</em>と同じ方法でパースする場合に限り正当であり、<em>(e op)</em>も同様である。例えば、<code>(⋆a+b)</code>は構文的に不当であるが、<code>(+a⋆b)</code>と<code>(⋆(a+b))</code>は有効である。なぜなら<code>(+)</code>は左結合であり、<code>(a+b+)</code>は構文的に正しいが、<code>(+a+b)</code>はそうではない。後者は<code>(+(a+b))</code>のように書かれるのが正当である。他の例として、次の式は</p>
+<pre><code class="language-hs">(let n = 10 in n +)
+</code></pre>
+<p>セクション<a href="./3-expressions.html">3</a>にあるように、let/ラムダに関するメタルールにより誤りである。次の式は</p>
+<pre><code class="language-hs">(let n = 10 in n + x)
+</code></pre>
+<p>以下のように解析され</p>
+<pre><code class="language-hs">(let n = 10 in (n + x))
+</code></pre>
+<p>次のようにはならない</p>
+<pre><code class="language-hs">((let n = 10 in n) + x)
+</code></pre>
+<p>なぜなら、<code>-</code>は文法内で特別に扱われるからだ。前のセクションで説明したように、(- <em>exp</em>)はセクションではなく、前置の符号反転演算子の適用である。しかしながら、Prelude名で定義された<code>subtract</code>関数があり、それによって<code>(subtract <em>exp</em>)</code>が不正なセクション(<strong>訳注</strong>: (- <em>exp</em>)のこと)と同じ意味となる。式(+ (- <em>exp</em>))は同じ用途で役立つことができる。</p>
+<div class="column">
+<p><strong>変換:</strong> 以下の等式が成り立つ。</p>
+<pre><code class="language-hs">(op e)  =       \ x -&gt; x op e
+(e op)  =       \ X -&gt; e op x
+</code></pre>
+<p><em>op</em>は二項演算子で、<em>e</em>は式であり、<em>x</em>は<em>e</em>の中で自由出現ではない変数である。</p>
+</div>
+<a class="header" href="#条件文" id="条件文"><h2>条件文</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>lexp</em></td><td>→</td><td><code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em></td><td> </td></tr>
+</tbody></table>
+<p>条件式は<code>if <em>e<sub>1</sub></em> then <em>e<sub>2</sub></em> else <em>e<sub>3</sub></em></code>の形式をとり、もし<em>e<sub>1</sub></em>が<code>True</code>なら、<em>e<sub>2</sub></em>を返し、<em>e<sub>1</sub></em>が<code>False</code>なら<em>e<sub>3</sub></em>を返し、それ以外なら<code>⊥</code>を返す。</p>
+<div class="column">
+<p><strong>変換:</strong> 以下の等式が成り立つ。</p>
+<pre><code>if <em>e<sub>1</sub></em> then <em>e<sub>2</sub></em> else <em>e<sub>3</sub></em>(op e) = case <em>e<sub>1</sub></em> of { True -> <em>e<sub>2</sub></em> ; False -> <em>e<sub>3</sub></em> }
+</code></pre>
+<p><code>True</code>と<code>False</code>はPrelude内で定義されている<code>Bool</code>型の2つの引数のないコンストラクタである。<em>e<sub>1</sub></em>は<code>Bool</code>型でなければならず、<em>e<sub>2</sub></em>と<em>e<sub>3</sub></em>も同じ型でなければならない。条件式全体の型も同様である。</p>
+</div>
+<a class="header" href="#リスト" id="リスト"><h2>リスト</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>infixexp</em></td><td>→</td><td><em>exp<sub>1</sub></em> <em>qop</em> <em>exp<sub>2</sub></em></td><td> </td></tr>
+<tr><td>    <em>aexp</em></td><td>→</td><td>[ <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> ]</td><td>(<em>k</em> ≥ 1)</td></tr>
+<tr><td>            </td><td>|</td><td><em>gcon</em></td><td> </td></tr>
+<tr><td>    <em>gcon</em></td><td>→</td><td><code>[]</code></td><td> </td></tr>
+<tr><td>            </td><td>|</td><td><em>qcon</em></td><td> </td></tr>
+<tr><td>    <em>qcon</em></td><td>→</td><td>( <em>gconsym</em> )</td><td> </td></tr>
+<tr><td>     <em>qop</em></td><td>→</td><td><em>qconop</em></td><td> </td></tr>
+<tr><td>  <em>qconop</em></td><td>→</td><td><em>gconsym</em></td><td> </td></tr>
+<tr><td> <em>gconsym</em></td><td>→</td><td><code>:</code></td><td> </td></tr>
+</tbody></table>
+<p><em>List</em> は<em>k</em> ≥ 1として、[<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>]のように書く。リストコンストラクタは <code>:</code>であり、空リストは<code>[]</code>で表記される。リストの標準操作はPrelude内で与えられる(セクション<a href="./6-predefined-types-and-classes.html">6.1.3</a>と<a href="./9-standard-prelude.html">9章</a>の特にセクション<a href="./9-standard-prelude.html">9.1</a>を参照)。</p>
+<div class="column">
+<p><strong>変換:</strong> 以下の等式が成り立つ。</p>
+<pre>
+<code>[<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>] = <em>e<sub>1</sub></em> : (<em>e<sub>2</sub></em> : ( … (<em>e<sub>k</sub></em> : [])))</code></pre>
+<p><code>:</code>と<code>[]</code>はPredule内(セクション<a href="./6-predefined-types-and-classes.html">6.1.3</a>)で定義されたリストのコンストラクタである。<em>e<sub>1</sub></em>から<em>e<sub>k</sub></em>までの型は同じでなければならない(それを<em>t</em>と呼ぶ)。式全体の型は<em>[t]</em>になる(セクション<a href="./4-declarations-and-bindings.html">4.1.2</a>)。</p>
+</div>
+<p>コンストラクタ<code>&quot;:&quot;</code>は<code>[]</code>のようにリストコンストラクタとしてのみ予約されており、言語構文の一部と見做されている。また、それは隠すことも再定義することもできない。<code>:</code>は優先順位レベル5の右結合演算子である(セクション<a href="./4-declarations-and-bindings.html">4.4.2</a>)。</p>
+<a class="header" href="#タプル" id="タプル"><h2>タプル</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td>( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )</td><td>(<em>k</em> ≥ 2)</td></tr>
+<tr><td>        </td><td>|</td><td><em>qcon</em></td><td> </td></tr>
+<tr><td><em>qcon</em></td><td>→</td><td>(,{,})</td><td> </td></tr>
+</tbody></table>
+<p><strong>タプル</strong>  は<em>k</em> ≥ 2以上の(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)のように書く。<em>n-tuple</em>のコンストラクタは<code>(,…,)</code>と表記され、<em>n</em> - 1のコンマがある。従って、<code>(a,b,c)</code>と<code>(,,) a b c</code>は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション<a href="./6-predefined-types-and-classes.html">6.1.4</a>と<a href="./9-standard-prelude.html">9章</a>)。</p>
+<div class="column">
+<p><strong>変換:</strong> <em>k</em> ≥ 2のときの(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)はPrelude内で定義された<em>k</em>-tupleのインスタンスになり、変換は要求されない。もし、<em>t<sub>1</sub></em>から<em>t<sub>k</sub></em>はそれぞれ<em>e<sub>1</sub></em>から<em>e<sub>k</sub></em>の型があり、最終的なタプルの型は(<em>t<sub>1</sub></em>,…,<em>t<sub>k</sub></em>)になる(セクション<a href="./4-declarations-and-bindings.html">4.1.2</a>)。</p>
+</div>
+<a class="header" href="#単位式と括弧付き式" id="単位式と括弧付き式"><h2>単位式と括弧付き式</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td><em>gcon</em></td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>(</code> <em>exp</em> <code>)</code></td><td> </td></tr>
+<tr><td><em>gcon</em></td><td>→</td><td><code>()</code></td><td> </td></tr>
+</tbody></table>
+<p><em>(e)</em>の形式はシンプルに <strong>括弧付き式</strong> であり、<em>e</em>と等しい。<em>ユニット(unit)</em>式<code>()</code>は<code>()</code>型を持つ(セクション<a href="./4-declarations-and-bindings.html">4.1.2</a>を参照)。それは<code>⊥</code>以外の型のメンバのみで、&quot;引数のないタプル&quot;のように考えられる(セクション<a href="./6-predefined-types-and-classes.html">6.1.5</a>を参照)。</p>
+<div class="column">
+<p><strong>変換:</strong> <em>(e)</em>は<em>e</em>と等しい。</p>
+</div>
+<a class="header" href="#数列" id="数列"><h2>数列</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td><code>[</code> <em>exp<sub>1</sub></em> <code>[</code>, <em>exp<sub>2</sub></em><code>]</code> .. <code>[</code><em>exp<sub>3</sub></em><code>]</code> <code>]</code></td><td> </td></tr>
+</tbody></table>
+<p><strong>数列</strong> [<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型<em>t</em>の値のリストを表し、各<em>e<sub>i</sub></em>は型<em>t</em>を持ち、<em>t</em>は<code>Enum</code>クラスのインスタンスである。</p>
+<div class="column">
+<p><strong>変換:</strong> 数列はこれらの等式を満たす。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>[ <em>e<sub>1</sub></em>.. ]                                              </td><td>=</td><td> <code>enumFrom</code> <em>e<sub>1</sub></em></td></tr>
+<tr><td>[ <em>e<sub>1</sub></em>,<em>e<sub>2</sub></em>.. ]                       </td><td>=</td><td> <code>enumFromThen</code> <em>e<sub>1</sub></em> <em>e<sub>2</sub></em></td></tr>
+<tr><td>[ <em>e<sub>1</sub></em>..<em>e<sub>3</sub></em> ]                        </td><td>=</td><td>  <code>enumFromTo</code> <em>e<sub>1</sub></em> <em>e<sub>3</sub></em></td></tr>
+<tr><td>[ <em>e<sub>1</sub></em>,<em>e<sub>2</sub></em>..<em>e<sub>3</sub></em> ] </td><td>=</td><td> <code>enumFromThenTo</code> <em>e<sub>1</sub></em> <em>e<sub>2</sub></em> <em>e<sub>3</sub></em></td></tr>
+</tbody></table>
+<p><code>enumForm</code>、<code>enumFormThen</code>、<code>enumFormTo</code>、<code>enumFormThenTo</code>はPrelude内で定義されている<code>Enum</code>クラスのクラスメソッドになる。</p>
+</div>
+<p>故に数列の意味論は型<em>t</em>のインスタンス宣言に完全に依存している。どの<code>Prelude</code>型が<code>Enum</code>型にあるか、そしてそれらの意味論についてのより詳しいことについてはセクション<a href="./6-predefined-types-and-classes.html">6.3.4</a>を参照すること。</p>
+<a class="header" href="#リスト内包表記" id="リスト内包表記"><h2>リスト内包表記</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td>[ <em>exp</em> | <em>qual<sub>1</sub></em> , … , <em>qual<sub>n</sub></em> ]</td><td>(list comprehension, <em>n</em> ≥ 1)</td></tr>
+<tr><td><em>qual</em></td><td>→</td><td><em>pat</em> &lt;- <em>exp</em></td><td>(generator)</td></tr>
+<tr><td>        </td><td>|</td><td><code>let</code> <em>decls</em></td><td>(local declaration)</td></tr>
+<tr><td>        </td><td>|</td><td><em>exp</em></td><td>(boolean guard)</td></tr>
+</tbody></table>
+<p><strong>リスト内包表記</strong> は[ <em>e</em> | q<sub>1</sub>, …, q<sub>n</sub> ]、<em>n</em> ≥ 1形式を持ち、<em>q<sub>i</sub></em>修飾子は次のいずれかである。</p>
+<ul>
+<li>形式<em>p &lt;- e</em>の <strong>ジェネレータ</strong>  。<em>p</em>は型<em>t</em>のパターン(セクション<a href="#3.17">3.17</a>)であり、<em>e</em>は型<code>[t]</code>の式である。</li>
+<li>生成された式eで、あるいは後方のブーリアンガードとジェネレータで使われる新しい定義を提供する <strong>ローカル束縛</strong> 。</li>
+<li><strong>ブーリアンガード</strong>  。<code>Bool</code>型の任意の式を表すことができる。</li>
+</ul>
+<p>このようなリスト内包表記は修飾子リスト内のジェネレータのネストされた深さ優先探索の評価によって作成された連続した環境で<em>e</em>を評価することによって生成された要素のリストを返す。変数の束縛は通常のパターンマッチングルール(セクション<a href="%22#3.17%22">3.17</a>)に従って発生し、もし一致に失敗したら、その時はそのリストの要素は単純にスキップされる。従って、</p>
+<pre><code class="language-hs">[ x |  xs   &lt;- [ [(1,2),(3,4)], [(5,4),(3,2)] ],  
+      (3,x) &lt;- xs ]
+</code></pre>
+<p>リスト<code>[4,2]</code>を返す。もし修飾子がブーリアンガードなら、成功した前のパターンマッチのために<code>True</code>と評価しなけれないけない。通常通り、リスト内法表記における束縛は外部スコープの束縛をシャドーイングできる。例えば以下のようになる。</p>
+<pre><code class="language-hs">[ x | x &lt;- x, x &lt;- x ] = [ z | y &lt;- x, z &lt;- y]
+</code></pre>
+<div class="column">
+<p><strong>変換:</strong> リスト内包表記はこれらの等式を満たし、これらの等式はカーネルへの変換として使われる可能性がある。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>[  <em>e</em> | <code>True</code> ]                      </td><td>=</td><td>[<em>e</em>]</td></tr>
+<tr><td>[  <em>e</em> | <em>q</em> ]                           </td><td>=</td><td>[  <em>e</em> | <em>q</em>, <code>True</code> ]</td></tr>
+<tr><td>[  <em>e</em> | <em>b</em>,  <em>Q</em>  ]             </td><td>=</td><td><code>if</code> <em>b</em> <code>then</code> [  <em>e</em> | <em>Q</em> ] <code>else</code> []</td></tr>
+<tr><td>[  <em>e</em> | <em>p</em> &lt;- <em>l</em>,  <em>Q</em> ]</td><td>=</td><td><code>let</code> <code>ok</code> <em>p</em> = [  <em>e</em> | <em>Q</em> ]</td></tr>
+<tr><td>                                                            </td><td> </td><td>     <code>ok</code> _ = []</td></tr>
+<tr><td>                                                            </td><td> </td><td><code>in</code> <code>concatMap</code> <code>ok</code>  <em>l</em></td></tr>
+<tr><td>[  <em>e</em> | <code>let</code> <em>decls</em>,  Q ]  </td><td>=</td><td><code>let</code> <em>decls</em> <code>in</code> [  <em>e</em> | <em>Q</em> ]</td></tr>
+</tbody></table>
+<p><em>e</em>は式にわたる範囲で、<em>p</em>はパターンにわたり、<em>l</em>はリスト値式にわたり、<em>b</em>はブーリアン式にわたり、<em>decls</em> は宣言リストにわたり、<em>q</em>は修飾子にわたり、<em>Q</em>は修飾子の列にわたる範囲をもつ。<code>ok</code>は新しい変数である。関数<code>concatMap</code>とブーリアン値<code>True</code>はPrelude内で定義されている。</p>
+</div>
+<p>リスト内法表記の変換で示した通り、letによって束縛された変数は最大限多相的な型を持つ一方で&lt;-によって束縛されたものはラムダ束縛であり、よって単相的になる。 (セクション<a href="./4-declarations-and-bindings.html">4.5.4</a>を参照).</p>
+<a class="header" href="#let式" id="let式"><h2>Let式</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>lexp</em></td><td>→</td><td><code>let</code> <em>decls</em> <code>in</code> <em>exp</em></td><td> </td></tr>
+</tbody></table>
+<p><strong>let</strong> 式は一般的な形式<code><code>let</code> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em> } <code>in</code> <em>e</em></code>を持ち、ネストされたレキシカルスコープをもつ相互再帰的な宣言のリストを導入する(<code>let</code>は他の言語で<code>letrc</code>としばしば呼ばれる)。宣言の範囲は式<em>e</em>と宣言の右側である。宣言は<a href="./4-declarations-and-bindings.html">4章</a>で説明される。パターン束縛のマッチは遅延され、暗黙的な<code>~</code>がこれらのパターンを反駁不可にする。 例えば、</p>
+<pre><code class="language-hs">let (x,y) = undefined in e
+</code></pre>
+<p>は<code>x</code>または<code>y</code>が評価されるまでランタイムエラーをもたらさない。</p>
+<div class="column">
+<p><strong>変換:</strong> 式<code><code>let</code> { <em>d<sub>1</sub></em> ; … ; <em>d<sub>n</sub></em>} in <em>e<sub>0</sub></em></code>の動的な意味論は次の変換によって捕捉される。全ての型シグネチャを取り除いた後、それぞれの宣言<em>d<sub>i</sub></em>は<code><em>p<sub>i</sub></em> = <em>e<sub>i</sub></em></code>の形の等式へと変換される。<code>p<sub>i</sub></code>と<code><em>e<sub>i</sub></em></code>はセクション<a href="./4-declarations-and-bindings.html">4.4.3</a>での変換を使用する、各々のパターンと式である。一度この変換が終われば、次のような等式が成り立つ。この等式はカーネルへの変換として使われる場合がある。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><code>let</code> {<em>p<sub>1</sub></em> = <em>e<sub>1</sub></em>;  ... ; <em>p<sub>n</sub></em> = <em>e<sub>n</sub></em>} <code>in</code> <em>e<sub>0</sub></em> </td><td>=</td><td> <code>let</code> (<code>~</code><em>p<sub>1</sub></em>, ... ,<code>~</code><em>p<sub>n</sub></em>) = (<em>e<sub>1</sub></em>, ... ,<em>e<sub>n</sub></em>) in <em>e<sub>0</sub></em></td></tr>
+<tr><td><code>let</code> <em>p</em> = <em>e<sub>1</sub></em>  <code>in</code>  e<sub>0</sub>                                                                              </td><td>=</td><td> <code>case</code> <em>e<sub>1</sub></em> of <code>~</code><em>p</em> -&gt; <em>e<sub>0</sub></em></td></tr>
+<tr><td>                                                                                                                                                          </td><td> </td><td>where no variable in <em>p</em> appears free in <em>e<sub>1</sub></em></td></tr>
+<tr><td><code>let</code> <em>p</em> = <em>e<sub>1</sub></em>  <code>in</code>  <em>e<sub>0</sub></em>                                                                     </td><td>=</td><td><code>let</code> <em>p</em> = <code>fix</code> ( \ <code>~</code><em>p</em> -&gt; <em>e<sub>1</sub></em>) in <em>e<sub>0</sub></em></td></tr>
+</tbody></table>
+<p><code>fix</code>は最小不動点演算子である。反駁不可パターン<em>~p</em>の使用は注意すべきだ。この変換は静的な意味論を保存しない。なぜなら、<code>case</code>を使用すると束縛変数が完全な多相型へ型付けされなくなるからである。<code>let</code>式で束縛された静的な意味論はセクション<a href="./4-declarations-and-bindings.html">4.4.3</a>で説明される。</p>
+</div>
+<a class="header" href="#case式" id="case式"><h2>Case式</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>lexp</em></td><td>→</td><td><code>case</code> <em>exp</em> <code>of</code> { <em>alts</em> }</td><td> </td></tr>
+<tr><td><em>alts</em></td><td>→</td><td><em>alt<sub>1</sub></em> ; … ; <em>alt<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>alt</em></td><td>→</td><td><em>pat</em> -&gt; <em>exp</em> [<code>where</code> <em>decls</em>]</td><td> </td></tr>
+<tr><td>        </td><td>|</td><td>   <em>pat</em> <em>gdpat</em> [<code>where</code> <em>decls</em>]</td></tr>
+<tr><td>        </td><td>|</td><td>                </td><td>(empty alternative)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> <em>gdpat</em></td><td>→</td><td><em>guards</em> -&gt; <em>exp</em> [ <em>gdpat</em> ]</td><td> </td></tr>
+<tr><td><em>guards</em></td><td>→</td><td> <code>|</code> <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>guard</em></td><td>→</td><td><em>pat</em> &lt;- <em>infixexp</em></td><td>(pattern guard)</td></tr>
+<tr><td>          </td><td>|</td><td> <code>let</code> <em>decls</em>            </td><td>(local declaration)</td></tr>
+<tr><td>          </td><td>|</td><td> <em>infixexp</em>               </td><td>(boolean guard)</td></tr>
+</tbody></table>
+<p><em>case</em> 式は一般的な形式<code>case <em>e</em> of { <em>p<sub>1</sub></em> <em>match<sub>1</sub></em> ; … ; <em>p<sub>n</sub></em> <em>match<sub>n</sub></em> }</code>を持つ。各<em>match<sub>i</sub></em>は一般的な形式</p>
+<pre>
+<code>| <em>gs<sub>i1</sub></em>    -> <em>e<sub>i1</sub></em>
+…
+| <em>gs<sub>imi</sub></em>   -> <em>e<sub>imi</sub></em>
+where <em>decls<sub>i</sub></em>
+</code></pre>
+<p>( <strong>ガード</strong>  の構文ルールについて注目して欲しい。<code>|</code>は区切りを表す構文的なメタシンボルではなく終端記号である。)各選択子<em>p<sub>i</sub> match<sub>i</sub></em>はパターン<em>p<sub>i</sub></em>から成り、<em>match<sub>i</sub></em>と一致する。各マッチは順繰りにガード<em>gs<sub>ij</sub></em>と本体<em>e<sub>ij</sub></em>のペアの列から成り、代替となる全てのガードと式上の範囲での付加的な束縛(<em>decls<sub>i</sub></em>)に従う。</p>
+<p><strong>ガード</strong>  は次の形式をの一つを持つ。</p>
+<ul>
+<li><strong>パターンガード</strong>  は形式<em>p</em> &lt;- <em>e</em>で、<em>p</em>は型<em>t</em>のパターンで、<em>e</em>は式の種類<em>t</em>である。もし、式<em>e</em>がパターン<em>p</em>に一致するなら成功し、パターンの束縛をその環境にもたらす。</li>
+<li><strong>局地的束縛</strong>  は形式<code>let <em>decls</em></code>である。それらは常に成功し、その環境に<em>decls</em>と定義した名前をもたらす。</li>
+<li><strong>ブーリアンガード</strong>  は<code>Bool</code>型の数式である。もし、式が<code>True</code>と評価するなら成功し、その環境に新しい名前をもたらさない。ブーリアンガード<em>g</em>はパターンガード<code>True &lt;- <em>g</em></code>に意味的に等しい。</li>
+</ul>
+<p>形式<code><em>pat</em> -&gt; <em>exp</em> where <em>decls</em></code>の代わりの以下の簡略記法が扱われる。</p>
+<pre><code class="language-hs">pat | True -&gt; exp
+where decls
+</code></pre>
+<p>ケース式は少なくとも1つの選択句を持たなければならず、各選択句は一つの実体を持たないといけない。各実体は同じ型を持たなければならず、式全体の型はその型になる。</p>
+<p>ケース式は式<em>e</em>が個々の選択句に反するパターンマッチングによって評価される。その選択子は上から下へ連続的に試される。もし、<em>e</em>が選択句のパターンと一致したら、そのとき選択句のガード式は始めにパターンの一致の間に生成された束縛によって展開されたケース式の環境内で上から下へ連続的に試される。その時、<code>where</code>句内の<em>decls<sub>i</sub></em>によって、その選択句は関連付けられる。</p>
+<p>各ガード式のためにコンマ区切りのガードは左から右へ連続的に試される。もしそのすべてに成功したなら、そのときは対応する式はガードによって生成された束縛で展開された環境で評価される。すなわち、(let句かパターンガードのいずれかを使った)ガードによって生成された束縛は続くガードと対応する式のスコープ内にある。もしあらゆるガードが失敗したら、その時はこのガード式は失敗し次のガード式を試す。</p>
+<p>もし与えられた選択句のどのガード式も成功しなかったら、その時マッチングは次の選択句へ継続する。もしどの選択句も成功しなければ、そのときの結果は<code>⊥</code>となる。パターンマッチングはセクション<a href="%22#%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%22">3.17</a>で説明され、ケース式の正式な意味論はセクション<a href="%22#%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%81%AE%E6%AD%A3%E5%BC%8F%E3%81%AA%E6%84%8F%E5%91%B3%E8%AB%96%22">3.17.3</a>で説明される。</p>
+<p><strong>パースについての注意点</strong>  。以下の式は</p>
+<pre><code class="language-hs">case x of { (a,_) | let b = not a in b :: Bool -&gt; a }
+</code></pre>
+<p>これを正しく構文解析するには用心しなければならない。ただ一つの曖昧さのない構文解析は、すなわち次のようにすることである。</p>
+<pre><code class="language-hs">case x of { (a,_) | (let b = not a in b :: Bool) -&gt; a }
+</code></pre>
+<p>しかしながら、<code>Bool -&gt; a</code>というフレーズは型として構文的に正当であり、先読みが制限されているパーサーはこの選択に誤ってコミットする可能性があり、それゆえプログラムは拒否する。故に、プログラマーは型シグネチャで終わるガードを避けるように勧められる。これは実際に <strong>ガード</strong> が<em>exp</em>ではなく<em>infixexp</em>を含んでいる理由になる。</p>
+<a class="header" href="#do式" id="do式"><h2>Do式</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>lexp</em></td><td>→</td><td><code>do</code> { <em>stmts</em> }</td><td>(do expression)</td></tr>
+<tr><td><em>stmts</em></td><td>→</td><td><em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<code>;</code>]</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> <em>stmt</em></td><td>→</td><td><em>exp</em> ;</td><td> </td></tr>
+<tr><td>           </td><td>|</td><td><em>pat</em> &lt;- <em>exp</em> ;</td><td> </td></tr>
+<tr><td>         </td><td>|</td><td><code>let</code> <em>decls</em> ;</td><td> </td></tr>
+<tr><td>         </td><td>|</td><td><code>;</code>                       </td><td>(empty statement)</td></tr>
+</tbody></table>
+<p><em>do式</em>はモナドのプログラミングのためのより従来的な構文を提供する。それは以下のような式を許す。</p>
+<pre><code class="language-hs">putStr &quot;x: &quot;    &gt;&gt;  
+getLine         &gt;&gt;= \l -&gt;  
+return (words l)
+</code></pre>
+<p>より、旧来の方法による書き方は次のものになる。</p>
+<pre><code class="language-hs">do putStr &quot;x: &quot;  
+   l &lt;- getLine  
+   return (words l)
+</code></pre>
+<div class="column">
+<p><strong>変換：</strong> Do式はこれらの等式を満たし、排除した空の<em>stmts</em>の後にカーネルの中への変換のように使われるかもしれない。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><code>do</code> {<em>e</em>}                                     </td><td>=</td><td><em>e</em></td></tr>
+<tr><td><code>do</code> {<em>e</em>;<em>stmts</em>}                      </td><td>=</td><td><em>e</em> &gt;&gt; <code>do</code> {<em>stmts</em>}</td></tr>
+<tr><td><code>do</code> {<em>p</em> &lt;- e; <em>stmts</em>}                </td><td>=</td><td><code>let</code> <code>ok</code> <em>p</em> = <code>do</code> {<em>stmts</em>}</td></tr>
+<tr><td>                                                                 </td><td> </td><td>  <code>ok</code> _ = <code>fail</code> &quot;...&quot;</td></tr>
+<tr><td>                                                                 </td><td> </td><td> <code>in</code> <em>e<em> &gt;&gt;= <code>ok</code></td></tr>
+<tr><td><code>do</code> {<code>let</code> <em>decls</em>; <em>stmts</em>}</td><td>=</td><td><code>let</code> <em>decls</em> <code>in</code> <code>do</code> {<em>stmts</em>}</td></tr>
+</tbody></table>
+<p>コンパイラが生成したエラーメッセージを表す省略記号<code>&quot;...&quot;</code>の部分は<code>fail</code>へ渡され、そして可能であればパターンマッチに失敗した場所を表示する。関数<code>&gt;&gt;</code>,<code>&gt;&gt;=</code>と<code>fail</code>はPreludeで定義されたクラス<code>Monad</code>の操作であり、<code>ok</code>は新しい識別子である。</p>
+</div>
+<p><code>do</code>の変換でも示したように、<code>let</code>に束縛された変数は完全に多相的な型をもつ一方で<code>&lt;-</code>によって定義された変数はラムダ束縛であり、ゆえに単相的である。</p>
+<a class="header" href="#フィールドラベル付きのデータ型" id="フィールドラベル付きのデータ型"><h2>フィールドラベル付きのデータ型</h2></a>
+<p>データ型の宣言はフィールドラベルを必要に応じて定義してもよい。(セクション<a href="./4-declarations-and-bindings.html">4.2.1</a>を参照)これらのフィールドラベルは構築、形式の選択、データ型全体の構造に依存した方法でのフィールドの更新することに使用される。</p>
+<p>異なるデータ型は同じスコープの共通のフィールドラベルを共有することはできない。フィールドラベルはコンストラクタ内で高々一度だけ、使用することができる。しかしながら、データ型の中で、あるフィールドがすべてのコンストラクタ内で同じ型を持つときに限り1つのフィールドを複数のコンストラクタで使用することができる。最後の点については次が良い例である:</p>
+<pre><code class="language-hs">data S = S1 { x :: Int } | S2 { x :: Int }   -- OK  
+data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
+</code></pre>
+<p>ここでの<code>s</code>は正当であるが<code>T</code>はそうではない。また<code>y</code>は後者では矛盾する型付けが与えられている。</p>
+<a class="header" href="#フィールドセレクション" id="フィールドセレクション"><h3>フィールドセレクション</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>aexp</td><td>→</td><td>qvar</td></tr>
+</tbody></table>
+<p>フィールドラベルはセレクタ関数のように使用される。変数のように使われる際は、フィールドラベルはオブジェクトからフィールドを抽出する関数のように振る舞う。セレクタはトップレベルの束縛であり、よってローカル変数によってシャドーイングされる場合があるが、しかし他のトップレベルの束縛で同じ名前のものと衝突してはならない。この覆いはセレクタ関数にのみ影響を及ぼし、レコード作成(セクション<a href="%22#3.15.2%22">3.15.2</a>)及びに更新(セクション<a href="%22#3.15.3%22">3.15.3</a>)、フィールドラベルは通常の変数と混合されることはない。</p>
+<div class="column">
+<p><strong>変換:</strong> フィールドラベル<em>f</em>は次のようなセレクタ関数を生成する。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>f x</td><td>=</td><td><code>case</code> x <code>of</code> { <em>C<sub>1</sub></em> <em>p<sub>11</sub></em> … <em>p<sub>1k</sub></em>  -&gt;  <em>e<sub>1</sub></em> ;… ; <em>C<sub>n</sub> p<sub>n1</sub></em> … <em>p<sub>nk</sub></em>  -&gt;  <em>e<sub>n</sub></em> }</td></tr>
+</tbody></table>
+<p><em>C<sub>1</sub> ... C<sub>n</sub></em>は全て<em>f</em>とラベルされたフィールドを含むデータ型のコンストラクタで、<em>p<sub>ij</sub></em>は<em>f</em>が<em>C<sub>i</sub></em>の要素の<em>j</em>番目、または<code>_</code>をラベルした時の<code>y</code>であり、<em>e<sub>i</sub></em>は<em>C<sub>i</sub></em>のフィールドが<em>f</em>または<code>undefined</code>のラベルを持つ時の<code>y</code>である。</p>
+</div>
+<a class="header" href="#フィールドラベルを用いた生成" id="フィールドラベルを用いた生成"><h3>フィールドラベルを用いた生成</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>aexp</em></td><td>→</td><td><em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }</td><td>(labeled construction, <em>n</em> ≥ 0)</td></tr>
+<tr><td><em>fbind</em></td><td>→</td><td><em>qvar</em> = <em>exp</em></td><td> </td></tr>
+</tbody></table>
+<p>ラベル付けされたフィールドを使うコンストラクタが値の生成に使われる場合があるが、その時には各コンポーネントは位置ではなく名前によって指定する。宣言リストの中で使われる中括弧とは異なりレイアウトの対象にならない。<code>{</code>と<code>}</code>の文字は明示しなければならない。(これはフィールドの更新、フィールドパターンにおいても正しい。)フィールドラベルを使用する構築は次の制約に応じる。</p>
+<ul>
+<li>指定されたコンストラクタで宣言されたフィールドラベルのみ言及してよい。</li>
+<li>フィールドラベルは複数回言及してはならない。</li>
+<li>言及されないフィールドは<code>⊥</code>で初期化される。</li>
+<li>正格なフィールド(宣言された型のフィールドの接頭語に<code>!</code>が付けられている)が生成の際に省略された時はコンパイルエラーが発生する。厳格なフィールドはセクション<a href="./4-declarations-and-bindings.html">4.2.1</a>で説明される。</li>
+</ul>
+<p>式<code>F {}</code>は、<code>F</code>はデータコンストラクタであり、<em><code>F</code>がレコード構文により宣言されたかどうかに関わらず</em>、正当である(ただし<code>F</code>が正格フィールドを持たない時に限る。上の4番目の箇条書きを参照)。それは<code>F ⊥<sub>1</sub> … ⊥<sub>n</sub></code>を表し、<em>n</em>は<code>F</code>の引数の数である。</p>
+<div class="column">
+<p><strong>変換：</strong> <em>f = v</em>の束縛で、フィールド<em>f</em>は<em>v</em>でラベルする。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>C</em> { <em>bs</em> }</td><td>=</td><td><em>C</em> (<em>pick<sub>1</sub><sup>C</sup></em> <em>bs</em> <em><sub>undefined</sub></em>) … (<em>pick<sub>k</sub><sup>C</sup></em> <em>bs</em> <em>undefined</em>)</td></tr>
+</tbody></table>
+<p><em>k</em>は<em>C</em>の引数の数である。</p>
+<p>補助関数<em>pick<sub>i</sub><sup>C</sup> bs d</em>は次にように定義される。</p>
+<p>
+もし、コンストラクタ<em>C</em>の<em>i</em>番目の要素がフィールドラベル<em>f</em>を持ち、<em>if f=v</em>は束縛された<em>bs</em>に表示されるなら、その時は<em>pick<sub>i</sub><sup>C</sup> bs d</em>は<em>v</em>である。言い換えると<em>pick<sub>i</sub><sup>C</sup> bs d</em>はデフォルト値<em>d</em>である。
+</p>
+</div>
+<a class="header" href="#フィールドラベルを使用した更新" id="フィールドラベルを使用した更新"><h3>フィールドラベルを使用した更新</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>aexp</em></td><td>→</td><td><em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }</td><td>(labeled update, <em>n</em> ≥ 1)</td></tr>
+</tbody></table>
+<p>フィールドラベルを使ったデータ型に所属する値は非破壊的に更新されるかもしれない。これは元々存在していた値を指定されたフィールドの値で書き換えた新しい値を生成する。更新は次の方法に制限される。</p>
+<ul>
+<li>全てのラベルは同じデータ型から取られなければいけない。</li>
+<li>少なくともあるコンストラクタは更新の中で全ての言及されたラベルを定義しなければいけない。</li>
+<li>2回以上言及されるラベルがあってはならない。</li>
+<li>実行エラーは更新された値が全ての明記されたラベルを含まない時に発生する。</li>
+</ul>
+<div class="column">
+<p><strong>変換:</strong> 以下は以前の<em>pick</em>の定義を使用する。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>e { bs }</td><td>=</td><td><code>case</code> <em>e</em> <code>of</code></td></tr>
+<tr><td>            </td><td> </td><td>    <em>C<sub>1</sub></em> <em>v<sub>1</sub></em> … <em>v<sub>k1</sub></em> -&gt; <em>C<sub>1</sub></em> (<em>pick<sub>1</sub><sup>C1</sup></em> <em>bs</em> <em>v<sub>1</sub></em>) … (<em>pick<sub>k 1</sub><sup>C1</sup></em> <em>bs</em> <em>v <sub>k1</sub></em>)</td></tr>
+<tr><td>            </td><td> </td><td>      ...</td></tr>
+<tr><td>            </td><td> </td><td>    <em>C<sub>j</sub></em> <em>v<sub>1</sub></em> … <em>v<sub>kj</sub></em> -&gt; <em>C<sub>j</sub></em> (<em>pick<sub>1</sub><sup>Cj</sup></em> <em>bs</em> <em>v<sub>1</sub></em>) … (<em>pick<sub>k j</sub><sup>Cj</sup></em> <em>bs</em> <em>v <sub>k<sub>j</sub></sub></em>)</td></tr>
+<tr><td>            </td><td> </td><td>    _ -&gt; <code>error</code> &quot;Update error&quot;</td></tr>
+</tbody></table>
+<p><em>{ C<sub>1</sub>,...,C<sub>j</sub>}</em>は<em>bs</em>内の全てのラベルを含むコンストラクタの集合で、<em>ｋ<sub>i</sub></em>は<em>C<sub>i</sub></em>の引数の数である。</p>
+</div>
+<p>これはラベル付けされたフィールドを使用している例である。</p>
+<pre><code class="language-hs">data T    = C1 {f1,f2 :: Int}  
+          | C2 {f1 :: Int,  
+                f3,f4 :: Char}
+</code></pre>
+<table><thead><tr><th>式</th><th>変換</th></tr></thead><tbody>
+<tr><td> C1 {f1 = 3} </td><td> C1 3 <code>undefined</code> </td></tr>
+<tr><td>  C2 {f1 = 1, f4 = 'A', f3 = 'B'} </td><td> C2 1 'B' 'A' </td></tr>
+<tr><td> x {f1 = 1} </td><td> <code>case</code> x <code>of</code> C1 _ f2   -&gt; C1 1 f2</td></tr>
+<tr><td>            </td><td>           C2 _ f3 f4 -&gt; C2 1 f3 f4 </td></tr>
+</tbody></table>
+<p>フィールド<code>f1</code>は両方の<code>T</code>のコンストラクタに共通である。この例では、フィールドラベル表記でコンストラクタを使った式をフィールドラベルを使わない同じコンストラクタを使った同値な式へと変換している。もし、<code>x {f2 = 1, f3 = 'x'}</code>のように、どのコンストラクタも、更新で使われたフィールドラベルの集合を定義していないのであれば、コンパイル時エラーという結果になるだろう。</p>
+<a class="header" href="#式の型シグネチャ" id="式の型シグネチャ"><h2>式の型シグネチャ</h2></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>exp</em></td><td>→</td><td><em>exp</em> <code>::</code> [<em>context</em> =&gt;] <em>type</em></td></tr>
+</tbody></table>
+<p><strong>式の型シグネチャ</strong> は形式<em>e :: t</em>を持つ。<em>e</em>は式で、<em>t</em>は型(セクション<a href="./4-declarations-and-bindings.html">4.1.2</a>)であり、それらは明示的に式を分類することに使用され、オーバーロード(セクション<a href="%E2%80%9D./4-declarations-and-bindings.html">4.1.2</a>を参照)するために曖昧な型付けを解決することに使われるかもしれない。式の値は<em>exp</em>の値である。通常の型シグネチャと同様に(セクション<a href="%E2%80%9D./4-declarations-and-bindings.html">4.4.1</a>を参照)、宣言された型は<em>exp</em>から導出可能な主要な型より具体的になるかもしれないが、主要な型より一般的なまたは同程度な型を与えることはエラーである。</p>
+<div class="column">
+<p><strong>変換：</strong></p>
+<pre><code class="language-hs">e :: t = let { v :: t;  v = e } in v
+</code></pre>
+</div>
+<a class="header" href="#パターンマッチング" id="パターンマッチング"><h2>パターンマッチング</h2></a>
+<p><strong>パターン</strong>  はラムダ抽象や関数定義、パターン束縛、リスト内包表記、do式、case式内で現れる。しかしながら、はじめの5つは最終的にcase式に変換されるので、パターンマッチの意味論はcase式のときのみ定めれば十分である。</p>
+<a class="header" href="#パターン" id="パターン"><h3>パターン</h3></a>
+<p>パターンはこの構文を持つ。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>pat</em></td><td>→</td><td><em>lpat</em> <em>qconop</em> <em>pat</em></td><td>(infix constructor)</td></tr>
+<tr><td>         </td><td>|</td><td><em>lpat</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>lpat</em></td><td>→</td><td><em>apat</em></td><td> </td></tr>
+<tr><td>          </td><td>|</td><td><code>-</code> (<em>integer</em> | <em>float</em>)</td><td>(negative literal)</td></tr>
+<tr><td>          </td><td>|</td><td><em>gcon</em> <em>apat<sub>1</sub></em> … <em>apat<sub>k</sub></em></td><td>(arity gcon  =  <em>k</em>, <em>k</em> ≥ 1)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>apat</em></td><td>→</td><td><em>var</em> [ <code>@</code> <em>apat</em>]</td><td>(as pattern)</td></tr>
+<tr><td>          </td><td>|</td><td><em>gcon</em></td><td>(arity gcon  =  0)</td></tr>
+<tr><td>          </td><td>|</td><td><em>qcon</em> { <em>fpat1</em> , … , <em>fpatk</em> }</td><td>(labeled pattern, <em>k</em> ≥ 0)</td></tr>
+<tr><td>          </td><td>|</td><td><em>literal</em></td><td> </td></tr>
+<tr><td>          </td><td>|</td><td><code>_</code>                       </td><td>(wildcard)</td></tr>
+<tr><td>          </td><td>|</td><td>( <em>pat</em> )                     </td><td>(parenthesized pattern)</td></tr>
+<tr><td>          </td><td>|</td><td>( <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> )</td><td>(tuple pattern, <em>k</em> ≥ 2)</td></tr>
+<tr><td>          </td><td>|</td><td>[ <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> ]</td><td>(list pattern, <em>k</em> ≥ 1)</td></tr>
+<tr><td>          </td><td>|</td><td><code>~</code> <em>apat</em></td><td>(irrefutable pattern)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>fpat</em></td><td>→</td><td><em>qvar</em> <code>=</code> <em>pat</em></td><td> </td></tr>
+</tbody></table>
+<p>コンストラクタの引数の数はそれに関係するサブパターンの数と一致しなければいけない。部分的に適用されるコンストラクタに反して一致することはできない。</p>
+<p>全てのパターンは <strong>線形</strong> でなければならない。変数は2回以上現れないかもしれない。例として、この定義は不正である。</p>
+<pre><code class="language-hs">f (x,x) = x     -- ILLEGAL; x used twice in pattern
+</code></pre>
+<p>形式<em>var@pat</em>のパターンは<em>as-patterns</em>と呼ばれ、<em>var</em>を<em>pat</em>によってマッチされた値に付ける名前として使うことができる。例えば以下のものは、</p>
+<pre><code class="language-hs">case e of { xs@(x:rest) -&gt; if x==0 then rest else xs }
+</code></pre>
+<p>は次のものと等しい。</p>
+<pre><code class="language-hs">let { xs = e } in  
+  case xs of { (x:rest) -&gt; if x==0 then rest else xs }
+</code></pre>
+<p>形式<code>_</code>のパターンは <strong>ワイルドカード</strong> であり、パターンのいくつかの部分が右手側で参照されない時に便利である。それは他の場所で使われない識別子がその場所に置かれているかのようである。例えば、以下は、</p>
+<pre><code class="language-hs">case e of { [x,_,_]  -&gt;  if x==0 then True else False }
+</code></pre>
+<p>は次のものと等しい。</p>
+<pre><code class="language-hs">case e of { [x,y,z]  -&gt;  if x==0 then True else False }
+</code></pre>
+<a class="header" href="#パターンマッチングの非形式的の意味論" id="パターンマッチングの非形式的の意味論"><h3>パターンマッチングの非形式的の意味論</h3></a>
+<p>パターンは値に対してマッチが行われる。パターンマッチを行おうとした場合、次の3つのいずれかの結果を得る。 <strong>失敗</strong> かもしれない、 <strong>成功</strong> かもしれず、その時はパターン内の各変数に束縛を返す、 <strong>分岐する</strong> かもしれない(例:<code>⊥</code>を返す)。パターンマッチングは次のルールによって外から内へ、左から右へ進行する。</p>
+<ol>
+<li>
+<p>値<em>v</em>に対してマッチするパターン<em>var</em>のマッチングは常に成功し、<em>var</em>を<em>v</em>に束縛する。</p>
+</li>
+<li>
+<p>値<em>v</em>に対してマッチするパターン<em>~apat</em>のマッチングは常に成功する。もし<em>v</em>に対してマッチする<em>apat</em>のマッチングが別の方法で成功するならば、<em>apat</em>内の束縛されていない変数は適切な値に束縛される。<em>v</em>に対してマッチする<em>apat</em>のマッチングが失敗または分岐するなら<em>⊥ </em>に束縛される(束縛は評価を <strong>ほのめかさない</strong> )。
+<br><br>
+運用上、これはある<em>apat</em>内の変数が使われるまで、パターン<em>~apat</em>が何とも一致しないことを意味する。その時点でパターン全体はその値に対してマッチし、もし一致が失敗または分岐するなら、全体の計算を行う。</p>
+</li>
+<li>
+<p>あらゆる値に対してマッチするワイルドパターン<code>_</code>のマッチングは常に成功し、束縛は行われない。</p>
+</li>
+<li>
+<p>値に対してマッチするパターン<em>con pat</em>のマッチングは、<em>con</em>は<code>newtype</code>によって定義されたコンストラクタである、以下の項目でその値に依存する。</p>
+<ul>
+<li>もし値が形式<em>con v</em>であるなら、その時<em>pat</em>は<em>v</em>に対してマッチされる。</li>
+<li>もし値が<code>⊥</code>なら、その時<em>pat</em>は<code>⊥</code>に対してマッチする。</li>
+</ul>
+<p>すなわち<code>newtype</code>と関連するコンストラクタが値の型を変更することのみに務める。</p>
+</li>
+<li>
+<p>値に対しての<em>con pat<sub>1</sub> ... pat<sub>n</sub></em>のマッチングは、<em>con</em>は<code>data</code>によって定義されるコンストラクタである、依存するその値に依存する。</p>
+<ul>
+<li>もし値が形式<em>con pat<sub>1</sub> ... pat<sub>n</sub></em>であるなら、サブパターンはそのデータ値の要素に対して左から右へ一致される。もし、全てのマッチングが成功したなら、マッチング全体は成功し、はじめの失敗または分岐はマッチング全体を各々、失敗または分岐へともたらす。</li>
+<li>もし値が形式<em>con' v<sub>1</sub> ... v<sub>m</sub></em>であるなら、<em>con</em>は<em>con'</em>への異なるコンストラクタである、そのマッチングは失敗する。</li>
+<li>もし値が<code>⊥</code>なら、そのマッチングは分岐する。</li>
+</ul>
+</li>
+<li>
+<p>ラベル付きフィールドを使ったコンストラクタに対してのマッチングはそのフィールドがフィールドリスト内で指定された順序で照合されることを除いて、通常のコンストラクタパターンのマッチングと同じである。全てのリストされたフィールドはコンストラクタによって宣言されなければならず、フィールドは2回以上指定されないかもしれない。パターンによって指定されたフィールドは無視される(<code>_</code>に対して一致する)。</p>
+</li>
+<li>
+<p>値<em>v</em>対する数値、文字、文字列リテラルパターン<em>k</em>のマッチングはもし、<em>v == k</em>なら成功する。<code>==</code>はパターンの型を元にオーバロードされる。マッチングはもしこのテストが分岐するなら分岐する。
+<br><br>
+数値リテラルの解釈はまさにセクション<a href="%22#3.2%22">3.2</a>で記載のとおりである。即ち、オーバロードされた関数<code>fromInteger</code>または<code>fromRational</code>は(それぞれ)適切な型へ変換することによって<code>Integer</code>または<code>Rational</code>リテラルに適用される。</p>
+</li>
+</ol>
+<p>静的型の制約(例えば、文字とbooleanを一致させる静的なエラー)は別として、次の静的クラスの制約は保持する。</p>
+<ul>
+<li>整数リテラルパターンはクラス<code>Num</code>の値とのみ照合できる。</li>
+<li>浮動小数点リテラルパターンはクラス<code>Factional</code>の値とのみ照合できる。</li>
+</ul>
+<p>2種類のパターンの区別することはしばしば有用である。 <strong>反駁できない</strong> パターンの照合は厳密ではなく、そのパターンはもし、照合された値が<code>⊥</code>なら一致する。 <strong>反駁できる</strong> パターンは厳密であり、その一致される値が<code>⊥</code>なら分岐する。反駁できないパターンは次のものである。変数やワイルドカード、<em>N</em>が<code>newtype</code>と<em>apat</em>によって定義されたコンストラクタ<em>N apat</em>は反駁できず(セクション<a href="./4-declarations-and-bindings.html">4.2.3</a>)、<em>var@apat</em>の<em>apat</em>は反駁できない、または形式<em>~apat</em>(<em>apat</em>が反駁できないかどうか)である。他の全てのパターンは反駁できる。</p>
+<p>ここにいくつかの例をだす。</p>
+<ol>
+<li>
+<p>もし、パターン<code>['a','b']</code>が<code>['x',⊥]</code>と一致されるなら、その時、<code>'a'</code>は<code>x</code>との一致に <strong>失敗し</strong>  、その結果は失敗と一致する。しかし、もし<code>['a','b']</code>が<code>[⊥,'x']</code>と一致されるなら、その時、<code>'a'</code>と<code>⊥</code>を一致するよう試みることは <strong>分岐</strong> と一致することをもたらす。</p>
+</li>
+<li>
+<p>これらの例は反駁できるものとできないもののマッチングの実演である。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>(\ ~(x,y) -&gt; 0) ⊥</td><td>⇒</td><td>0</td></tr>
+<tr><td>(\  (x,y) -&gt; 0) ⊥</td><td>⇒</td><td>⊥</td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td>(\ ~[x] -&gt; 0) []</td><td>⇒</td><td>0</td></tr>
+<tr><td>(\ ~[x] -&gt; x) []</td><td>⇒</td><td>⊥</td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td>(\ ~[x,~(a,b)] -&gt; x) [(0,1),⊥]</td><td>⇒</td><td>(0,1)</td></tr>
+<tr><td>(\ ~[x, (a,b)] -&gt; x) [(0,1),⊥]</td><td>⇒</td><td>⊥</td></tr>
+<tr><td> </td><td> </td><td> </td></tr>
+<tr><td>(\  (x:xs) -&gt; x:x:xs) ⊥</td><td>⇒</td><td>⊥</td></tr>
+<tr><td>(\ ~(x:xs) -&gt; x:x:xs) ⊥</td><td>⇒</td><td>⊥:⊥:⊥</td></tr>
+</tbody></table>
+</li>
+<li>
+<p>次の宣言を考えてほしい。</p>
+<pre><code class="language-hs">newtype N = N Bool  
+data    D = D !Bool
+</code></pre>
+<p>これらの例は<code>data</code>と<code>newtype</code>によって定義された型においてのパターンマッチングの違いを説明する。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>(\  (N True) -&gt; True) ⊥</td><td>⇒</td><td>⊥</td></tr>
+<tr><td>(\  (D True) -&gt; True) ⊥</td><td>⇒</td><td>⊥</td></tr>
+<tr><td>(\ ~(D True) -&gt; True) ⊥</td><td>⇒</td><td>True</td></tr>
+</tbody></table>
+<p>追加の例はセクション<a href="./4-declarations-and-bindings.html">4.2.3</a>で見つかるだろう。</p>
+</li>
+</ol>
+<p>関数内のcase式内の最上位パターンと最上位パターンの集合またはパターン束縛は0以上の <strong>ガード</strong> に関係する持つかもしれない。ガードの構文と意味論についてはセクション<a href="%22#3.13%22">3.13</a>を参照してもらいたい。</p>
+<p>ガード意味論は関数またはcase式の厳密な特徴への影響を持つ。特に、他の反駁できないパターンがガードのために評価されるかもしれない。例えば、次の</p>
+<pre><code class="language-hs">f :: (Int,Int,Int) -&gt; [Int] -&gt; Int  
+f ~(x,y,z) [a] | (a == y) = 1
+</code></pre>
+<p><code>a</code>と<code>y</code>の両方はガードの<code>==</code>によって評価される。</p>
+<a class="header" href="#パターンマッチングの正式な意味論" id="パターンマッチングの正式な意味論"><h3>パターンマッチングの正式な意味論</h3></a>
+<p>case式を除くすべてのパターンマッチの意味論は、パターンマッチの構成と<code>case</code>式との間を関連付ける等式を与えることで定められる( <strong>訳注</strong> : パターンマッチの意味論は一旦case式を使って定義し、そのあとcase式の意味論に従って処理を行う)。<code>case</code>式の意味論自体は図<a href="%22#figure-3.1%22">3.1</a>、<a href="#figure-3.3">3.3</a>の、一連の識別子のように順番に与えられる。どんな実装でもこれらの識別子を保持するために振る舞わなければならず、かなり非効率的なコードを生成することから、それはそれらを直接使用することは期待されない。</p>
+<p><a name="figure-3.1"></a></p>
+<table class="fbox">
+<tbody>
+ <tr>
+  <td class="code-number">(a)</td>
+  <td><pre>
+<code>case <em>e</em> of { alts } = (\v -> case <em>v</em> of { alts }) <em>e</em>
+where <em>v</em> is a new variable</code></pre>
+ </td>
+ </tr>
+ <tr>
+  <td class="code-number">(b)</td>
+  <td><pre>
+<code>case  <em>v</em> of {  <em>p</em> <sub>1</sub>  match<sub>1</sub>;  … ; <em>p<sub>n</sub></em>  match<sub>n</sub> }
+=  case <em>v</em> of { <em>p<sub>1</sub></em>  match<sub>1</sub> ;
+               _  -> … case <em>v</em> of {
+                         <em>p<sub>n</sub></em>  match<sub>n</sub> ;
+                         _  -> error "No match" }…}
+where each match<sub>i</sub> has the form:
+ | <em>gs<sub>i,1</sub></em>  -> <em>e<sub>i,1</sub></em> ; … ; | <em>gs<sub>i,m<sub>i</sub></sub></em> -> <em>e<sub>i,m<sub>i</sub></sub></em> where { <em>decls</em><sub>i</sub> } </code></pre>
+ </td>
+ </tr>
+ <tr>
+  <td class="code-number">(c)</td>
+  <td><pre>
+<code>case <em>v</em> of { <em>p</em> | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em> ; …
+             | <em>gs<sub>n</sub></em> -> <em>e<sub>n</sub></em> where { <em>decls</em> }
+            _     -> <em>e′</em> }
+= case <em>e′</em> of { <em>y</em> ->
+   case <em>v</em> of {
+     <em>p</em> -> let { <em>decls</em> } in
+          case () of {
+            () | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em>;
+            _ -> … case () of {
+                       () | <em>gs<sub>n</sub><em> -> <em>e<sub>n</sub></em>;
+                       _  -> <em>y</em> } … }
+     _ -> <em>y</em> }}
+where <em>y</em> is a new variable</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(d)</td>
+ <td><pre>
+<code>case <em>v</em> of { ~p -> <em>e</em>; _ -> <em>e′</em> }
+= (\x<sub>1</sub> … x<sub>n</sub> -> <em>e</em> ) (case <em>v</em> of { p-> x<sub>1</sub> })… (case <em>v</em> of { <em>p</em> -> x<sub>n</sub>})
+where x<sub>1</sub>,…,x<sub>n</sub> are all the variables in p</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(<em>e</em>)</td>
+ <td><pre>
+<code>case <em>v</em> of { x@<em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+=  case <em>v</em> of { <em>p</em> -> ( \ x -> <em>e</em> ) <em>v</em> ; _ -> <em>e′</em> }</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(f)</td>
+ <td><pre>
+<code>case <em>v</em> of { _ -> <em>e</em>; _ -> <em>e′</em> } = <em>e</em> </code></pre>
+ </td>
+ </tr>
+</tbody>
+</table>
+<p><strong>図 3.1:</strong> case式の意味論、パート1</p>
+<div class="separator"></div>
+<div class="separator"></div>
+<p><a name="figure-3.2"></a></p>
+<table class="fbox">
+<tbody>
+ <tr>
+  <td class="code-number">(g)</td>
+  <td><pre><code>case <em>v</em> of { <em>K</em> p<sub>1</sub>…p<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
+    = case <em>v</em> of {
+         <em>K</em> x<sub>1</sub>…x<sub>n</sub> -> case x<sub>1</sub> of {
+                        <em>p<sub>1</sub></em> -> … case xn of { <em>p<sub>n</sub></em> -> <em>e</em> ; _ -> <em>e′</em> } …
+                        _  -> <em>e′</em> }
+         _ -> <em>e′</em> }
+    at least one of <em>p<sub>1</sub></em>,…,<em>p<sub>n</sub></em> is not a variable; x<sub>1</sub>,…,x<sub>n</sub> are new variables</code></pre>
+ </td>
+ </tr>
+ <tr>
+  <td class="code-number">(h)</td>
+  <td><pre><code>case <em>v</em> of { <em>k</em> -> <em>e</em>; _ -> <em>e′</em> } = if (v==k) then <em>e</em> else <em>e′</em>
+    where <em>k</em> is a numeric, character, or string literal</code></pre>
+ </td>
+ </tr>
+ <tr>
+  <td class="code-number">(i)</td>
+  <td><pre><code>case <em>v</em> of { x -> <em>e</em>; _ -> <em>e′</em> } = case <em>v</em> of { x -> <em>e</em> }</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(j)</td>
+ <td><pre><code>case <em>v</em> of { x -> <em>e</em> } = ( \ x -> <em>e</em> ) <em>v</em> </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(k)</td>
+ <td><pre><code>case <em>N</em> <em>v</em> of { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+    = case <em>v</em> of { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }
+    where <em>N</em> is a newtype constructor </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(l)</td>
+ <td><pre><code>case ⊥ of { <em>N</em> <em>p</em> -> <em>e</em>; _ -> <em>e′</em> } = case ⊥ of { <em>p</em> -> <em>e</em> }
+    where <em>N</em> is a newtype constructor </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(m)</td>
+ <td><pre><code>case  <em>v</em>  of {  <em>K</em>  { <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  ,  <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , … } ->  <em>e</em> ; _ ->  <em>e′</em> }
+    =  case <em>e′</em> of {
+        <em>y</em> ->
+        case  <em>v</em>  of {
+          <em>K</em>  {  <em>f<sub>1</sub></em>  =  <em>p<sub>1</sub></em>  } ->
+                case  <em>v</em>  of { <em>K</em>  { <em>f<sub>2</sub></em>  =  <em>p<sub>2</sub></em>  , …  } ->  <em>e</em> ; _ ->  <em>y</em>  };
+                _ ->  <em>y</em>  }}
+    where <em>f<sub>1</sub></em>, <em>f<sub>2</sub></em>, … are fields of constructor <em>K</em>; <em>y</em> is a new variable </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(n)</td>
+ <td><pre><code>case  <em>v</em>  of {  <em>K</em>  { f  =  <em>p</em> } ->  <em>e</em> ; _ ->  <em>e′</em> }
+  = case  <em>v</em>  of {
+       <em>K</em> <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em>  ->  <em>e</em> ; _ ->  <em>e′</em> }
+  where <em>p<sub>i</sub></em> is <em>p</em> if f labels the ith component of <em>K</em>, _ otherwise </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(o)</td>
+ <td><pre><code>case  <em>v</em>  of {  <em>K</em>  {} ->  <em>e</em> ; _ ->  <em>e′</em> }
+  = case  <em>v</em>  of {
+       <em>K</em> _ … _ ->  <em>e</em> ; _ ->  <em>e′</em> }</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(p)</td>
+ <td><pre><code>case (K′ <em>e<sub>1</sub></em> … <em>e<sub>m</sub></em>) of { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } = <em>e′</em>
+  where <em>K</em> and <em>K′</em> are distinct data constructors of arity <em>n</em> and m, respectively</code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(q)</td>
+ <td><pre><code>case (K <em>e<sub>1</sub></em> … <em>e<sub>n</sub></em>) of { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> }
+  = (\x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>) <em>e<sub>1</sub></em> … <em>e<sub>n</sub></em>
+  where <em>K</em> is a data constructor of arity <em>n</em> </code></pre>
+ </td>
+ </tr>
+ <tr>
+ <td class="code-number">(r)</td>
+ <td><pre><code>case ⊥ of { <em>K</em> x<sub>1</sub> … x<sub>n</sub> -> <em>e</em>; _ -> <em>e′</em> } =  ⊥
+  where <em>K</em> is a data constructor of arity <em>n</em></code></pre>
+ </td>
+ </tr>
+</tbody>
+</table>
+<p><strong>図 3.2:</strong> case式の意味論、パート2</p>
+<div class="separator"></div>
+<div class="separator"></div>
+<p><a name="figure-3.3"></a></p>
+<table class="fbox">
+<tbody>
+<tr>
+ <td class="code-number">(s)</td>
+ <td><pre><code>case () of { () | <em>g<sub>1</sub></em>, …, <em>g<sub>n</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+= case () of {
+     () | <em>g<sub>1</sub></em> -> … case () of {
+                    () | <em>g<sub>n</sub></em> -> <em>e</em>;
+                    _ -> <em>e′</em> } …
+     _ -> <em>e′</em> }
+ where <em>y</em> is a new variable </code></pre>
+</td>
+</tr>
+ <td class="code-number">(t)</td>
+ <td><pre><code>case() of { () | <em>p</em> <- <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+= case <em>e</em><sub>0</sub> of { <em>p</em> -> <em>e</em>; _ -> <em>e′</em> }</code></pre>
+</td>
+</tr>
+<tr>
+<td class="code-number">(u)</td>
+<td><pre><code>case () of { () | let <em>decls</em> -> <em>e</em>; _ -> <em>e′</em> }
+= let <em>decls</em> in <em>e</em> </code></pre>
+</td>
+</tr>
+<tr>
+ <td class="code-number">(v)</td>
+ <td><pre><code>case () of { () | <em>e<sub>0</sub></em> -> <em>e</em>; _ -> <em>e′</em> }
+  = if <em>e<sub>0</sub></em> then <em>e</em> else <em>e′</em> </code></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>図 3.3:</strong> case式の意味論、パート3</p>
+<div class="separator"></div>
+<p>図<a href="%22#figure-3.1%22">3.1</a>-<a href="%22#figure-3.3%22">3.3</a>の<em>e, e'</em>と<em>e<sub>i</sub></em>は式で、<em>g<sub>i</sub></em>と<em>gs<sub>i</sub></em>はガードと各々のガードの並びであり、<em>p</em>と<em>p<sub>i</sub></em>はパターン、<em>v, x, x<sub>i</sub></em>は変数、<em>K,K'</em>は代数的データ型<code>(data)</code>コンストラクタ(タプルコンストラクタを含む)で、<em>N</em>は<code>newtype</code>コンストラクタである。</p>
+<p>ルール(b)は実際にガードを含むかどうかにはかかわらず、一般的な表層ソース言語の<code>case</code>式に適合するものである。もしガードが書かれていなければ、その時、<code>True</code>が形式<em>match<sub>i</sub></em>内のガード<em>gs<sub>i,j</sub></em>に代用される。各々の識別子はもっと簡単な形式へと<code>case</code>式の結果を操作する。</p>
+<p>図<a href="%22#figure-3.2%22">3.2</a>のルール(h)はオーバロードされた<code>==</code>演算子を起動し、パターンマッチングの意味をオーバーロードされた定数に対して定義するというルールである。</p>
+<p>これらの識別子は静的な意味論を全て保存する。ルール(d)、(e)、(j)、(q)は<code>let</code>ではなくラムダを使っていて、これは<code>case</code>によって束縛された変数が単相型ということを示す(セクション<a href="./4-declarations-and-bindings.html">4.1.4</a>を参照)。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/2-lexical-structure.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/4-declarations-and-bindings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/2-lexical-structure.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/4-declarations-and-bindings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

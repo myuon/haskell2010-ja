@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Control.Monad - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html" class="active"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#controlmonad" id="controlmonad"><h1>Control.Monad</h1></a>
+<pre><code class="language-hs">module Control.Monad (  
+    Functor(fmap),  Monad((&gt;&gt;=), (&gt;&gt;), return, fail),  MonadPlus(mzero, mplus),  
+    mapM,  mapM_,  forM,  forM_,  sequence,  sequence_,  (=&lt;&lt;),  (&gt;=&gt;),  (&lt;=&lt;),  
+    forever,  void,  join,  msum,  filterM,  mapAndUnzipM,  zipWithM,  
+    zipWithM_,  foldM,  foldM_,  replicateM,  replicateM_,  guard,  when,  
+    unless,  liftM,  liftM2,  liftM3,  liftM4,  liftM5,  ap  
+  ) where
+</code></pre>
+<p><code>Control.Monad</code>モジュールは<code>Functor</code>, <code>Monad</code>, <code>MonadPlus</code>クラスと、いくつかのモナド上の便利な演算子を提供する。</p>
+<p>(<strong>訳注</strong>: 以下の説明は現状のGHCの提供するものとは異なっています。)</p>
+<a class="header" href="#functorとmonadクラス" id="functorとmonadクラス"><h2>FunctorとMonadクラス</h2></a>
+<a class="header" href="#型クラス" id="型クラス"><h4>型クラス</h4></a>
+<pre><code class="language-hs">class Functor f where
+</code></pre>
+<p><code>Functor</code>クラスはそれ上にマップできるような型に使われる。<code>Functor</code>インスタンスは次の法則を満たすべきである:</p>
+<ul>
+<li><code>fmap id == id</code></li>
+<li><code>fmap (f . g) == fmap f . fmap g</code></li>
+</ul>
+<p>リスト、<code>Data.Maybe.Maybe</code>、<code>System.IO.IO</code>に対する<code>Functor</code>のインスタンスはこの法則を満たす。</p>
+<a class="header" href="#メソッド" id="メソッド"><h4>メソッド</h4></a>
+<pre><code class="language-hs">fmap :: (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<a class="header" href="#インスタンス" id="インスタンス"><h4>インスタンス</h4></a>
+<pre><code class="language-hs">instance Functor []
+instance Functor IO
+instance Functor Maybe
+instance Ix i =&gt; Functor (Array i)
+</code></pre>
+<a class="header" href="#型クラス-1" id="型クラス-1"><h4>型クラス</h4></a>
+<pre><code class="language-hs">class Monad f where
+</code></pre>
+<p><code>Monad</code>クラスはモナド上の基本的な演算子を定義する。<strong>モナド</strong>は<strong>圏論</strong>と呼ばれる数学の一分野から来た概念である。しかしながら、Haskellプログラマの観点からはモナドはアクションの<strong>抽象データ型</strong>のことであると思うのが最適である。Haskellの<code>do</code>式はモナディックな式を書くための便利な構文を提供している。</p>
+<p>最小完全定義: <code>&gt;&gt;=</code>と<code>return</code></p>
+<p><code>Monad</code>のインスタンスは次の法則をみたすべきである:</p>
+<ul>
+<li><code>return a &gt;&gt;= k == k a</code></li>
+<li><code>m &gt;&gt;= return == m</code></li>
+<li><code>m &gt;&gt;= (\x -&gt; k x &gt;&gt;= h) == (m &gt;&gt;= k) &gt;&gt;= h</code></li>
+</ul>
+<p><code>Monad</code>と<code>Functor</code>のインスタンスは追加で次の法則も満たすべきである。</p>
+<ul>
+<li><code>fmap f xs == xs &gt;&gt;= return . f</code></li>
+</ul>
+<p>Preludeで定義されているリスト、<code>Data.Maybe.Maybe</code>、<code>System.IO.IO</code>に対する<code>Monad</code>のインスタンスはこの法則を満たす。</p>
+<a class="header" href="#メソッド-1" id="メソッド-1"><h4>メソッド</h4></a>
+<pre><code class="language-hs">(&gt;&gt;=) :: m a -&gt; (a -&gt; m b) -&gt; m b
+</code></pre>
+<p>最初のアクションによって生成された値を2つ目のアクションの引数として渡すことで連続して2つのアクションを合成する。</p>
+<pre><code class="language-hs">(&gt;&gt;) :: m a -&gt; m b -&gt; m b
+</code></pre>
+<p>最初のアクションによって生成された値を捨てることで連続して2つのアクションを合成する。これは手続き型言語での順列を表す演算子(例えばセミコロン)のようなものである。</p>
+<pre><code class="language-hs">return :: a -&gt; m a
+</code></pre>
+<p>値をモナディックな型に注入する。</p>
+<pre><code class="language-hs">fail :: String -&gt; m a
+</code></pre>
+<p>メッセージとともに失敗する。この演算子はモナドの数学的な定義の一部ではないが、<code>do</code>式の中でパターンマッチに失敗した際に呼ばれる。</p>
+<a class="header" href="#インスタンス-1" id="インスタンス-1"><h4>インスタンス</h4></a>
+<pre><code class="language-hs">instance Monad []
+instance Monad IO
+instance Monad Maybe
+</code></pre>
+<a class="header" href="#型クラス-2" id="型クラス-2"><h4>型クラス</h4></a>
+<pre><code class="language-hs">class Monad m =&gt; MonadPlus m where
+</code></pre>
+<p>モナドであって、選択と失敗を備えたもの。</p>
+<a class="header" href="#メソッド-2" id="メソッド-2"><h4>メソッド</h4></a>
+<pre><code class="language-hs">mzero :: m a
+</code></pre>
+<p><code>mplus</code>の単位元。さらに次の法則も満たすべきである:</p>
+<ul>
+<li><code>mzero &gt;&gt;= f = mzero</code></li>
+<li><code>v &gt;&gt; mzero = mzero</code></li>
+</ul>
+<pre><code class="language-hs">mplus :: m a -&gt; m a -&gt; m a
+</code></pre>
+<p>結合的な演算子。</p>
+<a class="header" href="#インスタンス-2" id="インスタンス-2"><h4>インスタンス</h4></a>
+<pre><code class="language-hs">instance MonadPlus []
+instance MonadPlus Maybe
+</code></pre>
+<a class="header" href="#関数" id="関数"><h2>関数</h2></a>
+<a class="header" href="#名前付けの慣習" id="名前付けの慣習"><h3>名前付けの慣習</h3></a>
+<p>このライブラリの関数は次のような名前付けの慣習に従っている。</p>
+<ul>
+<li><code>M</code>が後ろにつくものはクライスリ圏での関数を表す。すなわち、モナド型コンストラクタ<code>m</code>が関数の結果(カリー化していない形)に対して付けられ、それ以外にはつかない。よって、例としては次:</li>
+</ul>
+<pre><code class="language-hs">filter  ::              (a -&gt;   Bool) -&gt; [a] -&gt;   [a]  
+filterM :: (Monad m) =&gt; (a -&gt; m Bool) -&gt; [a] -&gt; m [a]
+</code></pre>
+<ul>
+<li><code>_</code>が後ろにつくものは結果の型が<code>(m a)</code>から<code>(m ())</code>になる。よって、例としては次:</li>
+</ul>
+<pre><code class="language-hs">sequence  :: Monad m =&gt; [m a] -&gt; m [a]  
+sequence_ :: Monad m =&gt; [m a] -&gt; m ()
+</code></pre>
+<ul>
+<li><code>m</code>が先頭につくものは、すでに存在する関数をモナディックな形に一般化したものである。よって、例としては次:</li>
+</ul>
+<pre><code class="language-hs">sum  :: Num a       =&gt; [a]   -&gt; a  
+msum :: MonadPlus m =&gt; [m a] -&gt; m a
+</code></pre>
+<a class="header" href="#monadの基本的な関数" id="monadの基本的な関数"><h3><code>Monad</code>の基本的な関数</h3></a>
+<pre><code class="language-hs">mapM :: Monad m =&gt; (a -&gt; m b) -&gt; [a] -&gt; m [b]
+</code></pre>
+<p><code>mapM f</code>は<code>sequence . map f</code>と同値である。</p>
+<pre><code class="language-hs">mapM_ :: Monad m =&gt; (a -&gt; m b) -&gt; [a] -&gt; m ()
+</code></pre>
+<p><code>mapM_ f</code>は<code>sequence_ . map f</code>と同値である。</p>
+<pre><code class="language-hs">forM :: Monad m =&gt; [a] -&gt; (a -&gt; m b) -&gt; m [b]
+</code></pre>
+<p><code>forM</code>は<code>mapM</code>の引数を逆にしたものである。</p>
+<pre><code class="language-hs">forM_ :: Monad m =&gt; [a] -&gt; (a -&gt; m b) -&gt; m ()
+</code></pre>
+<p><code>forM_</code>は<code>mapM_</code>の引数を逆にしたものである。</p>
+<pre><code class="language-hs">sequence :: Monad m =&gt; [m a] -&gt; m [a]
+</code></pre>
+<p>各アクションを左から右に順番に評価し、結果を集める。</p>
+<pre><code class="language-hs">sequence_ :: Monad m =&gt; [m a] -&gt; m ()
+</code></pre>
+<p>各アクションを左から右に順番に評価し、結果を無視する。</p>
+<pre><code class="language-hs">(=&lt;&lt;) :: Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
+</code></pre>
+<p><code>&gt;&gt;=</code>と同じで、引数が入れ替えたもの。</p>
+<pre><code class="language-hs">(&gt;=&gt;) :: Monad m =&gt; (a -&gt; m b) -&gt; (b -&gt; m c) -&gt; a -&gt; m c
+</code></pre>
+<p>左から右へのモナドのクライスリ合成。</p>
+<pre><code class="language-hs">(&lt;=&lt;) :: Monad m =&gt; (b -&gt; m c) -&gt; (a -&gt; m b) -&gt; a -&gt; m c
+</code></pre>
+<p>右から左へのモナドのクライスリ合成。<code>&gt;&gt;=</code>の引数を逆にしたもの。</p>
+<pre><code class="language-hs">forever :: Monad m =&gt; m a -&gt; m b
+</code></pre>
+<p><code>forever act</code>はアクションを無限に繰り返す。</p>
+<pre><code class="language-hs">void :: Functor f =&gt; f a -&gt; f ()
+</code></pre>
+<p><code>void value</code>は<code>IO</code>アクションの結果の値といった評価の結果を捨て、または無視する。</p>
+<a class="header" href="#リストの関数の一般化" id="リストの関数の一般化"><h3>リストの関数の一般化</h3></a>
+<pre><code class="language-hs">join :: Monad m =&gt; m (m a) -&gt; m a
+</code></pre>
+<p><code>join</code>関数はモナドの従来のjoin演算子である。モナドの構造を1レベル取り除き、(束縛されている)引数をより外側のレベルへ射影するために使われる。</p>
+<pre><code class="language-hs">msum :: MonadPlus m =&gt; [m a] -&gt; m a
+</code></pre>
+<p>リストに対する<code>concat</code>関数の一般化である。</p>
+<pre><code class="language-hs">filterM :: Monad m =&gt; (a -&gt; m Bool) -&gt; [a] -&gt; m [a]
+</code></pre>
+<p>リストに対する<code>filter</code>関数の一般化である。</p>
+<pre><code class="language-hs">mapAndUnzipM :: Monad m =&gt; (a -&gt; m (b, c)) -&gt; [a] -&gt; m ([b], [c])
+</code></pre>
+<p><code>mapAndUnzipM</code>関数は第一引数をリストに適用し、ペアのリストを結果として返す。この関数は複雑なデータや状態変化を行うようなモナドで主に使われる。</p>
+<pre><code class="language-hs">zipWithM :: Monad m =&gt; (a -&gt; b -&gt; m c) -&gt; [a] -&gt; [b] -&gt; m [c]
+</code></pre>
+<p><code>zipWithM</code>関数は<code>zipWith</code>を任意のモナドに一般化したものである。</p>
+<pre><code class="language-hs">zipWithM_ :: Monad m =&gt; (a -&gt; b -&gt; m c) -&gt; [a] -&gt; [b] -&gt; m ()
+</code></pre>
+<p><code>zipWithM_</code>は<code>zipWithM</code>の拡張で、最後の結果を無視するものである。</p>
+<pre><code class="language-hs">foldM :: Monad m =&gt; (a -&gt; b -&gt; m a) -&gt; a -&gt; [b] -&gt; m a
+</code></pre>
+<p><code>foldM</code>関数は<code>foldl</code>に似たものであるが、結果がモナドに包まれているところが異なる。<code>foldM</code>は引数であるリストを左から右に向かって走査することに注意せよ。このことは、<code>&gt;&gt;</code>と&quot;畳み込み関数&quot;が可換でない場合に問題になりうる。</p>
+<pre><code class="language-hs">       foldM f a1 [x1, x2, ..., xm]
+==
+
+       do  
+         a2 &lt;- f a1 x1  
+         a3 &lt;- f a2 x2  
+         ...  
+         f am xm
+</code></pre>
+<p>右から左に向かった評価が必要であれば、入力のリストを反転させればよい。</p>
+<pre><code class="language-hs">foldM_ :: Monad m =&gt; (a -&gt; b -&gt; m a) -&gt; a -&gt; [b] -&gt; m ()
+</code></pre>
+<p><code>foldM</code>に近いが、結果を捨てる。</p>
+<pre><code class="language-hs">replicateM :: Monad m =&gt; Int -&gt; m a -&gt; m [a]
+</code></pre>
+<p><code>replicateM n act</code>はアクションを<code>n</code>回行い、結果を集める。</p>
+<pre><code class="language-hs">replicateM_ :: Monad m =&gt; Int -&gt; m a -&gt; m ()
+</code></pre>
+<p><code>replicateM</code>に近いが、結果を捨てる。</p>
+<a class="header" href="#モナディックな式の条件付き実行" id="モナディックな式の条件付き実行"><h3>モナディックな式の条件付き実行</h3></a>
+<pre><code class="language-hs">guard :: MonadPlus m =&gt; Bool -&gt; m ()
+</code></pre>
+<p><code>guard b</code>は<code>b</code>が<code>True</code>であれば<code>return ()</code>であり、<code>b</code>が<code>False</code>であれば<code>mzero</code>である。</p>
+<pre><code class="language-hs">when :: Monad m =&gt; Bool -&gt; m () -&gt; m ()
+</code></pre>
+<p>モナディックな式の条件付き実行である。例えば、</p>
+<pre><code class="language-hs">       when debug (putStr &quot;Debugging\n&quot;)
+</code></pre>
+<p>はブール値<code>debug</code>が<code>True</code>であれば文字列<code>Debugging\n</code>を出力し、そうでなければ何もしない。</p>
+<pre><code class="language-hs">unless :: Monad m =&gt; Bool -&gt; m () -&gt; m ()
+</code></pre>
+<p><code>when</code>の逆である。</p>
+<a class="header" href="#モナディックな持ち上げ演算子" id="モナディックな持ち上げ演算子"><h3>モナディックな持ち上げ演算子</h3></a>
+<pre><code class="language-hs">liftM :: Monad m =&gt; (a1 -&gt; r) -&gt; m a1 -&gt; m r
+</code></pre>
+<p>関数をモナドに持ち上げる。</p>
+<pre><code class="language-hs">liftM2 :: Monad m =&gt; (a1 -&gt; a2 -&gt; r) -&gt; m a1 -&gt; m a2 -&gt; m r
+</code></pre>
+<p>関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。例えば、</p>
+<pre><code class="language-hs">    liftM2 (+) [0,1] [0,2] = [0,2,1,3]  
+    liftM2 (+) (Just 1) Nothing = Nothing
+</code></pre>
+<pre><code class="language-hs">liftM3 :: Monad m =&gt; (a1 -&gt; a2 -&gt; a3 -&gt; r)
+                     -&gt; m a1 -&gt; m a2 -&gt; m a3 -&gt; m r
+</code></pre>
+<p>関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(<code>liftM2</code>を参照)</p>
+<pre><code class="language-hs">liftM4 :: Monad m =&gt; (a1 -&gt; a2 -&gt; a3 -&gt; a4 -&gt; r)
+                     -&gt; m a1 -&gt; m a2 -&gt; m a3 -&gt; m a4 -&gt; m r
+</code></pre>
+<p>関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(<code>liftM2</code>を参照)</p>
+<pre><code class="language-hs">liftM5 :: Monad m =&gt; (a1 -&gt; a2 -&gt; a3 -&gt; a4 -&gt; a5 -&gt; r)
+                     -&gt; m a1 -&gt; m a2 -&gt; m a3 -&gt; m a4 -&gt; m a5 -&gt; m r
+</code></pre>
+<p>関数をモナドに持ち上げ、モナディックな引数を左から右へと走査する。(<code>liftM2</code>を参照)</p>
+<pre><code class="language-hs">ap :: Monad m =&gt; m (a -&gt; b) -&gt; m a -&gt; m b
+</code></pre>
+<p>多く場合<code>liftM</code>演算子は、(関数適用を持ち上げる)<code>ap</code>を使用したものに置き換えることができる。</p>
+<pre><code class="language-hs">       return f ‘ap‘ x1 ‘ap‘ ... ‘ap‘ xn
+</code></pre>
+<p>は次と等しい。</p>
+<pre><code class="language-hs">       liftMn f x1 x2 ... xn
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/12-compiler-pragmas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/14-data-array.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/12-compiler-pragmas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/14-data-array.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

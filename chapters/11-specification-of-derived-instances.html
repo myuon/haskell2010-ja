@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>インスタンス導出の仕様 - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html" class="active"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#インスタンス導出の仕様" id="インスタンス導出の仕様"><h1>インスタンス導出の仕様</h1></a>
+<p>インスタンス導出とは、データまたはnewtype宣言から自動的に生成されるインスタンス宣言である。インスタンス導出のコード本体は対応する型の定義から文法的に導出される。インスタンス導出はコンパイラが知っているクラスに対してのみ可能である。このようなクラスはPreludeまたは標準ライブラリで定義されている。この章では、Preludeによって定義されたクラスの導出について説明する。</p>
+<p><code>T</code>が次のように定義された代数的データ型であるとする:</p>
+<pre><code class="language-haskell">data cx =&gt; T u1 ... uk = K1 t11 ... t1k1 | ... | Kn tn1 ... tnkn
+    deriving (C1, ..., Cm)
+</code></pre>
+<p>(ここで、<code>m ≥ 0</code>であるとする。また、<code>m = 1</code>のときは括弧は省略できる)</p>
+<p>そしてクラス<code>C</code>に対するインスタンス導出宣言は次の条件を満たすときに可能である:</p>
+<ol>
+<li><code>C</code>は<code>Eq, Ord, Enum, Bounded, Show, Read</code>のいずれかである</li>
+<li>文脈<code>cx'</code>であって、<code>cx' =&gt; C tij</code>が構成に使われているすべての型<code>tij</code>について成り立つようなものが存在する</li>
+<li><code>C</code>が<code>Bounded</code>であるとき、型は列挙型である(どのコンストラクタもパラメーターを持たない)か、唯一のコンストラクタをもつ</li>
+<li><code>C</code>が<code>Enum</code>であるとき、型は列挙型である</li>
+<li><code>T u1 ... uk</code>が<code>C</code>のインスタンスになるような明示的なインスタンス宣言がプログラムのどこにも存在しない</li>
+<li>データ宣言がコンストラクタをもたないとき(上で<code>n = 0</code>のとき)、どのクラスも導出可能でない(<code>m = 0</code>である)</li>
+</ol>
+<p>インスタンスを導出するという目的から、<code>newtype</code>宣言は<code>data</code>宣言で1つコンストラクタをもつものとして扱われる。</p>
+<p><code>deriving</code>の形があるとき、各クラス<code>Ci</code>に対する<code>T u1 ... uk</code>のインスタンス宣言は自動的に生成される。どれかの<code>Ci</code>に対してインスタンス宣言が導出不可能であるとき、静的エラーが返る。インスタンス導出が必要でないときは、<code>deriving</code>の形は省略されるか、<code>deriving ()</code>が使われることもある。</p>
+<p>それぞれの導出されたインスタンス宣言は <code>instance (cx, cx') =&gt; Ci (T u1 ... uk) where { d }</code> の形をしている。ただし<code>d</code>は<code>Ci</code>と<code>T</code>のデータ型宣言に依存して自動的に導出される(これについてはこのセクションの残りで説明する))。</p>
+<p>コンテキスト <code>cx'</code>は上の(2)を満たす最小のコンテキストである。相互再帰データ型でこれを計算するためにコンパイラは不動点の計算を行う必要があることがある。</p>
+<p>Preludeのクラスで導出可能なそれぞれについてのインスタンス導出の詳細をここで与える。ここでの説明で登場する自由変数とコンストラクタはすべて<code>Prelude</code>で定義されたものを指している。</p>
+<a class="header" href="#eqとordのインスタンス導出" id="eqとordのインスタンス導出"><h3><code>Eq</code>と<code>Ord</code>のインスタンス導出</h3></a>
+<p><code>Eq</code>と<code>Ord</code>のインスタンス導出によって自動的に導入されるクラスメソッドは <code>(==), (/=), compare, (&lt;), (&lt;=), (&gt;), (&gt;=), max, min</code>である。最後の7つの演算子は各コンストラクタの集合ごとに辞書順で比較を行うように定義される。すなわち、データ型宣言で先に書かれたコンストラクタは後に書かれたコンストラクタよりも小さい値として扱われる。例えば、<code>Bool</code>データ型に対して、<code>(True &gt; False) == True</code>が成り立つ。</p>
+<p>導出された比較はコンストラクタを常に左から右に向かって走査する。このことは次の例から確かめられる:</p>
+<pre><code class="language-haskell">(1,undefined) == (2,undefined) =&gt;    False
+(undefined,1) == (undefined,2) =&gt;    ⊥
+</code></pre>
+<p>導出されたクラス<code>Eq</code>と<code>Ord</code>の演算はいずれも引数に対して正格である。例えば、<code>False</code>は<code>Bool</code>型の最初のコンストラクタであるが<code>False &lt;= ⊥</code>は<code>⊥</code>である。</p>
+<a class="header" href="#enumのインスタンス導出" id="enumのインスタンス導出"><h3><code>Enum</code>のインスタンス導出</h3></a>
+<p><code>Enum</code>のインスタンス導出宣言は列挙型(すべてのコンストラクタが引数をとらないようなデータ型)に対してのみ可能である。</p>
+<p>引数をとらないコンストラクタはは左から右に向かって<code>0</code>から<code>n-1</code>までナンバリングされていると仮定する。このナンバリングの仕組みの下で<code>succ</code>と<code>pred</code>は値の次の値と前の値を与える演算子である。<code>succ</code>を最大の要素に適用したときと<code>pred</code>を最小の要素に適用したときはエラーになる。</p>
+<p><code>toEnum</code>と<code>fromEnum</code>は列挙された値を<code>Int</code>へ、または<code>Int</code>から変換する演算子である。<code>toEnum</code>は<code>Int</code>の引数に一致するコンストラクタの番号がない場合は実行時エラーになる。</p>
+<p>他のメソッドの定義は次である:</p>
+<pre><code class="language-haskell">enumFrom x           = enumFromTo x lastCon
+enumFromThen x y     = enumFromThenTo x y bound
+    where  
+        bound
+            | fromEnum y &gt;= fromEnum x = lastCon
+            | otherwise                = firstCon
+enumFromTo x y       = map toEnum [fromEnum x .. fromEnum y]
+enumFromThenTo x y z = map toEnum [fromEnum x, fromEnum y .. fromEnum z]
+</code></pre>
+<p>ここで、<code>firstCon</code>と<code>lastCon</code>はそれぞれ<code>data</code>宣言にある最初と最後のコンストラクタである。例として、データ型</p>
+<pre><code class="language-haskell">data Color = Red | Orange | Yellow | Green deriving (Enum)
+</code></pre>
+<p>が与えられたとき、次のようになる:</p>
+<pre><code class="language-haskell">[Orange ..]         ==  [Orange, Yellow, Green]  
+fromEnum Yellow     ==  2
+</code></pre>
+<a class="header" href="#boundedのインスタンス導出" id="boundedのインスタンス導出"><h3><code>Bounded</code>のインスタンス導出</h3></a>
+<p><code>Bounded</code>クラスは<code>minBound</code>と<code>maxBound</code>をクラスメソッドとして導入するが、これはそれぞれその型の最小、最大の要素を定めるメソッドである。列挙型に対しては、<code>data</code>宣言にある最初と最後のコンストラクタが境界になる。コンストラクタが1つの型に対しては、コンストラクタを構成型の教会に適用したものになる。例として、次のデータ型を考える。</p>
+<pre><code class="language-haskell">data Pair a b = Pair a b deriving Bounded
+</code></pre>
+<p>これは次のような<code>Bounded</code>インスタンスを生成する:</p>
+<pre><code class="language-haskell">instance (Bounded a,Bounded b) =&gt; Bounded (Pair a b) where  
+    minBound = Pair minBound minBound  
+    maxBound = Pair maxBound maxBound
+</code></pre>
+<a class="header" href="#readとshowのインスタンス導出" id="readとshowのインスタンス導出"><h3><code>Read</code>と<code>Show</code>のインスタンス導出</h3></a>
+<p><code>Read</code>と<code>Show</code>のインスタンス導出で自動的に導入されるクラスメソッドは<code>showsPrec, readsPrec, showList, readList</code>である。これらは値を文字列に変換し、文字列をパースして値にするために使われる。</p>
+<p>関数<code>showsPrec d x r</code>は優先度<code>d</code>(<code>0</code>から<code>11</code>の間の数値をとる)、値<code>x</code>、文字列<code>r</code>を受ける。これは<code>r</code>に<code>x</code>の文字列表現を結合したものを返す。<code>showsPrec</code>は次の規則を満たす: <code>showsPrec d x r ++ s == showsPred d x (r ++ s)</code> この表現は、<code>x</code>のトップレベルコンストラクタの優先度が<code>d</code>よりも小さいときは括弧で囲われる。追加のパラメータ<code>r</code>は木などの構造を木のサイズに対して二次関数的でなく線形時間で出力するためには必須になる。</p>
+<p>関数<code>readsPrec d s</code>は優先度<code>d</code>(<code>0</code>から<code>10</code>の数値をとる)と文字列<code>s</code>を受け取り、文字列の先頭から値をパースすることを試み、(パースされた値, 残りの文字列)なるペアのリストを返す。パースに成功することがない場合、返却されるリストは空になる。括弧のない中置演算子の適用のパースが成功するのは演算子の優先度が<code>d</code>以上の時だけである。</p>
+<p>次が成り立つ。</p>
+<pre><code class="language-haskell">(x,&quot;&quot;) は (readsPrec d (showsPrec d x &quot;&quot;)) の要素である
+</code></pre>
+<p>つまり、<code>readsPrec</code>は<code>showsPrec</code>によって生成された文字列をパースでき、<code>showsPrec</code>に初めに渡された値が得られるべきである。</p>
+<p><code>showList</code>と<code>readList</code>は標準的でない表示を使ってオブジェクトのリストを表現できるようにする。</p>
+<p><code>readsPrec</code>は文字列以外の標準的な型のどんな有効な表現もパースできる。文字列に対してはクォートされた文字列のみが許され、他にはリストに対しては、ブラケットで囲まれた形<code>[...]</code>のみが許される。詳細は9章(<strong>[訳注]</strong> リンク)を見よ。</p>
+<p><code>show</code>の結果は、結合性の宣言がその型が宣言された時点で有効になっている場合であれば、定数のみを含んだHaskellの文法的に正しい式になる。戻り値は、データ型で定義されたコンストラクタの名前と括弧、スペースのみを含む。ラベル付きコンストラクタフィールドが使われているときは、波括弧、コンマ、フィールド名、等号も使われる。括弧は<strong>結合性を無視して</strong>必要なところでだけ追加される。<code>show</code>の戻り値は、すべてのコンポーネント型がread可能ならば<code>read</code>できる。(これはPreludeで定義されたすべてのインスタンスに対しては正しいが、ユーザーによって定義されたインスタンスではそうとは限らない。)</p>
+<p><code>Read</code>のインスタンス導出によって、次のようなことが仮定される。そしてこれらの過程は<code>Show</code>のインスタンス導出も従う:</p>
+<ul>
+<li>
+<p>コンストラクタが中置演算子として定義されているならば、<code>Read</code>インスタンスの導出はコンストラクタの(前置形ではなく)中置適用のみをパースする。</p>
+</li>
+<li>
+<p>結合性は括弧を減らすためには使われないが、優先度はそうと使われる場合がある。例として</p>
+<pre><code class="language-haskell">infixr 4 :$
+data T = Int :$ T | NT
+</code></pre>
+<p>があったとき、</p>
+<ul>
+<li><code>show (1 :$ 2 :$ NT)</code>は文字列<code>&quot;1 :$ (2 :$ NT)&quot;</code>を生成する。</li>
+<li><code>read &quot;1 :$ (2 :$ NT)&quot;</code>は成功し、当然の結果を返す。</li>
+<li><code>read 1 :$ 2 :$ NT</code>は失敗する。</li>
+</ul>
+</li>
+<li>
+<p>コンストラクタがレコード構文により定義されている場合、導出された<code>Read</code>はレコード構文の形のみパースし、さらにフィールドは元々の宣言と同じ順番でしか与えることはできない。</p>
+</li>
+<li>
+<p><code>Read</code>インスタンスの導出は入力文字列のトークンの間に任意のHaskellの空白を許す。余分な括弧も許される。</p>
+</li>
+</ul>
+<p><code>Read</code>と<code>Show</code>インスタンスの導出が不適切なケースもある。次のような問題がある:</p>
+<ul>
+<li>循環構造はこれらのインスタンスによっては出力、読み取りできない。</li>
+<li>出力によって部分構造の共有が失われる。つまり、オブジェクトが出力された表現は必要より遥かに大きくなる場合がある。</li>
+<li><code>read</code>で使われるパースの方法は非常に非効率的であるので、巨大な構造の読み取りは非常に遅い場合がある。</li>
+<li>Preludeで定義された型の出力はユーザーによる制御ができない。例えば、浮動小数点数のフォーマットを変える方法がない。</li>
+</ul>
+<a class="header" href="#例" id="例"><h3>例</h3></a>
+<p>完結した例として木構造を考えよう:</p>
+<pre><code class="language-haskell">data Tree a = Leaf a | Tree a :^: Tree a
+    deriving (Eq, Ord, Read, Show)
+</code></pre>
+<p><code>Tree</code>は列挙型でもなければコンストラクタが1つでもないので、<code>Bounded</code>と<code>Enum</code>のインスタンスの自動導出はできない。<code>Tree</code>のインスタンス宣言の完全なものはFigure 11.1にある。デフォルトクラスメソッド定義に注意せよ。例えば、<code>Ord</code>に対しては<code>&lt;=</code>のみが定義されており、ほかのクラスメソッド(<code>&lt;,&gt;,&gt;=,max,min</code>)はFigure 6.1に示されている、クラス宣言で与えられたデフォルト値によって与えられている。</p>
+<p><strong>Figure11.1</strong>: インスタンス導出の例</p>
+<pre><code class="language-haskell">infixr 5 :^:  
+data Tree a =  Leaf a  |  Tree a :^: Tree a  
+ 
+instance (Eq a) =&gt; Eq (Tree a) where  
+        Leaf m == Leaf n  =  m==n  
+        u:^:v  == x:^:y   =  u==x &amp;&amp; v==y  
+             _ == _       =  False  
+ 
+instance (Ord a) =&gt; Ord (Tree a) where  
+        Leaf m &lt;= Leaf n  =  m&lt;=n  
+        Leaf m &lt;= x:^:y   =  True  
+        u:^:v  &lt;= Leaf n  =  False  
+        u:^:v  &lt;= x:^:y   =  u&lt;x || u==x &amp;&amp; v&lt;=y  
+ 
+instance (Show a) =&gt; Show (Tree a) where  
+ 
+        showsPrec d (Leaf m) = showParen (d &gt; app_prec) showStr  
+          where  
+             showStr = showString &quot;Leaf &quot; . showsPrec (app_prec+1) m  
+ 
+        showsPrec d (u :^: v) = showParen (d &gt; up_prec) showStr  
+          where  
+             showStr = showsPrec (up_prec+1) u .  
+                       showString &quot; :^: &quot;      .  
+                       showsPrec (up_prec+1) v  
+                -- Note: right-associativity of :^: ignored  
+ 
+instance (Read a) =&gt; Read (Tree a) where  
+ 
+        readsPrec d r =  readParen (d &gt; up_prec)  
+                         (\r -&gt; [(u:^:v,w) |  
+                                 (u,s) &lt;- readsPrec (up_prec+1) r,  
+                                 (&quot;:^:&quot;,t) &lt;- lex s,  
+                                 (v,w) &lt;- readsPrec (up_prec+1) t]) r  
+ 
+                      ++ readParen (d &gt; app_prec)  
+                         (\r -&gt; [(Leaf m,t) |  
+                                 (&quot;Leaf&quot;,s) &lt;- lex r,  
+                                 (m,t) &lt;- readsPrec (app_prec+1) s]) r  
+ 
+up_prec  = 5    -- :^: の結合優先度
+app_prec = 10   -- 適用はどんな結合優先度の高い演算子よりも優先度が高い
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/10-syntax-reference.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/12-compiler-pragmas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/10-syntax-reference.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/12-compiler-pragmas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>前書き - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="toc.html">目次</a></li><li class="affix"><a href="preface.html" class="active">前書き</a></li><li><a href="chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="chapters/4-declarations-and-bindings.html"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#前書き" id="前書き"><h1>前書き</h1></a>
+<blockquote>
+<p>『幾多の人々がコンビネーター論理に関する技術的な文書を残しており、さらにその多くは、われわれのものも含めて誤った状態で出版されている。我々の罪を犯した仲間たちはその時代で最も注意深くて有能な論理学者に属する人々であり、我々はこのことがこの分野が手に負えないことの証拠であると考えている。よって十分な解説は正確さのために必要であるし、極端な要約は(通常よりも遥かに)節約にならないであろう。』</p>
+<p>ハスケル・B・カリー, ロベール・フェイ<br />
+コンビネーター論理[3]の前書きにて 1956年5月31日</p>
+</blockquote>
+<p>1987年の7月、オレゴン州のポートランドでの関数型言語とコンピューターの設計(FPCA '87)学会にて会議が開かれ、関数型言語コミュニティが置かれている不幸な状況について話し合われた。すなわち、それまで10を超える非正格な純粋関数型言語が実装されており、それらの表現力とベースとなる意味論がどれも似かよっていたことである。その会議で強く意見が一致したこととして、共通となる言語が欠けていることはこの種の関数型言語がより広く使われるようになることの妨げとなっているということであった。新しいアイデアの素早いやりとりの場、現実のアプリケーション開発のための安定した基盤、そして人々が関数型言語を利用することを推奨する売り込みの手段を提供する、共通言語を設計するための委員会が結成されることが決定された。。この文書はその委員会(とそれに続く)の努力の結果である、Haskellと呼ばれる純粋関数型言語を説明したものである。これは我々の多くの部分の論理学的な基礎を提供する仕事を成した論理学者ハスケル・B・カリーにちなんでつけられた。</p>
+<a class="header" href="#目的" id="目的"><h2>目的</h2></a>
+<p>委員会の主たる目的は次の条件を満たすような言語をデザインすることであった。</p>
+<ol>
+<li>教育、研究、そして大規模なシステムを作ることも含めたアプリケーションに適したものであること。</li>
+<li>公表された形式的な文法および意味論により完全に説明されるものであること。</li>
+<li>自由に利用可能なものであること。誰でも言語を実装し、それを配りたい人に配ることが許可されていること。</li>
+<li>広く認められたアイデアに基づいているものであること。</li>
+<li>関数型プログラミング言語の不要な多様性を減らすこと。</li>
+</ol>
+<a class="header" href="#haskell-2010-言語とライブラリ" id="haskell-2010-言語とライブラリ"><h2>Haskell 2010: 言語とライブラリ</h2></a>
+<p>委員会はHaskellが言語デザインにおいて将来の研究の礎の役割を果たすことを目的とし、実験的な機能を盛り込んだその拡張や変種たる言語が登場することを望んでいた。</p>
+<p>Haskellは実際には最初の発表から進化を続けてきている。1997年の中頃までには、言語デザインに5つのバージョンが存在していた(Haskell 1.0から1.4)。1997年にアムステルダムで開かれたHaskellのワークショップにおいて、Haskellの安定した変種が必要であることが決定され、これが&quot;Haskell 98&quot;となり、1999年の2月に発表された。小さなバグを修正したものが2002年に <strong>改訂版</strong> Haskell 98レポートとされた。</p>
+<p>2005年のHaskellワークショップにおいて、公式の言語に対する多くの拡張が広く使われているということ(そしてそれらは複数の実装でサポートされていること)と、言語標準を定期的に定義することは意味のあることであることが合意された。それには現在の状態の明文化(とルール化)が必須であった。</p>
+<p>このためHaskell Primeの取り組みがHaskell 98の相対的に保守的な拡張であると理解された、新しい機能は皆によく理解され広く合意されたものにしか立脚しないのである。それは&quot;安定した&quot;言語であることも意図されていたが、近年の言語デザインの研究でのかなりの進歩も反映したものであった。</p>
+<p>色々な言語デザインを調査し数年の後には、唯一の一枚岩な言語の版でやるには仕事が大きすぎること、進捗を生む最良の方法は言語を小さくゆっくりと段階を踏んだ言語の進化であるので、各版はよく理解された拡張と変更のほんの一部だけを統一したものにすることが決定された。Haskell 2010はこのようにして作られた最初の版であり、新しい版は毎年1つずつ出される見込みである。</p>
+<a class="header" href="#haskell-98への拡張" id="haskell-98への拡張"><h2>Haskell 98への拡張</h2></a>
+<p>Haskell 98と比較してHaskell 2010に入った最も重要な言語の変更点をここに並べる。</p>
+<p>新しい言語機能:</p>
+<ul>
+<li>外部関数インターフェイス(FFI)</li>
+<li>階層的モジュール名(例: <code>Data.Bool</code>)</li>
+<li>パターンガード</li>
+</ul>
+<p>削除された言語機能:</p>
+<ul>
+<li><code>(n + k)</code>パターン文法</li>
+</ul>
+<a class="header" href="#haskellのリソース" id="haskellのリソース"><h2>Haskellのリソース</h2></a>
+<p>Haskellのウェブサイト https://www.haskell.org はたくさんの有益なリソースへのアクセスを可能にしている。次はその一部である:</p>
+<ul>
+<li>オンライン版の言語とライブラリの定義</li>
+<li>Haskellのチュートリアルの資料</li>
+<li>Haskellメーリングリストの詳細</li>
+<li>Haskellの実装</li>
+<li>Haskellに貢献したツールやライブラリ</li>
+<li>Haskellのアプリケーション</li>
+<li>ユーザーが貢献するwikiの記事</li>
+<li>Haskellコミュニティにおけるニュースとイベント</li>
+</ul>
+<p>是非あなたもHaskellのメーリングリストやHaskell wikiにて、コメントし、改善を提案し、言語やレポートの現状について批評をしてみてください。</p>
+<a class="header" href="#言語の構築" id="言語の構築"><h2>言語の構築</h2></a>
+<p>Haskellは研究者やアプリケーションプログラマーたちの活発なコミュニティによって作られ、維持されてきた。言語とライブラリ委員会の一員を務める人々が、特に多量の時間とエネルギーをこの言語に捧げてきた。彼らの名前と、その期間での所属をここに記す。</p>
+<p>(<strong>訳注</strong> ここでは名前と所属について翻訳をせず原文のまま表示します)</p>
+<div style="text-align: center;">
+Arvind (MIT)
+<br />
+Lennart Augustsson (Chalmers University)
+<br />
+Dave Barton (Mitre Corp)
+<br />
+Brian Boutel (Victoria University of Wellington)
+<br />
+Warren Burton (Simon Fraser University)
+<br />
+Manuel M T Chakravarty (University of New South Wales)
+<br />
+Duncan Coutts (Well-Typed LLP)
+<br />
+Jon Fairbairn (University of Cambridge)
+<br />
+Joseph Fasel (Los Alamos National Laboratory)
+<br />
+John Goerzen
+<br />
+Andy Gordon (University of Cambridge)
+<br />
+Maria Guzman (Yale University)
+<br />
+Kevin Hammond [編集者] (University of Glasgow)
+<br />
+Bastiaan Heeren (Utrecht University)
+<br />
+Ralf Hinze (University of Bonn)
+<br />
+Paul Hudak [編集者] (Yale University)
+<br />
+John Hughes [編集者] (University of Glasgow; Chalmers University)
+<br />
+Thomas Johnsson (Chalmers University)
+<br />
+Isaac Jones (Galois, inc.)
+<br />
+Mark Jones (Yale University, University of Nottingham, Oregon Graduate Institute)
+<br />
+Dick Kieburtz (Oregon Graduate Institute)
+<br />
+John Launchbury (University of Glasgow; Oregon Graduate Institute; Galois, inc.)
+<br />
+Andres Löh (Utrecht University)
+<br />
+Ian Lynagh (Well-Typed LLP)
+<br />
+Simon Marlow [編集者] (Microsoft Research)
+<br />
+John Meacham
+<br />
+Erik Meijer (Utrecht University)
+<br />
+Ravi Nanavati (Bluespec, inc.)
+<br />
+Rishiyur Nikhil (MIT)
+<br />
+Henrik Nilsson (University of Nottingham)
+<br />
+Ross Paterson (City University, London)
+<br />
+John Peterson [編集者] (Yale University)
+<br />
+Simon Peyton Jones [編集者] (University of Glasgow; Microsoft Research Ltd)
+<br />
+Mike Reeve (Imperial College)
+<br />
+Alastair Reid (University of Glasgow)
+<br />
+Colin Runciman (University of York)
+<br />
+Don Stewart (Galois, inc.)
+<br />
+Martin Sulzmann (Informatik Consulting Systems AG)
+<br />
+Audrey Tang
+<br />
+Simon Thompson (University of Kent)
+<br />
+Philip Wadler [編集者] (University of Glasgow)
+<br />
+Malcolm Wallace (University of York)
+<br />
+Stephanie Weirich (University of Pennsylvania)
+<br />
+David Wise (Indiana University)
+<br />
+Jonathan Young (Yale University)
+</div>
+<p>[編集者]と記された人々はこの言語の1つ以上の版での編集に協力してくれている。</p>
+<p>加えて、他にも多くの人々が多かれ少なかれ有益な貢献をしてくれている。以下の人々である。
+Hans Aberg, Kris Aerts, Sten Anderson, Richard Bird, Tom Blenko, Stephen Blott, Duke Briscoe, Paul Callaghan, Magnus Carlsson, Mark Carroll, Franklin Chen, Olaf Chitil, Chris Clack, Guy Cousineau, Tony Davie, Craig Dickson, Chris Dornan, Laura Dutton, Chris Fasel, Pat Fasel, Sigbjorn Finne, Michael Fryers, Peter Gammie, Andy Gill, Mike Gunter, Cordy Hall, Mark Hall, Thomas Hallgren, Matt Harden, Klemens Hemm, Fergus Henderson, Dean Herington, Bob Hiromoto, Nic Holt, Ian Holyer, Randy Hudson, Alexander Jacobson, Patrik Jansson, Robert Jeschofnik, Orjan Johansen, Simon B. Jones, Stef Joosten, Mike Joy, Wolfram Kahl, Stefan Kahrs, Antti-Juhani Kaijanaho, Jerzy Karczmarczuk, Kent Karlsson, Martin D. Kealey, Richard Kelsey, Siau-Cheng Khoo, Amir Kishon, Feliks Kluzniak, Jan Kort, Marcin Kowalczyk, Jose Labra, Jeff Lewis, Mark Lillibridge, Bjorn Lisper, Sandra Loosemore, Pablo Lopez, Olaf Lubeck, Christian Maeder, Ketil Malde, Michael Marte, Jim Mattson, John Meacham, Sergey Mechveliani, Gary Memovich, Randy Michelsen, Rick Mohr, Andy Moran, Graeme Moss, Arthur Norman, Nick North, Chris Okasaki, Bjarte M. Østvold, Paul Otto, Sven Panne, Dave Parrott, Larne Pekowsky, Rinus Plasmeijer, Ian Poole, Stephen Price, John Robson, Andreas Rossberg, George Russell, Patrick Sansom, Michael Schneider, Felix Schroeter, Julian Seward, Nimish Shah, Christian Sievers, Libor Skarvada, Jan Skibinski, Lauren Smith, Raman Sundaresh, Josef Svenningsson, Ken Takusagawa, Wolfgang Thaller, Satish Thatte, Tom Thomson, Tommy Thorn, Dylan Thurston, Mike Thyer, Mark Tullsen, David Tweed, Pradeep Varma, Keith Wansbrough, Tony Warnock, Michael Webber, Carl Witty, Stuart Wray, and Bonnie Yantis.</p>
+<p>最後に、チャーチ、ロッサー、カリーによる重要で基礎的な仕事とほかの人々のラムダ計算に関する仕事はもちろんのこととして、長年にわたって開発されてきた注目に値する多くのプログラミング言語の影響を認めるのが正しい。様々なアイデアの源をピンポイントに挙げるのは難しいが、次の言語は特に影響を与えている: Lisp (とその現在での姿であるCommon LispとScheme)、ランディンのISWIM、APL、バッカスのFP[1]、MLとStandard ML、Hopeと Hope+、Clean、Id、Gofer、Sisal、そしてターナーのMiranda(Mirandaは有限会社リサーチソフトウェアのトレードマークである)が最後を飾った一連の言語。これらの先駆者たちなしにはHaskellは不可能であっただろう。</p>
+<p>サイモン・マーロー<br />
+2010年4月 ケンブリッジ大学にて</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="toc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="chapters/1-introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="toc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="chapters/1-introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="customize.js"></script>
+        
+
+        
+
+    </body>
+</html>

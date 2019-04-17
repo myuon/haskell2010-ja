@@ -1,0 +1,1115 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>宣言と束縛 - Haskell2010 Language Report 日本語訳</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../src/customize.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../toc.html">目次</a></li><li class="affix"><a href="../preface.html">前書き</a></li><li><a href="../chapters/1-introduction.html"><strong aria-hidden="true">1.</strong> 序説</a></li><li><a href="../chapters/2-lexical-structure.html"><strong aria-hidden="true">2.</strong> 字句構造</a></li><li><a href="../chapters/3-expressions.html"><strong aria-hidden="true">3.</strong> 式</a></li><li><a href="../chapters/4-declarations-and-bindings.html" class="active"><strong aria-hidden="true">4.</strong> 宣言と束縛</a></li><li><a href="../chapters/5-modules.html"><strong aria-hidden="true">5.</strong> モジュール</a></li><li><a href="../chapters/6-predefined-types-and-classes.html"><strong aria-hidden="true">6.</strong> 事前定義された型とクラス</a></li><li><a href="../chapters/7-basic-input-output.html"><strong aria-hidden="true">7.</strong> 入出力の基本</a></li><li><a href="../chapters/8-foreign-function-interface.html"><strong aria-hidden="true">8.</strong> Foreign Function Interface</a></li><li><a href="../chapters/9-standard-prelude.html"><strong aria-hidden="true">9.</strong> 標準 Prelude</a></li><li><a href="../chapters/10-syntax-reference.html"><strong aria-hidden="true">10.</strong> 文法リファレンス</a></li><li><a href="../chapters/11-specification-of-derived-instances.html"><strong aria-hidden="true">11.</strong> インスタンス導出の仕様</a></li><li><a href="../chapters/12-compiler-pragmas.html"><strong aria-hidden="true">12.</strong> コンパイラプラグマ</a></li><li><a href="../chapters/13-control-monad.html"><strong aria-hidden="true">13.</strong> Control.Monad</a></li><li><a href="../chapters/14-data-array.html"><strong aria-hidden="true">14.</strong> Data.Array</a></li><li><a href="../chapters/15-data-bits.html"><strong aria-hidden="true">15.</strong> Data.Bits</a></li><li><a href="../chapters/16-data-char.html"><strong aria-hidden="true">16.</strong> Data.Char</a></li><li><a href="../chapters/17-data-complex.html"><strong aria-hidden="true">17.</strong> Data.Complex</a></li><li><a href="../chapters/18-data-int.html"><strong aria-hidden="true">18.</strong> Data.Int</a></li><li><a href="../chapters/19-data-ix.html"><strong aria-hidden="true">19.</strong> Data.Ix</a></li><li><a href="../chapters/20-data-list.html"><strong aria-hidden="true">20.</strong> Data.List</a></li><li><a href="../chapters/21-data-maybe.html"><strong aria-hidden="true">21.</strong> Data.Maybe</a></li><li><a href="../chapters/22-data-ratio.html"><strong aria-hidden="true">22.</strong> Data.Ratio</a></li><li><a href="../chapters/23-data-word.html"><strong aria-hidden="true">23.</strong> Data.Word</a></li><li><a href="../chapters/24-foreign.html"><strong aria-hidden="true">24.</strong> Foreign</a></li><li><a href="../chapters/25-foreign-c.html"><strong aria-hidden="true">25.</strong> Foreign.C</a></li><li><a href="../chapters/26-foreign-c-error.html"><strong aria-hidden="true">26.</strong> Foreign.C.Error</a></li><li><a href="../chapters/27-foreign-c-string.html"><strong aria-hidden="true">27.</strong> Foreign.C.String</a></li><li><a href="../chapters/28-foreign-c-types.html"><strong aria-hidden="true">28.</strong> Foreign.C.Types</a></li><li><a href="../chapters/29-foreign-foregin-ptr.html"><strong aria-hidden="true">29.</strong> Foreign.ForeignPtr</a></li><li><a href="../chapters/30-foreign-marshal.html"><strong aria-hidden="true">30.</strong> Foreign.Marshal</a></li><li><a href="../chapters/31-foreign-marshal-alloc.html"><strong aria-hidden="true">31.</strong> Foreign.Marshal.Alloc</a></li><li><a href="../chapters/32-foreign-marshal-array.html"><strong aria-hidden="true">32.</strong> Foreign.Marshal.Array</a></li><li><a href="../chapters/33-foreign-marshal-error.html"><strong aria-hidden="true">33.</strong> Foreign.Marshal.Error</a></li><li><a href="../chapters/34-foreign-marshal-utils.html"><strong aria-hidden="true">34.</strong> Foreign.Marshal.Utils</a></li><li><a href="../chapters/35-foreign-ptr.html"><strong aria-hidden="true">35.</strong> Foreign.Ptr</a></li><li><a href="../chapters/36-foreign-stable-ptr.html"><strong aria-hidden="true">36.</strong> Foregin.StablePtr</a></li><li><a href="../chapters/37-foreign-storable.html"><strong aria-hidden="true">37.</strong> Foregin.Storable</a></li><li><a href="../chapters/38-numeric.html"><strong aria-hidden="true">38.</strong> Numeric</a></li><li><a href="../chapters/39-system-environment.html"><strong aria-hidden="true">39.</strong> System.Environment</a></li><li><a href="../chapters/40-system-exit.html"><strong aria-hidden="true">40.</strong> Sytem.Exit</a></li><li><a href="../chapters/41-system-io.html"><strong aria-hidden="true">41.</strong> System.IO</a></li><li><a href="../chapters/42-system-io-error.html"><strong aria-hidden="true">42.</strong> System.IO.Error</a></li><li class="affix"><a href="../bibliography.html">参考文献</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Haskell2010 Language Report 日本語訳</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#宣言と束縛" id="宣言と束縛"><h1>宣言と束縛</h1></a>
+<p>この章では、Haskellの <strong>宣言</strong> の構文と簡略した意味論を説明する。</p>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>module</em></td><td> → </td><td><code>module</code> <em>modid</em> [<em>exports</em>] <code>where</code> <em>body</em></td><td> </td></tr>
+<tr><td>      </td><td>|</td><td><em>body</em></td><td> </td></tr>
+<tr><td>  <em>body</em></td><td> → </td><td>{ <em>impdecls</em> ; <em>topdecls</em> }</td><td> </td></tr>
+<tr><td>      </td><td>|</td><td>{ <em>impdecls</em> }</td><td> </td></tr>
+<tr><td>      </td><td>|</td><td>{ <em>topdecls</em> }</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>topdecls</em></td><td> → </td><td><em>topdecl<sub>1</sub></em> ; … ; <em>topdecl<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>topdecl</em></td><td> → </td><td><code>type</code> <em>simpletype</em> = <em>type</em></td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>data</code> [<em>context</em> =&gt;] <em>simpletype</em> [= <em>constrs</em>] [<em>deriving</em>]</td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>newtype</code> [<em>context</em> =&gt;] <em>simpletype</em> = <em>newconstr</em> [<em>deriving</em>]</td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>class</code> [<em>scontext</em> =&gt;] <em>tycls</em> <em>tyvar</em> [<code>where</code> <em>cdecls</em>]</td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>instance</code> [<em>scontext</em> =&gt;] <em>qtycls</em> <em>inst</em> [<code>where</code> <em>idecls</em>]</td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><code>default</code> (<em>type<sub>1</sub></em> , … , <em>type<sub>n</sub></em>)</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>        </td><td>|</td><td><code>foreign</code> <em>fdecl</em></td><td> </td></tr>
+<tr><td>        </td><td>|</td><td><em>decl</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td>  <em>decls</em></td><td> → </td><td>{ <em>decl<sub>1</sub></em> ; … ; <em>decl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>   <em>decl</em></td><td> → </td><td><em>gendecl</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td>(<em>funlhs</em> | <em>pat</em>) <em>rhs</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> <em>cdecls</em></td><td> → </td><td>{ <em>cdecl<sub>1</sub></em> ; … ; <em>cdecl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>  <em>cdecl</em></td><td> → </td><td><em>gendecl</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td>(<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> <em>idecls</em></td><td> → </td><td>{ <em>idecl<sub>1</sub></em> ; … ; <em>idecl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>  <em>idecl</em></td><td> → </td><td>(<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+<tr><td>       </td><td>|</td><td>  </td><td>(empty)</td></tr>
+<tr><td><em>gendecl</em></td><td>→</td><td><em>vars</em> :: [<em>context</em> <code>=&gt;</code>] <em>type</em></td><td>(type signature)</td></tr>
+<tr><td>       </td><td>|</td><td><em>fixity</em> [<em>integer</em>] <em>ops</em></td><td>(fixity declaration)</td></tr>
+<tr><td>       </td><td>|</td><td>  </td><td>(empty declaration)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td>    <em>ops</em></td><td>→</td><td><em>op<sub>1</sub></em> , … , <em>op<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td>   <em>vars</em></td><td>→</td><td><em>var<sub>1</sub></em> , … , <em>var<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>fixity</em></td><td>→</td><td><code>infixl</code> | <code>infixr</code> | <code>infix</code></td><td> </td></tr>
+</tbody></table>
+<p>構文的カテゴリ<em>topdecls</em>に属する宣言はHaskellモジュール(<a href="./5-modules.html">5章</a>)の最上位のみ許す一方で <em>decls</em>は最上位またはネストされたスコープのいずれかで使ってもよい(例えば、<code>let</code>か<code>where</code>の内で<em>topdecls</em>を構築する)。</p>
+<p>説明のため、<code>type</code>と<code>newtype</code>、<code>data</code>宣言からなるユーザー定義のデータ型(セクション<a href="#a%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E5%AE%9A%E7%BE%A9%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B">4.2</a>)と<code>class</code>と<code>instance</code>、<code>default</code>宣言からなる型クラスとオーバーロード(セクション<a href="#a%E5%9E%8B%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89">4.3</a>)、値束縛と型シグネチャ、固定の宣言からなるネストされた宣言(セクション<a href="#a%E3%83%8D%E3%82%B9%E3%83%88%E3%81%95%E3%82%8C%E3%81%9F%E5%AE%A3%E8%A8%80">4.4</a>)の3つのグループに宣言を分割する。</p>
+<p>haskellは(整数や浮動小数点数のような)&quot;ハードウェアで実現された&quot;であるいくつかのプリミティブなデータ型を持つ。しかし、多くの&quot;ビルドイン&quot;なデータ型は通常のHaskellコードによって定義されていて、通常<code>type</code>や<code>data</code>宣言に使われる。これらの&quot;ビルドイン&quot;のデータ型はセクション<a href="./6-predefined-types-and-classes.html#a%E6%A8%99%E6%BA%96Haskell%E5%9E%8B">6.1</a>で詳細に説明される。</p>
+<a class="header" href="#型とクラスの概要" id="型とクラスの概要"><h2>型とクラスの概要</h2></a>
+<p>Haskellは静的型意味論<a href="../bibliography.html">4</a>,<a href="../bibliography.html">6</a>を提供するために伝統的なHindley-Milner多相型システムを使用するが、その型システムは構造化された手法にオーバーロード関数を導入するために提供する <strong>型クラス</strong> (または <strong>クラス</strong> )で拡張されている。</p>
+<p><code>class</code>宣言(セクション<a href="#a%E3%82%AF%E3%83%A9%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.1</a>)は新しい <strong>型クラス</strong> とあらゆるそのクラスのインスタンスの型によってもサポートされなければいけないオーバーロードされた操作を導入する。<code>instance</code>宣言(セクション<a href="#%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.2</a>)は型がクラスの <strong>インスタンス</strong> であり、名付けられた型でインスタンス化されるオーバーロードされたオペレーション、クラスメソッドと呼ばれる、の定義を含むということを宣言する。</p>
+<p>例えば、型<code>Int</code>と<code>Float</code>で操作<code>(+)</code>と<code>negate</code>をオーバーロードしたいと考えたとしよう。<code>Num</code>と呼ばれる新しい型クラスを導入する。</p>
+<pre><code class="language-hs">class Num a  where          -- Numの単純化されたクラス宣言
+  (+)    :: a -&gt; a -&gt; a     -- (NumはPreludeで定義されている)  
+  negate :: a -&gt; a
+</code></pre>
+<p>この宣言は「型<code>a</code>がもし与えられた型で定義されたクラスメソッド<code>(+)</code>と<code>negate</code>があるならクラス<code>Num</code>のインスタンスである」と読めるであろう。</p>
+<p>このクラスのインスタンス化のときに<code>Int</code>と<code>Float</code>をその際に宣言できる。</p>
+<pre><code class="language-hs">instance Num Int  where     -- Num Intの単純化されたインスタンス
+   x + y       =  addInt x y  
+   negate x    =  negateInt x  
+
+ instance Num Float  where   -- Num Floatの単純化されたインスタンス
+   x + y       =  addFloat x y  
+   negate x    =  negateFloat x
+</code></pre>
+<p><code>addInt</code>や<code>negateInt</code>、<code>addFloat</code>、<code>negateFloat</code>はこのケースでプリミティブ関数で想定されるが、一般的にはユーザー定義関数になり得る。
+上のはじめの宣言は「<code>Int</code>はクラス<code>Num</code>のインスタンスであり、その証拠として(クラスメソッド)<code>(+)</code>と<code>negate</code>が定義されている」と読まれる。</p>
+<p>型クラスのより多くの例はJones<a href="../bibliography.html">8</a>かWadlerとBlott<a href="../bibliography.html">13</a>による論文で見つけられる。用語'型クラス'はオリジナルのHaskell1.0型システムを記述するために使われてあって、'コンストラクタクラス'はオリジナルの型クラスへ拡張を記述することに使われていた。ふたつの異なる用語を使う理由はもはやなく、この規格書において、'型クラス'という単語は元々のHaskell型クラスとJonesによって導入されたコンストラクタクラスの両方を含んでいる。</p>
+<a class="header" href="#カインド" id="カインド"><h3>カインド</h3></a>
+<p>型の表現が有効である確証を得るために、型の表現を異なる<em>カインド(カインド, kind)</em>へと分類され、以下の2つの可能な形式の内、1つを取る。</p>
+<ul>
+<li>シンボル<code>*</code>は全ての引数のない型コンストラクタのカインドを意味する。</li>
+<li>もし<em>K<sub>1</sub></em>と<em>K<sub>2</sub></em>がカインドならば、<em>K<sub>1</sub> → K<sub>2</sub></em>はカインド<em>K<sub>1</sub></em>の型を取り、<em>K<sub>2</sub></em>の型を返す型のカインドである。</li>
+</ul>
+<p>型推論が値の表現の正当性をチェックするのと同様にして、カインド推論は型の表現の正当性をチェックする。しかしながら、型とは違い、カインドは完全に暗黙的であり、言語の見て分かる部分には存在しない。カインドの推論はセクション<a href="#a%E3%82%AB%E3%82%A4%E3%83%B3%E3%83%89%E3%81%AE%E6%8E%A8%E8%AB%96">4.6</a>で議論される。</p>
+<a class="header" href="#型の構文" id="型の構文"><h3>型の構文</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>type</em></td><td> → </td><td><em>btype</em> [-&gt; <em>type</em>]</td><td>(function type)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>btype</em></td><td>→</td><td>[<em>btype</em>] <em>atype</em></td><td>(type application)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>atype</em></td><td>→</td><td><em>gtycon</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td><em>tyvar</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td>( <em>type<sub>1</sub></em> , … , <em>type<sub>k</sub></em> )</td><td>(tuple type, <em>k</em> ≥ 2)</td></tr>
+<tr><td>  </td><td>|</td><td>[ <em>type</em> ]</td><td>(list type)</td></tr>
+<tr><td>  </td><td>|</td><td>( <em>type</em> )</td><td>(parenthesised constructor)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>gtycon</em></td><td>→</td><td><em>qtycon</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td>()</td><td>(unit type)</td></tr>
+<tr><td>  </td><td>|</td><td>[]</td><td>(list constructor)</td></tr>
+<tr><td>  </td><td>|</td><td>(-&gt;)</td><td>(function constructor)</td></tr>
+<tr><td>  </td><td>|</td><td>(,{,})</td><td>(tupling constructors)</td></tr>
+</tbody></table>
+<p>Haskellの型の表現のための構文は上に与えられる。データ値と同じようにデータコンストラクタを使って作られ、型の値(訳注: 型の表現でそれ以上簡約出来ないもののこと)は <strong>型コンストラクタ</strong> から作られる。データコンストラクタと同様に、型コンストラクタの名前は大文字で始められる。データコンストラクタとは違い、中置型コンストラクタは許されない(<code>(-&gt;)</code>以外)。</p>
+<p>型の表現の主要な形式は次のものになる。</p>
+<ol>
+<li>
+<p>小文字で始まる識別子のように書かれた型変数。変数のカインドは現れた文脈によって暗黙的に決定される。</p>
+</li>
+<li>
+<p>型コンストラクタ。多くの型コンストラクタは大文字から始まる識別子のように書かれている。
+例えば、</p>
+<ul>
+<li><code>Char</code>や<code>Int</code>,<code>Float</code>,<code>Double</code>、<code>Bool</code>はカインド<code>*</code>で構築される型である。</li>
+<li><code>Maybe</code>と<code>IO</code>は単項型コンストラクタで、カインド<code>*→*</code>をもつ型として扱われる。</li>
+<li>宣言<code>data T ...</code>または<code>newtype T ...</code>は型のボキャブラリーに型コンストラクタ<code>T</code>を追加する。<code>T</code>のカインドはカインドの推論によって決定される。</li>
+</ul>
+<p>特殊な構文は特定のビルドインの型コンストラクタに提供される。</p>
+<ul>
+<li><strong>自明型</strong> は<code>()</code>のように書かれ、カインド<code>*</code>を持つ。それは&quot;引数のないタプル&quot;型を示し、<code>()</code>と書かれるが、値をちゃんと持つ(セクション<a href="./3-expressions.html#a%E5%8D%98%E4%BD%8D%E5%BC%8F%E3%81%A8%E6%8B%AC%E5%BC%A7%E4%BB%98%E3%81%8D%E5%BC%8F">3.9</a>と<a href="./6-predefined-types-and-classes.html#a">6.1.5</a>を参照)。</li>
+<li><strong>関数型</strong> は<code>(-&gt;)</code>のように書かれ、カインド<code>∗→∗→∗</code>を持つ。</li>
+<li><strong>リスト型</strong> は<code>[]</code>のように書かれ、カインド<code>∗→∗</code>を持つ。</li>
+<li><strong>タプル型</strong> は<code>(,), (,,)</code>等のように書かれる。それらのカインドは<code>∗→∗→∗, ∗→∗→∗→ ∗</code>などである。</li>
+</ul>
+<p><code>(-&gt;)</code>と<code>[]</code>の定数の使用は下でより詳しく説明される。</p>
+</li>
+<li>
+<p>型適用。もし、<em>t<sub>1</sub></em>がカインド<em>K<sub>1</sub> → K<sub>2</sub></em>の型で<em>t<sub>2</sub></em>がカインド<em>K<sub>1</sub></em>の型であるなら、その時<em>t<sub>1</sub>, t<sub>2</sub></em>はカインド<em>K<sub>2</sub></em>の型の表現である。</p>
+</li>
+<li>
+<p><strong>括弧つき型</strong> 、形式<em>(t)</em>を持つ、型<em>t</em>と同一である。</p>
+</li>
+</ol>
+<p>例えば、型の表現<code>IO a</code>は変数<code>a</code>に定数<code>IO</code>への適用のように理解されることが可能だ。<code>IO</code>型コンストラクタはカインド<code>∗→∗</code>を持ち、変数<code>a</code>と式全体の両方を従え、式<code>IO a</code>はカインド<code>*</code>を持たなければならない。一般的に <strong>型の推論</strong> (セクション<a href="#a%E3%82%AB%E3%82%A4%E3%83%B3%E3%83%89%E3%81%AE%E6%8E%A8%E8%AB%96">4.6</a>)の処理は適切なカインドをユーザー定義のデータ型や型のシノニム、クラスへ決定することを必要とされる。</p>
+<p>特別な構文は特定の型の表現がより伝統的なスタイルで書かれることを許すために提供される。</p>
+<ol>
+<li><strong>関数型</strong> は形式<em>t<sub>1</sub> -&gt; t<sub>2</sub></em>を持ち、型<em>(-&gt;) t<sub>1</sub> t<sub>2</sub></em>に等しい。アロー関数は左に関連づける。例えば、<code>Int -&gt; Int -&gt; Float</code>は<code>Int -&gt; (Int -&gt; Float)</code>を意味する。</li>
+<li><strong>タプル型</strong> は<em>K</em> ≥ 2である形式<em>t<sub>1</sub>, ..., t<sub>k</sub></em>を持ち、括弧の間に<em>k-1</em>個のカンマがある型<em>(,…,) t<sub>1</sub> … t<sub>k</sub></em>と等しい。それは型<em>t<sub>1</sub></em>をはじめの要素に、型<em>t<sub>2</sub></em>を2番目の要素に持つなど、<em>k</em>要素のタプルの型を示す(セクション<a href="./3-expressions.html#a%E3%82%BF%E3%83%97%E3%83%AB">3.8</a>と<a href="./6-predefined-types-and-classes.html#a">6.1.4</a>を参照)。</li>
+<li><strong>リスト型</strong> は形式<em>[t]</em>を持ち、型<em>[] t</em>と等しい。それは型<em>t</em>の要素を伴うリストの型を示す(セクション<a href="./3-expressions.html#a%E3%83%AA%E3%82%B9%E3%83%88">3.7</a>と<a href="./6-predefined-types-and-classes.html#a">6.1.3</a>を参照)。</li>
+</ol>
+<p>これらの特別な構文的形式は何がスコープに入っているかにかかわらず関数、タプル、リストのビルドイン型のコンストラクタを常に示す。同様な方法で、プリフィックスな型コンストラクタ<code>(-&gt;), [], (), (,)</code>等はビルドインの型コンストラクタを常に示す。それらは修飾子を付けることはできず、そしてまたリストのimport/exportするもののリストに入れることもできない(<a href="./5-modules.html#a">5章</a>)。(上述の特定の生成規則、&quot;gtycon&quot;から)</p>
+<p>リストとタプル型が特別な構文を持つのだが、それらの意味論はユーザー定義された代数データ型と同じである。</p>
+<p>式と型は一貫した構文を持つことに注意すること。もし、<em>t<sub>i</sub></em>は式またはパターン<em>e<sub>i</sub></em>の型ならその時、式<em>(\ e<sub>1</sub> -&gt; e<sub>2</sub>), [e<sub>1</sub>]</em>と<em>(e<sub>1</sub>,e<sub>2</sub>)</em>は各々、型<em>(t<sub>1</sub> -&gt; t<sub>2</sub>), [t<sub>1</sub>]</em>と<em>(t<sub>1</sub>,t<sub>2</sub>)</em>を持つ。</p>
+<p>ひとつの例外(クラス宣言内の区別された型変数のこと(セクション<a href="#a%E3%82%AF%E3%83%A9%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.1</a>))を除いて、Haskellの型の表現内の型変数は一般に全て全称量化されていると仮定され、全称量化のための明示的な文法はない<a href="./../bibliography.html">4</a>。例えば、型の表現<code>a -&gt; a</code>は型<code>∀ a. a → a</code>を示す。明確にするために、しかしながら、Haskellプログラムの型を議論する時に明示的な個々の区分をしばしば書く。明示的に個々に区分された型を書く時、<code>∀</code>のスコープは可能な限り左側へ拡張する。例として、<code>∀ a. a → a</code>は<code>∀ a. (a → a)</code>を意味する。</p>
+<a class="header" href="#クラス表明と文脈の構文" id="クラス表明と文脈の構文"><h3>クラス表明と文脈の構文</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>context</em></td><td> → </td><td><em>class</em></td><td> </td></tr>
+<tr><td>       </td><td> | </td><td>( <em>class<sub>1</sub></em> , … , <em>class<sub>n</sub></em> )</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td> <em>class</em> </td><td> → </td><td><em>qtycls</em> <em>tyvar</em></td><td> </td></tr>
+<tr><td>       </td><td> | </td><td><em>qtycls</em> ( <em>tyvar</em> <em>atype<sub>1</sub></em> … <em>atype<sub>n</sub></em> )</td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>qtycls</em></td><td> → </td><td>[ <em>modid</em> . ] <em>tycls</em></td><td> </td></tr>
+<tr><td>  <em>tycls</em></td><td> → </td><td><em>conid</em></td><td> </td></tr>
+<tr><td>  <em>tyvar</em></td><td> → </td><td><em>varid</em></td><td> </td></tr>
+</tbody></table>
+<p><strong>クラス表明</strong> は形式<em>qtycls tyvar</em>を持ち、クラス<em>qtycls</em>の型<em>tyvar</em>のメンバを示す。クラス識別子は大文字で始める。 <strong>文脈</strong> は0個以上のクラス表明からなり、一般に<em>( C<sub>1</sub> u<sub>1</sub>, …, C<sub>n</sub> u<sub>n</sub> )</em>の形式をもつ。ここで<em>C<sub>1</sub>, …, C<sub>n</sub></em>はクラス識別子であり、<em>( u<sub>1</sub>, …, u<sub>n</sub>)</em>はそれぞれ変数型または一つ以上の型への変数型の適用のいずれかである。<em>n = 1</em>のとき括弧の外側は省かれるであろう。一般的に、文脈を示すために<em>cx</em>を使用し、<em>cx =&gt; t</em>を文脈<em>cx</em>によって制限された型<em>t</em>を示すために書く。文脈<em>cx</em>は<em>t</em>によって参照される変数型のみを含まなければいけない。利便性のために、文脈<em>cx</em>が空であっても、具体的な構文は<em>=&gt;</em>を含まないケースであるが、<em>cx =&gt; t</em>を書く。</p>
+<a class="header" href="#型とクラスの意味論" id="型とクラスの意味論"><h3>型とクラスの意味論</h3></a>
+<p>このセクションは、型システムの簡略的な詳細を提供する。(WadlerとBlott<a href="../bibliography.html">[13]</a>、Jones<a href="../bibliography.html">[8]</a>は各々より詳細に型とコンストラクタクラスを議論している。)</p>
+<p>Haskellの型システムは <strong>型</strong> をプログラム内の各式に割り当てる。一般的に、型は形式<code>∀ <em><span class="overline">u</span>. cx  ⇒  t</em></code>である。<em><span class="overline">u</span></em>は変数型の集合<em>u<sub>1</sub>, ..., u<sub>n</sub></em>である。どのような型であっても、<em>cx</em>に束縛がない一般的な個々に区別された変数型<em>u<sub>i</sub></em>は<em>t</em>でも束縛がないものでなければならない。その上、内容<em>cx</em>はセクション<a href="#a%E3%82%AF%E3%83%A9%E3%82%B9%E8%A1%A8%E6%98%8E%E3%81%A8%E6%96%87%E8%84%88%E3%81%AE%E6%A7%8B%E6%96%87">4.1.3</a>上で与えられた形式でなければならない。例として、ここにいくつかの正常な型がある。</p>
+<pre><code class="language-hs">Eq a =&gt; a -&gt; a  
+(Eq a, Show a, Eq b) =&gt; [a] -&gt; [b] -&gt; String  
+(Eq (f a), Functor f) =&gt; (a -&gt; b) -&gt; f a -&gt; f b -&gt; Bool
+</code></pre>
+<p>3つの型で、制約<code>Eq (f a)</code>は<code>f</code>が全称量化されているためもっと単純にはできない。</p>
+<p>式<em>e</em>の型は型を<em>e</em>に束縛のない変数へ与えるため <strong>型環境</strong> に依存し、いずれかの型を宣言する <strong>クラス環境</strong> はいずれかのクラスのインスタンスである。(型は<code>インスタンス</code>宣言または<code>派生</code>節の存在によってのみクラスのインスタンスになる。)</p>
+<p>型は一般化による半順序集合(下に明記される)で関連する。多くの一般的な型は、一般化の先行順によって同等まで導かれ、(与えられた環境の)個々の式は <strong>主要な型</strong> と呼ばれるものに割り当てられる。Haskellの拡張されたHindley-Milner型システムは全式の主要な型を推論でき、オーバーロードされたクラスメソッドの妥当な使用を含んでいる(セクション<a href="#a%E6%9B%96%E6%98%A7%E3%81%AA%E5%9E%8B%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89%E3%81%95%E3%82%8C%E3%81%9F%E6%95%B0%E5%80%A4%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4">4.3.4</a>で説明するように、確実に曖昧なオーバーロードが起こり得るのだが)。したがって、明示的な型付け(型シグネチャと呼ぶ)は通常、オプションである(セクション<a href="./3-expressions,md#a%E5%BC%8F%E3%81%AE%E5%9E%8B%E3%82%B7%E3%82%B0%E3%83%8D%E3%83%81%E3%83%A3">3.16</a>と<a href="#a%E5%9E%8B%E3%82%B7%E3%82%B0%E3%83%8D%E3%83%81%E3%83%A3">4.4.1</a>を参照)。</p>
+<p>型<code>∀ <em><span class="overline">u</span>. cx<sub>1</sub>  ⇒  t<sub>1</sub></em></code>は領域が以下のような<em><span class="overline">u</span></em>の代用<em>S</em>がある場合に限り、型<code>∀ <em><span class="overline">w</span>. cx<sub>2</sub>  ⇒  t<sub>2</sub></em></code> <strong>より一般的</strong> である。</p>
+<ul>
+<li><em>t<sub>2</sub></em>は<em>S(t<sub>1</sub>)</em>と同じである。</li>
+<li><em>cx<sub>2</sub></em>はそのクラスの環境を保持し、<em>S(cx<sub>1</sub>)</em>も保持する。</li>
+</ul>
+<p>型<code>∀ <em><span class="overline">u</span>. cx  ⇒  t</em></code>の値は内容<em>cx[<span class="overline">s</span>;/<span class="overline">u</span>]</em>を保持する場合に限り型<em><span class="overline">s</span></em>でインスタンス化されるかもしれない。例えば、関数<code>double</code>について考えてみる。</p>
+<pre><code class="language-hs">double x = x + x
+</code></pre>
+<p><code>double</code>の最も一般的な型は<code>∀ <em>a. Num a⇒  a  →  a</em></code>である。<code>double</code>は(<code>Int</code>にインスタンス化する)型<code>Int</code>の値に適用されるかもしれない、なぜなら<code>Num Int</code>が成り立つ、すなわち<code>Int</code>はクラス<code>Num</code>のインスタンスだからである。しかしながら、<code>double</code>が型<code>Char</code>の値に通常の意味で適用されることはないであろう。なぜなら、<code>Char</code>は通常クラス<code>Num</code>のインスタンスではないからだ。ユーザーはインスタンスのような宣言を選択するかもしれない。その場合、<code>double</code>が型<code>Char</code>の値に通常の意味で適用されることはないであろう。</p>
+<a class="header" href="#ユーザー定義のデータ型" id="ユーザー定義のデータ型"><h2>ユーザー定義のデータ型</h2></a>
+<p>このセクションでは、代数のデータ型(<code>data</code>宣言)や新たに命名するデータ型(<code>newtype</code>宣言)、型のシノニム(<code>type</code>宣言)を説明する。これらの宣言はモジュールのトップレベルでのみ現れてよい。</p>
+<a class="header" href="#代数データ型宣言" id="代数データ型宣言"><h3>代数データ型宣言</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>topdecl</em></td><td>→</td><td><code>data</code> [<em>context</em> =&gt;] <em>simpletype</em> [= <em>constrs</em>] [<em>deriving</em>]</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>simpletype</em></td><td>→</td><td><em>tycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em></td><td>(<em>k</em> ≥ 0)</td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td><em>constrs</em></td><td>→</td><td><em>constr<sub>1</sub></em> | … | <em>constr<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> <em>constr</em></td><td>→</td><td><em>con</em> [<code>!</code>] <em>atype<sub>1</sub></em> … [<code>!</code>] <em>atype<sub>k</sub></em></td><td>(arity <em>con</em> = <em>k</em>, <em>k</em> ≥ 0)</td></tr>
+<tr><td>  </td><td>|</td><td>(<em>btype</em> | <code>!</code> <em>atype</em>) <em>conop</em> (<em>btype</em> | <code>!</code> <em>atype</em>)</td><td>(infix <em>conop</em>)</td></tr>
+<tr><td>  </td><td>|</td><td><em>con</em> { <em>fielddecl<sub>1</sub></em> , … , <em>fielddecl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>fielddecl</em></td><td>→</td><td><em>vars</em> <code>::</code> (<em>type</em> | <code>!</code> <em>atype</em>)</td><td> </td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr><td> <em>deriving</em></td><td>→</td><td><code>deriving</code> (<em>dclass</em> | (<em>dclass<sub>1</sub></em>, … , <em>dclass<sub>n</sub></em>))</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>dclass</em></td><td>→</td><td><em>qtycls</em></td><td> </td></tr>
+</tbody></table>
+<p><em>constr</em>の優先順位は式と同じである。通常のコンストラクタの適用が中置コンストラクタの適用より高い優先順位を持つ(そのため<code>a : Foo a</code>は<code>a : (Foo a)</code>のように解析する)。</p>
+<p>代数的なデータ型の宣言は、<em>cx</em>が内容である形式<code>data <em>cs =&gt; T u<sub>1</sub> ... u<sub>k</sub> = K<sub>1</sub> t<sub>1 1</sub> ... t<sub>1k<sub>1</sub></sub> | ... | K<sub>n</sub> t<sub>n1</sub> ... t<sub>nk<sub>n</sub></sub></em></code>を持つ。
+この宣言は0個以上の構成要素である<em>データコンストラクタ K<sub>1</sub>, …, K<sub>n</sub></code></em>をもつような新しい<em>型コンストラクタT</em>を導入する。
+このリポートで、修飾されていない用語&quot;コンストラクタ&quot;は&quot;データコンストラクタ&quot;を常に意味する。</p>
+<p>データコンストラクタの型は<code><em>K<sub>i</sub></em>  ::  ∀ <em>u<sub>1</sub> … u<sub>k</sub>.  cx<sub>i</sub>  ⇒  t<sub>i1</sub>  →  ⋅⋅⋅  →  t<sub>ik<sub>i</sub></sub>  →  (T u<sub>1</sub> … u<sub>k</sub>)</em></code>によって与えられる。
+ここで<em>cx<sub>i</sub></em>は、<em>t<sub>i1</sub>, …, t<sub>ik<sub>i</sub></sub></em>の型に自由に出現する型変数たちのみを含むような<em>cx</em>の部分集合の中で最大なものである。
+型変数<em>u<sub>1</sub></em>から<em>u<sub>k</sub></em>は互いに異なるものでなければならず、<em>cx</em>と<em>t<sub>ij</sub></em>に出現してもよい。
+また、他の型変数が<em>cx</em>やそれより右側に出現すると静的なエラーとなる。
+新しい型定数<em>T</em>は引数の変数<em>u<sub>i</sub></em>のカインド<em>κ<sub>i</sub></em>がセクション<a href="#a%E3%82%AB%E3%82%A4%E3%83%B3%E3%83%89%E3%81%AE%E6%8E%A8%E8%AB%96">4.6</a>で説明されるカインド推論によって決定される形式<em>κ<sub>1</sub> →… → κ<sub>k</sub> →∗</em>のカインドを持つ。
+これは<em>T</em>が0から<em>k</em>引数のどこでも型の表現に使われるかもしれないということを意味する。</p>
+<p>例えば、以下の宣言は</p>
+<pre><code class="language-hs">data Eq a =&gt; Set a = NilSet | ConsSet a (Set a)
+</code></pre>
+<p>カインド<code>∗→∗</code>の型コンストラクタ<code>Set</code>を導入し、型ありのコンストラクタ<code>NilSet</code>と<code>ConsSet</code>は以下のものである。</p>
+<pre><code class="language-hs">NilSet  ::  ∀ a.  Set  a
+ConsSet ::  ∀ a.  Eq   a  ⇒  a  →  Set   a  →  Set   a
+</code></pre>
+<p>与えられた例では、<code>ConsSet</code>にオーバーロードされた型は<code>ConsSet</code>は型がクラス<code>Eq</code>のインスタンスである値に提供されることのみ可能であることを保証する。<code>ConsSet</code>に対照したパターンマッチングは<code>Eq a</code>拘束にも発生する。例えば、</p>
+<pre><code class="language-hs">f (ConsSet a s) = a
+</code></pre>
+<p>関数<code>f</code>は推論された型<code>Eq a =&gt; Set a -&gt; a</code>を持つ。<code>data</code>宣言の内容は他に何も効果を持たない。</p>
+<p>データ型のコンストラクタの可視性(すなわちデータ型の&quot;抽象度&quot;)は、それが定義されたモジュールの外では、セクション<a href="./5-modules.html#a">5.8</a>で説明されるエクスポートリスト内のデータ型の名前の形式によって制御される。</p>
+<p><code>data</code>宣言の内容は他に何も効果を持たない付加的な<code>deriving</code>の部分は <strong>派生されたインスタンス</strong> と関係しており、セクション<a href="#a%E6%B4%BE%E7%94%9F%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9">4.3.3</a>で説明される。</p>
+<p><strong>ラベル付けされたフィールド</strong> 引数<em>k</em>個とるデータコンストラクタは<em>k</em>要素のオブジェクトを作成する。これらの要素は通常、式またはパターンの中のコンストラクタへの引数のように位置付けして呼び出される。巨大なデータ型のために、データオブジェクトの要素に <strong>フィールドラベル</strong> を割り当てることは便利である。これはコンストラクタ内でその位置を独立して参照されるために明記するフィールドを許す。</p>
+<p><code>data</code>宣言のコンストラクタ定義はラベルを記録構文<code>(C { ... })</code>を使用するコンストラクタのフィールドに割り当てられるだろう。フィールドラベルを使用するコンストラクタはそれらなしにコンストラクタを自由に組み合わされるかもしれない。フィールドラベルに関係するコンストラクタは通常のコンストラクタのようにまだ使われるだろう。ラベルを使う機能は基礎となる位置上のコンストラクタを使う操作のための単純な簡略記法である。その位置上のコンストラクタの引数はラベル付けされたフィールドのように同じ順序で発生する。例えば、以下の宣言は</p>
+<pre><code class="language-hs">data C = F { f1,f2 :: Int, f3 :: Bool }
+</code></pre>
+<p>下のように生成されるものと同一な型とコンストラクタを定義する。</p>
+<pre><code class="language-hs">data C = F Int Int Bool
+</code></pre>
+<p>フィールドラベルを使用する操作はセクション<a href="./3-expressions.html#a%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%A9%E3%83%99%E3%83%AB%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B">3.15</a>で説明される。<code>data</code>宣言においては、型シノニムを展開した後にそのフィールドが使われている場所すべてで同じ型がつく場合に限り、同じフィールドラベルを複数のコンストラクタで使ってもよい。ラベルはスコープ内の型以上で共有されることはできない。フィールド名は通常の変数とクラスメソッドを使う最上位の名前空間を共有し、スコープ内の他の最上位の名前と衝突してはいけない。</p>
+<p>パターン<code>F {}</code>はコンストラクタ<code>F</code>が <strong>記録構文を使って宣言されているかどうかにかかわらず</strong> 、<code>F</code>によって構築された任意の値と一致する。</p>
+<p><strong>正格なフラグ</strong> データコンストラクタが適用されるたびに、代数的データ型の宣言に対応する型が感嘆符<code>!</code>で表される正格なフラグを持つ場合に限り、コンストラクタの各引数は評価される。
+<code>&quot;!&quot;</code>は通常のvarsymであって、<em>reservedop</em>としては字句解析されない。
+それはデータ宣言の引数の型の内容にのみ特別な意味を持つ。</p>
+<div class="column">
+<p><strong>変換:</strong> 各<em>s<sub>i</sub></em>が形式<em>!t<sub>i</sub></em>か<em>t<sub>i</sub></em>のいずれかである形式<code>data <em>cx =&gt; T u<sub>1</sub> … u<sub>k</sub> = … | K s<sub>1</sub> … s<sub>n</sub> | …</em></code>の宣言は<em>(\ x<sub>1</sub> … x<sub>n</sub> -&gt; ( ((K op<sub>1</sub> x<sub>1</sub>) op<sub>2</sub> x<sub>2</sub>) … ) op<sub>n</sub> x<sub>n</sub>)</em>という式の中の<em>K</em>の全ての発生を置き換える。
+<em>op<sub>i</sub></em>はもし<em>s<sub>i</sub></em>が形式<em>t<sub>i</sub></em>なら、正格ではない適用関数<code>$</code>であり、<em>op<sub>i</sub></em>はもし<em>s<sub>i</sub></em>が形式<code>！ <em>t<sub>i</sub></em></code>であるなら正格に適用する関数<code>$!</code>である(セクション<a href="./6-predefined-types-and-classes.html#a">6.2</a>を参照)。
+<em>K</em>上のパターンマッチングは正格なフラグによる影響を受けられない。</p>
+</div>
+<a class="header" href="#型シノニムの宣言" id="型シノニムの宣言"><h3>型シノニムの宣言</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>   <em>topdecl</em></td><td>→</td><td><code>type</code> <em>simpletype</em> <code>=</code> <em>type</em></td><td> </td></tr>
+<tr><td><em>simpletype</em></td><td>→</td><td><em>tycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em></td><td>(<em>k</em> ≥ 0)</td></tr>
+</tbody></table>
+<p>型シノニムの宣言は古い型と等しい新しい型を生成する。
+それは新しいコンストラクタ<em>T</em>を生成する形式<code>type</code> <em>T u<sub>1</sub> ... u<sub>k</sub> = t</em>を持つ。
+型<em>(T t<sub>1</sub> …t<sub>k</sub>)</em>は型<em>t[t<sub>1</sub>∕u<sub>1</sub>, …, t<sub>k</sub>∕u<sub>k</sub>]</em>に等しい。
+型変数<em>u<sub>1</sub></em>から<em>u<sub>k</sub></em>は互いに異なるものでなければならず、<em>t</em>上のみにスコープされる。
+そしてその<em>t</em>の中に他の型変数が現れたら静的エラーになる。
+新しい型コンストラクタ<em>T</em>のカインドは引数<em>u<sub>i</sub></em>のカインド<em>κ<sub>i</sub></em>は形式<em>κ<sub>1</sub> →… → κ<sub>k</sub> → κ</em>であり、<em>t</em>の右側の<em>κ</em>はセクション<a href="#a%E3%82%AB%E3%82%A4%E3%83%B3%E3%83%89%E3%81%AE%E6%8E%A8%E8%AB%96">4.6</a>で説明されるカインドの推論によって決定される。
+例えば、次の定義はリスト型のコンストラクタを書く方法の代替案を提供することに使用されることができる。</p>
+<pre><code class="language-hs">type List = []
+</code></pre>
+<p>型シノニムの宣言によって生成された型コンストラクタのシンボル<em>T</em>は一部のみを提供されることはできない。十分な数の引数なしに<em>T</em>を使うことは静的エラーになる。</p>
+<p>再帰的と相互再帰的なデータ型は許されるのだが、 <strong>代数的データ型</strong>  が入り込む限り、型シノニムではそうではない。例えば、</p>
+<pre><code class="language-hs">type Rec a   =  [Circ a]  
+data Circ a  =  Tag [Rec a]
+</code></pre>
+<p>は許されるが、それに反して、</p>
+<pre><code class="language-hs">type Rec a   =  [Circ a]        -- invalid  
+type Circ a  =  [Rec a]         -- invalid
+</code></pre>
+<p>はそうではない。似たもので、<code>type Rec a = [Rec a]</code>も許されない。</p>
+<p>型シノニムはより読みやすい型シグネチャを作る便利な、しかし厳密な構文的仕組みである。同義語とその定義は<code>instance</code>宣言のインスタンス型を除いて、完全に置き換えできる(セクション<a href="#a%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.2</a>を参照)。</p>
+<a class="header" href="#データ型の改名" id="データ型の改名"><h3>データ型の改名</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>topdecl</em></td><td>→</td><td><code>newtype</code> [<em>context</em> =&gt;] <em>simpletype</em> = <em>newconstr</em> [<em>deriving</em>]</td><td> </td></tr>
+<tr><td> <em>newconstr</em></td><td>→</td><td><em>con</em> <em>atype</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td><em>con</em> { <em>var</em> :: <em>type</em> }</td><td> </td></tr>
+<tr><td><em>simpletype</em></td><td>→</td><td><em>tycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em></td><td>(<em>k</em> ≥ 0)</td></tr>
+</tbody></table>
+<p><code>newtype <em>cs =&gt; T u<sub>1</sub> ... u<sub>k</sub> = N t</em></code>の形の宣言は新しい型を導入し、その表現はすでに存在している型と同じである(<strong>訳注</strong>: TはNから新たに作られた型であるが、実行時表現が等しい)。
+型<em>(T u<sub>1</sub>… u<sub>k</sub>)</em>はデータ型<em>t</em>を改名する。
+それは型シノニムからオリジナルな型からまたはその型へ明示的に強制されなければならない厳密な型を作成することとは異なる。
+また型シノニムと異なり、<code>newtype</code>は再帰的な型を定義することに使用されるかもしれない。
+式の中のコンストラクタ<em>N</em>は型<em>t</em>から型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>へ値を強制する。
+パターンの中の<em>N</em>は型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>から型<em>t</em>へ値を強制する。
+これらの強制は実行時のオーバーヘッドなしに実装されるかもしれない。
+<code>newtype</code>はオブジェクトの根底にある表現を変更しない。</p>
+<p>新しいインスタンス(セクション<a href="#a%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.2</a>を参照)は<code>newtype</code>によって定義された型に定義されることができるが、型シノニムに定義されることはないかもしれない。
+<code>newtype</code>によって作成された型は代数的データ型が追加の間接レベルを持つ表現内の代数的データ型とは異なる。
+この差は効率が悪い表現にアクセスするかもしれない。
+この差はパターンマッチングのための異なるルールに反映される(セクション<a href="./3-expressions.html#a%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0">3.17</a>を参照)。
+代数的なデータ型とは異なり、新しい型コンストラクタ<em>N</em>は <strong>リフトしない</strong> 、そのため、<code><em>N</em> ⊥</code>は<code>⊥</code>と同じである。</p>
+<p>次の例は<code>data</code>(代数的データ型)と<code>type</code>(型シノニム)、<code>newtype</code>(型の改名)との差を明確にする。以下の宣言が与えられる。</p>
+<pre><code class="language-hs">data D1 = D1 Int  
+data D2 = D2 !Int  
+type S = Int  
+newtype N = N Int  
+d1 (D1 i) = 42  
+d2 (D2 i) = 42  
+s i = 42  
+n (N i) = 42
+</code></pre>
+<p>式<code>(d1 ⊥)</code>と<code>(d2 ⊥)</code>、<code>(d2 (D2 ⊥))</code>は<code>⊥</code>と全て等しい。一方で、<code>(n ⊥)</code>と<code>(n (N ⊥))</code>、<code>(d1 (D1 ⊥))</code>、<code>(s ⊥)</code>は<code>42</code>と全て等しくなる。特別に、<code>(N ⊥)</code>は<code>(D1 ⊥)</code>が<code>⊥</code>と等しくないときは<code>⊥</code>と等しくなる。</p>
+<p><code>newtype</code>宣言のオプション的に派生部分は<code>data</code>宣言の派生要素と同じ方法で扱われる。セクション<a href="%22#4.3.3%22">4.3.3</a>を参照すること。</p>
+<p><code>newtype</code>宣言はフィールド名をつける構文を使用するかもしれず、もちろんそのフィールドしかないかもしれない。従って、</p>
+<pre><code class="language-hs">newtype Age = Age { unAge :: Int }
+</code></pre>
+<p>はコンストラクタとデコンストラクタの両方をスコープに持ち込む。</p>
+<pre><code class="language-hs">Age   :: Int -&gt; Age  
+unAge :: Age -&gt; Int
+</code></pre>
+<a class="header" href="#型クラスとオーバーロード" id="型クラスとオーバーロード"><h2>型クラスとオーバーロード</h2></a>
+<a class="header" href="#クラス宣言" id="クラス宣言"><h3>クラス宣言</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td> <em>topdecl</em></td><td>→</td><td><code>class</code> [<em>scontext</em> =&gt;] <em>tycls</em> tyvar [<code>where</code> <em>cdecls</em>]</td><td> </td></tr>
+<tr><td><em>scontext</em></td><td>→</td><td><em>simpleclass</em></td><td> </td></tr>
+<tr><td> </td><td>|</td><td>( <em>simpleclass<sub>1</sub></em> <code>,</code> … <code>,</code> <em>simpleclass<sub>n</sub></em> )</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td><em>simpleclass</em></td><td>→</td><td><em>qtycls</em> <em>tyvar</em></td><td> </td></tr>
+<tr><td>  <em>cdecls</em></td><td>→</td><td>{ <em>cdecl<sub>1</sub></em> <code>;</code> … <code>;</code> <em>cdecl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>   <em>cdecl</em></td><td>→</td><td><em>gendecl</em> </td></tr>
+<tr><td> </td><td>|</td><td>(<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+</tbody></table>
+<p><strong>クラス宣言</strong> は新しいクラスとその中のオペレーション(<strong>クラスメソッド</strong>)を生成する。クラス宣言は次の一般的な形式を持つ。</p>
+<pre><code class="language-hs">class cx =&gt; C u where cdecls
+</code></pre>
+<p>これは新しいクラスの名前<em>C</em>を生成し、型変数<em>u</em>はそのクラスの本体のクラスメソッドシグネチャ上でのみスコープされる。内容<em>cx</em>は下で説明する<em>C</em>のスーパークラスを明記する。<em>cx</em>の中で参照されるであろう型変数のみが<em>u</em>である。</p>
+<p>スーパークラスの関係は循環してはいけない。例)指示された非環式のグラフを構成しなければいけない。</p>
+<p><code>class</code>宣言の<em>cdecls</em>部分は3種類の宣言を含む。</p>
+<ul>
+<li>クラス宣言は新しい<em>クラスメソッドv<sub>i</sub></em>を生成し、スコープは<em>class</em>宣言の外側に展開する。
+クラス宣言のクラスメソッドは<em>cdecls</em>内の明示的な型シグネチャ<em>v<sub>i</sub> :: cx<sub>i</sub> =&gt; t<sub>i</sub></em>にある<em>v<sub>i</sub></em>そのものである。
+クラスメソッドは変数束縛とフィールド名と一緒に最上位の名前空間を共有する。
+それらはスコープの他の最上位の束縛と衝突してはならない。
+そのため、クラスメソッドは最上位の定義やフィールド名、他のクラスメソッドのように同じ名前を持つことはできない。
+<br><br>
+トップレベルのクラスメソッド<em>v<sub>i</sub></em>の型は<em>v<sub>i</sub> :: ∀u,<span class="overline">w</span>.(Cu,cx<sub>i</sub>) ⇒ t<sub>i</sub></em>である。
+<em>t<sub>i</sub></em>は<em>u</em>を言及しなければいけないし、<em>u</em>より型変数<em><span class="overline">w</span></em>を言及するかもしれない。
+その場合、<em>v<sub>i</sub></em>の型は<em>u</em>と<em><span class="overline">w</span></em>の両方に多相的である。
+<em>cx<sub>i</sub></em>は<em><span class="overline">w</span></em>のみ束縛するだろう。
+特に、<em>cx<sub>i</sub></em>は<em>u</em>を束縛しなくともよい。
+例えば、
+<pre><code class="language-hs">class Foo a where
+op :: Num b =&gt; a -&gt; b -&gt; a
+</code></pre>
+<br>
+ここでの<code>op</code>型は<code>∀ <em>a</em>, <em>b</em>.(<code>Foo</code> <em>a</em>, Num <em>b</em>)   ⇒  <em>a</em>  →  <em>b</em>  →  <em>a</em>.</code>である。</li>
+<li><em>cdecls</em>は(他の値ではなく)そのクラスのメソッドに対する <strong>結合性宣言</strong> を含んでもよい。
+しかしながら、クラスメソッドはトップレベルの値を宣言することから、他の選択肢としてクラスメソッドの結合性宣言はクラス宣言の外側であるトップレベルに現れてもよい。</li>
+<li>最後に、<em>cdecls</em>は<em>v<sub>i</sub></em>のいずれかの <strong>デフォルトクラスメソッド</strong> を含められる(セクション<a href="#a%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.2</a>)。
+デフォルトメソッドの宣言は通常、左手側が変数か関数定義のみであろうことを除いて値の定義である。
+例えば、
+<pre><code class="language-hs">class Foo a where  
+op1, op2 :: a -&gt; a  
+(op1, op2) = ...
+</code></pre>
+<br>
+は、許可されない。デフォルト宣言の左手側がパターンだからだ。</li>
+</ul>
+<p>これらのケース以外に、<em>cdecls</em>内の宣言は許されない。</p>
+<p><code>where</code>部を伴わない<code>class</code>宣言はオリジナルの全てのクラスメソッドを継承する巨大なクラスのコレクションを合成することに便利かもしれない。
+例えば、</p>
+<pre><code class="language-hs">class  (Read a, Show a) =&gt; Textual a
+</code></pre>
+<p>このような場合、型が全スーパークラスのインスタンスであるなら、たとえサブクラスが直ちにクラスメソッドを持たなくても、サブクラスのインスタンスに <strong>自動的にはならず</strong> 、<code>instance</code>宣言は<code>where</code>部を伴わず明示的に与えられなければならない。</p>
+<a class="header" href="#インスタンス宣言" id="インスタンス宣言"><h3>インスタンス宣言</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>topdecl</em></td><td>→</td><td><code>instance</code> [<em>scontext</em> =&gt;] <em>qtycls</em> <em>inst</em> [<code>where</code> <em>idecls</em>]</td><td> </td></tr>
+<tr><td>   <em>inst</em></td><td>→</td><td><em>gtycon</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td>( <em>gtycon</em> <em>tyvar<sub>1</sub></em> … <em>tyvar<sub>k</sub></em> )</td><td>(<em>k</em> ≥ 0, <em>tyvars</em>  <em>distinct</em>)</td></tr>
+<tr><td>  </td><td>|</td><td>( <em>tyvar<sub>1</sub></em> , … , <em>tyvar<sub>k</sub></em> )</td><td>(<em>k</em> ≥ 2, <em>tyvars</em>  <em>distinct</em>)</td></tr>
+<tr><td>  </td><td>|</td><td>[ <em>tyvar</em> ]</td><td> </td></tr>
+<tr><td>  </td><td>|</td><td>( <em>tyvar<sub>1</sub></em> -&gt; <em>tyvar<sub>2</sub></em> )</td><td>(<em>tyvar<sub>1</sub></em>  <em>and</em> <em>tyvar<sub>2</sub></em>  <em>distinct</em>)</td></tr>
+<tr><td> <em>idecls</em></td><td>→</td><td>{ <em>idecl<sub>1</sub></em> ; … ; <em>idecl<sub>n</sub></em> }</td><td>(<em>n</em> ≥ 0)</td></tr>
+<tr><td>  <em>idecl</em></td><td>→</td><td>(<em>funlhs</em> | <em>var</em>) <em>rhs</em></td><td> </td></tr>
+<tr><td>  </td><td>|</td><td> </td><td>(<em>empty</em>)</td></tr>
+</tbody></table>
+<p><strong>インスタンス宣言</strong> はクラスのインスタンスを生成する。クラス宣言は<code>class <em>cx</em> =&gt; <em>C u</em> where { <em>cbody</em> }</code>という風に行う。対応するインスタンス宣言の一般的な形式は次のものになる：<code>instance <em>cx′</em> =&gt; <em>C (T u<sub>1</sub> … u<sub>k</sub>)</em> where { <em>d</em> } where <em>k</em> ≥ 0</code>。型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>はシンプルな型変数<em>u<sub>1</sub>, … u<sub>k</sub></em>に提供される型コンストラクタ<em>T</em>の形式を取らなければいけない。さらに<em>T</em>は型シノニムであってはならず、<em>u<sub>i</sub></em>は全て互いに異ならなければならない。</p>
+<p>以下のようなインスタンス宣言は禁止である。</p>
+<pre><code class="language-hs">instance C (a,a) where ...  
+instance C (Int,a) where ...  
+instance C [[a]] where ...
+</code></pre>
+<p>宣言<em>d</em>は<em>C</em>のクラスメソッドのみの束縛を含められる。スコープにないクラスメソッドへの束縛を与えることは不正であるが、スコープ内にあるものの名前は重要ではない。特に、それは修飾子付きの名前でもよいであろう。(このルールはセクション<a href="./5-modules.html#a">5.2</a>のエクスポートリスト内に従属する名前に使われることと同一である。)例として、<code>range</code>は修飾子付きの名前<code>Data.Ix.range</code>のみがスコープ内にあるが、これは正当である。</p>
+<pre><code class="language-hs">module A where  
+  import qualified Data.Ix  
+
+  instance Data.Ix.Ix T where  
+    range = ...
+</code></pre>
+<p><code>class</code>宣言内にすでに与えられているゆえに、宣言はあらゆる型シグネチャまたは固定宣言を含めないであろう。デフォルトのクラスメソッド(セクション<a href="#a%E3%82%AF%E3%83%A9%E3%82%B9%E5%AE%A3%E8%A8%80">4.3.1</a>)の場合のように、メソッド宣言は変数または関数定義の形式を取らなければならない。</p>
+<p>もし、いくつかのクラスメソッドに束縛が与えられなければ、その時、<code>class</code>宣言内の対応するデフォルトのクラスメソッドは(提供しているなら)使われる。デフォルトが存在しないなら、その時、このインスタンスのクラスメソッドは<code>undefined</code>に束縛され、コンパイル時エラーは発生しない。</p>
+<p>型<em>T</em>をクラス<em>C</em>のインスタンスであるよう生成する<code>instance</code>宣言は<em>C-Tインスタンス宣言</em>と呼ばれ、以下の静的な制約に従うべきである。</p>
+<ul>
+<li>
+<p>型はプログラム上で1回以上個々のクラスのインスタンスのように宣言されるだろう。</p>
+</li>
+<li>
+<p>クラスと型は同じカインドを持たなければいけない。これはセクション<a href="#a%E3%82%AB%E3%82%A4%E3%83%B3%E3%83%89%E3%81%AE%E6%8E%A8%E8%AB%96">4.6</a>で説明される使用するカインドの推論を決定されることが可能だ。</p>
+</li>
+<li>
+<p>インスタンス型<em>(T u<sub>1</sub> … u<sub>k</sub>)</em>内の型変数がインスタンス内容<em>cx'</em>に束縛を満たすということを推測するべきだ。この推測の元、次の2つの状態も満たされなければならない。</p>
+<ol>
+<li><em>C</em>のスーパークラスの内容<em>cx[(T u<sub>1</sub> … u<sub>k</sub>)∕u] </em>によって表現された束縛が満たされなければならない。言い換えると、<em>T</em>は<em>C</em>のスーパークラスの各インスタンスでなければならず、全スーパークラスのインスタンスの内容は<em>cx'</em>によって暗示されなければいけない。</li>
+<li>正しく型付けされた<em>d</em>内のクラスメソッド宣言に要求されるインスタンス型内の型変数上の束縛も満たされなければいけない。</li>
+</ol>
+<p>実際に異常なケースを除いては、インスタンス宣言から上記2つの制約を満たす最も一般的なインスタンス文脈<em>cx'</em>を推論することが可能である。だが、それでも明示的なインスタンスの内容を書くことは強制される。</p>
+</li>
+</ul>
+<p>次の例はスーパークラスインスタンスによって強いられた制限事項を説明する。</p>
+<pre><code class="language-hs">class Foo a =&gt; Bar a where ...  
+
+instance (Eq a, Show a) =&gt; Foo [a] where ...  
+
+instance Num a =&gt; Bar [a] where ...
+</code></pre>
+<p>この例はHaskellにおいて正常である。<code>Foo</code>は<code>Bar</code>のスーパークラスであるため、2つ目のインスタンス宣言は<code>[a]</code>が仮定<code>Num a</code>の下で<code>Foo</code>のインスタンスである時に正常である。1つめのインスタンス宣言はこの仮定の下で<code>[a]</code>が<code>Foo</code>のインスタンスであると実際に告げる。なぜなら、<code>Eq</code>と<code>Show</code>は<code>Num</code>のスーパークラスだからだ。</p>
+<p>もし2つのインスタンス宣言が代わりにこのように読むなら。</p>
+<pre><code class="language-hs">instance Num a =&gt; Foo [a] where ...  
+
+instance (Eq a, Show a) =&gt; Bar [a] where ...
+</code></pre>
+<p>そのとき、そのプログラムは不正である。2つ目のインスタンス宣言は<code>[a]</code>が仮定<code>(Eq a, Show a)</code>の下、<code>Foo</code>のインスタンスであるときのみ正常である。しかし、<code>[a]</code>がもっと強い仮定<code>Num a</code>の下で<code>Foo</code>のインスタンスのみであることから、これは保持しない。</p>
+<p><code>instance</code>宣言のさらに進んだ例は<a href="./9-standard-prelude.html">9章</a>で見つけられるだろう。</p>
+<a class="header" href="#導出されたインスタンス" id="導出されたインスタンス"><h3>導出されたインスタンス</h3></a>
+<p>セクション<a href="#%E4%BB%A3%E6%95%B0%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B%E5%AE%A3%E8%A8%80">4.2.1</a>で言及したように、<code>data</code>と<code>newtype</code>の宣言は任意の<code>deriving</code>の形式を含んでいる。
+もしその形式が含まれていたら、そのデータ型に対して <strong>導出されたインスタンス宣言</strong> が指定されたクラスのそれぞれについて自動的に生成される。
+これらのインスタンスはユーザー定義されたインスタンスと同じ制限事項に従うべきである。
+型<em>T</em>へクラス<em>C</em>を導出している時、<em>C</em>の全スーパークラスのインスタンスは<em>T</em>のために存在しなければならず、明示的な<code>instance</code>宣言を経由または<code>deriving</code>句にスーパークラスを含むことを経由するかのいずれかである。</p>
+<p>導出されたインスタンスはユーザー定義のデータ型へ便利なよく使われるオペレーションを提供する。
+例えば、クラス<code>Eq</code>の中のデータ型に導出されたインスタンスが<code>==</code>と<code>/=</code>オペレーションを定義すると、それらを定義する必要からプログラマーを解放する。</p>
+<p>導出されたインスタンスが許されるPreludeのクラスは<code>Eq</code>と<code>Ord</code>、<code>Enum</code>、<code>Bounded</code>、<code>Show</code>、<code>Read</code>のみであり、図<a href="./6-predefined-types-and-classes.html#a">6.1</a>で全て図示される。
+これらの句それぞれに生成される導出されたインスタンスの様相の精密な詳細は<a href="./11-specification-of-derived-instances.html">11</a>章に提供されており、そこにはそのような導出されたインスタンスが可能である時の仕様書を含んでいる。
+標準ライブラリによって定義された句も導出可能であろう。</p>
+<p>もし<code>deriving</code>の形式で名付けられたクラス上で<code>instance</code>宣言を導出することが可能でないなら、静的エラーが結果となる。
+例えば、すべてのデータ型が正しく<code>Enum</code>のクラスメソッドをサポートできるわけではない。
+それはまた導出されたクラスに明示的な<code>instance</code>宣言を与えるため静的エラーになる。</p>
+<p>もし<code>deriving</code>形式が<code>data</code>または<code>newtype</code>宣言から省略されたなら、そのときそのデータ型への <strong>いかなる</strong> インスタンス宣言も導出されない。
+すなわち、<code>deriving</code>形式を省くことは空の導出の形式<code>: deriving()</code>を含んでいることと同等である。</p>
+<a class="header" href="#曖昧な型とオーバーロードされた数値演算子の既定値" id="曖昧な型とオーバーロードされた数値演算子の既定値"><h3>曖昧な型とオーバーロードされた数値演算子の既定値</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>topdecl</em></td><td>→</td><td><code>default</code> (<em>type<sub>1</sub></em> <code>,</code> … <code>,</code> <em>type<sub>n</sub></em>)</td><td>(<em>n</em> ≥ 0)</td></tr>
+</tbody></table>
+<p>Haskellスタイルのオーバーロード固有の問題は <strong>曖昧な型</strong> の可能性があるということである。
+例えば、<a href="./11-specification-of-derived-instances">11</a>章で定義された<code>read</code>と<code>show</code>関数を使い、もし単なる<code>Int</code>と<code>Bool</code>が<code>Read</code>と<code>Show</code>のメンバーなら、その時の次の式</p>
+<pre><code class="language-hs">let x = read &quot;...&quot; in show x  -- invalid
+</code></pre>
+<p>は曖昧である。なぜなら<code>show</code>と<code>read</code>の型は、下の2つの式の</p>
+<pre><code class="language-hs">show :: ∀ a. Show  a  ⇒  a  →  String
+read :: ∀ a. Read  a  ⇒  String  →  a
+</code></pre>
+<p>両方のケースで<code>a</code>を<code>Int</code>または<code>Bool</code>のどちらでもインスタンス化で満たすことが可能だからだ。
+そのような式は不適切な型付けだと考えられ、静的エラーである。</p>
+<p>型<code>∀ <em><span class="overline">u</span>. cx  ⇒  t</em></code>内で、もし<em>t</em>ではなく<em>ex</em>の中に存在する<em><span class="overline">u</span></em>に型変数<em>u</em>があるなら、式<code>e</code>が <strong>曖昧な型</strong> を持つと言う。
+そのような型は不正である。</p>
+<p>例えば、先程の<code>show</code>と<code>read</code>を伴う式はその型が<code>∀ <em>a</em>.  Show  <em>a</em>, Read  <em>a</em>  ⇒  String</code>であるから曖昧な型を持つ。</p>
+<p>曖昧な型はユーザーからの入力によってのみ回避できる。
+その方法のひとつはセクション<a href="./3-expressions#a%E5%BC%8F%E3%81%AE%E5%9E%8B%E3%82%B7%E3%82%B0%E3%83%8D%E3%83%81%E3%83%A3">3.16</a>で説明された <strong>式の型シグネチャ</strong> の使用を通じてである。
+例として、先程与えられた曖昧な式において、以下のように書くことで、</p>
+<pre><code class="language-hs">let x = read &quot;...&quot; in show (x::Bool)
+</code></pre>
+<p>型から曖昧さを取り除く。</p>
+<p>型シグネチャにより固定された型を与える以外にも、曖昧な式はある変数と同じ型にしなければならない場合がしばしばある。
+これは関数<code>asTypeOf</code>:<code><em>x</em> <code>asTypeOf</code> <em>y</em></code>(<a href="./9-standard-prelude.html">9</a>章)の用途が<em>x</em>の値を持つということであるが、<em>x</em>と<em>y</em>は同じ型を持つように強制される。
+例えば、</p>
+<pre><code class="language-hs">approxSqrt x = encodeFloat 1 (exponent x ‘div‘ 2) ‘asTypeOf‘ x
+</code></pre>
+<p>(<code>encodeFloat</code>と<code>exponent</code>の説明についてはセクション<a href="./6-predefined-types-and-classes.html">6.4.6</a>を参照)</p>
+<p><code>Num</code>クラスの曖昧さはとてもありふれているので、Haskellはこれを解決する別の方法を提供している。
+それは<strong>デフォルト宣言</strong>である。
+<em>n</em> ≥ 0で、各<em>t<sub>i</sub></em>が<code>Num <em>t<sub>i</sub></em></code>が保持する<code>default (<em>t<sub>1</sub></em> , … , <em>t<sub>n</sub></em>)</code>。
+曖昧な型が発見された状態で、もし以下の条件を満たすなら、曖昧な型変数<code>v</code>はデフォルト可能である。</p>
+<ul>
+<li><em>v</em>は<code><em>C v</em></code>の形の制約の中でのみ出現し(ただし<em>C</em>はクラスである)、かつ</li>
+<li>少なくともこれらのクラスの一つが数値クラス(<code>Num</code>、または<code>Num</code>のサブクラス)であり、</li>
+<li>これらのクラスの全てがPreludeまたは標準ライブラリの中で定義されている(図<a href="./6-predefined-types-and-classes.html#a">6.2</a>-<a href="./6-predefined-types-and-classes.html#a">6.3</a>は数値クラスを示し、図<a href="./6-predefined-types-and-classes.html#a">6.1</a>はPrelude内で定義されたクラスを示す)。</li>
+</ul>
+<p>各デフォルト可能な変数は全ての曖昧な変数のクラスのインスタンスであるデフォルトリストの初めの型によって置き換えられる。
+そのような型が見つからなければ、静的エラーである。</p>
+<p>ひとつのデフォルト宣言のみがモジュールごとに許可され、その効果はそのモジュールに制限される。
+もしデフォルト宣言がモジュール内で与えられないなら、その時は次のようなものであると仮定する。</p>
+<pre><code class="language-hs">default (Integer, Double)
+</code></pre>
+<p>空のデフォルト宣言<code>default ()</code>はモジュール内の全てのデフォルトをオフにする。</p>
+<a class="header" href="#ネストされた宣言" id="ネストされた宣言"><h2>ネストされた宣言</h2></a>
+<p>次の宣言はモジュールのトップレベルを含むどんな宣言リストでも使用される。</p>
+<a class="header" href="#型シグネチャ" id="型シグネチャ"><h3>型シグネチャ</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>gendecl</em></td><td>→</td><td><em>vars</em> <code>::</code> [<em>context</em> <code>=&gt;</code>] </td><td><em>type</em></td></tr>
+<tr><td>   <em>vars</em></td><td>→</td><td><em>var<sub>1</sub></em> <code>,</code> …<code>,</code> <em>var<sub>n</sub></em>      </td><td>(<em>n</em> ≥ 1)</td></tr>
+</tbody></table>
+<p>型シグネチャは可能な限り内容を尊重して変数の型を明示する。型シグネチャは<em>i</em>がそれぞれ1から<em>n</em>を取る<code><em>v<sub>i</sub> :: cx =&gt; t</em></code>を表明することと同等な形式: <code><em>v<sub>1</sub>, …, v<sub>n</sub> :: cx =&gt; t</em></code>を持つ。
+各<em>v<sub>i</sub></em>は型シグネチャを含む同じ宣言リストに束縛する値を持たなければいけない。
+例えば、型シグネチャをスコープ外へ束縛された変数へ与えることは不正である。
+その上、たとえそのシグネチャが同一であっても、一つの変数に一つ以上の型シグネチャを与えることは不正である。</p>
+<p>セクション<a href="#a%E5%9E%8B%E3%81%AE%E6%A7%8B%E6%96%87">4.1.2</a>で言及されたように、シグネチャに現れた全ての型変数はそのシグネチャ上で全称量化され、従って型変数のスコープはそれを含む型シグネチャに制限される。
+例として、次の宣言、</p>
+<pre><code class="language-hs">f :: a -&gt; a  
+f x = x :: a                  -- invalid
+</code></pre>
+<p>2つの型シグネチャ内の<code>a</code>は完全に異なる。
+それにまた<code>x</code>が型<code>∀ <em>a. a</em></code>を持たないことから、これらの宣言は静的エラーを含む。
+(<code>x</code>の型は<code>f</code>の型次第であり、現状ではHaskellで依存型をもつ変数のシグネチャを指定する方法はない。このことはセクション<a href="#a%E5%8D%98%E7%9B%B8%E6%80%A7">4.5.4</a>で説明される)</p>
+<p>もし、与えられた問題が変数<em>f</em>のシグネチャを含むなら、その時各々の<em>f</em>の使用は宣言された型を持つように扱われる。
+もし同じ型が定義している<em>f</em>の実体へ推論されることもできなければ、静的エラーである。</p>
+<p>もし変数<code>f</code>が対応する型シグネチャ宣言を提供しないで定義されるなら、その時それ自身の宣言グループ(セクション<a href="#a%E9%96%A2%E6%95%B0%E3%81%A8%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E6%9D%9F%E7%B8%9B%E3%81%AE%E9%9D%99%E7%9A%84%E3%81%AA%E6%84%8F%E5%91%B3%E8%AB%96">4.5</a>)の外側の各<code>f</code>の使用は対応する推論される型、または <strong>主要な</strong> 型を持つように扱われる。
+しかしながら、型推論がまだ可能であることを保証するために、定義する実体とその宣言グループを伴う全ての<code>f</code>の使用が同じ単相型を持たなければいけない。(セクション<a href="#a%E4%B8%80%E8%88%AC%E5%8C%96">4.5.2</a>で述べるように、主要な型は一般化によって得られる。)</p>
+<p>例えば、もし以下のように定義したら、</p>
+<pre><code class="language-hs">sqr x  =  x⋆x
+</code></pre>
+<p>その時その主要な型は<code>sqr  ::  ∀ a.  Num  a  ⇒  a  →  a</code>であり、<code>sqr 5</code>または<code>sqr 0.1</code>のような適用を許す。
+次のようにより明確に型を宣言することも正常である。</p>
+<pre><code class="language-hs">sqr :: Int -&gt; Int
+</code></pre>
+<p>しかし、この場合<code>sqr 0.1</code>のような適用は不正である。
+次のような型シグネチャは</p>
+<pre><code class="language-hs">sqr :: (Num a, Num b) =&gt; a -&gt; b     -- invalid  
+sqr :: a -&gt; a                       -- invalid
+</code></pre>
+<p>それらは<code>sqr</code>の主要な型より一般的であるが、不正である。</p>
+<p>型シグネチャは <strong>多相的再帰</strong> をサポートすることにも使われることができる。
+次の定義は異常であるが、型シグネチャを使って推論されるものよりも一般的な型をどのようにして指定すればよいか、ということのよい説明である。</p>
+<pre><code class="language-hs">data T a  =  K (T Int) (T a)
+f         :: T a -&gt; a
+f (K x y) =  if f x == 1 then f y else undefined
+</code></pre>
+<p>もしシグネチャ宣言を取り除くなら、<code>f</code>の型は<code>f</code>への引数が<code>T Int</code>である初めの再帰的な呼び出しの結果、<code>T Int -&gt; Int</code>のように推論される。
+多相的再帰はユーザーが<code>T a -&gt; a</code>のように、より一般的な型シグネチャを供給することを許可する。</p>
+<a class="header" href="#結合性宣言" id="結合性宣言"><h3>結合性宣言</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td><em>gendecl</em></td><td>→</td><td><em>fixity</em> [<em>integer</em>] <em>ops</em></td><td> </td></tr>
+<tr><td><em>fixity</em></td><td>→</td><td><code>infixl</code> | <code>infixr</code> | <code>infix</code></td><td> </td></tr>
+<tr><td><em>ops</em></td><td>→</td><td>    <em>op<sub>1</sub></em> , … , <em>op<sub>n</sub></em> </td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td><em>op</em></td><td>→</td><td>     <em>varop</em> | <em>conop</em> </td><td> </td></tr>
+</tbody></table>
+<p>結合性宣言は一つ以上の演算子の結合性と束縛の優先順位を与える。
+結合性宣言の中の<em>integer</em>は0から9の範囲でなければならない。
+結合性宣言は型シグネチャが現れるところや、型シグネチャのように各自の演算子のプロパティを宣言する場所ならどこでも現れることができる。
+また型シグネチャのように、結合性宣言は演算子の宣言と同じ宣言の列でのみ出現することができ、そして演算子に対しては高々1つの結合性宣言のみ与えてよい。
+(クラスメソッドは小さな例外であり、それらの結合性宣言はクラス宣言の中またはトップレベルに出現できる。)</p>
+<p>non-とleft-、right-結合(それぞれ<code>infix</code>と<code>infixl</code>、<code>infixr</code>)の3種類の結合性と、0から9を含んだ(レベル0は最も小さい結合を束縛し、レベル9は最も大きい結合を束縛する)10の優先順位のレベルがある。
+もし <strong>桁</strong> が省略されるなら、レベル9と仮定される。
+結合性宣言を欠いた演算子は<code>infixl 9</code>と仮定される(結合性の使い方のより詳細はセクション<a href="./3-expressions.html">3</a>を参照)。</p>
+<p>テーブル<a href="#table-4.1">4.1</a>はPreduleに定義された演算子の結合性と優先順位をリストアップする。</p>
+<hr />
+<p><a name="table-4.1"></a></p>
+<table><thead><tr><th>優先順位</th><th>                                 左結合演算子</th><th>                                               非結合演算子</th><th>               右結合演算子</th></tr></thead><tbody>
+<tr><td align="right">      9</td><td align="left">                                          <code>!!</code></td><td align="left">                                                            </td><td align="left">                        <code>.</code> </td></tr>
+<tr><td align="right">      8</td><td align="left">                                              </td><td align="left">                                                            </td><td align="left">             <code>^</code>, <code>^^</code>,<code>⋆⋆</code> </td></tr>
+<tr><td align="right">      7</td><td align="left"> <code>⋆</code>,<code>/</code>,<code>'div'</code>,<br><code>'mod'</code>,<code>'rem'</code>, <code>'quot'</code></td><td align="left">                                                            </td><td align="left">                            </td></tr>
+<tr><td align="right">      6</td><td align="left">                                         <code>+,-</code></td><td align="left">                                                            </td><td align="left">                            </td></tr>
+<tr><td align="right">      5</td><td align="left">                                              </td><td align="left">                                                            </td><td align="left">                  <code>:</code>, <code>++</code> </td></tr>
+<tr><td align="right">      4</td><td align="left">                                              </td><td align="left"> <code>==</code>, <code>/=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>,<br><code>'elem'</code>, <code>'notElem'</code> </td><td align="left">                            </td></tr>
+<tr><td align="right">      3</td><td align="left">                                              </td><td align="left">                                                            </td><td align="left">                       <code>&amp;&amp;</code> </td></tr>
+<tr><td align="right">      2</td><td align="left">                                              </td><td align="left">                                                            </td><td align="left">  <code>||</code> </td></tr>
+<tr><td align="right">      1</td><td align="left">                                   <code>&gt;&gt;</code>, <code>&gt;&gt;=</code></td><td align="left">                                                            </td><td align="left">                            </td></tr>
+<tr><td align="right">      0</td><td align="left">                                              </td><td align="left">                                                            </td><td align="left">          <code>$</code>, <code>$!</code>, <code>'seq'</code></td></tr>
+</tbody></table>
+<p><strong>テーブル4.1</strong> Prelude演算子の優先順位と結合性</p>
+<hr />
+<p>結合性は型と同様に特定の実体(コンストラクタまたは変数)の性質であり、実体がもつ <strong>名前</strong> のプロパティではない。
+例えば、</p>
+<pre><code class="language-hs">module Bar( op ) where  
+  infixr 7 ‘op‘  
+  op = ...  
+
+module Foo where  
+  import qualified Bar  
+  infix 3 ‘op‘  
+
+  a ‘op‘ b = (a ‘Bar.op‘ b) + 1  
+
+  f x = let  
+            p ‘op‘ q = (p ‘Foo.op‘ q) ⋆ 2  
+        in ...
+</code></pre>
+<p>ここでの、<code>'Bar.op'</code>は<code>infixr 7</code>で、<code>‘Foo.op‘</code>は<code>infix 3</code>であり、<code>f</code>の右手側の<code>op</code>のネストされた定義は<code>infixl 9</code>のデフォルトの結合性を持つ。
+(ネストされた結合性宣言を伴う<code>op</code>のネストされた定義に結合性を与えることもまた可能であろう。)</p>
+<a class="header" href="#関数とパターン束縛" id="関数とパターン束縛"><h3>関数とパターン束縛</h3></a>
+<table><thead><tr></tr></thead><tbody>
+<tr><td>  <em>decl</em></td><td>→</td><td>(<em>funlhs</em> | <em>pat</em>) <em>rhs</em></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>funlhs</em></td><td>→</td><td><em>var</em> <em>apat</em> <code>{</code> <em>apat</em> <code>}</code></td><td> </td></tr>
+<tr><td>            </td><td>|</td><td><em>pat</em> <em>varop</em> <em>pat</em></td><td> </td></tr>
+<tr><td>            </td><td>|</td><td> <code>(</code> <em>funlhs</em> <code>)</code> <em>apat</em> <code>{</code> <em>apat</em> <code>}</code></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td>   <em>rhs</em></td><td>→</td><td><code>=</code> <em>exp</em> [<code>where</code> <em>decls</em>]</td><td> </td></tr>
+<tr><td>          </td><td>|</td><td>     <em>gdrhs</em> [<code>where</code> <em>decls</em>]</td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td> <em>gdrhs</em></td><td>→</td><td><em>guards</em> = <em>exp</em> <code>[</code><em>gdrhs</em><code>]</code></td><td> </td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>guards</em></td><td>→</td><td> | <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em></td><td>(<em>n</em> ≥ 1)</td></tr>
+<tr><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td><em>guard</em></td><td>→</td><td><em>pat</em> <code>&lt;-</code> <em>infixexp</em>           </td><td>(pattern guard)</td></tr>
+<tr><td>         </td><td>|</td><td><code>let</code> <em>decls</em>                        </td><td>(local declaration)</td></tr>
+<tr><td>         </td><td>|</td><td><em>infixexp</em>                           </td><td>(boolean guard)</td></tr>
+</tbody></table>
+<p>この文法に置いて我々は次の2つのケースを区別する: <strong>パターンの束縛</strong> がおきているとき(そのとき左手側は<code>pat</code>である)と、それ以外の <strong>関数束縛</strong> と呼ばれる束縛がおきているときである。
+どちらの束縛もモジュールのトップレベルでまたは<code>where</code>か<code>let</code>の構成物の範囲で現れることができる。</p>
+<a class="header" href="#関数束縛" id="関数束縛"><h4>関数束縛</h4></a>
+<p>関数束縛は関数の値に変数を束縛する。
+変数<em>x</em>へ束縛する関数の一般的な形式は以下のものである。</p>
+<pre><code><em>x	p<sub>11</sub> … p<sub>1k</sub>	match<sub>1</sub></em>
+…
+<em>x	p<sub>n1</sub> … p<sub>nk</sub>	match<sub>n</sub></em>
+</code></pre>
+<p>上の各<em>p<sub>ij</sub></em>はパターンで、各<em>match<sub>i</sub></em>は次の一般的形式</p>
+<pre><code>= <em>e<sub>i</sub></em> where { <em>decls<sub>i</sub></em> }
+</code></pre>
+<p>または、</p>
+<pre><code>| <em>gs<sub>i1</sub>  =  e<sub>i1</sub> </em>
+…
+ | <em>gs<sub>imi</sub></em>  =  <em>e<sub>im<sub>i</sub></sub></em>
+            where { <em>decls<sub>i</sub></em> }
+</code></pre>
+<p>であり、<em>n</em> ≥ 1, 1 ≤ <em>i</em> ≤ <em>n</em>, <em>m<sub>i</sub></em> ≥ 1である。
+前者は後者の特別な場合であるので、簡略記法として扱われる。
+すなわち、</p>
+<pre><code> | `True` = <em>e<sub>i</sub></em> `where` { <em>decls<sub>i</sub></em> } </code></pre>
+<p>注意点として関数を定義している全ての句は隣接しなければならず、各句の中のパターンの数は同じでなければならない。
+各適合に対応するパターンのセットは<strong>線形</strong>でなければならず、変数がその実体のセットの中に一回以上現れることは許されていない。</p>
+<p>関数の値を中置演算子に束縛するための代わりの構文が与えられている。
+例えば、これらの3つの関数定義は全て等しい。</p>
+<pre><code class="language-hs">plus x y z = x+y+z
+x ‘plus‘ y = \ z -&gt; x+y+z
+(x ‘plus‘ y) z = x+y+z
+</code></pre>
+<p>結合性の解決は、関数の束縛を中置にしたものにも式の場合と同様に適用することに注意せよ(セクション<a href="./10-syntax-reference.html#a">10.6</a>)。
+関数束縛に等しい左側に適用している結合性の解決はトップレベルで定義されている<em>varop</em>を残さなければいけない。
+例えば、もし優先度6で新しい演算子<em>##</em>を定義しているなら、その時この定義は不正である。</p>
+<pre><code class="language-hs">a ## b : xs = exp
+</code></pre>
+<p>なぜなら、<code>:</code>は優先度5を持ち、従って左手側は<code>(a <em>##</em> x) : xs</code>に解決され、この式は<code>(a <em>##</em> x)</code>が正常なパターンでないためパターン束縛にはできない</p>
+<div class="column">
+<p><strong>変換:</strong> 関数への一般的な束縛の形式はこの等式に構文的に等しい(すなわち:シンプルなパターン束縛)。</p>
+<pre><code><em>x</em> = \ <em>x<sub>1</sub></em> … <em>x<sub>k</sub></em> -> case (<em>x<sub>1</sub></em>, …, <em>x<sub>k</sub></em>) of
+(<em>p<sub>11</sub></em>, …, <em>p<sub>1k</sub></em>) <em>match<sub>1</sub></em>
+…
+(<em>p<sub>n1</sub></em>, …, <em>p<sub>nk</sub></em>) <em>match<sub>n</sub></em>
+</code></pre>
+<p><em>x<sub>i</sub></em>は新しい識別子である。</p>
+</div>
+<a class="header" href="#パターン束縛" id="パターン束縛"><h4>パターン束縛</h4></a>
+<p>パターン束縛は値に変数を束縛する。
+<strong>シンプルな</strong> パターン束縛は<em>p = e</em>の形式を持つ。
+まるでその前に暗黙の<code>~</code>があるかのように、パターン<em>p</em>は反駁できないパターンとして「遅延的に」適合される。
+セクション<a href="./3-expressions.html#aLet%E5%BC%8F">3.12</a>にその変換を確かめられる。</p>
+<p>パターン束縛の <strong>一般的な</strong> 形式は <strong>p適合</strong> であり、<strong>適合</strong> は上記の関数束縛において同じ構造である。
+言い換えると、パターン束縛は以下のものである。</p>
+<pre><code><em>p</em> | <em>gs<sub>1</sub></em> = <em>e<sub>1</sub></em>
+  | <em>gs<sub>2</sub></em> = <em>e<sub>2</sub></em>
+    …
+  | <em>gs<sub>m</sub></em> = <em>e<sub>m</sub></em>
+  where { <em>decls</em> }
+</code></pre>
+<div class="column">
+<p><strong>変換：</strong> 上記のパターン束縛はこのシンプルなパターン束縛と構文的に等しい。</p>
+<pre><code><em>p</em> = let <em>decls</em> in
+    case () of
+      () | <em>gs<sub>1</sub></em> -> <em>e<sub>1</sub></em>
+         | <em>gs<sub>2</sub></em> -> <em>e<sub>2</sub></em>
+           …
+         | <em>gs<sub>m</sub></em> -> <em>e<sub>m</sub></em>
+       _ -> error "Unmatched pattern"
+</code></pre>
+</div>
+<a class="header" href="#関数とパターン束縛の静的な意味論" id="関数とパターン束縛の静的な意味論"><h2>関数とパターン束縛の静的な意味論</h2></a>
+<p>関数の静的意味論と<code>let</code>式または<code>where</code>句のパターン束縛はこのセクションで論じる。</p>
+<a class="header" href="#依存の解析" id="依存の解析"><h3>依存の解析</h3></a>
+<p>一般的に静的意味論は通常のHindley-Milner推論規則を適用することによって与えられる。
+多相性を増加するために、これらの規則は <strong>依存の解析</strong> によって見分けられる束縛のグループに適用される。</p>
+<p>もし次のいずれかであるなら、束縛<em>b1</em>は同じ宣言のリストの中の束縛<em>b2</em>に依存する。</p>
+<ol>
+<li><em>b1</em>は自由識別子で、型シグネチャを持たず<em>b2</em>によって束縛されるようなものを含む。または、</li>
+<li><em>b1</em>は<em>b2</em>に依存する束縛に依存する。</li>
+</ol>
+<p><strong>宣言のグループ</strong> は相互依存の束縛の最小限のひと組である。
+Hindley-Milner型推論は依存の順序に各宣言グループに適用される。
+<code>where/let</code>の構成物の中の宣言の順序は無意味である。</p>
+<a class="header" href="#一般化" id="一般化"><h3>一般化</h3></a>
+<p>Hindley-Milner型システムは次の2段階でlet式に型を割り当てる。</p>
+<ol>
+<li>宣言グループは依存している順に考慮される。
+各グループにおいて、全称量化を伴わない型がそのグループに束縛される各変数へ推論される。
+その時、これらの型に現れる全ての型変数は型環境に束縛された変数を連帯されるにも限らず全称量化される。
+このことを一般化と呼ばれる。</li>
+<li>最後に、let式の本体は型付けされる。</li>
+</ol>
+<p>例えば、次の宣言を考えてほしい。</p>
+<pre><code class="language-hs">f x = let g y = (y,y)  
+    in ...
+</code></pre>
+<p><code>g</code>の定義の型は<em>a  →  (a,a)</em>である。
+一般化は、<code>g</code>に対して多相型∀ <em>a. a → (a,a)</em>を紐づけ、そのあと<code>&quot;...&quot;</code>の部分の型付けが続けられる。</p>
+<p>オーバーロードされた定義に型を付ける時、単一の宣言グループにおけるすべてのオーバーロードしている制約は集められる。それはグループで宣言された各変数の型の文脈を作るためである。
+例えば、以下の定義において</p>
+<pre><code class="language-hs">f x = let g1 x y = if x&gt;y then show x else g2 y x  
+          g2 p q = g1 q p  
+      in ...
+</code></pre>
+<p><code>g1</code>と<code>g2</code>の定義の型は両方<code><em>a</em>  →  <em>a</em>  →  String</code>であり、
+累算された制約は<code>Ord <em>a</em></code>(<code>&gt;</code>の使用から発生する)と、<code>Show <em>a</em></code>(<code>show</code>の使用から発生する)である。
+この制約の収集に現れる型変数は<strong>制約された型変数</strong>と呼ばれる。</p>
+<p>一般化の手順は型<code>∀ <em>a</em>. (Ord <em>a</em>, Show <em>a</em>)  ⇒  <em>a</em>  →  <em>a</em>  →  String</code>という<code>g1</code>と<code>g2</code>両方に帰属する。
+<code>&gt;</code>と<code>show</code>が<code>g1</code>の定義にあるのに、<code>g2</code>は<code>g1</code>と同じ方法にオーバーロードされることに注目してほしい。</p>
+<p>プログラマがある宣言グループの2つ以上の変数に明示的な型シグネチャを与えたならば、それらのシグネチャの文脈は型変数の名前の取り換えを除いて一致しなければならない。</p>
+<a class="header" href="#文脈の簡約エラー" id="文脈の簡約エラー"><h3>文脈の簡約エラー</h3></a>
+<p>セクション<a href="#a%E5%9E%8B%E3%81%A8%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E6%84%8F%E5%91%B3%E8%AB%96">4.1.4</a>で言及されたように、型の文脈は型変数または一つ以上の型変数の適用のみ制約できる。
+よって、一般化によって生成された型は全ての文脈の制約が「頭部正規形」に簡約されなければいけない形式に表現されなければならない。
+例として、次の定義を考えてもらいたい。</p>
+<pre><code class="language-hs">xs y  =  xs == [y]
+</code></pre>
+<p>その型は次のもので与えられ、</p>
+<pre><code class="language-hs">f :: Eq a =&gt; [a] -&gt; a -&gt; Bool
+</code></pre>
+<p>以下のものではない。</p>
+<pre><code class="language-hs">f :: Eq [a] =&gt; [a] -&gt; a -&gt; Bool
+</code></pre>
+<p>等号はリストに対して使われているが、文脈は簡単な形にしなければならず、一般化の前にリストに対する<code>Eq</code>のインスタンス宣言を用いて行う。
+もしそのようなインスタンスがスコープ内に無いなら、静的エラーが起きる。</p>
+<p>ここには<em>m</em>が一般化された型変数のひとつである形式<em>C (m t)</em>の制約のための要求を示す例がある。
+すなわち、クラスCを型変数または型コンストラクタではない型式に適用する場合である。
+次のものを考えてもらいたい。</p>
+<pre><code class="language-hs">f :: (Monad m, Eq (m a)) =&gt; a -&gt; m a -&gt; Bool  
+f x y = return x == y
+</code></pre>
+<p><code>return</code>の型は<code>Monad m =&gt; a -&gt; m a</code>であり、<code>(==)</code>の型は<code>Eq a =&gt; a -&gt; a -&gt; Bool</code>である。
+<code>f</code>の型は従って<code>(Monad m, Eq (m a)) =&gt; a -&gt; m a -&gt; Bool</code>であるべきで、その文脈はそれ以上簡易化されることはできない。</p>
+<p>データ型<code>deriving</code>句(セクション<a href="#a%E5%B0%8E%E5%87%BA%E3%81%95%E3%82%8C%E3%81%9F%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9">4.3.3</a>)から派生したインスタンス宣言は、あらゆるインスタンス宣言のように、<strong>簡単な文脈</strong>を持たなければならない。
+すなわち、全ての制約は<em>a</em>が型変数である形式<em>C a</em>でなければならない。
+例えば、以下の型において</p>
+<pre><code class="language-hs">data Apply a b = App (a b)  deriving Show
+</code></pre>
+<p>導出されたShowインスタンスは文脈<code>Show (a b)</code>を生成し、そしてそれは簡約されることはできず、かつシンプルではないゆえに静的エラーが結果として生じる。</p>
+<a class="header" href="#単相性" id="単相性"><h3>単相性</h3></a>
+<p>時々、その定義の型の中に使用されるすべての型変数にわたる一般化ができないことがある。
+例えば、次の宣言を考える。</p>
+<pre><code class="language-hs">f x = let g y z = ([x,y], z)  
+      in ...
+</code></pre>
+<p><code>x</code>が型<em>a</em>を持ち、<code>g</code>の定義の型は<em>a  →  b  →  ([a],b)</em>という環境である。
+一般化の手順は型<code>∀ <em>b</em>.  <em>a</em>  →  <em>b</em>  →  <em>([a],b)</em></code>という<code>g</code>に帰属する。
+<em>a</em>が型環境に現れているため、<em>b</em>のみが全称量化されることが可能である。
+このことを<code>g</code>の型が<strong>型変数aに単相的</strong>であると言う。</p>
+<p>そのような単相性の結果として<code>g</code>の全ての適用の初めの引数が単一の型でなければならない。
+例えば、次の式は<code>”...”</code>に有効であろう。</p>
+<pre><code class="language-hs">(g True, g False)
+</code></pre>
+<p>(ついでに言うと<code>x</code>を<code>Bool</code>型を持つよう強制させる。)　しかし次のものは不正である。</p>
+<pre><code class="language-hs">(g True, g 'c')
+</code></pre>
+<p>一般的にもし<code>a</code>が<code>∀ <span class="overline">u</span>. <em>cx  ⇒  t</em>.</code>の中で自由なら、型<code>∀ <em>u. cx  ⇒  t</em></code>は型変数<em>a</em>に<strong>単相的</strong>であると言われる。</p>
+<p>Haskellによって与えられる明示的な型シグネチャは単相的な型変数を含む型を表現するのに十分な力がないことには注意すべきである。
+例えば、次のものは書くことができない。</p>
+<pre><code class="language-hs">f x = let  
+        g :: a -&gt; b -&gt; ([a],b)  
+        g y z = ([x,y], z)  
+      in ...
+</code></pre>
+<p>なぜなら、あれは<code>g</code>が<code>a</code>と<code>b</code>の両方に多相的であることを要求されるからだ(セクション<a href="#a%E5%9E%8B%E3%82%B7%E3%82%B0%E3%83%8D%E3%83%81%E3%83%A3">4.4.1</a>)。
+このプログラムでは、<code>g</code>は最初の引数が型変数を含まないものに制限された場合にのみ型シグネチャを与えられる。
+例えば、</p>
+<pre><code class="language-hs">g :: Int -&gt; b -&gt; ([Int],b)
+</code></pre>
+<p>このシグネチャは<code>Int</code>型を持つ<code>x</code>ももたらすだろう。</p>
+<a class="header" href="#単相性の制限" id="単相性の制限"><h3>単相性の制限</h3></a>
+<p>Haskellは上記の標準Hindley-Milner制限の範囲を超えて、一般化の手順に一定の余分な制限を配置し、特定の場合において多相性をさらに削減する。</p>
+<p>単相性の制限は変数の束縛する構文に依存する。
+変数は <strong>関数束縛</strong> または <strong>パターン束縛</strong> のどちらかによって束縛されることを思い出してほしい。
+しかも、 <strong>単純な</strong> パターン束縛はそのパターンが単一の変数のみで構成するパターン束縛である(セクション<a href="#a%E9%96%A2%E6%95%B0%E3%81%A8%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E6%9D%9F%E7%B8%9B">4.4.3</a>)。</p>
+<p>次の2つのルールは単相性の制限を定義する。</p>
+<div class="column">
+<p><strong>単相性の制限</strong></p>
+<ul>
+<li>
+<p><strong>ルール1</strong><br>
+次の条件を満たすとき、与えられた宣言グループが <strong>非制限的</strong> であるという。</p>
+<ul>
+<li><strong>(a):</strong><br>
+グループ内の各変数は関数束縛または単純なパターン束縛によって束縛される(セクション<a href="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E6%9D%9F%E7%B8%9B">4.4.3.2</a>)。かつ、</li>
+<li><strong>(b):</strong><br>
+単純なパターン束縛によって束縛されるようなグループ内のすべての変数に対して明示的な型シグネチャが与えられている。</li>
+</ul>
+<p>Hindley-Milnerの多相性に関する通常の制限とは、環境に自由に出現しない型変数のみが一般化されるというものである。
+それに加えて、該当するグループの一般化のステップにおいて、<strong>制限的な宣言グループの制約された型変数は一般化されない場合がある</strong>。
+(もし同じ型クラスに属さないといけないなら、型変数が制約されていることを思い出すこと。セクション<a href="#a%E4%B8%80%E8%88%AC%E5%8C%96">4.5.2</a>を参照。)</p>
+</li>
+<li>
+<p><strong>ルール2</strong><br>
+全部のモジュールへの型推論が完了した時に残るあらゆる単相的な型変数は曖昧だと考えられ、そしてデフォルトのルールを使用した各々の型に解決される(セクション<a href="#a%E6%9B%96%E6%98%A7%E3%81%AA%E5%9E%8B%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89%E3%81%95%E3%82%8C%E3%81%9F%E6%95%B0%E5%80%A4%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4">4.3.4</a>)。</p>
+</li>
+</ul>
+</div>
+<p><strong>動機</strong>　ルール1は2つの理由により要求され、両方ともかなり巧妙である。</p>
+<ul>
+<li>
+<p><strong>ルール1は思いがけなく繰り返されることから計算を防止する。</strong>
+例えば、<code>genericLength</code>は型が次のもので与えられる(<code>Data.List</code>ライブラリの)標準関数である。</p>
+<pre><code class="language-hs">genericLength :: Num a =&gt; [b] -&gt; a
+</code></pre>
+<p>では、次の式を考えて欲しい。</p>
+<pre><code class="language-hs">let { len = genericLength xs } in (len, len)
+</code></pre>
+<p>まるで<code>len</code>が一度だけ計算されるべきかのように見れるが、ルール1がなければ2回の異なるオーバーロード毎に一回づつで、計二回計算されるであろう。
+もしプログラマが実際に計算が繰り返されてほしいと考えているなら、明示的な型シグネチャを追加するだろう。</p>
+<pre><code class="language-hs">let { len :: Num a =&gt; a; len = genericLength xs } in (len, len)
+</code></pre>
+</li>
+<li>
+<p><strong>ルール1は曖昧さを防止する</strong>。例えば、次の宣言グループを考えてほしい。</p>
+<pre><code class="language-hs">[(n,s)] = reads t
+</code></pre>
+<p><code>reads</code>は型がシグネチャによって与えられる標準関数であることを思い出してほしい。</p>
+<pre><code class="language-hs">reads :: (Read a) =&gt; String -&gt; [(a,String)]
+</code></pre>
+<p>ルール1なしで、<code>n</code>は型<code>∀ <em>a</em>. Read <em>a  ⇒  a</em></code>を割り当てられるであろう。そして、<code>s</code>は型<code>∀ <em>a</em>. Read <em>a</em> ⇒  String</code>である。
+後者は不正な型である、なぜなら本質的に曖昧であるからだ。
+<code>s</code>を使うオーバーロードするもので決定することは可能ではなく、そして<code>s</code>に型シグネチャを追加することで解決されることもできない。
+このゆえに、<strong>単純ではないパターン</strong>束縛が使われている時(セクション<a href="#a%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E6%9D%9F%E7%B8%9B">4.4.3.2</a>)、型シグネチャが与えられるかどうかにかかわりなく、推論された型はそれらの制約された型変数の中で常に単相的である。
+この場合において、<code>n</code>と<code>s</code>の両者は<em>a</em>に単相的である。</p>
+<p>同じ制約はパターン束縛関数に適用する。
+例えば、次の中の</p>
+<pre><code class="language-hs">(f,g) = ((+),(-))
+</code></pre>
+<p><code>f</code>と<code>g</code>の両者は<code>f</code>または<code>g</code>に与えられる型シグネチャにかかわらず単相的である。</p>
+</li>
+</ul>
+<p>ルール2は現在のモジュールの外側のモジュール上で型推論を行うことを除いて、<strong>エクスポートされた</strong>束縛の単相的な使用を強いるための方法がないことから要求される。
+ルール2はモジュール内に束縛された全変数の正確な型がそのモジュールのみで決定されなければならないことを述べ、それをインポートするモジュールによってではないことを述べている。</p>
+<pre><code class="language-hs">module M1(len1) where
+default( Int, Double )
+len1 = genericLength &quot;Hello&quot;
+
+module M2 where
+  import M1(len1)
+  len2 = (2⋆len1) :: Rational
+</code></pre>
+<p>モジュール<code>M1</code>上の型推論が完了した時、<code>len1</code>は(ルール1によって)単相的な型<code>Num a =&gt; a</code>を持つ。
+ルール2はそのとき単相的な型変数<code>a</code>が曖昧であると述べ、セクション<a href="#a%E6%9B%96%E6%98%A7%E3%81%AA%E5%9E%8B%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89%E3%81%95%E3%82%8C%E3%81%9F%E6%95%B0%E5%80%A4%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4">4.3.4</a>の既定のルールを使い解決されなければならない。
+それゆえに、<code>len1</code>が型<code>Int</code>を取得し、<code>len2</code>の中の使用は誤った型である。
+(もし上記のコードが実際に求められるなら、<code>len1</code>上の型シグネチャはその問題を解決するであろう。)</p>
+<p>この問題はネストされた束縛では起きない。なぜなら、それらの全体のスコープがコンパイラに見えているからだ。</p>
+<p><strong>結果</strong>
+単相性ルールはプログラマに多くの結果をもたらす。
+関数構文を用いて定義されたどんなものも、通常期待されるような関数に一般化される。
+例として、</p>
+<pre><code class="language-hs">f x y = x+y
+</code></pre>
+<p>関数<code>f</code>はクラス<code>Num</code>にオーバーロードするもので使われる。
+ここに再計算の危険はない。
+しかしながら、次のパターン構文を伴い定義される同じ関数は、</p>
+<pre><code class="language-hs">f = \x -&gt; \y -&gt; x+y
+</code></pre>
+<p>もし<code>f</code>が完全にオーバーロードされるなら型シグネチャを要求する。
+多くの関数は単純なパターン束縛を使用してたいてい自然に定義される。
+ユーザーは、完全なオーバーローディングを保つためには型シグネチャを添えることを心掛けなければならない。
+標準Preludeはこのことのたくさんの例を含む。</p>
+<pre><code class="language-hs">sum  :: (Num a) =&gt; [a] -&gt; a  
+sum  =  foldl (+) 0   
+</code></pre>
+<p>ルール1はトップレベルとネストされた定義の両方に適用する。
+次のものを考えてほしい。</p>
+<pre><code class="language-hs">module M where  
+  len1 = genericLength &quot;Hello&quot;  
+  len2 = (2⋆len1) :: Rational
+</code></pre>
+<p>ここで、型推論は<code>len1</code>が単相的な型<code>(Num a =&gt; a)</code>を持つことを探し、その型変数<code>a</code>は<code>len2</code>上の型推論を行う時に<code>Rational</code>に解決される。</p>
+<a class="header" href="#カインドの推論" id="カインドの推論"><h2>カインドの推論</h2></a>
+<p>このセクションは <strong>カインドの推論</strong> 、すなわち与えられたプログラムに現れる各型コンストラクタとクラスに適切なカインドを計算することに使われるルールを述べる。</p>
+<p>カインドの推論の工程の最初の手順は依存グループデータ型やシノニム、クラス定義のセットを整理することである。
+これはセクション<a href="#a%E9%96%A2%E6%95%B0%E3%81%A8%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E6%9D%9F%E7%B8%9B%E3%81%AE%E9%9D%99%E7%9A%84%E3%81%AA%E6%84%8F%E5%91%B3%E8%AB%96">4.5</a>で述べられた値宣言の依存解析のように同じ方法を多く成し遂げられることができる。
+例えば、次のプログラムの断片はデータ型コンストラクタ<code>D</code>とシノニム<code>S</code>、クラス<code>C</code>の定義を含み、
+その全ては同じ依存グループに含まれているであろう。</p>
+<pre><code class="language-hs">data C a =&gt; D a = Foo (S a)  
+type S a = [D a]  
+class C a where  
+    bar :: a -&gt; D a -&gt; Bool
+</code></pre>
+<p>各グループ内の変数やコンストラクタ、クラスのカインドは型推論とカインドを保存するユニフィケーションの標準的なテクニックを用いて決定される[<a href="../bibliography.html">8</a>]。
+例えば上で定義した中で、パラメータ<code>a</code>は<code>bar</code>の型の関数コンストラクタ<code>(-&gt;)</code>の引数のように現れ、これゆえにカインド<code>∗</code>を持たなければならない。
+それは<code>D</code>と<code>S</code>の両方がカインド<code>∗→∗</code>を、かつクラス<code>C</code>の全インスタンスがカインド<code>∗</code>を持たなければならないということを結果として生ずる。</p>
+<p>推論されたカインドのいくつかの部分は対応する定義によっておそらく完全に決定されないであろうことも起こりうる。
+そのような場合、<code>∗</code>の既定値は推測される。
+例えば、次の例の各々の<code>a</code>パラメータに任意のカインド<em>κ</em>を推測できるだろう。</p>
+<pre><code class="language-hs">data App f a = A (f a)  
+data Tree a  = Leaf | Fork (Tree a) (Tree a)
+</code></pre>
+<p>これは任意のカインド<code><em>κ</em></code>に対して、それぞれ<code>App</code>と<code>Tree</code>にカインド<code>(<em>κ</em> →∗) → <em>κ</em> →∗</code>と<code><em>κ</em> →∗</code>を与えるであろう。
+そして、多相的なカインドを許すように拡張を要求するであろう。
+代わりに、デフォルト束縛<code><em>κ</em> = ∗</code>を用いれば、これら2つのコンストラクタへ与えられる実際のカインドはおのおの、<code>(∗→∗) →∗→∗</code>と<code>∗→∗</code>になる。</p>
+<p>既定値は特別な型コンストラクタ定数またはクラスが後ろの依存グループまたはプログラムの他の場所で使われる方法の検討なしで各依存グループに与えられる。
+例として、上のソースコードに次に続く定義を追加することは(例えば<code>(∗→∗) →∗</code>に変化することによって)<code>Tree</code>へ推論されたカインドに影響を及ぼさない。
+そして代わりに静的エラーを生成する。
+なぜなら<code>[], ∗→∗,</code>のカインドは<code>Tree</code>の引数へ期待されるカインド<code>∗</code>と適合しないからだ。</p>
+<pre><code class="language-hs">type FunnyTree = Tree []     -- invalid
+</code></pre>
+<p>これは各コンストラクタとクラスがスコープ内にある時はいつでも同じカインドで一貫して使われていることを保証するため重要である。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapters/3-expressions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapters/5-modules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapters/3-expressions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapters/5-modules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../customize.js"></script>
+        
+
+        
+
+    </body>
+</html>
