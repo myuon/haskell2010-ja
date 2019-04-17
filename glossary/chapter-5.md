@@ -10,5 +10,6 @@
 |--|--|
 |entity|エンティティ|
 |first class values|ファーストクラス値|
+|irrelevant|無関係|
 |module|モジュール|
 
