@@ -223,7 +223,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 <pre><code>if <em>e<sub>1</sub></em> then <em>e<sub>2</sub></em> else <em>e<sub>3</sub></em>(op e) = case <em>e<sub>1</sub></em> of { True -> <em>e<sub>2</sub></em> ; False -> <em>e<sub>3</sub></em> }
 </code></pre>
 
-<code>True</code>と<code>False</code>はPrelude内で定義されている<code>Bool</code>型の2つの引数のないコンストラクタである。<em>e<sub>1</sub></em>は<code>Bool</code>型でなければならず、<em>e<sub>2</sub></em>と<em>e<sub>3</sub></em>も同じ型でなければならない。条件式全体の型も同様である。
+<code>True</code>と<code>False</code>はPrelude内で定義されている<code>Bool</code>型の2つの引数のないコンストラクタである。<em>e<sub>1</sub></em>は<code>Bool</code>型でなければならない。<em>e<sub>2</sub></em>と<em>e<sub>3</sub></em>は同じ型でなければならず、これは条件式全体の型にもなる。
 </div>
 
 ## リスト
@@ -252,7 +252,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 <code>:</code>と<code>[]</code>はPredule内(セクション[6.1.3](./6-predefined-types-and-classes.md))で定義されたリストのコンストラクタである。<em>e<sub>1</sub></em>から<em>e<sub>k</sub></em>までの型は同じでなければならない(それを<em>t</em>と呼ぶ)。式全体の型は<em>[t]</em>になる(セクション[4.1.2](./4-declarations-and-bindings.md))。
 </div>
 
-コンストラクタ<code>":"</code>は`[]`のようにリストコンストラクタとしてのみ予約されており、言語構文の一部と見做されている。また、それは隠すことも再定義することもできない。<code>:</code>は優先順位レベル5の右結合演算子である(セクション[4.4.2](./4-declarations-and-bindings.md))。
+コンストラクタ"<code>:</code>"は`[]`のようにリストコンストラクタとしてのみ予約されており、言語構文の一部と見做されている。また、それは隠すことも再定義することもできない。<code>:</code>は優先順位5の右結合演算子である(セクション[4.4.2](./4-declarations-and-bindings.md))。
 
 ## タプル
 
@@ -262,11 +262,11 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |        |&#124;|<em>qcon</em>| |
 |<em>qcon</em>|→|<code>(,</code>{<code>,</code>}<code>)</code>| |
 
- **タプル**  は<em>k</em> ≥ 2以上の(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)のように書く。<em>n-tuple</em>のコンストラクタは`(,…,)`と表記され、<em>n</em> - 1のコンマがある。従って、<code>(a,b,c)</code>と<code>(,,) a b c</code>は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション[6.1.4](./6-predefined-types-and-classes.md)と[9章](./9-standard-prelude.md))。
+ **タプル**  は<em>k</em> ≥ 2以上の(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)のように書く。<em>n-tuple</em>のコンストラクタは<em>n</em> - 1個のコンマを用いて`(,…,)`と表記される。従って、<code>(a,b,c)</code>と<code>(,,) a b c</code>は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション[6.1.4](./6-predefined-types-and-classes.md)と[9章](./9-standard-prelude.md))。
 
 <div class="column">
 
-**変換:** <em>k</em> ≥ 2のときの(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)はPrelude内で定義された<em>k</em>-tupleのインスタンスになり、変換は要求されない。もし、<em>t<sub>1</sub></em>から<em>t<sub>k</sub></em>はそれぞれ<em>e<sub>1</sub></em>から<em>e<sub>k</sub></em>の型があり、最終的なタプルの型は(<em>t<sub>1</sub></em>,…,<em>t<sub>k</sub></em>)になる(セクション[4.1.2](./4-declarations-and-bindings.md))。
+**変換:** <em>k</em> ≥ 2のときの(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)はPrelude内で定義された<em>k</em>-tupleのインスタンスになり、変換は要求されない。もし、<em>t<sub>1</sub></em>から<em>t<sub>k</sub></em>がそれぞれ<em>e<sub>1</sub></em>から<em>e<sub>k</sub></em>の型なのであれば、最終的なタプルの型は(<em>t<sub>1</sub></em>,…,<em>t<sub>k</sub></em>)になる(セクション[4.1.2](./4-declarations-and-bindings.md))。
 
 </div>
 
@@ -278,7 +278,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |        |&#124;|`(` <em>exp</em> `)`| |
 |<em>gcon</em>|→|`()`| |
 
-<em>(e)</em>の形式はシンプルに **括弧付き式** であり、<em>e</em>と等しい。<em>ユニット(unit)</em>式`()`は`()`型を持つ(セクション[4.1.2](./4-declarations-and-bindings.md)を参照)。それは`⊥`以外の型のメンバのみで、"引数のないタプル"のように考えられる(セクション[6.1.5](./6-predefined-types-and-classes.md)を参照)。
+<em>(e)</em>の形式はシンプルに **括弧付き式** であり、<em>e</em>と等しい。<em>ユニット(unit)</em>式`()`は`()`型を持つ(セクション[4.1.2](./4-declarations-and-bindings.md)を参照)。`⊥`を除けば、これはこの型の唯一のメンバであり、"引数のないタプル"のように考えられる(セクション[6.1.5](./6-predefined-types-and-classes.md)を参照)。
 
 <div class="column">
 
