@@ -4,18 +4,18 @@
 
 |||||
 |--|--|--|--|
-|<em>exp</em>|→|<em>infixexp</em> :: [<em>context</em> =>] <em>type</em>|(expression type signature)|
+|<em>exp</em>|→|<em>infixexp</em> <code>::</code> [<em>context</em> <code>=></code>] <em>type</em>|(expression type signature)|
 |       |&#124;|<em>infixexp</em>| |
 | | | | |
 |<em>infixexp</em>|→|<em>lexp</em> <em>qop</em> <em>infixexp</em>|(infix operator application)|
-|            |&#124;|- <em>infixexp</em>|(prefix negation)|
+|            |&#124;|<code>-</code> <em>infixexp</em>|(prefix negation)|
 |            |&#124;|<em>lexp</em>| |
 | | | | |
-|<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
+|<em>lexp</em>|→|<code>\\</code> <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> <code>-></code> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
 |        |&#124;|<code>let</code> <em>decls</em> <code>in</code> <em>exp</em>|(let expression)|
-|        |&#124;|<code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em>|(conditional)|
-|	       |&#124;|<code>case</code> <em>exp</em> `of` { <em>alts</em> }|(case expression)|
-|        |&#124;|<code>do</code> { <em>stmts</em> }|(do expression)|
+|        |&#124;|<code>if</code> <em>exp</em> [<code>;</code>] <code>then</code> <em>exp</em> [<code>;</code>] <code>else</code> <em>exp</em>|(conditional)|
+|	       |&#124;|<code>case</code> <em>exp</em> <code>of</code> <code>{</code> <em>alts</em> <code>}</code>|(case expression)|
+|        |&#124;|<code>do</code> <code>{</code> <em>stmts</em> <code>}</code>|(do expression)|
 |        |&#124;|<em>fexp</em>| |
 | | | | |
 |<em>fexp</em>|→|[<em>fexp</em>] <em>aexp</em>|(function application)|
@@ -23,15 +23,15 @@
 |<em>aexp</em>|→|<em>qvar</em>|(variable)|
 |        |&#124;|<em>gcon</em>|(general constructor)|
 |        |&#124;|<em>literal</em>| |
-|        |&#124;|( <em>exp</em> )|(parenthesized expression)|
-|        |&#124;|( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )|(tuple, <em>k</em> ≥ 2)|
-|        |&#124;|[ <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> ]|(list, <em>k</em> ≥ 1)|
-|        |&#124;|[ <em>exp<sub>1</sub></em> [, <em>exp<sub>2</sub></em>] .. [<em>exp<sub>3</sub></em>] ]|(arithmetic sequence)|
-|        |&#124;|[ <em>exp</em> &#124; <em>qual<sub>1</sub></em> , … , <em>qual<sub>n</sub></em> ]|(list comprehension, <em>n</em> ≥ 1)|
-|        |&#124;|( <em>infixexp</em> <em>qop</em> )|(left section)|
-|        |&#124;|( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )|(right section)|
-|        |&#124;|<em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled construction, <em>n</em> ≥ 0)|
-|        |&#124;|<em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled update, <em>n</em>  ≥  1)|
+|        |&#124;|<code>(</code> <em>exp</em> <code>)</code>|(parenthesized expression)|
+|        |&#124;|<code>(</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>)</code>|(tuple, <em>k</em> ≥ 2)|
+|        |&#124;|<code>[</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>]</code>|(list, <em>k</em> ≥ 1)|
+|        |&#124;|<code>[</code> <em>exp<sub>1</sub></em> [<code>,</code> <em>exp<sub>2</sub></em>] … [<em>exp<sub>3</sub></em>] <code>]</code>|(arithmetic sequence)|
+|        |&#124;|<code>[</code> <em>exp</em> <code>&#124;</code> <em>qual<sub>1</sub></em> <code>,</code> … <code>,</code> <em>qual<sub>n</sub></em> <code>]</code>|(list comprehension, <em>n</em> ≥ 1)|
+|        |&#124;|<code>(</code> <em>infixexp</em> <em>qop</em> <code>)</code>|(left section)|
+|        |&#124;|<code>(</code> <em>qop<sub>⟨<code>-</code>⟩</sub></em> <em>infixexp</em> <code>)</code>|(right section)|
+|        |&#124;|<em>qcon</em> <code>{</code> <em>fbind<sub>1</sub></em> <code>,</code> … <code>,</code> <em>fbind<sub>n</sub></em> <code>}</code>|(labeled construction, <em>n</em> ≥ 0)|
+|        |&#124;|<em>aexp<sub>⟨qcon⟩</sub></em> <code>{</code> <em>fbind<sub>1</sub></em> <code>,</code> … <code>,</code> <em>fbind<sub>n</sub></em> <code>}</code>|(labeled update, <em>n</em>  ≥  1)|
 
 中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション[4.4.2](./4-declarations-and-bindings.md)参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>"x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z"</em> ( <em>qop<sup>(a,i)</sup></em>は結合性が<em>a</em>で優先順位が<em>i</em>の演算子を意味する)が与えられた場合、<em>i = j</em>でかつ<em>a = b = l</em>か<em>a = b = r</em>でない時は、括弧は<em>"x qop<sup>(a,i)</sup> y"</em>か<em>"y qop<sup>(b,i)</sup> z"</em>のどちらかを囲むよう追加されなければいけない。
 
@@ -74,22 +74,22 @@ Haskellの式の変換は実行時エラーが発生したことを明示的に�
 |        |&#124;|<em>gcon</em>|(general constructor)|
 |        |&#124;|<em>literal</em>| |
 | | | | |
-|<em>gcon</em>|→|()| |
-|	       |&#124;|[]| |
-|	       |&#124;|(,{,})| |
+|<em>gcon</em>|→|<code>()</code>| |
+|	       |&#124;|<code>[]</code>| |
+|	       |&#124;|<code>(,</code>{<code>,</code>}<code>)</code>| |
 |	       |&#124;|<em>qcon</em>| |
 | | | | |
-|    <em>var</em>|→|<em>varid</em> &#124; ( <em>varsym</em> )|(variable)|
-|   <em>qvar</em>|→|<em>qvarid</em> &#124; ( <em>qvarsym</em> )|(qualified variable)|
-|    <em>con</em>|→|<em>conid</em> &#124; ( <em>consym</em> )|(constructor)|
-|   <em>qcon</em>|→|<em>qconid</em> &#124; ( <em>gconsym</em> )|(qualified constructor)|
-|  <em>varop</em>|→|<em>varsym</em> &#124; \`  <em>varid</em> \`|(variable operator)|
-| <em>qvarop</em>|→|<em>qvarsym</em> &#124; \`  <em>qvarid</em> \`|(qualified variable operator)|
-|  <em>conop</em>|→|<em>consym</em> &#124; \`  <em>conid</em> \`|(constructor operator)|
-| <em>qconop</em>|→|<em>gconsym</em> &#124; \`  <em>qconid</em> \`|(qualified constructor operator)|
+|    <em>var</em>|→|<em>varid</em> &#124; <code>(</code> <em>varsym</em> <code>)</code>|(variable)|
+|   <em>qvar</em>|→|<em>qvarid</em> &#124; <code>(</code> <em>qvarsym</em> <code>)</code>|(qualified variable)|
+|    <em>con</em>|→|<em>conid</em> &#124; <code>(</code> <em>consym</em> <code>)</code>|(constructor)|
+|   <em>qcon</em>|→|<em>qconid</em> &#124; <code>(</code> <em>gconsym</em> <code>)</code>|(qualified constructor)|
+|  <em>varop</em>|→|<em>varsym</em> &#124; <code>\`</code>  <em>varid</em> <code>\`</code>|(variable operator)|
+| <em>qvarop</em>|→|<em>qvarsym</em> &#124; <code>\`</code>  <em>qvarid</em> <code>\`</code>|(qualified variable operator)|
+|  <em>conop</em>|→|<em>consym</em> &#124; <code>\`</code>  <em>conid</em> <code>\`</code>|(constructor operator)|
+| <em>qconop</em>|→|<em>gconsym</em> &#124; <code>\`</code>  <em>qconid</em> <code>\`</code>|(qualified constructor operator)|
 |     <em>op</em>|→|<em>varop</em> &#124; <em>conop</em>|(operator)|
 |    <em>qop</em>|→|<em>qvarop</em> &#124; <em>qconop</em>|(qualified operator)|
-|<em>gconsym</em>|→|: &#124; <em>qconsym</em>
+|<em>gconsym</em>|→|<code>:</code> &#124; <em>qconsym</em>
 
 Haskellは中置記法に対応するため特別な構文を提供している。 **演算子**  は中置構文を用いて適用が可能である(セクション[3.4]("#3.4"))か、 **セクション**  (セクション[3.5]("#3.5"))を用いて部分的に適用が可能な関数のことである。
 
@@ -114,7 +114,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |||||
 |--|--|--|--|
 |<em>fexp</em>|→|[<em>fexp</em>] <em>aexp</em>|(function application)|
-|<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
+|<em>lexp</em>|→|<code>\\</code> <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> <code>-></code> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
 
 関数適用は<em>e<sub>1</sub></em> <em>e<sub>2</sub></em>と書く。適用は左結合性をもつので、<code>(f x) y</code>の括弧は省略することができる。<em>e<sub>1</sub></em>はデータ構成子である可能性もあるため、データ構成子の部分的な適用は許されている。
 
@@ -139,7 +139,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |||||
 |--|--|--|--|
 |<em>infixexp</em>|→|<em>lexp</em> <em>qop</em> <em>infixexp</em>| |
-|            |&#124;|- <em>infixexp</em>|(prefix negation)|
+|            |&#124;|<code>-</code> <em>infixexp</em>|(prefix negation)|
 |            |&#124;|<em>lexp</em>| |
 |<em>qop</em>|→|<em>qvarop</em> &#124; <em>qconop</em>|(qualified operator)|
 
@@ -163,8 +163,8 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→| ( <em>infixexp</em> <em>qop</em> )              |(left section)|
-|        |&#124;| ( <em>qop<sub>⟨-⟩</sub></em> <em>infixexp</em> )|(right section)|
+|<em>aexp</em>|→| <code>(</code> <em>infixexp</em> <em>qop</em> <code>)</code>                           |(left section)|
+|        |&#124;| <code>(</code> <em>qop<sub>⟨<code>-</code>⟩</sub></em> <em>infixexp</em> <code>)</code>|(right section)|
 
 
 **セクション** は( <em>op</em> <em>e</em> )や( <em>e</em> <em>op</em> )のように書かれる。このときの<em>op</em>は二項演算子で<em>e</em>は式である。セクションは二項演算子を部分的に適用する便利な構文である。
@@ -212,7 +212,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>lexp</em>|→|<code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em>| |
+|<em>lexp</em>|→|<code>if</code> <em>exp</em> [<code>;</code>] <code>then</code> <em>exp</em> [<code>;</code>] <code>else</code> <em>exp</em>| |
 
 条件式は<code>if <em>e<sub>1</sub></em> then <em>e<sub>2</sub></em> else <em>e<sub>3</sub></em></code>の形式をとり、もし<em>e<sub>1</sub></em>が`True`なら、<em>e<sub>2</sub></em>を返し、<em>e<sub>1</sub></em>が`False`なら<em>e<sub>3</sub></em>を返し、それ以外なら`⊥`を返す。
 
@@ -231,11 +231,11 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 |||||
 |--|--|--|--|
 |<em>infixexp</em>|→|<em>exp<sub>1</sub></em> <em>qop</em> <em>exp<sub>2</sub></em>| |
-|    <em>aexp</em>|→|[ <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> ]|(<em>k</em> ≥ 1)|
+|    <em>aexp</em>|→|<code>[</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>]</code>|(<em>k</em> ≥ 1)|
 |            |&#124;|<em>gcon</em>| |
 |    <em>gcon</em>|→|<code>[]</code>| |
 |            |&#124;|<em>qcon</em>| |
-|    <em>qcon</em>|→|( <em>gconsym</em> )| |
+|    <em>qcon</em>|→|<code>(</code> <em>gconsym</em> <code>)</code>| |
 |     <em>qop</em>|→|<em>qconop</em>| |
 |  <em>qconop</em>|→|<em>gconsym</em>| |
 | <em>gconsym</em>|→|<code>:</code>| |
@@ -258,9 +258,9 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|( <em>exp<sub>1</sub></em> , … , <em>exp<sub>k</sub></em> )|(<em>k</em> ≥ 2)|
+|<em>aexp</em>|→|<code>(</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>)</code>|(<em>k</em> ≥ 2)|
 |        |&#124;|<em>qcon</em>| |
-|<em>qcon</em>|→|(,{,})| |
+|<em>qcon</em>|→|<code>(,</code>{<code>,</code>}<code>)</code>| |
 
  **タプル**  は<em>k</em> ≥ 2以上の(<em>e<sub>1</sub></em>, …, <em>e<sub>k</sub></em>)のように書く。<em>n-tuple</em>のコンストラクタは`(,…,)`と表記され、<em>n</em> - 1のコンマがある。従って、<code>(a,b,c)</code>と<code>(,,) a b c</code>は同じ値を表す。タプルの標準操作はPrelude内で定義されている(セクション[6.1.4](./6-predefined-types-and-classes.md)と[9章](./9-standard-prelude.md))。
 
@@ -289,7 +289,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|`[` <em>exp<sub>1</sub></em> `[`, <em>exp<sub>2</sub></em>`]` .. `[`<em>exp<sub>3</sub></em>`]` `]`| |
+|<em>aexp</em>|→|`[` <em>exp<sub>1</sub></em> `[`, <em>exp<sub>2</sub></em>`]` … `[`<em>exp<sub>3</sub></em>`]` `]`| |
 
  **数列** [<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型<em>t</em>の値のリストを表し、各<em>e<sub>i</sub></em>は型<em>t</em>を持ち、<em>t</em>は`Enum`クラスのインスタンスである。
 
@@ -313,8 +313,8 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|[ <em>exp</em> &#124; <em>qual<sub>1</sub></em> , … , <em>qual<sub>n</sub></em> ]|(list comprehension, <em>n</em> ≥ 1)|
-|<em>qual</em>|→|<em>pat</em> <- <em>exp</em>|(generator)|
+|<em>aexp</em>|→|<code>[</code> <em>exp</em> <code>&#124;</code> <em>qual<sub>1</sub></em> <code>,</code> … <code>,</code> <em>qual<sub>n</sub></em> <code>]</code>|(list comprehension, <em>n</em> ≥ 1)|
+|<em>qual</em>|→|<em>pat</em> <code><-</code> <em>exp</em>|(generator)|
 |        |&#124;|<code>let</code> <em>decls</em>|(local declaration)|
 |        |&#124;|<em>exp</em>|(boolean guard)|
 
@@ -389,15 +389,15 @@ let (x,y) = undefined in e
 
 |||||
 |--|--|--|--|
-|<em>lexp</em>|→|<code>case</code> <em>exp</em> <code>of</code> { <em>alts</em> }| |
-|<em>alts</em>|→|<em>alt<sub>1</sub></em> ; … ; <em>alt<sub>n</sub></em>|(<em>n</em> ≥ 1)|
-| <em>alt</em>|→|<em>pat</em> -> <em>exp</em> [<code>where</code> <em>decls</em>]| |
+|<em>lexp</em>|→|<code>case</code> <em>exp</em> <code>of</code> <code>{</code> <em>alts</em> <code>}</code>| |
+|<em>alts</em>|→|<em>alt<sub>1</sub></em> <code>;</code> … <code>;</code> <em>alt<sub>n</sub></em>|(<em>n</em> ≥ 1)|
+| <em>alt</em>|→|<em>pat</em> <code>-></code> <em>exp</em> [<code>where</code> <em>decls</em>]| |
 |        |&#124;|	<em>pat</em> <em>gdpat</em> [<code>where</code> <em>decls</em>]
 |        |&#124;|                |(empty alternative)|
 |||||
-| <em>gdpat</em>|→|<em>guards</em> -> <em>exp</em> [ <em>gdpat</em> ]| |
+| <em>gdpat</em>|→|<em>guards</em> <code>-></code> <em>exp</em> [ <em>gdpat</em> ]| |
 |<em>guards</em>|→| <code>&#124;</code> <em>guard<sub>1</sub></em>, …, <em>guard<sub>n</sub></em>|(<em>n</em> ≥ 1)|
-| <em>guard</em>|→|<em>pat</em> <- <em>infixexp</em>|(pattern guard)|
+| <em>guard</em>|→|<em>pat</em> <code><-</code> <em>infixexp</em>|(pattern guard)|
 |          |&#124;|	<code>let</code> <em>decls</em>	           |(local declaration)|
 |          |&#124;|	<em>infixexp</em>	            |(boolean guard)|
 
@@ -451,11 +451,11 @@ case x of { (a,_) | (let b = not a in b :: Bool) -> a }
 
 |||||
 |--|--|--|--|
-| <em>lexp</em>|→|<code>do</code> { <em>stmts</em> }|(do expression)|
+| <em>lexp</em>|→|<code>do</code> <code>{</code> <em>stmts</em> <code>}</code>|(do expression)|
 |<em>stmts</em>|→|<em>stmt<sub>1</sub></em> … <em>stmt<sub>n</sub></em> <em>exp</em> [<code>;</code>]|(<em>n</em> ≥ 0)|
-| <em>stmt</em>|→|<em>exp</em> ;| |
-|	        |&#124;|<em>pat</em> <- <em>exp</em> ;| |
-|         |&#124;|<code>let</code> <em>decls</em> ;| |
+| <em>stmt</em>|→|<em>exp</em> <code>;</code>| |
+|	        |&#124;|<em>pat</em> <code><-</code> <em>exp</em> <code>;</code>| |
+|         |&#124;|<code>let</code> <em>decls</em> <code>;</code>| |
 |         |&#124;|<code>;</code> 	                   |(empty statement)|
 
 <em>do式</em>はモナドのプログラミングのためのより従来的な構文を提供する。それは以下のような式を許す。
@@ -530,8 +530,8 @@ data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 
 |||||
 |--|--|--|--|
-| <em>aexp</em>|→|<em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled construction, <em>n</em> ≥ 0)|
-|<em>fbind</em>|→|<em>qvar</em> = <em>exp</em>| |
+| <em>aexp</em>|→|<em>qcon</em> <code>{</code> <em>fbind<sub>1</sub></em> <code>,</code> … <code>,</code> <em>fbind<sub>n</sub></em> <code>}</code>|(labeled construction, <em>n</em> ≥ 0)|
+|<em>fbind</em>|→|<em>qvar</em> <code>=</code> <em>exp</em>| |
 
 ラベル付けされたフィールドを使うコンストラクタが値の生成に使われる場合があるが、その時には各コンポーネントは位置ではなく名前によって指定する。宣言リストの中で使われる中括弧とは異なりレイアウトの対象にならない。<code>{</code>と<code>}</code>の文字は明示しなければならない。(これはフィールドの更新、フィールドパターンにおいても正しい。)フィールドラベルを使用する構築は次の制約に応じる。
 
@@ -562,7 +562,7 @@ data T = T1 { y :: Int } | T2 { y :: Bool }  -- BAD
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|<em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled update, <em>n</em> ≥ 1)|
+|<em>aexp</em>|→|<em>aexp<sub>⟨qcon⟩</sub></em> <code>{</code> <em>fbind<sub>1</sub></em> <code>,</code> … <code>,</code> <em>fbind<sub>n</sub></em> <code>}</code>|(labeled update, <em>n</em> ≥ 1)|
 
 フィールドラベルを使ったデータ型に所属する値は非破壊的に更新されるかもしれない。これは元々存在していた値を指定されたフィールドの値で書き換えた新しい値を生成する。更新は次の方法に制限される。
 
@@ -608,7 +608,7 @@ data T    = C1 {f1,f2 :: Int}
 
 ||||
 |--|--|--|
-|<em>exp</em>|→|<em>exp</em> <code>::</code> [<em>context</em> =>] <em>type</em>|
+|<em>exp</em>|→|<em>exp</em> <code>::</code> [<em>context</em> <code>=></code>] <em>type</em>|
 
  **式の型シグネチャ** は形式<em>e :: t</em>を持つ。<em>e</em>は式で、<em>t</em>は型(セクション[4.1.2](./4-declarations-and-bindings.md))であり、それらは明示的に式を分類することに使用され、オーバーロード(セクション[4.1.2](”./4-declarations-and-bindings.md”)を参照)するために曖昧な型付けを解決することに使われるかもしれない。式の値は<em>exp</em>の値である。通常の型シグネチャと同様に(セクション[4.4.1](”./4-declarations-and-bindings.md”)を参照)、宣言された型は<em>exp</em>から導出可能な主要な型より具体的になるかもしれないが、主要な型より一般的なまたは同程度な型を与えることはエラーである。
 
@@ -641,12 +641,12 @@ e :: t = let { v :: t;  v = e } in v
 |||||
 |<em>apat</em>|→|<em>var</em> [ <code>@</code> <em>apat</em>]|(as pattern)|
 |	       |&#124;|<em>gcon</em>|(arity gcon  =  0)|
-|	       |&#124;|<em>qcon</em> { <em>fpat1</em> , … , <em>fpatk</em> }|(labeled pattern, <em>k</em> ≥ 0)|
+|	       |&#124;|<em>qcon</em> <code>{</code> <em>fpat1</em> <code>,</code> … <code>,</code> <em>fpatk</em> <code>}</code>|(labeled pattern, <em>k</em> ≥ 0)|
 |	       |&#124;|<em>literal</em>| |
 |	       |&#124;|<code>_</code> 	                    |(wildcard)|
-|	       |&#124;|( <em>pat</em> )                     |(parenthesized pattern)|
-|	       |&#124;|( <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> )|(tuple pattern, <em>k</em> ≥ 2)|
-|	       |&#124;|[ <em>pat<sub>1</sub></em> , … , <em>pat<sub>k</sub></em> ]|(list pattern, <em>k</em> ≥ 1)|
+|	       |&#124;|<code>(</code> <em>pat</em> <code>)</code>                     |(parenthesized pattern)|
+|	       |&#124;|<code>(</code> <em>pat<sub>1</sub></em> <code>,</code> … <code>,</code> <em>pat<sub>k</sub></em> <code>)</code>|(tuple pattern, <em>k</em> ≥ 2)|
+|	       |&#124;|<code>[</code> <em>pat<sub>1</sub></em> <code>,</code> … <code>,</code> <em>pat<sub>k</sub></em> <code>]</code>|(list pattern, <em>k</em> ≥ 1)|
 |	       |&#124;|<code>~</code> <em>apat</em>|(irrefutable pattern)|
 |||||
 |<em>fpat</em>|→|<em>qvar</em> <code>=</code> <em>pat</em>| |
