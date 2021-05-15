@@ -5,7 +5,7 @@
 |||||
 |--|--|--|--|
 |<em>exp</em>|→|<em>infixexp</em> :: [<em>context</em> =>] <em>type</em>|(expression type signature)|
-|       |&#124;|<em>infixexp</em>|(expression type signature)|
+|       |&#124;|<em>infixexp</em>| |
 | | | | |
 |<em>infixexp</em>|→|<em>lexp</em> <em>qop</em> <em>infixexp</em>|(infix operator application)|
 |            |&#124;|- <em>infixexp</em>|(prefix negation)|
