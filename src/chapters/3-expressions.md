@@ -1,4 +1,4 @@
-# 式
+# 
 
 この章では、私たちはHaskellの式の構文と非形式的な意味論を説明する。また必要であらばHaskellカーネルへの変換についても説明する。<code>let</code>式の場合を除いて、これらの変換は静的、動的な意味論の両方を保存する。これらの変換を使った束縛されていない変数とコンストラクタは常に<code>Prelude</code>によって定義された実体を参照する。例えば、リスト内包表記の変換(セクション[3.11])で使われる<code>"concatMap"</code>は<code>Prelude</code>によって定義された<code>concatMap</code>を意味する。これは識別子<code>"concatMap"</code>がリスト内包表記で使われているスコープ内にあるかないかは関係なく、また、(もしスコープ内にあったとしても)束縛されていても関係はない。
 
@@ -26,7 +26,7 @@
 |        |&#124;|<code>(</code> <em>exp</em> <code>)</code>|(parenthesized expression)|
 |        |&#124;|<code>(</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>)</code>|(tuple, <em>k</em> ≥ 2)|
 |        |&#124;|<code>[</code> <em>exp<sub>1</sub></em> <code>,</code> … <code>,</code> <em>exp<sub>k</sub></em> <code>]</code>|(list, <em>k</em> ≥ 1)|
-|        |&#124;|<code>[</code> <em>exp<sub>1</sub></em> [<code>,</code> <em>exp<sub>2</sub></em>] … [<em>exp<sub>3</sub></em>] <code>]</code>|(arithmetic sequence)|
+|        |&#124;|<code>[</code> <em>exp<sub>1</sub></em> [<code>,</code> <em>exp<sub>2</sub></em>] <code>..</code> [<em>exp<sub>3</sub></em>] <code>]</code>|(arithmetic sequence)|
 |        |&#124;|<code>[</code> <em>exp</em> <code>&#124;</code> <em>qual<sub>1</sub></em> <code>,</code> … <code>,</code> <em>qual<sub>n</sub></em> <code>]</code>|(list comprehension, <em>n</em> ≥ 1)|
 |        |&#124;|<code>(</code> <em>infixexp</em> <em>qop</em> <code>)</code>|(left section)|
 |        |&#124;|<code>(</code> <em>qop<sub>⟨<code>-</code>⟩</sub></em> <em>infixexp</em> <code>)</code>|(right section)|
@@ -289,9 +289,9 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 |||||
 |--|--|--|--|
-|<em>aexp</em>|→|`[` <em>exp<sub>1</sub></em> `[`, <em>exp<sub>2</sub></em>`]` … `[`<em>exp<sub>3</sub></em>`]` `]`| |
+|<em>aexp</em>|→|`[` <em>exp<sub>1</sub></em> [<code>,</code> <em>exp<sub>2</sub></em>] <code>..</code> [<em>exp<sub>3</sub></em>] `]`| |
 
- **数列** [<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型<em>t</em>の値のリストを表し、各<em>e<sub>i</sub></em>は型<em>t</em>を持ち、<em>t</em>は`Enum`クラスのインスタンスである。
+ **数列** [<em>e<sub>1</sub></em>,<em>e<sub>2</sub></em> .. <em>e<sub>3</sub></em>]は型<em>t</em>の値のリストを表す。各<em>e<sub>i</sub></em>は型<em>t</em>を持ち、<em>t</em>は`Enum`クラスのインスタンスである。
 
 <div class="column">
 
