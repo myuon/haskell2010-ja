@@ -4,17 +4,17 @@
 
 |||||
 |--|--|--|--|
-|<em>exp</em>|→|<em>infixexp</em> :: [context =>] type|(expression type signature)|
+|<em>exp</em>|→|<em>infixexp</em> :: [<em>context</em> =>] <em>type</em>|(expression type signature)|
 |       |&#124;|<em>infixexp</em>|(expression type signature)|
 | | | | |
-|<em>infixexp</em>|→|<em>lexp</em> qop <em>infixexp</em>|(infix operator application)|
+|<em>infixexp</em>|→|<em>lexp</em> <em>qop</em> <em>infixexp</em>|(infix operator application)|
 |            |&#124;|- <em>infixexp</em>|(prefix negation)|
 |            |&#124;|<em>lexp</em>| |
 | | | | |
 |<em>lexp</em>|→|\ <em>apat<sub>1</sub></em> … <em>apat<sub>n</sub></em> -> <em>exp</em>|(lambda abstraction, <em>n</em> ≥ 1)|
 |        |&#124;|<code>let</code> <em>decls</em> <code>in</code> <em>exp</em>|(let expression)|
 |        |&#124;|<code>if</code> <em>exp</em> [;] <code>then</code> <em>exp</em> [;] <code>else</code> <em>exp</em>|(conditional)|
-|	       |&#124;|<code>case</code> <em>exp</em> of { <em>alts</em> }|(case expression)|
+|	       |&#124;|<code>case</code> <em>exp</em> `of` { <em>alts</em> }|(case expression)|
 |        |&#124;|<code>do</code> { <em>stmts</em> }|(do expression)|
 |        |&#124;|<em>fexp</em>| |
 | | | | |
