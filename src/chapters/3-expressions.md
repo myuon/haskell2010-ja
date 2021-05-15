@@ -118,7 +118,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 関数適用は<em>e<sub>1</sub></em> <em>e<sub>2</sub></em>と書く。適用は左結合性をもつので、<code>(f x) y</code>の括弧は省略することができる。<em>e<sub>1</sub></em>はデータ構成子である可能性もあるため、データ構成子の部分的な適用は許されている。
 
- **ラムダ抽象** は<code>\ <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e</code>と書き、<code><em>p<sub>i</sub></em></code>はパターンである。<code>\x:xs->x</code>のような式は構文的に正しくない。<code>\(x:xs)->x</code>と書くのが正しい。
+ **ラムダ抽象** は<code>\ <em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e</code>と書き、<code><em>p<sub>i</sub></em></code>はパターンである。<code>\x:xs->x</code>のような式は構文的に正しくない。<code>\\(x:xs)->x</code>と書くのが正しい。
 
 パターンの集合は **線形** でなければならない。つまり、変数は集合の中で2回以上出現してはいけない。
 
@@ -126,7 +126,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 **変換:** 以下の等式が成り立つ。
 
-<pre><code><em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e = \ X<sub>1</sub> … X<sub>n</sub> -> case (X<sub>1</sub>, …, X<sub>n</sub>) of (<em>p<sub>1</sub></em>, …, <em>p<sub>n</sub></em>) -> e</code></pre>
+<pre><code>\<em>p<sub>1</sub></em> … <em>p<sub>n</sub></em> -> e = \ X<sub>1</sub> … X<sub>n</sub> -> case (X<sub>1</sub>, …, X<sub>n</sub>) of (<em>p<sub>1</sub></em>, …, <em>p<sub>n</sub></em>) -> e</code></pre>
 
 <em>X<sub>i</sub></em>は新しい識別子である。
 
