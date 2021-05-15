@@ -33,7 +33,7 @@
 |        |&#124;|<em>qcon</em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled construction, <em>n</em> ≥ 0)|
 |        |&#124;|<em>aexp<sub>⟨qcon⟩</sub></em> { <em>fbind<sub>1</sub></em> , … , <em>fbind<sub>n</sub></em> }|(labeled update, <em>n</em>  ≥  1)|
 
-中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション[4.4.2](./4-declarations-and-bindings.md)参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>"x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z"</em> ( <em>qop<sup>(a,i)</sup></em>は結合性が<em>a</em>で優先順位が<em>i</em>の演算子を意味する)が与えられた場合、括弧は<em>i = j</em>でかつ<em>a = b = l</em>か<em>a = b = r</em>でない時は、<em>"x qop<sup>(a,i)</sup> y"</em>か<em>"y qop<sup>(b,i)</sup> z"</em>のどちらかを囲むよう追加されなければいけない。
+中置演算子を含む式は演算子の結合性によって曖昧さを排除されている(セクション[4.4.2](./4-declarations-and-bindings.md)参照)。同じ優先度をもつ連続した括弧を持たない演算子は構文エラーを避けるためにどちらも左または右のどちらかに結合しなければならない。括弧を持たない式<em>"x qop<sup>(a,i)</sup> y qop<sup>(b,j)</sup> z"</em> ( <em>qop<sup>(a,i)</sup></em>は結合性が<em>a</em>で優先順位が<em>i</em>の演算子を意味する)が与えられた場合、<em>i = j</em>でかつ<em>a = b = l</em>か<em>a = b = r</em>でない時は、括弧は<em>"x qop<sup>(a,i)</sup> y"</em>か<em>"y qop<sup>(b,i)</sup> z"</em>のどちらかを囲むよう追加されなければいけない。
 
 中置演算子を含む式の解決するためのアルゴリズムの例はセクション[10.6](./10-syntax-reference.md)にある。
 
