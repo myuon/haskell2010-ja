@@ -147,7 +147,7 @@ Haskellは中置記法に対応するため特別な構文を提供している�
 
 特殊な形式<em>-e</em>は前置の符号反転演算子を表す。この演算子はHaskellにおける唯一の前置演算子であり、<code>negate (*e*)</code>という意味の構文である。二項演算子<code>-</code>はPrelude内の<code>-</code>の定義への参照を必要とせず、モジュールシステムによって再束縛されるかもしれない。しかしながら、単項演算子<code>-</code>はPrelude内で定義された<code>negate</code>関数を常に参照する。<code>-</code>演算子の局所的な意味と単項の符号反転演算との間には何の関連もない。
 
-前置の符号反転演算子はPrelude内(表[4.1](./4-declarations-and-bindings.md)を参照)で定義された中置演算子<code>-</code>と同じ優先順位を持つ。<code>e1-e2</code>は二項演算子<code>-</code>の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって<code>e1(-e2)</code>と書かなければいけない。同様に、<code>(-)</code>は中置演算子と同様に<code>(\ x y -> x-y)</code>のための構文であるが、<code>(\ x -> -x)</code>を表せず、そのためには<code>negate</code>を使う必要がある。
+前置の符号反転演算子はPrelude内(表[4.1](./4-declarations-and-bindings.md)を参照)で定義された中置演算子<code>-</code>と同じ優先順位を持つ。<code>e1-e2</code>は二項演算子<code>-</code>の中置表現解析されるため、前置の符号反転演算子を使うには構文解析に代わって<code>e1(-e2)</code>と書かなければいけない。同様に、<code>(-)</code>は他の中置演算子と同様に<code>(\ x y -> x-y)</code>のための構文であるが、<code>(\ x -> -x)</code>を表せず、そのためには<code>negate</code>を使う必要がある。
 
 <div class="column">
 
